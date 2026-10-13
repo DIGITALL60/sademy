@@ -1,0 +1,52 @@
+{
+  "name": "Sademy · Marketplace de Servicios y Oficios",
+  "short_name": "Sademy",
+  "description": "Marketplace de oficios con trabajadores calificados, certificados y de confianza.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#10B981",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/mascot.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "assets/mascot.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Nuevo Pedido",
+      "short_name": "Pedir",
+      "description": "Pedir presupuestos de oficios verificados",
+      "url": "/#oficios",
+      "icons": [{ "src": "assets/favicon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Mis Pedidos",
+      "short_name": "Pedidos",
+      "description": "Ver pedidos y presupuestos en curso",
+      "url": "/#presupuestos",
+      "icons": [{ "src": "assets/favicon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Sademy Pro",
+      "short_name": "Pro",
+      "description": "Portal para trabajadores y profesionales",
+      "url": "/#sademy-pro",
+      "icons": [{ "src": "assets/favicon.svg", "sizes": "any" }]
+    }
+  ],
+  "categories": ["lifestyle", "business", "utilities"]
+}

@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sademy · Marketplace de Servicios y Oficios Verificados</title>
+  <meta name="description" content="Encontrá trabajadores calificados, certificados y de confianza. Electricistas, plomeros, gasistas y más oficios con presupuesto previo, pago seguro y garantía Sademy.">
+  
+  <!-- Favicon adaptado al logo circular de Sademy (sin esquinas cuadradas) -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <!-- PWA Manifest & Mobile App Configuration (Apple / Samsung) -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#10B981">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Sademy">
+  <meta name="application-name" content="Sademy">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- Tipografía oficial recomendada en el Manual de Marca: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Estilos del Design System Sademy -->
+  <link rel="stylesheet" href="css/style.css?v=20261013">
+</head>
+<body>
+
+  <!-- ========================================================================
+       PRELOADER PROFESIONAL SADEMY (FONDO DIFUMINADO + LOGO + BARRA CARGANDO)
+       ======================================================================== -->
+  <div id="sademy-preloader" class="sademy-preloader" role="status" aria-live="polite">
+    <div class="preloader-content">
+      <div class="preloader-logo-wrap">
+        <img src="assets/favicon.svg" alt="Sademy" class="preloader-mascot-img">
+        <div class="preloader-pulse-ring"></div>
+      </div>
+      
+      <div class="preloader-brand-title">sademy</div>
+      <div class="preloader-brand-sub">Servicios y oficios de confianza</div>
+
+      <div class="preloader-bar-track">
+        <div id="preloader-bar-fill" class="preloader-bar-fill"></div>
+      </div>
+      <div id="preloader-status-text" class="preloader-status">Verificando profesionales en tu zona...</div>
+    </div>
+  </div>
+
+  <!-- Barra de progreso de scroll ultra-fina -->
+  <div id="scroll-progress-bar" class="scroll-progress-bar"></div>
+
+  <!-- Header & Navegación Principal Oficial -->
+  <header class="main-header">
+    <div class="navbar">
+      <!-- Logo y Mascota oficial conforme al Manual de Identidad (Giro cada 10s) -->
+      <a href="#hero" class="brand-logo" aria-label="Sademy Inicio">
+        <img src="assets/favicon.svg" alt="Mascota oficial Sademy" class="brand-mascot-icon">
+        <span class="brand-wordmark">sademy</span>
+      </a>
+
+      <!-- Enlaces de navegación -->
+      <nav class="main-nav" aria-label="Navegación principal">
+        <ul class="nav-links">
+          <li><a href="#oficios" class="nav-link">Oficios</a></li>
+          <li>
+            <a href="javascript:void(0)" onclick="openMyOrdersModal()" class="nav-link">
+              Mis Pedidos
+              <span id="nav-orders-badge" class="nav-badge" title="Pedidos activos">2</span>
+            </a>
+          </li>
+          <li><a href="#directorio" class="nav-link">Profesionales</a></li>
+          <li><a href="#como-funciona" class="nav-link">Cómo Funciona</a></li>
+          <li><a href="#garantia" class="nav-link">Pago Protegido</a></li>
+          <li><a href="#calculadora" class="nav-link">Precios Estimados</a></li>
+        </ul>
+      </nav>
+
+      <!-- Botones de acción y autenticación -->
+      <div class="nav-actions">
+        <!-- Botón PWA Instalable estilo Apple/Samsung -->
+        <button id="pwa-install-btn" class="btn btn-outline-pwa btn-sm" onclick="triggerPwaInstall()" style="display: none;" title="Instalar Sademy en tu dispositivo">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span>Instalar App</span>
+        </button>
+
+        <!-- Botón Ingresar (Cuando no hay sesión) -->
+        <button id="nav-login-btn" class="btn btn-secondary btn-sm" onclick="openAuthModal('client')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          Ingresar
+        </button>
+
+        <!-- Botón Soy Profesional (Para trabajadores) -->
+        <button id="nav-pro-btn" class="btn btn-soft btn-sm" onclick="handleProNavClick()">
+          Soy Profesional
+        </button>
+
+        <!-- Menú de Usuario Autenticado (Estilo Apple / OneUI con blur y tarjeta) -->
+        <div id="nav-user-dropdown-wrapper" class="nav-user-dropdown-wrapper" style="display: none;">
+          <button id="nav-user-pill-btn" class="nav-user-pill-btn" onclick="toggleUserDropdown()" aria-expanded="false" title="Abrir opciones de cuenta">
+            <img id="nav-user-avatar-img" src="assets/mascot.jpg" class="nav-user-avatar" alt="Avatar usuario">
+            <span id="nav-user-name-text" class="nav-user-name">Carlos M.</span>
+            <span id="nav-user-role-tag" class="nav-user-role-badge">Cliente</span>
+            <svg class="chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+
+          <div id="user-profile-menu" class="user-profile-menu">
+            <div class="user-menu-header">
+              <img id="menu-user-avatar" src="assets/mascot.jpg" alt="Usuario" class="menu-user-avatar">
+              <div class="menu-user-meta">
+                <strong id="menu-user-name">Carlos M.</strong>
+                <span id="menu-user-email">carlos.m@gmail.com</span>
+                <span id="menu-user-role-label" class="menu-user-badge">✓ Cliente Verificado</span>
+              </div>
+            </div>
+            <div class="user-menu-divider"></div>
+            <a href="javascript:void(0)" onclick="closeUserDropdown(); openMyOrdersModal();" class="user-menu-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              <span>Mis Pedidos</span>
+              <span id="menu-orders-badge" class="nav-badge">2</span>
+            </a>
+            <a href="javascript:void(0)" onclick="toggleUserRoleMode(); closeUserDropdown();" id="menu-toggle-role-link" class="user-menu-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+              <span id="menu-role-switch-text">Cambiar a Portal Profesional (Pro)</span>
+            </a>
+            <a href="javascript:void(0)" onclick="triggerPwaInstall(); closeUserDropdown();" class="user-menu-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+              <span>Instalar Aplicación en Pantalla</span>
+            </a>
+            <div class="user-menu-divider"></div>
+            <button onclick="logoutUser()" class="user-menu-item user-menu-logout">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+              <span>Cerrar Sesión</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Botón Nuevo Pedido -->
+        <button class="btn btn-primary btn-sm" onclick="openNewOrderModal()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          Nuevo pedido
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       HERO SECTION
+       ======================================================================== -->
+  <section id="hero" class="hero-section">
+    <div class="container hero-grid">
+      
+      <!-- Contenido Hero -->
+      <div class="hero-content">
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <div class="live-availability-badge">
+            <span class="pulse-dot-live"></span>
+            <span>14 profesionales verificados de guardia en tu zona ahora mismo</span>
+          </div>
+          <div class="hero-pill">
+            <svg class="hero-pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span class="hero-pill-text">Plataforma Oficial con Matrícula Comprobada</span>
+          </div>
+        </div>
+
+        <h1 class="hero-title">
+          El marketplace de oficios con trabajadores <span class="highlight">calificados</span>, certificados y de confianza.
+        </h1>
+
+        <p class="hero-description">
+          Conectamos a personas que necesitan resolver trabajos cotidianos con profesionales evaluados en su zona. Recibí presupuestos transparentes y pagá con fondos protegidos hasta tu total conformidad.
+        </p>
+
+        <!-- Buscador interactivo en vivo -->
+        <div class="hero-search-box">
+          <div class="search-inputs-row">
+            
+            <div class="search-field">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              <select id="hero-trade-select" aria-label="Seleccionar oficio">
+                <option value="electricidad">⚡ Electricista</option>
+                <option value="plomeria">🔧 Plomería y Sanitarios</option>
+                <option value="gas">🔥 Gasista Matriculado</option>
+                <option value="pintura">🎨 Pintura y Revestimientos</option>
+                <option value="cerrajeria">🔑 Cerrajería 24hs</option>
+                <option value="aire">❄️ Aire Acondicionado</option>
+              </select>
+            </div>
+
+            <div class="search-field">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <input type="text" id="hero-zone-input" value="Palermo, CABA" placeholder="Ciudad o barrio...">
+            </div>
+
+            <button class="btn btn-primary" onclick="openNewOrderModal()">
+              Pedir Presupuestos
+            </button>
+          </div>
+
+          <!-- Chips de acceso rápido -->
+          <div class="search-chips-row">
+            <span class="chips-label">Populares:</span>
+            <button class="quick-chip active" data-cat="electricidad">Electricistas</button>
+            <button class="quick-chip" data-cat="plomeria">Plomería</button>
+            <button class="quick-chip" data-cat="gas">Gasistas</button>
+            <button class="quick-chip" data-cat="pintura">Pintura</button>
+            <button class="quick-chip" data-cat="cerrajeria">Cerrajería</button>
+          </div>
+        </div>
+
+        <!-- Badges de confianza -->
+        <div class="hero-trust-row">
+          <div class="trust-item">
+            <span class="trust-check-icon">✓</span>
+            <span>Identidad & Matrícula Comprobada</span>
+          </div>
+          <div class="trust-item">
+            <span class="trust-check-icon">✓</span>
+            <span>Pago retenido en custodia segura</span>
+          </div>
+          <div class="trust-item">
+            <span class="trust-check-icon">✓</span>
+            <span>Garantía de Satisfacción Sademy</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Interfaz Central de la Aplicación Sademy (Fiel al Diseño Móvil y Adaptado a PC) -->
+      <div class="hero-visual-card">
+        <div class="sademy-app-container" id="sademy-app-view">
+          
+          <!-- Barra superior de la App -->
+          <div class="phone-top-bar">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="brand-wordmark" style="font-size: 1.6rem; animation: none;">sademy</span>
+            </div>
+            <button class="phone-header-btn" onclick="openNewOrderModal()">
+              Nuevo pedido
+            </button>
+          </div>
+
+          <!-- Navegación de pestañas: Mis pedidos / Mensajes / Ayuda -->
+          <div class="phone-nav-links">
+            <button id="app-tab-btn-pedidos" class="app-tab-link active" onclick="switchAppTab('pedidos')">Mis pedidos</button>
+            <button id="app-tab-btn-mensajes" class="app-tab-link" onclick="switchAppTab('mensajes')">Mensajes</button>
+            <button id="app-tab-btn-ayuda" class="app-tab-link" onclick="switchAppTab('ayuda')">Ayuda</button>
+          </div>
+
+          <!-- Vista 1: Mis Pedidos & Presupuestos Recibidos -->
+          <div id="app-view-pedidos" class="app-view-pane active">
+            <!-- Título y subtítulo del pedido -->
+            <div class="phone-title-block">
+              <h2 class="phone-title">Presupuestos recibidos</h2>
+              <p class="phone-subtitle">2 profesionales respondieron a tu pedido de instalación de luz en cocina.</p>
+            </div>
+
+            <!-- Selector para alternar entre las cotizaciones recibidas -->
+            <div class="quotes-toggle-pills-row">
+              <button id="pill-quote-marcos" class="quote-pill-btn active" onclick="selectAppQuote('marcos')">
+                Marcos R. ($24.500)
+              </button>
+              <button id="pill-quote-sofia" class="quote-pill-btn" onclick="selectAppQuote('sofia')">
+                Sofía L. ($21.000)
+              </button>
+            </div>
+
+            <!-- Tarjeta 1: Marcos R. Electricista (Fiel a la captura oficial) -->
+            <div id="quote-card-marcos" class="prototype-quote-card">
+              <div class="quote-service-icon-wrap">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+              </div>
+
+              <div class="quote-header-info">
+                <img src="assets/marcos.jpg" alt="Marcos R. Electricista" class="quote-worker-avatar" onerror="this.src='assets/mascot.jpg'">
+                <div style="flex: 1;">
+                  <div class="quote-badges-row">
+                    <span class="badge-tag badge-profession">ELECTRICISTA</span>
+                    <span class="badge-tag badge-new">NUEVO</span>
+                  </div>
+                  <h3 class="quote-worker-name">Marcos R.</h3>
+                  <p class="quote-includes-text">Incluye materiales y mano de obra</p>
+                  
+                  <div class="quote-rating-row" style="margin-top: 6px;">
+                    <div class="star-rating">★★★★★</div>
+                    <span style="font-weight: 700; color: #111827;">4.9</span>
+                    <span style="color: var(--color-text-tertiary); font-weight: normal;">· 38 trabajos</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="border-top: 1px solid #F3F4F6; margin: 4px 0 2px;"></div>
+
+              <div class="quote-price-row">
+                <div>
+                  <div style="font-size: 0.72rem; color: #9CA3AF; text-transform: uppercase; font-weight: 700; line-height: 1.2;">PRESUPUESTO<br>CERRADO</div>
+                  <div class="quote-amount" style="color: #065F46; font-size: 1.55rem; font-weight: 800; margin-top: 2px;">$24.500 <span style="font-size: 0.74rem; color: #9CA3AF; font-weight: 600;">ARS</span></div>
+                </div>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                  <button class="btn btn-secondary btn-sm" onclick="openChatModal('Marcos R.')" style="border-radius: 10px; padding: 8px 16px; font-weight: 600;">
+                    Chatear
+                  </button>
+                  <button class="btn btn-primary btn-sm" onclick="openQuoteDetailModal('quote-marcos')" style="border-radius: 10px; padding: 8px 18px; font-weight: 700;">
+                    Ver Presupuesto
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tarjeta 2: Sofía L. Electricista Matriculada -->
+            <div id="quote-card-sofia" class="prototype-quote-card" style="display: none;">
+              <div class="quote-service-icon-wrap">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+              </div>
+
+              <div class="quote-header-info">
+                <img src="assets/sofia.jpg" alt="Sofía L. Plomera" class="quote-worker-avatar" onerror="this.src='assets/mascot.jpg'">
+                <div style="flex: 1;">
+                  <div class="quote-badges-row">
+                    <span class="badge-tag badge-profession">ELECTRICISTA MATRICULADA</span>
+                    <span class="badge-tag badge-new">VERIFICADA PRO</span>
+                  </div>
+                  <h3 class="quote-worker-name">Sofía L.</h3>
+                  <p class="quote-includes-text">Mano de obra + diagnóstico de tablero</p>
+                  
+                  <div class="quote-rating-row" style="margin-top: 6px;">
+                    <div class="star-rating">★★★★★</div>
+                    <span style="font-weight: 700; color: #111827;">5.0</span>
+                    <span style="color: var(--color-text-tertiary); font-weight: normal;">· 52 trabajos</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="border-top: 1px solid #F3F4F6; margin: 4px 0 2px;"></div>
+
+              <div class="quote-price-row">
+                <div>
+                  <div style="font-size: 0.72rem; color: #9CA3AF; text-transform: uppercase; font-weight: 700; line-height: 1.2;">PRESUPUESTO<br>CERRADO</div>
+                  <div class="quote-amount" style="color: #065F46; font-size: 1.55rem; font-weight: 800; margin-top: 2px;">$21.000 <span style="font-size: 0.74rem; color: #9CA3AF; font-weight: 600;">ARS</span></div>
+                </div>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                  <button class="btn btn-secondary btn-sm" onclick="openChatModal('Sofía L.')" style="border-radius: 10px; padding: 8px 16px; font-weight: 600;">
+                    Chatear
+                  </button>
+                  <button class="btn btn-primary btn-sm" onclick="openQuoteDetailModal('quote-sofia')" style="border-radius: 10px; padding: 8px 18px; font-weight: 700;">
+                    Ver Presupuesto
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sello flotante de la mascota oficial -->
+            <div class="floating-mascot-badge" style="position: static; margin-top: 16px; justify-content: center;">
+              <img src="assets/mascot.jpg" alt="Mascota Sademy" class="floating-mascot-img">
+              <span class="floating-mascot-text">Garantía Sademy Activa · Pago Protegido</span>
+            </div>
+          </div>
+
+          <!-- Vista 2: Mensajes -->
+          <div id="app-view-mensajes" class="app-view-pane" style="display: none;">
+            <div class="phone-title-block">
+              <h2 class="phone-title">Mensajes</h2>
+              <p class="phone-subtitle">Comunicate directamente con los profesionales asignados.</p>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+              <div class="chat-thread-card" onclick="openChatModal('Marcos R.')">
+                <img src="assets/marcos.jpg" class="chat-thread-avatar" alt="Marcos R.">
+                <div style="flex: 1; overflow: hidden;">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <strong style="font-size: 0.95rem; color: var(--color-text-main);">Marcos R. (Electricista)</strong>
+                    <span style="font-size: 0.74rem; color: var(--color-text-muted);">10:50 hs</span>
+                  </div>
+                  <p style="font-size: 0.82rem; color: var(--color-text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px;">
+                    Sí, exactamente. Todo bajo norma IRAM y con garantía de 6 meses...
+                  </p>
+                </div>
+              </div>
+
+              <div class="chat-thread-card" onclick="openChatModal('Sofía L.')">
+                <img src="assets/sofia.jpg" class="chat-thread-avatar" alt="Sofía L.">
+                <div style="flex: 1; overflow: hidden;">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <strong style="font-size: 0.95rem; color: var(--color-text-main);">Sofía L. (Plomera Pro)</strong>
+                    <span style="font-size: 0.74rem; color: var(--color-text-muted);">11:02 hs</span>
+                  </div>
+                  <p style="font-size: 0.82rem; color: var(--color-text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px;">
+                    Hola Carlos! Revisé tu solicitud y puedo pasar mañana por la mañana...
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vista 3: Ayuda & Cobertura -->
+          <div id="app-view-ayuda" class="app-view-pane" style="display: none;">
+            <div class="phone-title-block">
+              <h2 class="phone-title">Centro de Ayuda</h2>
+              <p class="phone-subtitle">Tu tranquilidad garantizada en cada contratación.</p>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 12px;">
+              <div style="background: #ECFDF5; border: 1px solid var(--color-primary-border); border-radius: 12px; padding: 14px;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                  <span style="font-size: 1.1rem;">🛡️</span>
+                  <strong style="font-size: 0.95rem; color: #065F46;">Pago Protegido en Custodia</strong>
+                </div>
+                <p style="font-size: 0.82rem; color: #047857;">Tu dinero nunca va directo al trabajador hasta que el trabajo esté finalizado y des tu visto bueno.</p>
+              </div>
+
+              <div style="background: #F9FAFB; border: 1px solid var(--color-border); border-radius: 12px; padding: 14px;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                  <span style="font-size: 1.1rem;">📋</span>
+                  <strong style="font-size: 0.95rem; color: var(--color-text-main);">Seguro contra Daños</strong>
+                </div>
+                <p style="font-size: 0.82rem; color: var(--color-text-secondary);">Cobertura de hasta $500.000 ARS ante cualquier eventualidad imprevista durante el servicio.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECCIÓN 1: PROTAGÓNICA - PRESUPUESTOS RECIBIDOS (INTERACTIVO COMPLETO)
+       ======================================================================== -->
+  <section id="presupuestos" class="section section-bg-light">
+    <div class="container">
+      
+      <div class="section-header">
+        <span class="section-pretitle">Gestión de Pedidos en Vivo</span>
+        <h2 class="section-title">Compará presupuestos y elegí con confianza</h2>
+        <p class="section-desc">
+          En Sademy recibís ofertas detalladas con materiales, mano de obra y tiempo estimado. Sin sorpresas ni sobreprecios.
+        </p>
+      </div>
+
+      <div class="received-quotes-container">
+        
+        <!-- Banner del pedido activo -->
+        <div id="active-order-banner" class="active-request-banner">
+          <div class="request-meta-info">
+            <div class="request-icon-bullet">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </div>
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
+                <span class="badge-tag badge-profession">PEDIDO #ORD-2026-084</span>
+                <span style="font-size: 0.78rem; color: var(--color-text-muted);">Publicado hoy hace 2 hs</span>
+              </div>
+              <h3 class="request-heading">Instalación de luz en cocina (Luminarias LED y revisión térmica)</h3>
+              <p class="request-subtext">Humboldt 1900, Palermo, CABA · 2 profesionales postulados disponibles hoy y mañana</p>
+            </div>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="openNewOrderModal()">
+            Crear Otro Pedido
+          </button>
+        </div>
+
+        <!-- Tarjetas comparativas lado a lado de presupuestos recibidos -->
+        <div class="quotes-comparison-grid">
+          
+          <!-- Cotización 1: Marcos R. -->
+          <div class="worker-quote-card recommended">
+            <span class="recommended-ribbon">⭐ Más Rápido (Hoy)</span>
+            
+            <div class="worker-card-header">
+              <img src="assets/marcos.jpg" alt="Marcos R." class="worker-avatar-large" onerror="this.src='assets/mascot.jpg'">
+              <div class="worker-info-meta">
+                <div class="worker-name-row">
+                  <h4 class="worker-name-text">Marcos R.</h4>
+                  <svg class="verification-check-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                </div>
+                <div class="worker-trade-title">Electricista · Calificado Sademy</div>
+                <div class="quote-rating-row" style="margin-top: 4px;">
+                  <span class="star-rating">★★★★★</span>
+                  <span>4.9</span>
+                  <span style="color: var(--color-text-tertiary); font-size: 0.8rem;">(38 opiniones verificadas)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Desglose de cotización -->
+            <div class="quote-breakdown-box">
+              <div class="breakdown-row">
+                <span>Mano de obra (2h estimadas)</span>
+                <strong>$16.500 ARS</strong>
+              </div>
+              <div class="breakdown-row">
+                <span>Materiales (Cables IRAM + conectores)</span>
+                <strong>$8.000 ARS</strong>
+              </div>
+              <div class="breakdown-row">
+                <span>Seguro de Responsabilidad Sademy</span>
+                <span style="color: var(--color-primary); font-weight: 700;">Gratis</span>
+              </div>
+              <div class="breakdown-row total">
+                <span>Total Final Cerrado</span>
+                <span style="color: #065F46;">$24.500 ARS</span>
+              </div>
+            </div>
+
+            <div class="worker-quote-details">
+              <div class="detail-point">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"/></svg>
+                <span><strong>Disponibilidad:</strong> Hoy a partir de las 16:30 hs</span>
+              </div>
+              <div class="detail-point">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                <span><strong>Garantía:</strong> 6 meses de respaldo escrito</span>
+              </div>
+            </div>
+
+            <div class="quote-action-buttons">
+              <button class="btn btn-secondary btn-sm" onclick="openChatModal('Marcos R.')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Chatear
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="openPaymentModal(ACTIVE_ORDER.quotes[0])">
+                Aceptar & Pagar Seguro
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Cotización 2: Sofía L. -->
+          <div class="worker-quote-card">
+            
+            <div class="worker-card-header">
+              <img src="assets/sofia.jpg" alt="Sofía L." class="worker-avatar-large" onerror="this.src='assets/mascot.jpg'">
+              <div class="worker-info-meta">
+                <div class="worker-name-row">
+                  <h4 class="worker-name-text">Sofía L.</h4>
+                  <svg class="verification-check-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                </div>
+                <div class="worker-trade-title">Electricista Matriculada COPIME</div>
+                <div class="quote-rating-row" style="margin-top: 4px;">
+                  <span class="star-rating">★★★★★</span>
+                  <span>5.0</span>
+                  <span style="color: var(--color-text-tertiary); font-size: 0.8rem;">(52 opiniones verificadas)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Desglose de cotización -->
+            <div class="quote-breakdown-box">
+              <div class="breakdown-row">
+                <span>Mano de obra certificada IRAM</span>
+                <strong>$18.000 ARS</strong>
+              </div>
+              <div class="breakdown-row">
+                <span>Diagnóstico y torque térmicas</span>
+                <strong>$3.000 ARS</strong>
+              </div>
+              <div class="breakdown-row">
+                <span>Materiales</span>
+                <span style="color: var(--color-text-tertiary);">A coordinar en visita</span>
+              </div>
+              <div class="breakdown-row total">
+                <span>Total Estimado Base</span>
+                <span style="color: #065F46;">$21.000 ARS</span>
+              </div>
+            </div>
+
+            <div class="worker-quote-details">
+              <div class="detail-point">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"/></svg>
+                <span><strong>Disponibilidad:</strong> Mañana por la mañana (09:00 hs)</span>
+              </div>
+              <div class="detail-point">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                <span><strong>Garantía:</strong> 1 año con matrícula oficial</span>
+              </div>
+            </div>
+
+            <div class="quote-action-buttons">
+              <button class="btn btn-secondary btn-sm" onclick="openChatModal('Sofía L.')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Chatear
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="openPaymentModal(ACTIVE_ORDER.quotes[1])">
+                Aceptar & Pagar Seguro
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECCIÓN 2: CATEGORÍAS DE OFICIOS POPULARES
+       ======================================================================== -->
+  <section id="oficios" class="section">
+    <div class="container">
+      
+      <div class="section-header">
+        <span class="section-pretitle">Rubros y Especialidades</span>
+        <h2 class="section-title">Encontrá el oficio indicado para tu necesidad</h2>
+        <p class="section-desc">
+          Más de 30 categorías de servicios para el hogar, comercios y consorcios con profesionales evaluados.
+        </p>
+      </div>
+
+      <div class="categories-grid">
+        
+        <div class="category-card" data-cat="electricidad">
+          <div class="category-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          </div>
+          <h3 class="category-name">Electricistas</h3>
+          <span class="category-count">142 profesionales</span>
+        </div>
+
+        <div class="category-card" data-cat="plomeria">
+          <div class="category-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <h3 class="category-name">Plomería</h3>
+          <span class="category-count">98 profesionales</span>
+        </div>
+
+        <div class="category-card" data-cat="gas">
+          <div class="category-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+          </div>
+          <h3 class="category-name">Gasistas</h3>
+          <span class="category-count">76 matriculados</span>
+        </div>
+
+        <div class="category-card" data-cat="pintura">
+          <div class="category-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 11V4a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v7"/><path d="M3 11h18v2a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4v-2z"/><path d="M14 17v4a2 2 0 0 1-2 2h0a2 2 0 0 1-2-2v-4"/></svg>
+          </div>
+          <h3 class="category-name">Pintura</h3>
+          <span class="category-count">115 profesionales</span>
+        </div>
+
+        <div class="category-card" data-cat="cerrajeria">
+          <div class="category-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          </div>
+          <h3 class="category-name">Cerrajería 24h</h3>
+          <span class="category-count">64 de guardia</span>
+        </div>
+
+        <div class="category-card" data-cat="aire">
+          <div class="category-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <h3 class="category-name">Aire Acondicionado</h3>
+          <span class="category-count">83 instaladores</span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECCIÓN 3: DIRECTORIO DE PROFESIONALES VERIFICADOS (FILTRABLE EN VIVO)
+       ======================================================================== -->
+  <section id="directorio" class="section section-bg-light">
+    <div class="container">
+      
+      <div class="section-header">
+        <span class="section-pretitle">Directorio Verificado</span>
+        <h2 class="section-title">Profesionales cerca de tu domicilio</h2>
+        <p class="section-desc">
+          Perfiles validados con antecedentes, matrícula profesional revisada y valoraciones de clientes reales.
+        </p>
+      </div>
+
+      <!-- Barra de filtros interactiva -->
+      <div class="directory-filters-bar">
+        <div class="filter-group">
+          
+          <select id="filter-trade-select" class="filter-select" aria-label="Filtrar por oficio">
+            <option value="all">Todos los oficios</option>
+            <option value="electricidad">Electricistas</option>
+            <option value="plomeria">Plomería</option>
+            <option value="gas">Gasistas Matriculados</option>
+            <option value="pintura">Pintura</option>
+            <option value="cerrajeria">Cerrajería</option>
+            <option value="aire">Climatización</option>
+          </select>
+
+          <select id="filter-zone-select" class="filter-select" aria-label="Filtrar por zona">
+            <option value="all">Todas las zonas</option>
+            <option value="CABA">Capital Federal (CABA)</option>
+            <option value="GBA Norte">Zona Norte (Vicente López, San Isidro)</option>
+          </select>
+
+          <label class="verified-toggle-label">
+            <input type="checkbox" id="filter-verified-check">
+            <span>Solo con Matrícula Oficial</span>
+          </label>
+
+        </div>
+
+        <div>
+          <button class="btn btn-secondary btn-sm" onclick="resetFilters()">
+            Limpiar filtros
+          </button>
+        </div>
+      </div>
+
+      <!-- Grid dinámica inyectada por JS con tarjetas de perfiles -->
+      <div id="professionals-grid" class="professionals-grid">
+        <!-- Renderizado dinámico vía app.js -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECCIÓN: TRABAJOS REALES VERIFICADOS (ANTES Y DESPUÉS)
+       ======================================================================== -->
+  <section id="galeria-trabajos" class="section">
+    <div class="container">
+      
+      <div class="section-header">
+        <span class="section-pretitle">Evidencia de Calidad</span>
+        <h2 class="section-title">Trabajos verificados: El Antes y Después</h2>
+        <p class="section-desc">
+          Comprobá la terminación y prolijidad de los profesionales de Sademy en trabajos reales contratados por la plataforma.
+        </p>
+      </div>
+
+      <div class="case-showcase-grid">
+        
+        <!-- Caso 1: Electricidad -->
+        <div class="case-card">
+          <div class="case-image-container">
+            <span class="case-tag-badge">⚡ Electricidad · Palermo</span>
+            <img id="case-img-1" src="assets/marcos.jpg" alt="Caso Electricidad" class="case-img">
+          </div>
+          <div class="case-card-body">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--color-text-main);">Renovación de Tablero</h3>
+              <div class="case-toggle-tabs">
+                <button id="case-btn-1-before" class="case-toggle-btn" onclick="toggleCaseView(1, 'before')">Antes</button>
+                <button id="case-btn-1-after" class="case-toggle-btn active" onclick="toggleCaseView(1, 'after')">Después</button>
+              </div>
+            </div>
+            
+            <p id="case-desc-1" style="font-size: 0.86rem; color: var(--color-text-secondary); min-height: 48px;">
+              Instalación de tablero seccional con disyuntor de 40A y llaves térmicas Schneider bajo norma IRAM.
+            </p>
+
+            <div class="case-worker-tag">
+              <img src="assets/marcos.jpg" alt="Marcos R." class="case-worker-avatar">
+              <span>Realizado por <strong>Marcos R.</strong> · ★ 4.9 (38 trabajos)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Caso 2: Plomería -->
+        <div class="case-card">
+          <div class="case-image-container">
+            <span class="case-tag-badge">🔧 Plomería · Belgrano</span>
+            <img id="case-img-2" src="assets/sofia.jpg" alt="Caso Plomería" class="case-img">
+          </div>
+          <div class="case-card-body">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--color-text-main);">Termofusión Bajo Mesada</h3>
+              <div class="case-toggle-tabs">
+                <button id="case-btn-2-before" class="case-toggle-btn" onclick="toggleCaseView(2, 'before')">Antes</button>
+                <button id="case-btn-2-after" class="case-toggle-btn active" onclick="toggleCaseView(2, 'after')">Después</button>
+              </div>
+            </div>
+            
+            <p id="case-desc-2" style="font-size: 0.86rem; color: var(--color-text-secondary); min-height: 48px;">
+              Reemplazo de tramo oxidado por cañería Acqua System en termofusión con llaves esféricas de corte rápido.
+            </p>
+
+            <div class="case-worker-tag">
+              <img src="assets/sofia.jpg" alt="Sofía L." class="case-worker-avatar">
+              <span>Realizado por <strong>Sofía L.</strong> · ★ 5.0 (52 trabajos)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Caso 3: Gas -->
+        <div class="case-card">
+          <div class="case-image-container">
+            <span class="case-tag-badge">🔥 Gas · Caballito</span>
+            <img id="case-img-3" src="assets/claudio.jpg" alt="Caso Gas" class="case-img">
+          </div>
+          <div class="case-card-body">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--color-text-main);">Ventilación Reglamentaria</h3>
+              <div class="case-toggle-tabs">
+                <button id="case-btn-3-before" class="case-toggle-btn" onclick="toggleCaseView(3, 'before')">Antes</button>
+                <button id="case-btn-3-after" class="case-toggle-btn active" onclick="toggleCaseView(3, 'after')">Después</button>
+              </div>
+            </div>
+            
+            <p id="case-desc-3" style="font-size: 0.86rem; color: var(--color-text-secondary); min-height: 48px;">
+              Tendido de conducto rígido de 4 pulgadas con sombrero reglamentario y prueba de hermeticidad con columna de agua.
+            </p>
+
+            <div class="case-worker-tag">
+              <img src="assets/claudio.jpg" alt="Claudio V." class="case-worker-avatar">
+              <span>Realizado por <strong>Claudio V.</strong> · ★ 4.9 (84 trabajos)</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECCIÓN 4: PAGO PROTEGIDO (ESCROW) Y ANTIFRAUDE (RESPUESTA AL DOCUMENTO)
+       ======================================================================== -->
+  <section id="garantia" class="section">
+    <div class="container">
+      
+      <div class="escrow-flow-container">
+        
+        <div style="max-width: 720px;">
+          <span style="color: var(--color-primary-soft); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 8px;">
+            Confianza y Seguridad Sin Riesgos
+          </span>
+          <h2 class="section-title">El fin de pagar por adelantado o acordar a ciegas</h2>
+          <p class="section-desc">
+            En Sademy protegemos tanto al cliente como al trabajador. El pago queda retenido de forma segura en custodia y solo se libera cuando el trabajo esté finalizado y aprobado por vos.
+          </p>
+        </div>
+
+        <!-- 4 Pasos del sistema Escrow de Sademy -->
+        <div class="escrow-steps-grid">
+          
+          <div class="escrow-step-card">
+            <div class="escrow-step-number">1</div>
+            <h3 class="escrow-step-title">Presupuesto Cerrado</h3>
+            <p class="escrow-step-desc">El profesional te envía la propuesta detallando mano de obra y materiales. Sin cargos ocultos.</p>
+          </div>
+
+          <div class="escrow-step-card">
+            <div class="escrow-step-number">2</div>
+            <h3 class="escrow-step-title">Pago en Custodia</h3>
+            <p class="escrow-step-desc">Abonás con tarjeta o transferencia. Sademy retiene el dinero en una cuenta de custodia segura.</p>
+          </div>
+
+          <div class="escrow-step-card">
+            <div class="escrow-step-number">3</div>
+            <h3 class="escrow-step-title">Trabajo Realizado</h3>
+            <p class="escrow-step-desc">El profesional asiste y realiza el trabajo con cobertura de Seguro contra Daños de hasta $500.000.</p>
+          </div>
+
+          <div class="escrow-step-card">
+            <div class="escrow-step-number">4</div>
+            <h3 class="escrow-step-title">Liberación & Calificación</h3>
+            <p class="escrow-step-desc">Solo cuando das tu visto bueno de satisfacción, liberamos los fondos al trabajador y dejás tu reseña.</p>
+          </div>
+
+        </div>
+
+        <!-- Demostrador interactivo de estado de custodia -->
+        <div class="escrow-interactive-demo-box">
+          <div class="escrow-demo-status">
+            <div class="status-indicator-dot"></div>
+            <div>
+              <strong style="display: block; color: #FFFFFF; font-size: 1rem;">Protección Antifraude Activa</strong>
+              <span style="color: #9CA3AF; font-size: 0.84rem;">Al contratar por Sademy contás con garantía de satisfacción y soporte ante cualquier inconveniente.</span>
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="openPaymentModal(ACTIVE_ORDER.quotes[0])">
+            Simular Pago Seguro
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECCIÓN 5: CÓMO FUNCIONA (RECORRIDO DEL CLIENTE Y TRABAJADOR)
+       ======================================================================== -->
+  <section id="como-funciona" class="section section-bg-light">
+    <div class="container">
+      
+      <div class="section-header">
+        <span class="section-pretitle">Proceso Transparente</span>
+        <h2 class="section-title">Cómo funciona la plataforma Sademy</h2>
+        <p class="section-desc">
+          Diseñado para que resolver una urgencia o reforma sea simple, claro y confiable.
+        </p>
+      </div>
+
+      <!-- Recorrido del Cliente en 6 etapas -->
+      <div style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: 36px; margin-bottom: 32px; box-shadow: var(--shadow-xs);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+          <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--color-text-main);">
+            Recorrido del Cliente
+          </h3>
+          <span class="badge-tag badge-new">100% Digital y Rápido</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">
+          
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: #ECFDF5; color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-weight: 800;">1</div>
+            <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--color-text-main);">Publicá tu pedido</h4>
+            <p style="font-size: 0.82rem; color: var(--color-text-secondary);">Describí el problema y agregá fotos o urgencia en 2 minutos.</p>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: #ECFDF5; color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-weight: 800;">2</div>
+            <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--color-text-main);">Recibí cotizaciones</h4>
+            <p style="font-size: 0.82rem; color: var(--color-text-secondary);">Profesionales cercanos responden con presupuestos claros.</p>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: #ECFDF5; color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-weight: 800;">3</div>
+            <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--color-text-main);">Compará perfiles</h4>
+            <p style="font-size: 0.82rem; color: var(--color-text-secondary);">Revisá valoraciones, fotos de trabajos anteriores y matrícula.</p>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: #ECFDF5; color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-weight: 800;">4</div>
+            <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--color-text-main);">Chateá & Coordiná</h4>
+            <p style="font-size: 0.82rem; color: var(--color-text-secondary);">Acordá día y hora mediante el chat seguro de Sademy.</p>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: #ECFDF5; color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-weight: 800;">5</div>
+            <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--color-text-main);">Pagá protegido</h4>
+            <p style="font-size: 0.82rem; color: var(--color-text-secondary);">Los fondos quedan en custodia hasta tu satisfacción final.</p>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: #ECFDF5; color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-weight: 800;">6</div>
+            <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--color-text-main);">Calificá el trabajo</h4>
+            <p style="font-size: 0.82rem; color: var(--color-text-secondary);">Liberá el pago y dejá tu puntuación a la comunidad.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Tabla Comparativa: Boca a boca vs Sademy -->
+      <div style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: 36px; box-shadow: var(--shadow-xs);">
+        <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--color-text-main); margin-bottom: 8px;">
+          Por qué Sademy supera al "boca en boca" tradicional
+        </h3>
+        <p style="color: var(--color-text-secondary); font-size: 0.92rem; margin-bottom: 20px;">
+          Terminá con los precios inventados en el momento y la incertidumbre de no saber a quién metés en tu casa.
+        </p>
+
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Criterio</th>
+                <th>Boca en boca tradicional</th>
+                <th>Clasificados informales / Redes</th>
+                <th class="highlight-col">Sademy Marketplace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Verificación de identidad</strong></td>
+                <td>Nula (solo palabra de conocidos)</td>
+                <td>Cero (perfiles anónimos)</td>
+                <td class="highlight-col">✅ DNI, antecedentes y matrícula comprobados</td>
+              </tr>
+              <tr>
+                <td><strong>Presupuestos y precios</strong></td>
+                <td>Inciertos, varían sin aviso</td>
+                <td>Dispares y sin respaldo</td>
+                <td class="highlight-col">✅ Comparativa lado a lado con desglose cerrado</td>
+              </tr>
+              <tr>
+                <td><strong>Seguridad de pago</strong></td>
+                <td>Efectivo por adelantado sin garantía</td>
+                <td>Riesgo total de estafa</td>
+                <td class="highlight-col">✅ Pago en custodia Escrow hasta conformidad</td>
+              </tr>
+              <tr>
+                <td><strong>Garantía ante roturas</strong></td>
+                <td>El trabajador no suele responder</td>
+                <td>Desaparece tras cobrar</td>
+                <td class="highlight-col">✅ Seguro de Daños Sademy y garantía escrita</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECCIÓN 6: CALCULADORA DE PRECIOS ORIENTATIVOS
+       ======================================================================== -->
+  <section id="calculadora" class="section">
+    <div class="container">
+      
+      <div class="section-header">
+        <span class="section-pretitle">Transparencia de Costos</span>
+        <h2 class="section-title">Calculadora de referencia de mano de obra</h2>
+        <p class="section-desc">
+          Consultá los valores orientativos de mercado según la especialidad y el tamaño del trabajo.
+        </p>
+      </div>
+
+      <div class="calculator-box">
+        
+        <div class="calculator-form">
+          <div class="form-group">
+            <label class="form-label" for="calc-trade">Seleccioná el rubro</label>
+            <select id="calc-trade" class="form-control">
+              <option value="electricidad">⚡ Electricidad (Instalaciones y tableros)</option>
+              <option value="plomeria">🔧 Plomería (Pérdidas, bombas y griferías)</option>
+              <option value="gas">🔥 Gas (Inspecciones y artefactos)</option>
+              <option value="pintura">🎨 Pintura (Interiores y cielorrasos)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="calc-scope">Magnitud del trabajo</label>
+            <select id="calc-scope" class="form-control">
+              <option value="pequeño">Trabajo puntual / Reparación menor (1 ambiente o artefacto)</option>
+              <option value="mediano" selected>Trabajo estándar (Instalación completa de sector / cocina)</option>
+              <option value="grande">Trabajo integral (Tendido nuevo o reforma total)</option>
+            </select>
+          </div>
+
+          <div style="font-size: 0.84rem; color: var(--color-text-tertiary); line-height: 1.45;">
+            * Los valores son promedios referenciales de profesionales calificados en Argentina. Los presupuestos finales se ajustan con precisión una vez enviado el pedido.
+          </div>
+        </div>
+
+        <div class="calculator-result-card">
+          <span style="font-size: 0.85rem; font-weight: 700; color: #065F46; text-transform: uppercase;">Estimación orientativa</span>
+          <div id="calc-result-amount" class="calc-estimate-amount">$24.500</div>
+          <span style="font-size: 0.9rem; color: var(--color-text-secondary);">ARS (Mano de obra especializada)</span>
+          <div style="font-size: 0.84rem; color: var(--color-text-tertiary); margin-top: 4px;">
+            Tiempo estimado: <strong id="calc-result-time">2 a 3 horas</strong>
+          </div>
+          <button class="btn btn-primary" style="margin-top: 10px;" onclick="openNewOrderModal()">
+            Solicitar Presupuesto Real
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECCIÓN 7: VISTA SADEMY PRO (PARA TRABAJADORES Y OFICIOS)
+       ======================================================================== -->
+  <section id="sademy-pro" class="section section-bg-light view-pro-only" style="display: none;">
+    <div class="container">
+      
+      <div class="section-header">
+        <span class="section-pretitle">Portal Sademy Pro</span>
+        <h2 class="section-title">Hacé crecer tu trabajo y cobrá con seguridad</h2>
+        <p class="section-desc">
+          Gestioná tus solicitudes en tu zona, enviá cotizaciones formales y recibí pagos garantizados sin demoras ni cobradores.
+        </p>
+      </div>
+
+      <div class="pro-dashboard-preview">
+        
+        <!-- Métricas del profesional -->
+        <div class="pro-stats-grid">
+          <div class="pro-stat-card">
+            <span class="pro-stat-label">Pedidos en tu zona</span>
+            <div class="pro-stat-value">12</div>
+            <span class="pro-stat-badge">Radio: 5 km</span>
+          </div>
+
+          <div class="pro-stat-card">
+            <span class="pro-stat-label">Presupuestos Aceptados</span>
+            <div class="pro-stat-value">8</div>
+            <span class="pro-stat-badge">+2 esta semana</span>
+          </div>
+
+          <div class="pro-stat-card">
+            <span class="pro-stat-label">Saldo en Custodia (A liberar)</span>
+            <div class="pro-stat-value">$49.000</div>
+            <span class="pro-stat-badge">Liberación garantizada</span>
+          </div>
+
+          <div class="pro-stat-card">
+            <span class="pro-stat-label">Reputación y Nivel</span>
+            <div class="pro-stat-value">4.9 ★</div>
+            <span class="pro-stat-badge">Profesional Verificado Pro</span>
+          </div>
+        </div>
+
+        <!-- Solicitudes abiertas disponibles para presupuestar -->
+        <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--color-text-main); margin-bottom: 16px;">
+          Oportunidades de trabajo disponibles en tu zona
+        </h3>
+
+        <div class="pro-jobs-feed">
+          
+          <div class="pro-job-item">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                <span class="badge-tag badge-profession">ELECTRICIDAD</span>
+                <span style="font-size: 0.78rem; color: var(--color-text-tertiary);">Palermo · Hace 30 min</span>
+              </div>
+              <h4 style="font-size: 1.1rem; font-weight: 800; color: var(--color-text-main);">Instalación de luminarias LED y revisión de térmica</h4>
+              <p style="font-size: 0.86rem; color: var(--color-text-secondary); margin-top: 2px;">Cliente: Carlos M. · Requiere materiales y mano de obra · Urgencia: Hoy</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="sendWorkerProposal('Instalación de luminarias LED')">
+              Enviar Cotización
+            </button>
+          </div>
+
+          <div class="pro-job-item">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                <span class="badge-tag badge-profession">ELECTRICIDAD</span>
+                <span style="font-size: 0.78rem; color: var(--color-text-tertiary);">Belgrano · Hace 1 hora</span>
+              </div>
+              <h4 style="font-size: 1.1rem; font-weight: 800; color: var(--color-text-main);">Colocación de disyuntor bipolar y recableado de cocina</h4>
+              <p style="font-size: 0.86rem; color: var(--color-text-secondary); margin-top: 2px;">Cliente: Laura P. · Tablero antiguo de tapones a térmicas Schneider</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="sendWorkerProposal('Colocación de disyuntor')">
+              Enviar Cotización
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECCIÓN 8: PREGUNTAS FRECUENTES (FAQ)
+       ======================================================================== -->
+  <section class="section">
+    <div class="container">
+      
+      <div class="section-header">
+        <span class="section-pretitle">Resolvemos tus dudas</span>
+        <h2 class="section-title">Preguntas Frecuentes</h2>
+      </div>
+
+      <div style="max-width: 820px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px;">
+        
+        <details style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: 12px; padding: 18px 22px; cursor: pointer;">
+          <summary style="font-weight: 700; font-size: 1.05rem; color: var(--color-text-main); outline: none;">
+            ¿Cómo se verifica a los trabajadores en Sademy?
+          </summary>
+          <p style="margin-top: 10px; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6;">
+            Cada profesional pasa por un proceso de 4 etapas: validación biométrica de identidad (DNI), verificación de matrícula oficial habilitante en organismos correspondientes (COPIME, Metrogas, etc.), antecedentes penales sin observaciones y entrevista técnica inicial.
+          </p>
+        </details>
+
+        <details style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: 12px; padding: 18px 22px; cursor: pointer;">
+          <summary style="font-weight: 700; font-size: 1.05rem; color: var(--color-text-main); outline: none;">
+            ¿Qué pasa si el trabajo no queda bien o hay una rotura?
+          </summary>
+          <p style="margin-top: 10px; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6;">
+            Tu pago queda en custodia de Sademy hasta que revises el trabajo. Si algo no está conforme, retenemos la liberación y enviamos una revisión técnica sin costo. Además, cada contratación cuenta con Seguro contra Daños accidentales de hasta $500.000 ARS.
+          </p>
+        </details>
+
+        <details style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: 12px; padding: 18px 22px; cursor: pointer;">
+          <summary style="font-weight: 700; font-size: 1.05rem; color: var(--color-text-main); outline: none;">
+            ¿Por qué no conviene contratar o pagar por fuera de la plataforma?
+          </summary>
+          <p style="margin-top: 10px; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6;">
+            Al operar por fuera, perdés la protección de custodia de fondos, la garantía de 6 meses y el seguro de daños de Sademy. Dentro de la plataforma garantizamos que el profesional cobre exactamente lo pactado y vos recibas un trabajo garantizado.
+          </p>
+        </details>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       MODAL 1: NUEVO PEDIDO (WIZARD DE SOLICITUD)
+       ======================================================================== -->
+  <div id="modal-new-order" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-wizard-title">
+    <div class="modal-container">
+      
+      <div class="modal-header">
+        <div>
+          <h3 id="modal-wizard-title" class="modal-title">Pedir Presupuesto sin Cargo</h3>
+          <p style="font-size: 0.82rem; color: var(--color-text-tertiary);">Recibí presupuestos de profesionales verificados en tu zona</p>
+        </div>
+        <button class="modal-close-btn" onclick="closeOrderModal()" aria-label="Cerrar modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        
+        <!-- Indicador de pasos del wizard -->
+        <div class="wizard-steps-indicator">
+          <div id="wizard-bubble-1" class="wizard-step-bubble active">1</div>
+          <div id="wizard-bubble-2" class="wizard-step-bubble">2</div>
+          <div id="wizard-bubble-3" class="wizard-step-bubble">3</div>
+        </div>
+
+        <!-- Paso 1: Oficio y Título -->
+        <div id="wizard-step-content-1">
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label class="form-label" for="wizard-trade-select">¿Qué especialidad necesitás?</label>
+            <select id="wizard-trade-select" class="form-control">
+              <option value="electricidad">⚡ Electricista</option>
+              <option value="plomeria">🔧 Plomería y Sanitarios</option>
+              <option value="gas">🔥 Gasista Matriculado</option>
+              <option value="pintura">🎨 Pintura</option>
+              <option value="cerrajeria">🔑 Cerrajería</option>
+              <option value="aire">❄️ Aire Acondicionado</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="wizard-order-title">¿Qué necesitás resolver?</label>
+            <input type="text" id="wizard-order-title" class="form-control" value="Instalación de luz en cocina" placeholder="Ej: Cambio de grifería, instalación de térmicas...">
+          </div>
+        </div>
+
+        <!-- Paso 2: Detalles y Materiales -->
+        <div id="wizard-step-content-2" style="display: none;">
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label class="form-label" for="wizard-order-desc">Detalle del trabajo o falla</label>
+            <textarea id="wizard-order-desc" class="form-control" rows="3" placeholder="Describí brevemente los artefactos, medidas o síntomas del problema...">Necesito colocar luminarias LED bajo alacena y revisar la térmica del tablero.</textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">¿Necesitás que el profesional incluya los materiales?</label>
+            <div style="display: flex; gap: 16px; margin-top: 4px;">
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 0.9rem; cursor: pointer;">
+                <input type="radio" name="wizard-materials" value="si" checked> Sí, materiales y mano de obra
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 0.9rem; cursor: pointer;">
+                <input type="radio" name="wizard-materials" value="no"> Solo mano de obra
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paso 3: Ubicación y Urgencia -->
+        <div id="wizard-step-content-3" style="display: none;">
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label class="form-label" for="wizard-order-address">Ubicación aproximada</label>
+            <input type="text" id="wizard-order-address" class="form-control" value="Palermo, CABA" placeholder="Barrio y localidad...">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">¿Cuándo necesitás que se realice?</label>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px;">
+              <span class="quick-chip active">Urgente Hoy</span>
+              <span class="quick-chip">Esta semana</span>
+              <span class="quick-chip">Programado</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button id="wizard-prev-btn" class="btn btn-secondary btn-sm" onclick="prevWizardStep()" style="display: none;">Volver</button>
+        <button id="wizard-next-btn" class="btn btn-primary" onclick="nextWizardStep()">Continuar</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 2: DETALLE DEL PRESUPUESTO
+       ======================================================================== -->
+  <div id="modal-quote-detail" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-quote-title">
+    <div class="modal-container">
+      
+      <div class="modal-header">
+        <h3 id="modal-quote-title" class="modal-title">Detalle de la Propuesta</h3>
+        <button class="modal-close-btn" onclick="closeQuoteDetailModal()" aria-label="Cerrar modal">&times;</button>
+      </div>
+
+      <div id="quote-detail-content" class="modal-body">
+        <!-- Contenido inyectado dinámicamente -->
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" onclick="closeQuoteDetailModal()">Cerrar</button>
+        <button id="modal-quote-pay-btn" class="btn btn-primary">Aceptar & Pagar Seguro</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 3: PASARELA DE PAGO PROTEGIDO (ESCROW VAULT)
+       ======================================================================== -->
+  <div id="modal-escrow-payment" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-pay-title">
+    <div class="modal-container">
+      
+      <div class="modal-header">
+        <div>
+          <h3 id="modal-pay-title" class="modal-title">Pago en Custodia Protegida</h3>
+          <p style="font-size: 0.82rem; color: var(--color-primary-hover); font-weight: 600;">Sademy Escrow Security Vault</p>
+        </div>
+        <button class="modal-close-btn" onclick="closePaymentModal()" aria-label="Cerrar modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        
+        <div style="background-color: var(--color-surface-light); border-radius: 12px; padding: 18px; border: 1px solid var(--color-border); text-align: center;">
+          <span style="font-size: 0.82rem; color: var(--color-text-tertiary); text-transform: uppercase;">Monto total a custodiar</span>
+          <div id="payment-modal-amount" style="font-size: 2.2rem; font-weight: 800; color: #065F46; margin: 4px 0;">$24.500 ARS</div>
+          <span style="font-size: 0.85rem; color: var(--color-text-secondary);">Destinado a <strong id="payment-modal-pro-name">Marcos R.</strong></span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Seleccioná tu método de pago</label>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <label style="display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1px solid var(--color-primary-border); background: #F0FDF4; border-radius: 8px; cursor: pointer;">
+              <span style="font-weight: 600; font-size: 0.9rem;">💳 Tarjeta de Débito / Crédito (Visa, Mastercard)</span>
+              <input type="radio" name="pay-method" checked>
+            </label>
+            <label style="display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1px solid var(--color-border); border-radius: 8px; cursor: pointer;">
+              <span style="font-weight: 600; font-size: 0.9rem;">📲 Mercado Pago / Transferencia con Alias</span>
+              <input type="radio" name="pay-method">
+            </label>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 0.82rem; color: var(--color-text-secondary); background: #FAF5FF; border: 1px solid #E9D5FF; padding: 12px; border-radius: 8px;">
+          <svg style="color: #9333EA; flex-shrink: 0; margin-top: 2px;" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+          <span><strong>¿Cómo se cuida tu dinero?</strong> El profesional NO cobra hasta que vos confirmes que el trabajo quedó terminado a tu satisfacción. Si cancela o no asiste, se te reintegra el 100% de inmediato.</span>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" onclick="closePaymentModal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="confirmEscrowPayment()">Confirmar y Proteger Pago</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 4: CHAT EN VIVO CON EL PROFESIONAL
+       ======================================================================== -->
+  <div id="modal-chat" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="chat-modal-title">
+    <div class="modal-container">
+      
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <img src="assets/marcos.jpg" alt="Avatar" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;">
+          <div>
+            <h3 id="chat-modal-title" class="modal-title" style="font-size: 1.1rem;">Chat con Marcos R.</h3>
+            <span style="font-size: 0.76rem; color: var(--color-primary); font-weight: 700;">● En línea · Responde en minutos</span>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeChatModal()" aria-label="Cerrar modal">&times;</button>
+      </div>
+
+      <div class="chat-window">
+        <div id="chat-messages-container" class="chat-messages-area">
+          <!-- Mensajes dinámicos -->
+        </div>
+
+        <form class="chat-input-bar" onsubmit="event.preventDefault(); sendChatMessage();">
+          <input type="text" id="chat-input-field" class="form-control" style="flex: 1;" placeholder="Escribí tu consulta aquí...">
+          <button type="submit" class="btn btn-primary btn-sm">Enviar</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 5: REGISTRO & ACCESO CON GOOGLE (CLIENTES Y PROFESIONALES)
+       ======================================================================== -->
+  <div id="modal-auth" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
+    <div class="modal-container" style="max-width: 540px;">
+      
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <img src="assets/mascot.jpg" alt="Sademy" style="width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--color-primary);">
+          <div>
+            <h3 id="auth-modal-title" class="modal-title" style="font-size: 1.25rem;">Bienvenido a Sademy</h3>
+            <p style="font-size: 0.8rem; color: var(--color-text-secondary);">Acceso rápido y seguro a la comunidad</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeAuthModal()" aria-label="Cerrar modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        
+        <!-- Segmented Tab: Cliente vs Profesional -->
+        <div class="auth-tabs-row">
+          <button id="auth-tab-client" class="auth-tab-btn active" onclick="switchAuthTab('client')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            Busco Contratar
+          </button>
+          <button id="auth-tab-pro" class="auth-tab-btn" onclick="switchAuthTab('pro')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            Ofrezco Servicios
+          </button>
+        </div>
+
+        <!-- VISTA CLIENTE: Ultrarrápida en 1 clic con Google -->
+        <div id="auth-client-view">
+          
+          <button class="btn-google" onclick="loginWithGoogle('client')">
+            <svg class="google-icon-svg" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span>Continuar con Google</span>
+          </button>
+
+          <div style="margin-top: 18px; background-color: var(--color-surface-light); border-radius: 12px; padding: 14px; border: 1px solid var(--color-border);">
+            <div style="font-size: 0.82rem; font-weight: 700; color: var(--color-text-main); margin-bottom: 6px;">
+              ¿Por qué registrarte como cliente?
+            </div>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 0.8rem; color: var(--color-text-secondary);">
+              <li>⚡ Publicá pedidos en segundos y recibí cotizaciones gratis.</li>
+              <li>🛡️ Pagos retenidos en custodia hasta tu total conformidad.</li>
+              <li>⭐ Calificá trabajadores y consultá valoraciones auténticas.</li>
+            </ul>
+          </div>
+
+          <div class="auth-divider">
+            <span>o con correo electrónico</span>
+          </div>
+
+          <form onsubmit="event.preventDefault(); loginWithEmail('client');" style="display: flex; flex-direction: column; gap: 12px;">
+            <div class="form-group">
+              <label class="form-label" for="client-auth-email">Correo Electrónico</label>
+              <input type="email" id="client-auth-email" class="form-control" placeholder="nombre@ejemplo.com" required>
+            </div>
+            <button type="submit" class="btn btn-secondary" style="width: 100%;">
+              Ingresar con Email
+            </button>
+          </form>
+
+        </div>
+
+        <!-- VISTA PROFESIONAL: Google + Info extra para validación rigurosa -->
+        <div id="auth-pro-view" style="display: none;">
+          
+          <button class="btn-google" onclick="loginWithGoogle('pro')">
+            <svg class="google-icon-svg" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span>Vincular con Google y Continuar</span>
+          </button>
+
+          <!-- Formulario de información extra para validar perfil profesional -->
+          <div class="worker-extra-box" style="margin-top: 16px;">
+            <div class="worker-extra-header">
+              <div class="worker-extra-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+              </div>
+              <div>
+                <h4 class="worker-extra-title">Validación Obligatoria de Perfil</h4>
+                <span class="worker-extra-sub">Requisito de seguridad para recibir pedidos y presupuestar</span>
+              </div>
+            </div>
+
+            <form id="worker-verification-form" onsubmit="event.preventDefault(); submitWorkerVerification();" style="display: flex; flex-direction: column; gap: 12px;">
+              
+              <div class="form-group">
+                <label class="form-label" for="worker-field-trade">Oficio / Especialidad Principal *</label>
+                <select id="worker-field-trade" class="form-control" required>
+                  <option value="electricista">⚡ Electricista Domiciliario / Industrial</option>
+                  <option value="plomeria">🔧 Plomería y Termofusión</option>
+                  <option value="gas">🔥 Gasista Matriculado (Metrogas / Naturgy)</option>
+                  <option value="pintura">🎨 Pintura y Revestimientos</option>
+                  <option value="cerrajeria">🔑 Cerrajería de Seguridad</option>
+                  <option value="aire">❄️ Refrigeración e Instalación Split</option>
+                </select>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="form-group">
+                  <label class="form-label" for="worker-field-dni">DNI / CUIT *</label>
+                  <input type="text" id="worker-field-dni" class="form-control" placeholder="Ej: 34.567.890" value="32.845.109" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="worker-field-matricula">Matrícula o Certificado</label>
+                  <input type="text" id="worker-field-matricula" class="form-control" placeholder="Ej: MAT-2026-X" value="MAT-EL-8841">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="worker-field-zone">Zonas de Cobertura *</label>
+                <input type="text" id="worker-field-zone" class="form-control" placeholder="Ej: Palermo, Belgrano, Recoleta" value="CABA y GBA Norte" required>
+              </div>
+
+              <!-- Dropzone para adjuntar DNI / Credencial -->
+              <div class="form-group">
+                <label class="form-label">Comprobante de DNI o Matrícula Profesional *</label>
+                <div id="worker-dni-dropzone" class="dropzone-box" onclick="simulateFileUpload()">
+                  <div class="dropzone-label">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-primary);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    <span id="dropzone-status-text"><strong>Hacé clic para adjuntar foto de DNI o Matrícula</strong></span>
+                    <span style="font-size: 0.72rem; color: var(--color-text-muted);">Formatos admitidos: JPG, PNG o PDF (Máx. 5MB)</span>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 6px;">
+                Validar Perfil y Activar Sademy Pro
+              </button>
+
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 6: MIS PEDIDOS (PANEL DEL CLIENTE)
+       ======================================================================== -->
+  <div id="modal-my-orders" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="orders-modal-title">
+    <div class="modal-container" style="max-width: 620px;">
+      
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 38px; height: 38px; border-radius: 50%; background-color: var(--color-primary-bg); color: var(--color-primary); display: flex; align-items: center; justify-content: center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          </div>
+          <div>
+            <h3 id="orders-modal-title" class="modal-title" style="font-size: 1.25rem;">Mis Pedidos de Oficios</h3>
+            <p style="font-size: 0.8rem; color: var(--color-text-secondary);">Seguimiento de cotizaciones, custodia de pagos y garantías</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeMyOrdersModal()" aria-label="Cerrar modal">&times;</button>
+      </div>
+
+      <div id="my-orders-list-container" class="modal-body" style="gap: 14px;">
+        <!-- Se renderiza dinámicamente desde el almacenamiento real vía app.js -->
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" onclick="closeMyOrdersModal()">Cerrar</button>
+        <button class="btn btn-primary btn-sm" onclick="closeMyOrdersModal(); openNewOrderModal();">
+          + Solicitar Nuevo Pedido
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: ENVIAR COTIZACIÓN FORMAL (SADEMY PRO - LÓGICA REAL)
+       ======================================================================== -->
+  <div id="modal-pro-send-quote" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-pro-quote-title">
+    <div class="modal-container" style="max-width: 540px;">
+      
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <img src="assets/favicon.svg" alt="Sademy Pro" style="width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--color-primary);">
+          <div>
+            <h3 id="modal-pro-quote-title" class="modal-title" style="font-size: 1.25rem;">Enviar Cotización Formal</h3>
+            <p id="pro-quote-order-subtitle" style="font-size: 0.8rem; color: var(--color-primary-hover); font-weight: 600;">Propuesta para cliente</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeProQuoteModal()" aria-label="Cerrar modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" id="pro-quote-order-id" value="">
+        <input type="hidden" id="pro-quote-order-title-val" value="">
+
+        <div class="form-group">
+          <label class="form-label" for="pro-quote-labor">Mano de Obra Especializada ($ ARS) *</label>
+          <input type="number" id="pro-quote-labor" class="form-control" placeholder="18500" value="18000" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pro-quote-materials">Materiales y Repuestos ($ ARS - o 0 si no incluye)</label>
+          <input type="number" id="pro-quote-materials" class="form-control" placeholder="6500" value="4500">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pro-quote-time">Tiempo estimado de ejecución *</label>
+          <input type="text" id="pro-quote-time" class="form-control" placeholder="Ej: 2 horas" value="2 horas aprox." required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pro-quote-desc">Detalle y alcance técnico de la propuesta *</label>
+          <textarea id="pro-quote-desc" class="form-control" rows="3" placeholder="Detallá los materiales, marcas normalizadas y garantía escrita...">Instalación bajo normas reglamentarias, herramientas homologadas y materiales normalizados. Garantía de 6 meses respaldada por Sademy.</textarea>
+        </div>
+
+        <div style="background-color: #ECFDF5; border: 1px solid var(--color-primary-border); border-radius: 12px; padding: 14px; font-size: 0.82rem; color: #065F46; line-height: 1.45;">
+          🔒 <strong>Cobro 100% Protegido:</strong> Si el cliente acepta tu presupuesto, abonará a través de la custodia segura de Sademy. Al dar su conformidad al finalizar, el dinero se transferirá directamente a tu cuenta sin retenciones injustificadas.
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" onclick="closeProQuoteModal()">Cancelar</button>
+        <button class="btn btn-primary btn-sm" onclick="submitProQuote()">Enviar Presupuesto</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL / DIÁLOGO DE INSTALACIÓN PWA ESTILO APPLE & SAMSUNG
+       ======================================================================== -->
+  <div id="modal-pwa-install" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="pwa-install-modal-title">
+    <div class="modal-container" style="max-width: 480px; text-align: center;">
+      <div class="modal-header" style="justify-content: flex-end; border: none; padding-bottom: 0;">
+        <button class="modal-close-btn" onclick="closePwaModal()" aria-label="Cerrar modal">&times;</button>
+      </div>
+      <div class="modal-body" style="align-items: center; padding-top: 0;">
+        <div style="position: relative; width: 72px; height: 72px; margin-bottom: 8px;">
+          <img src="assets/favicon.svg" alt="Sademy App" style="width: 72px; height: 72px; border-radius: 20px; border: 2.5px solid var(--color-primary); box-shadow: var(--shadow-lg);">
+        </div>
+        <h3 id="pwa-install-modal-title" style="font-size: 1.35rem; font-weight: 800; color: var(--color-text-main);">Instalá Sademy</h3>
+        <p style="font-size: 0.88rem; color: var(--color-text-secondary); max-width: 360px; margin-bottom: 12px;">
+          Disfrutá la experiencia completa como aplicación nativa: acceso rápido desde la pantalla de inicio, notificaciones y funcionamiento ultra-rápido.
+        </p>
+
+        <div id="pwa-native-prompt-box" style="width: 100%;">
+          <button id="pwa-confirm-install-btn" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;" onclick="executePwaInstall()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Agregar a Pantalla de Inicio
+          </button>
+        </div>
+
+        <div id="pwa-ios-instructions" style="display: none; background: #F9FAFB; border: 1px solid var(--color-border); border-radius: 12px; padding: 14px; text-align: left; font-size: 0.82rem; color: var(--color-text-secondary); width: 100%;">
+          <strong>📱 En iPhone / iPad (Safari):</strong><br>
+          1. Tocá el botón <strong>Compartir</strong> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg> abajo en Safari.<br>
+          2. Seleccioná <strong>"Agregar al inicio"</strong> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>.<br>
+          3. ¡Listo! Ya podés usar Sademy como una app nativa.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor de notificaciones Toast -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- ========================================================================
+       FOOTER OFICIAL SADEMY CONFORME AL MANUAL
+       ======================================================================== -->
+  <footer class="main-footer">
+    <div class="container">
+      
+      <div class="footer-grid">
+        
+        <!-- Columna de marca -->
+        <div class="footer-brand-col">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="assets/favicon.svg" alt="Sademy" style="width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--color-primary);">
+            <span class="brand-wordmark brand-wordmark-light">sademy</span>
+          </div>
+          <p class="footer-tagline">
+            El marketplace de oficios con trabajadores calificados, certificados y de confianza. Conectamos la necesidad de las personas con soluciones seguras y de calidad.
+          </p>
+          <div style="font-size: 0.8rem; color: #6B7280;">
+            Manual de Identidad Visual · Octubre 2026
+          </div>
+        </div>
+
+        <!-- Columna Oficios -->
+        <div>
+          <h4 class="footer-col-title">Oficios Populares</h4>
+          <ul class="footer-links-list">
+            <li><a href="#oficios" class="footer-link">Electricistas en CABA</a></li>
+            <li><a href="#oficios" class="footer-link">Plomeros Urgencias</a></li>
+            <li><a href="#oficios" class="footer-link">Gasistas Matriculados</a></li>
+            <li><a href="#oficios" class="footer-link">Pintura de Interiores</a></li>
+            <li><a href="#oficios" class="footer-link">Cerrajería 24 Horas</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna Seguridad -->
+        <div>
+          <h4 class="footer-col-title">Confianza y Garantía</h4>
+          <ul class="footer-links-list">
+            <li><a href="#garantia" class="footer-link">Sistema Escrow de Pago</a></li>
+            <li><a href="#como-funciona" class="footer-link">Verificación de Identidad</a></li>
+            <li><a href="#garantia" class="footer-link">Seguro contra Daños</a></li>
+            <li><a href="#calculadora" class="footer-link">Guía de Precios</a></li>
+            <li><a href="#" class="footer-link">Centro de Ayuda</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna Para Profesionales -->
+        <div>
+          <h4 class="footer-col-title">Trabajadores</h4>
+          <ul class="footer-links-list">
+            <li><a href="javascript:void(0)" onclick="setRole('pro')" class="footer-link">Sademy Pro</a></li>
+            <li><a href="javascript:void(0)" onclick="setRole('pro')" class="footer-link">Registrar mi Oficio</a></li>
+            <li><a href="javascript:void(0)" onclick="setRole('pro')" class="footer-link">Validación de Matrícula</a></li>
+            <li><a href="#" class="footer-link">Términos del Servicio</a></li>
+            <li><a href="#" class="footer-link">Privacidad de Datos</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Barra inferior de copyright y disclaimer -->
+      <div class="footer-bottom">
+        <div>
+          © 2026 Sademy · Todos los derechos reservados.
+        </div>
+        <div>
+          Diseñado bajo los lineamientos del Manual de Identidad Visual de Sademy (Octubre 2026).
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Botón Flotante del Asistente Rápido Sademy -->
+  <div class="floating-assistant-btn" onclick="openNewOrderModal()" title="¿Tenés una urgencia? Tocá acá para cotizar con profesionales en 1 min">
+    <img src="assets/favicon.svg" alt="Sademy Mascota" class="floating-assistant-img">
+    <div>
+      <div class="floating-assistant-text">¿Urgencia en casa?</div>
+      <span class="floating-assistant-sub">Cotizá en 1 min ⚡</span>
+    </div>
+  </div>
+
+  <!-- Barra de Navegación Inferior Nativa para Celulares (Estilo iOS / Android) -->
+  <nav class="mobile-bottom-nav" aria-label="Navegación móvil nativa">
+    <button id="mob-nav-btn-pedidos" class="mob-nav-item active" onclick="switchAppTab('pedidos'); window.scrollTo({top: 0, behavior: 'smooth'});">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+      <span>Presupuestos</span>
+    </button>
+    <button id="mob-nav-btn-oficios" class="mob-nav-item" onclick="document.getElementById('directorio').scrollIntoView({behavior: 'smooth'})">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <span>Oficios</span>
+    </button>
+    <button id="mob-nav-btn-mensajes" class="mob-nav-item" onclick="switchAppTab('mensajes'); window.scrollTo({top: 0, behavior: 'smooth'});">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+      <span>Mensajes</span>
+    </button>
+    <button id="mob-nav-btn-ayuda" class="mob-nav-item" onclick="switchAppTab('ayuda'); window.scrollTo({top: 0, behavior: 'smooth'});">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+      <span>Garantía</span>
+    </button>
+  </nav>
+
+  <!-- Lógica y funcionalidades interactivas -->
+  <script src="js/app.js"></script>
+
+</body>
+</html>
