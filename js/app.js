@@ -254,6 +254,26 @@ function loadAppState() {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
+      if (!parsed.adminMetrics) {
+        parsed.adminMetrics = { gmv: 1842500, feesCollected: 248900, escrowActive: 115000, proSubsCount: 18 };
+      }
+      if (!parsed.adminTransactions) {
+        parsed.adminTransactions = [
+          { id: 'ORD-2026-041', client: 'Carlos M.', pro: 'Claudio V.', trade: 'Gasista', amount: 22000, fee: 2640, status: 'Liberado con éxito', date: '28 Sep' },
+          { id: 'ORD-2026-039', client: 'Lucía B.', pro: 'Sofía L.', trade: 'Plomería', amount: 35000, fee: 4200, status: 'Liberado con éxito', date: '27 Sep' },
+          { id: 'ORD-2026-035', client: 'Esteban R.', pro: 'Marcos R.', trade: 'Electricidad', amount: 48000, fee: 5760, status: 'Liberado con éxito', date: '25 Sep' },
+          { id: 'ORD-2026-031', client: 'Mariana K.', pro: 'Diego M.', trade: 'Pintura', amount: 62000, fee: 7440, status: 'Liberado con éxito', date: '22 Sep' }
+        ];
+      }
+      if (!parsed.pendingMatriculas) {
+        parsed.pendingMatriculas = [
+          { id: 'pro-pending-1', name: 'Facundo G.', trade: 'Gasista Matriculado', matricula: 'METROGAS #9214', zone: 'Belgrano, CABA', dni: '34.819.201', docVerified: true },
+          { id: 'pro-pending-2', name: 'Martín T.', trade: 'Electricista Matriculado', matricula: 'COPIME #3810', zone: 'Palermo, CABA', dni: '32.110.884', docVerified: true }
+        ];
+      }
+      if (!parsed.currentUser.proPlan) {
+        parsed.currentUser.proPlan = 'basic';
+      }
       return parsed;
     }
   } catch (e) {
@@ -268,7 +288,8 @@ function loadAppState() {
       email: 'carlos.m@gmail.com',
       avatar: 'assets/mascot.jpg',
       role: 'client',
-      verified: true
+      verified: true,
+      proPlan: 'basic'
     },
     currentRole: 'client', // 'client' | 'pro'
     orders: DEFAULT_ORDERS,
@@ -280,6 +301,22 @@ function loadAppState() {
       escrowBalance: 49000,
       rating: 4.9
     },
+    adminMetrics: {
+      gmv: 1842500,
+      feesCollected: 248900,
+      escrowActive: 115000,
+      proSubsCount: 18
+    },
+    adminTransactions: [
+      { id: 'ORD-2026-041', client: 'Carlos M.', pro: 'Claudio V.', trade: 'Gasista', amount: 22000, fee: 2640, status: 'Liberado con éxito', date: '28 Sep' },
+      { id: 'ORD-2026-039', client: 'Lucía B.', pro: 'Sofía L.', trade: 'Plomería', amount: 35000, fee: 4200, status: 'Liberado con éxito', date: '27 Sep' },
+      { id: 'ORD-2026-035', client: 'Esteban R.', pro: 'Marcos R.', trade: 'Electricidad', amount: 48000, fee: 5760, status: 'Liberado con éxito', date: '25 Sep' },
+      { id: 'ORD-2026-031', client: 'Mariana K.', pro: 'Diego M.', trade: 'Pintura', amount: 62000, fee: 7440, status: 'Liberado con éxito', date: '22 Sep' }
+    ],
+    pendingMatriculas: [
+      { id: 'pro-pending-1', name: 'Facundo G.', trade: 'Gasista Matriculado', matricula: 'METROGAS #9214', zone: 'Belgrano, CABA', dni: '34.819.201', docVerified: true },
+      { id: 'pro-pending-2', name: 'Martín T.', trade: 'Electricista Matriculado', matricula: 'COPIME #3810', zone: 'Palermo, CABA', dni: '32.110.884', docVerified: true }
+    ],
     activeFilterTrade: 'all',
     activeFilterZone: 'all',
     activeFilterVerifiedOnly: false
@@ -684,13 +721,18 @@ function renderActiveOrderBanner() {
           <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
         </div>
         <div>
-          <h4 class="request-heading">✅ Fondos en Custodia Segura (${currentOrder.escrowCode || 'ESCROW-ACTIVO'})</h4>
-          <p class="request-subtext">El profesional fue notificado. Tu dinero está seguro en Sademy y solo se libera con tu visto bueno.</p>
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <h4 class="request-heading" style="margin: 0;">🛡️ Fondos en Custodia Segura (${currentOrder.escrowCode || 'ESCROW-ACTIVO'})</h4>
+            <span class="badge-tag" style="background: #065F46; color: #FFFFFF; font-weight: 800; font-size: 0.78rem;">PIN: ${currentOrder.conformityPin || '7412'}</span>
+          </div>
+          <p class="request-subtext" style="margin-top: 4px;">
+            El profesional fue notificado. Tu dinero está protegido en Sademy y solo se transfiere cuando le entregues el PIN al finalizar.
+          </p>
         </div>
       </div>
-      <div style="display: flex; gap: 8px;">
+      <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
         <button class="btn btn-secondary btn-sm" onclick="openChatModal('${currentOrder.quotes[0]?.proName || 'Marcos R.'}')">Chatear</button>
-        <button class="btn btn-primary btn-sm" onclick="releasePaymentPrompt('${currentOrder.id}')">Liberar Pago al Finalizar</button>
+        <button class="btn btn-primary btn-sm" onclick="releasePaymentPrompt('${currentOrder.id}')" style="background: #065F46; font-weight: 700;">Ingresar PIN y Liberar Fondos</button>
       </div>
     `;
   }
@@ -1090,22 +1132,48 @@ function confirmEscrowPayment() {
   const order = currentOrderForPayment || appState.orders[0];
 
   if (order) {
+    const pin = Math.floor(1000 + Math.random() * 9000);
     order.paid = true;
     order.status = 'Pago en Custodia Segura';
     order.escrowCode = `ESCROW-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+    order.conformityPin = pin;
     order.hiredPro = {
-      name: quote.proName,
-      trade: quote.proTrade,
-      price: quote.totalPrice,
-      avatar: quote.avatar
+      name: quote?.proName || 'Marcos R.',
+      trade: quote?.proTrade || 'Electricista',
+      price: quote?.totalPrice || 24500,
+      avatar: quote?.avatar || 'assets/marcos.jpg'
     };
+
+    // Registrar en contabilidad del Administrador
+    const basePrice = quote?.totalPrice || 24500;
+    const feeRate = (appState.currentUser.proPlan === 'gold' ? 0.08 : 0.12);
+    const platformCommission = Math.round(basePrice * feeRate);
+
+    if (!appState.adminTransactions) appState.adminTransactions = [];
+    appState.adminTransactions.unshift({
+      id: order.id,
+      client: appState.currentUser.name || 'Carlos M.',
+      pro: order.hiredPro.name,
+      trade: order.categoryName || 'Electricista',
+      amount: basePrice,
+      fee: platformCommission,
+      status: 'Retenido en Custodia',
+      date: 'Hoy, ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    });
+
+    if (appState.adminMetrics) {
+      appState.adminMetrics.gmv += (basePrice + 1800);
+      appState.adminMetrics.feesCollected += platformCommission;
+      appState.adminMetrics.escrowActive += basePrice;
+    }
+
     saveAppState();
   }
 
   renderActiveOrderBanner();
   renderMyOrdersModalList();
 
-  showToast('¡Pago en custodia confirmado!', `Fondos retenidos con seguridad (${order?.escrowCode}). ${quote?.proName} asiste hoy a tu domicilio.`);
+  showToast('¡Pago en custodia confirmado con Mercado Pago!', `Fondos retenidos (${order?.escrowCode}). Tu PIN de conformidad es: ${order?.conformityPin}`);
 }
 
 function releasePaymentPrompt(orderId) {
@@ -1113,18 +1181,32 @@ function releasePaymentPrompt(orderId) {
   playPop();
   const order = appState.orders.find(o => o.id === orderId) || appState.orders[0];
   const proName = order.hiredPro?.name || order.quotes[0]?.proName || 'Marcos R.';
+  const correctPin = order.conformityPin || '7412';
 
-  if (confirm(`¿Confirmás que ${proName} finalizó el trabajo a tu total satisfacción y autorizás la liberación inmediata de los fondos?`)) {
+  const enteredPin = prompt(`Ingresá el PIN de 4 dígitos para liberar los fondos a ${proName} (Tu PIN es ${correctPin}):`, correctPin);
+  if (enteredPin === String(correctPin)) {
     order.completed = true;
     order.status = 'Finalizado con éxito';
+
+    // Actualizar estado en el libro de transacciones de administración
+    if (appState.adminTransactions) {
+      const tx = appState.adminTransactions.find(t => t.id === order.id);
+      if (tx) tx.status = 'Liberado al Pro (Pago MP)';
+    }
+    if (appState.adminMetrics && appState.adminMetrics.escrowActive >= (order.hiredPro?.price || 24500)) {
+      appState.adminMetrics.escrowActive -= (order.hiredPro?.price || 24500);
+    }
+
     saveAppState();
     playSuccessChime();
     renderActiveOrderBanner();
     renderMyOrdersModalList();
     updateOrdersBadges();
 
-    showToast('¡Pago liberado exitosamente!', `${proName} recibió sus honorarios. ¡Gracias por confiar en Sademy!`);
+    showToast('¡Pago liberado exitosamente!', `${proName} recibió sus honorarios vía Mercado Pago. ¡Gracias por confiar en Sademy!`);
     promptReviewModal(proName, order);
+  } else if (enteredPin !== null) {
+    showToast('PIN incorrecto', 'Verificá el PIN de 4 dígitos generado al momento del pago.');
   }
 }
 
@@ -1736,4 +1818,338 @@ function selectAppQuote(quoteWorker) {
     if (cardMarcos) cardMarcos.style.display = 'none';
   }
 }
+
+// ============================================================================
+// 12. CHECKOUT MERCADO PAGO Y SPLIT DE PAGOS
+// ============================================================================
+function selectPaymentMethodOption(method) {
+  triggerHapticFeedback();
+  playPop();
+
+  const cards = document.querySelectorAll('.mp-method-card');
+  cards.forEach(c => c.classList.remove('active'));
+
+  const radioCard = document.getElementById('mp-radio-card');
+  const radioBalance = document.getElementById('mp-radio-mp-balance');
+  const radioTransfer = document.getElementById('mp-radio-transfer');
+
+  if (method === 'card') {
+    if (radioCard) { radioCard.checked = true; radioCard.closest('.mp-method-card')?.classList.add('active'); }
+  } else if (method === 'mp-balance') {
+    if (radioBalance) { radioBalance.checked = true; radioBalance.closest('.mp-method-card')?.classList.add('active'); }
+  } else if (method === 'transfer') {
+    if (radioTransfer) { radioTransfer.checked = true; radioTransfer.closest('.mp-method-card')?.classList.add('active'); }
+  }
+}
+
+// ============================================================================
+// 13. PLANES DE SUSCRIPCIÓN SADEMY PRO (MONETIZACIÓN Y MEMBRESÍAS)
+// ============================================================================
+let isAnnualBilling = false;
+
+function openProSubscriptionsModal() {
+  triggerHapticFeedback();
+  playPop();
+  updateSubscriptionPricingUI();
+  highlightActiveSubscriptionCard();
+  const modal = document.getElementById('modal-pro-subscriptions');
+  if (modal) modal.classList.add('active');
+}
+
+function closeProSubscriptionsModal() {
+  const modal = document.getElementById('modal-pro-subscriptions');
+  if (modal) modal.classList.remove('active');
+}
+
+function toggleSubscriptionBillingCycle() {
+  triggerHapticFeedback();
+  playPop();
+  const toggle = document.getElementById('sub-annual-toggle');
+  isAnnualBilling = toggle ? toggle.checked : false;
+  updateSubscriptionPricingUI();
+}
+
+function updateSubscriptionPricingUI() {
+  const mLabel = document.getElementById('sub-billing-monthly-label');
+  const aLabel = document.getElementById('sub-billing-annual-label');
+  const priceGold = document.getElementById('price-val-gold');
+  const periodGold = document.getElementById('price-period-gold');
+  const pricePlat = document.getElementById('price-val-platinum');
+  const periodPlat = document.getElementById('price-period-platinum');
+
+  if (isAnnualBilling) {
+    if (mLabel) { mLabel.style.fontWeight = '500'; mLabel.style.color = 'var(--color-text-secondary)'; }
+    if (aLabel) { aLabel.style.fontWeight = '700'; aLabel.style.color = 'var(--color-text-main)'; }
+    if (priceGold) priceGold.textContent = '11.600';
+    if (periodGold) periodGold.textContent = '/ mes (facturado anual)';
+    if (pricePlat) pricePlat.textContent = '23.120';
+    if (periodPlat) periodPlat.textContent = '/ mes (facturado anual)';
+  } else {
+    if (mLabel) { mLabel.style.fontWeight = '700'; mLabel.style.color = 'var(--color-text-main)'; }
+    if (aLabel) { aLabel.style.fontWeight = '500'; aLabel.style.color = 'var(--color-text-secondary)'; }
+    if (priceGold) priceGold.textContent = '14.500';
+    if (periodGold) periodGold.textContent = '/ mes';
+    if (pricePlat) pricePlat.textContent = '28.900';
+    if (periodPlat) periodPlat.textContent = '/ mes';
+  }
+}
+
+function highlightActiveSubscriptionCard() {
+  const currentPlan = appState.currentUser.proPlan || 'basic';
+  const btnBasic = document.getElementById('btn-plan-basic');
+  const btnGold = document.getElementById('btn-plan-gold');
+  const btnPlat = document.getElementById('btn-plan-platinum');
+
+  if (btnBasic) btnBasic.textContent = currentPlan === 'basic' ? '✓ Plan Actual' : 'Elegir Plan';
+  if (btnGold) btnGold.textContent = currentPlan === 'gold' ? '✓ Plan Activo' : 'Suscribirme a PRO Destacado';
+  if (btnPlat) btnPlat.textContent = currentPlan === 'platinum' ? '✓ Plan Activo' : 'Activar Plan Empresa';
+}
+
+function selectProSubscription(planId) {
+  triggerHapticFeedback();
+  playSuccessChime();
+
+  appState.currentUser.proPlan = planId;
+  saveAppState();
+
+  highlightActiveSubscriptionCard();
+  updateNavAuthState();
+
+  const planNames = {
+    basic: 'Plan Inicial ($0/mes, comisión 15%)',
+    gold: 'Plan PRO Destacado ($14.500/mes, comisión reducida al 8%)',
+    platinum: 'Plan Cuadrilla & Empresas (comisión mínima 5%)'
+  };
+
+  showToast('¡Membresía Activada!', `Ya contás con el ${planNames[planId] || planId}. ¡Tus ganancias por trabajo ahora son mayores!`);
+
+  setTimeout(() => {
+    closeProSubscriptionsModal();
+  }, 1200);
+}
+
+// ============================================================================
+// 14. PANEL DE ADMINISTRADOR / MASTER BACKOFFICE (CONTROL DE NEGOCIO Y COMISIONES)
+// ============================================================================
+function openAdminBackofficeModal() {
+  triggerHapticFeedback();
+  playPop();
+  renderAdminBackoffice();
+  const modal = document.getElementById('modal-admin-backoffice');
+  if (modal) modal.classList.add('active');
+}
+
+function closeAdminBackofficeModal() {
+  const modal = document.getElementById('modal-admin-backoffice');
+  if (modal) modal.classList.remove('active');
+}
+
+function switchAdminTab(tabName) {
+  triggerHapticFeedback();
+  playPop();
+
+  const tabs = ['finanzas', 'matriculas', 'custodia'];
+  tabs.forEach(t => {
+    const btn = document.getElementById(`admin-tab-btn-${t}`);
+    const view = document.getElementById(`admin-view-${t}`);
+    if (btn) {
+      if (t === tabName) btn.classList.add('active');
+      else btn.classList.remove('active');
+    }
+    if (view) {
+      if (t === tabName) view.style.display = 'block';
+      else view.style.display = 'none';
+    }
+  });
+}
+
+function renderAdminBackoffice() {
+  // 1. Actualizar KPIs financieros
+  const gmvEl = document.getElementById('admin-gmv-total');
+  const feesEl = document.getElementById('admin-fees-total');
+  const escrowEl = document.getElementById('admin-escrow-total');
+  const subsEl = document.getElementById('admin-pro-subs-count');
+  const badgeEl = document.getElementById('admin-pending-badge');
+
+  const m = appState.adminMetrics || { gmv: 1842500, feesCollected: 248900, escrowActive: 115000, proSubsCount: 18 };
+
+  if (gmvEl) gmvEl.innerHTML = `$${m.gmv.toLocaleString('es-AR')} <span style="font-size: 0.8rem; font-weight: 600; color: #64748B;">ARS</span>`;
+  if (feesEl) feesEl.innerHTML = `$${m.feesCollected.toLocaleString('es-AR')} <span style="font-size: 0.8rem; font-weight: 600; color: #047857;">ARS</span>`;
+  if (escrowEl) escrowEl.innerHTML = `$${m.escrowActive.toLocaleString('es-AR')} <span style="font-size: 0.8rem; font-weight: 600; color: #64748B;">ARS</span>`;
+  if (subsEl) subsEl.innerHTML = `${m.proSubsCount} <span style="font-size: 0.8rem; font-weight: 600; color: #64748B;">Profesionales</span>`;
+  if (badgeEl) badgeEl.textContent = (appState.pendingMatriculas || []).length;
+
+  // 2. Renderizar tabla de transacciones
+  renderAdminTransactions();
+
+  // 3. Renderizar profesionales pendientes de matrícula
+  renderAdminMatriculas();
+
+  // 4. Renderizar pedidos en custodia
+  renderAdminEscrow();
+}
+
+function renderAdminTransactions() {
+  const tbody = document.getElementById('admin-transactions-tbody');
+  if (!tbody) return;
+
+  const txs = appState.adminTransactions || [];
+  if (txs.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #94A3B8; padding: 24px;">No hay transacciones registradas aún.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = txs.map(t => {
+    const isEscrow = t.status.includes('Custodia');
+    return `
+      <tr>
+        <td><strong style="color: #0F172A; font-size: 0.8rem;">${t.id}</strong></td>
+        <td>${t.client}</td>
+        <td><strong>${t.pro}</strong></td>
+        <td><span class="badge-tag" style="background: #F1F5F9; color: #334155;">${t.trade}</span></td>
+        <td><strong style="color: #065F46;">$${t.amount.toLocaleString('es-AR')} ARS</strong></td>
+        <td><strong style="color: #059669;">+$${t.fee.toLocaleString('es-AR')} ARS</strong></td>
+        <td>
+          <span class="badge-tag" style="background: ${isEscrow ? '#FEF3C7' : '#DCFCE7'}; color: ${isEscrow ? '#92400E' : '#166534'}; font-weight: 700;">
+            ${t.status}
+          </span>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function renderAdminMatriculas() {
+  const container = document.getElementById('admin-matriculas-container');
+  if (!container) return;
+
+  const pending = appState.pendingMatriculas || [];
+  if (pending.length === 0) {
+    container.innerHTML = `
+      <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 32px; text-align: center; color: #64748B;">
+        <span style="font-size: 2rem;">🎉</span>
+        <h4 style="margin: 8px 0 4px; color: #1E293B;">¡Cola al día!</h4>
+        <p style="font-size: 0.86rem; margin: 0;">No hay solicitudes de verificación ni matrículas pendientes de aprobación en este momento.</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = pending.map(p => `
+    <div class="admin-verification-card" id="matricula-card-${p.id}">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div style="width: 48px; height: 48px; border-radius: 50%; background: #E0E7FF; color: #4338CA; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem;">
+          ${p.name.charAt(0)}
+        </div>
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <strong style="font-size: 0.95rem; color: #1E293B;">${p.name}</strong>
+            <span class="badge-tag" style="background: #FEF3C7; color: #92400E; font-weight: 700;">Pendiente Verificación</span>
+          </div>
+          <div style="font-size: 0.82rem; color: #64748B; margin-top: 2px;">
+            ${p.trade} · <strong>${p.matricula}</strong> · DNI: ${p.dni} (${p.zone})
+          </div>
+          <div style="font-size: 0.74rem; color: #059669; font-weight: 600; margin-top: 3px;">
+            ✓ DNI frente/dorso validado · Registro oficial cruzado con base pública
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn btn-secondary btn-sm" onclick="rejectAdminMatricula('${p.id}')" style="color: #DC2626; border-color: #FECACA;">
+          Rechazar
+        </button>
+        <button class="btn btn-primary btn-sm" onclick="approveAdminMatricula('${p.id}')" style="background: #059669; border: none; font-weight: 700;">
+          ✓ Aprobar y Otorgar Tilde
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function approveAdminMatricula(proId) {
+  triggerHapticFeedback();
+  playSuccessChime();
+
+  const idx = (appState.pendingMatriculas || []).findIndex(p => p.id === proId);
+  if (idx !== -1) {
+    const pro = appState.pendingMatriculas[idx];
+    appState.pendingMatriculas.splice(idx, 1);
+
+    // Agregar al directorio oficial de profesionales si no estaba
+    PROFESSIONALS_DATA.push({
+      id: pro.id,
+      name: pro.name,
+      trade: pro.trade,
+      category: pro.trade.toLowerCase().includes('gas') ? 'gas' : 'electricidad',
+      avatar: 'assets/mascot.jpg',
+      badge: 'Matriculado Oficial',
+      verified: true,
+      certified: true,
+      matricula: pro.matricula,
+      rating: 5.0,
+      reviewsCount: 1,
+      zone: pro.zone,
+      city: 'CABA',
+      bio: 'Profesional verificado por la administración de Sademy tras revisión oficial de matrícula y antecedentes.',
+      priceHint: '$18.000',
+      priceUnit: 'por trabajo base',
+      skills: ['Certificado Aprobado', 'Matrícula Oficial', 'Garantía Sademy'],
+      completedJobs: 1,
+      responseTime: '< 15 min'
+    });
+
+    saveAppState();
+    renderProfessionalsDirectory();
+    renderAdminBackoffice();
+
+    showToast('¡Matrícula Aprobada!', `${pro.name} fue validado y ya figura con tilde verde de confianza en el directorio.`);
+  }
+}
+
+function rejectAdminMatricula(proId) {
+  triggerHapticFeedback();
+  playPop();
+
+  const idx = (appState.pendingMatriculas || []).findIndex(p => p.id === proId);
+  if (idx !== -1) {
+    const pro = appState.pendingMatriculas[idx];
+    appState.pendingMatriculas.splice(idx, 1);
+    saveAppState();
+    renderAdminBackoffice();
+    showToast('Solicitud rechazada', `Se notificó a ${pro.name} para que reenvíe documentación legible.`);
+  }
+}
+
+function renderAdminEscrow() {
+  const container = document.getElementById('admin-escrow-orders-list');
+  if (!container) return;
+
+  const escrowOrders = appState.orders.filter(o => o.paid && !o.completed);
+  if (escrowOrders.length === 0) {
+    container.innerHTML = `
+      <div style="text-align: center; padding: 24px; color: #64748B; font-size: 0.88rem;">
+        No hay órdenes activas en custodia actualmente.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = escrowOrders.map(o => `
+    <div style="border: 1px solid #CBD5E1; border-radius: 10px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; background: #F8FAFC;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <strong style="color: #0F172A;">${o.id} · ${o.title}</strong>
+          <span class="badge-tag" style="background: #065F46; color: #FFFFFF; font-weight: 800;">PIN: ${o.conformityPin || '7412'}</span>
+        </div>
+        <div style="font-size: 0.8rem; color: #64748B; margin-top: 3px;">
+          Profesional asignado: <strong>${o.hiredPro?.name || 'Marcos R.'}</strong> · Monto retenido: <strong style="color: #065F46;">$${(o.hiredPro?.price || 24500).toLocaleString('es-AR')} ARS</strong>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="releasePaymentPrompt('${o.id}'); closeAdminBackofficeModal();" style="background: #065F46; font-weight: 700;">
+        Gestionar PIN
+      </button>
+    </div>
+  `).join('');
+}
+
 

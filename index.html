@@ -125,6 +125,16 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
               <span id="menu-role-switch-text">Cambiar a Portal Profesional (Pro)</span>
             </a>
+            <a href="javascript:void(0)" onclick="closeUserDropdown(); openProSubscriptionsModal();" class="user-menu-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <span>Membresías Sademy PRO</span>
+              <span class="nav-badge" style="background: #F59E0B; color: #FFF;">PRO</span>
+            </a>
+            <a href="javascript:void(0)" onclick="closeUserDropdown(); openAdminBackofficeModal();" class="user-menu-item" style="color: #065F46; font-weight: 700;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              <span>Panel Dueño & Comisiones</span>
+              <span class="nav-badge" style="background: var(--color-primary); color: #FFF;">ADMIN</span>
+            </a>
             <a href="javascript:void(0)" onclick="triggerPwaInstall(); closeUserDropdown();" class="user-menu-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
               <span>Instalar Aplicación en Pantalla</span>
@@ -1314,48 +1324,94 @@
        MODAL 3: PASARELA DE PAGO PROTEGIDO (ESCROW VAULT)
        ======================================================================== -->
   <div id="modal-escrow-payment" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-pay-title">
-    <div class="modal-container">
+    <div class="modal-container" style="max-width: 540px;">
       
-      <div class="modal-header">
-        <div>
-          <h3 id="modal-pay-title" class="modal-title">Pago en Custodia Protegida</h3>
-          <p style="font-size: 0.82rem; color: var(--color-primary-hover); font-weight: 600;">Sademy Escrow Security Vault</p>
+      <div class="modal-header" style="background: linear-gradient(135deg, #009EE3 0%, #007EB5 100%); color: #FFFFFF; border-radius: 16px 16px 0 0; padding: 18px 24px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="background: #FFFFFF; border-radius: 8px; padding: 4px 8px; display: flex; align-items: center;">
+            <span style="color: #009EE3; font-weight: 900; font-size: 1rem; letter-spacing: -0.5px;">mercado<br><span style="color: #007EB5; font-size: 0.85rem;">pago</span></span>
+          </div>
+          <div>
+            <h3 id="modal-pay-title" class="modal-title" style="color: #FFFFFF; font-size: 1.15rem; margin: 0;">Checkout Oficial · Pago Protegido</h3>
+            <p style="font-size: 0.76rem; color: rgba(255, 255, 255, 0.9); margin: 2px 0 0; font-weight: 500;">Split Marketplace Escrow · Encriptación SSL 256-bit</p>
+          </div>
         </div>
-        <button class="modal-close-btn" onclick="closePaymentModal()" aria-label="Cerrar modal">&times;</button>
+        <button class="modal-close-btn" onclick="closePaymentModal()" aria-label="Cerrar modal" style="color: #FFFFFF; background: rgba(255,255,255,0.2);">&times;</button>
       </div>
 
-      <div class="modal-body">
+      <div class="modal-body" style="padding: 20px 24px;">
         
-        <div style="background-color: var(--color-surface-light); border-radius: 12px; padding: 18px; border: 1px solid var(--color-border); text-align: center;">
-          <span style="font-size: 0.82rem; color: var(--color-text-tertiary); text-transform: uppercase;">Monto total a custodiar</span>
-          <div id="payment-modal-amount" style="font-size: 2.2rem; font-weight: 800; color: #065F46; margin: 4px 0;">$24.500 ARS</div>
-          <span style="font-size: 0.85rem; color: var(--color-text-secondary);">Destinado a <strong id="payment-modal-pro-name">Marcos R.</strong></span>
+        <!-- Desglose Financiero Transparente (Split de Pago) -->
+        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 14px; padding: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.88rem;">
+            <span style="color: var(--color-text-secondary);">Mano de obra y materiales:</span>
+            <strong id="payment-breakdown-subtotal" style="color: var(--color-text-main);">$24.500 ARS</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 0.88rem;">
+            <span style="color: var(--color-text-secondary); display: flex; align-items: center; gap: 4px;">
+              Garantía y Seguro Antidaños Sademy:
+              <span class="info-tooltip-badge" title="Cubre hasta $500.000 ARS en seguro de responsabilidad civil y retención en custodia hasta tu visto bueno.">ⓘ</span>
+            </span>
+            <strong style="color: #059669;">$1.800 ARS</strong>
+          </div>
+          <div style="border-top: 1px dashed #CBD5E1; margin: 8px 0; padding-top: 10px; display: flex; justify-content: space-between; align-items: baseline;">
+            <span style="font-weight: 700; font-size: 1rem; color: var(--color-text-main);">Total a pagar:</span>
+            <div id="payment-modal-amount" style="font-size: 1.85rem; font-weight: 900; color: #065F46;">$26.300 <span style="font-size: 0.8rem; font-weight: 700; color: #64748B;">ARS</span></div>
+          </div>
+          <div style="margin-top: 8px; background: #ECFDF5; border-radius: 8px; padding: 8px 12px; font-size: 0.78rem; color: #065F46; display: flex; align-items: center; gap: 6px;">
+            <span>🛡️</span>
+            <span><strong>Destinado a:</strong> <strong id="payment-modal-pro-name">Marcos R.</strong> (Fondos retenidos en custodia hasta que apruebes el trabajo con tu PIN).</span>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label class="form-label">Seleccioná tu método de pago</label>
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-            <label style="display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1px solid var(--color-primary-border); background: #F0FDF4; border-radius: 8px; cursor: pointer;">
-              <span style="font-weight: 600; font-size: 0.9rem;">💳 Tarjeta de Débito / Crédito (Visa, Mastercard)</span>
-              <input type="radio" name="pay-method" checked>
+        <!-- Métodos de Pago con Mercado Pago -->
+        <div class="form-group" style="margin-top: 4px;">
+          <label class="form-label" style="font-size: 0.86rem; font-weight: 700;">Elegí cómo pagar con Mercado Pago</label>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <label class="mp-method-card active" onclick="selectPaymentMethodOption('card')">
+              <input type="radio" name="mp-method-radio" id="mp-radio-card" checked style="accent-color: #009EE3;">
+              <div style="flex: 1;">
+                <div style="font-weight: 700; font-size: 0.88rem; color: #1E293B;">💳 Tarjeta de Crédito o Débito</div>
+                <div style="font-size: 0.75rem; color: #64748B;">Visa, Mastercard, Cabal · Hasta 3 cuotas fijas</div>
+              </div>
+              <span class="badge-tag" style="background: #E0F2FE; color: #0369A1; font-weight: 700;">Recomendado</span>
             </label>
-            <label style="display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1px solid var(--color-border); border-radius: 8px; cursor: pointer;">
-              <span style="font-weight: 600; font-size: 0.9rem;">📲 Mercado Pago / Transferencia con Alias</span>
-              <input type="radio" name="pay-method">
+
+            <label class="mp-method-card" onclick="selectPaymentMethodOption('mp-balance')">
+              <input type="radio" name="mp-method-radio" id="mp-radio-mp-balance" style="accent-color: #009EE3;">
+              <div style="flex: 1;">
+                <div style="font-weight: 700; font-size: 0.88rem; color: #1E293B;">📲 Dinero en Cuenta Mercado Pago</div>
+                <div style="font-size: 0.75rem; color: #64748B;">Acreditación instantánea en 1 segundo con tu app</div>
+              </div>
+              <span style="font-size: 0.76rem; color: #059669; font-weight: 700;">Sin comisiones</span>
+            </label>
+
+            <label class="mp-method-card" onclick="selectPaymentMethodOption('transfer')">
+              <input type="radio" name="mp-method-radio" id="mp-radio-transfer" style="accent-color: #009EE3;">
+              <div style="flex: 1;">
+                <div style="font-weight: 700; font-size: 0.88rem; color: #1E293B;">🏦 Transferencia Bancaria (Alias / CVU)</div>
+                <div style="font-size: 0.75rem; color: #64748B;">Alias oficial: <strong style="color: #009EE3;">SADEMY.PAGO.OFICIAL</strong></div>
+              </div>
             </label>
           </div>
         </div>
 
-        <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 0.82rem; color: var(--color-text-secondary); background: #FAF5FF; border: 1px solid #E9D5FF; padding: 12px; border-radius: 8px;">
-          <svg style="color: #9333EA; flex-shrink: 0; margin-top: 2px;" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-          <span><strong>¿Cómo se cuida tu dinero?</strong> El profesional NO cobra hasta que vos confirmes que el trabajo quedó terminado a tu satisfacción. Si cancela o no asiste, se te reintegra el 100% de inmediato.</span>
+        <!-- Explicación de Seguridad con PIN -->
+        <div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 12px; padding: 12px 14px; display: flex; gap: 10px; font-size: 0.8rem; color: #1E40AF;">
+          <span style="font-size: 1.2rem;">🔑</span>
+          <div style="line-height: 1.4;">
+            <strong>Mecanismo de Seguridad Sademy:</strong> Al pagar, la plataforma genera un <strong>PIN de 4 dígitos</strong> exclusivo para este trabajo. Entregale este PIN al trabajador <em>únicamente</em> cuando veas que la tarea quedó concluida a tu entera conformidad para liberar sus honorarios.
+          </div>
         </div>
 
       </div>
 
-      <div class="modal-footer">
+      <div class="modal-footer" style="padding: 16px 24px; background: #F8FAFC; border-top: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center;">
         <button class="btn btn-secondary btn-sm" onclick="closePaymentModal()">Cancelar</button>
-        <button class="btn btn-primary" onclick="confirmEscrowPayment()">Confirmar y Proteger Pago</button>
+        <button id="btn-confirm-mercadopago" class="btn btn-primary" style="background: linear-gradient(135deg, #009EE3 0%, #007EB5 100%); border: none; font-weight: 700; padding: 10px 22px; display: flex; align-items: center; gap: 8px;" onclick="confirmEscrowPayment()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Pagar con Mercado Pago Protegido
+        </button>
       </div>
 
     </div>
@@ -1662,6 +1718,270 @@
           3. ¡Listo! Ya podés usar Sademy como una app nativa.
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 5: PLANES DE SUSCRIPCIÓN SADEMY PRO (MONETIZACIÓN Y MEMBRESÍAS)
+       ======================================================================== -->
+  <div id="modal-pro-subscriptions" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="pro-sub-title">
+    <div class="modal-container" style="max-width: 960px; width: 95%;">
+      
+      <div class="modal-header" style="padding: 22px 28px; border-bottom: 1px solid var(--color-border);">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="badge-tag" style="background: #FEF3C7; color: #92400E; font-weight: 800;">SADEMY PRO</span>
+            <span style="font-size: 0.8rem; color: #059669; font-weight: 700;">✓ Comisiones más bajas</span>
+          </div>
+          <h3 id="pro-sub-title" class="modal-title" style="margin-top: 4px; font-size: 1.4rem;">Membresías para Profesionales y Empresas</h3>
+          <p style="font-size: 0.86rem; color: var(--color-text-secondary); margin-top: 2px;">
+            Elegí el plan que mejor se adapte a tu volumen de trabajo. Ahorrá hasta un 70% en comisiones por trabajo cerrado.
+          </p>
+        </div>
+        <button class="modal-close-btn" onclick="closeProSubscriptionsModal()" aria-label="Cerrar modal">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding: 24px 28px;">
+        
+        <!-- Toggle Anual / Mensual -->
+        <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin-bottom: 24px;">
+          <span id="sub-billing-monthly-label" style="font-size: 0.9rem; font-weight: 700; color: var(--color-text-main);">Facturación Mensual</span>
+          <label class="switch-toggle" style="position: relative; display: inline-block; width: 50px; height: 26px;">
+            <input type="checkbox" id="sub-annual-toggle" onchange="toggleSubscriptionBillingCycle()" style="opacity: 0; width: 0; height: 0;">
+            <span class="switch-slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #CBD5E1; transition: .3s; border-radius: 34px;"></span>
+          </label>
+          <span id="sub-billing-annual-label" style="font-size: 0.9rem; font-weight: 500; color: var(--color-text-secondary); display: flex; align-items: center; gap: 6px;">
+            Anual <span class="badge-tag" style="background: #DCFCE7; color: #166534; font-size: 0.72rem; font-weight: 800;">20% OFF</span>
+          </span>
+        </div>
+
+        <!-- Grilla de Planes PRO -->
+        <div class="pro-plans-grid">
+          
+          <!-- Plan 1: Inicial / Gratis -->
+          <div class="pricing-plan-card" id="plan-card-basic">
+            <div class="plan-header">
+              <h4 class="plan-title">Plan Inicial</h4>
+              <p class="plan-desc">Ideal para quienes realizan trabajos esporádicos o recién comienzan.</p>
+              <div class="plan-price-block">
+                <span class="plan-currency">$</span>
+                <span class="plan-price">0</span>
+                <span class="plan-period">/ mes</span>
+              </div>
+            </div>
+            <div class="plan-commission-callout">
+              Comisión: <strong>15% por trabajo cerrado</strong>
+            </div>
+            <ul class="plan-features-list">
+              <li><span>✓</span> Hasta 3 presupuestos al mes</li>
+              <li><span>✓</span> Perfil básico en el directorio</li>
+              <li><span>✓</span> Pagos protegidos en custodia</li>
+              <li><span>✓</span> Liberación de fondos en 48 hs</li>
+              <li class="disabled"><span>✕</span> Alertas instantáneas de WhatsApp</li>
+              <li class="disabled"><span>✕</span> Insignia dorada PRO Destacado</li>
+            </ul>
+            <button class="btn btn-secondary plan-action-btn" id="btn-plan-basic" onclick="selectProSubscription('basic')">
+              Plan Actual
+            </button>
+          </div>
+
+          <!-- Plan 2: PRO Destacado (Recomendado) -->
+          <div class="pricing-plan-card featured" id="plan-card-gold">
+            <div class="plan-popular-ribbon">★ MÁS POPULAR · 84% DE PROS</div>
+            <div class="plan-header">
+              <h4 class="plan-title">PRO Destacado</h4>
+              <p class="plan-desc">Para profesionales independientes que buscan trabajo continuo.</p>
+              <div class="plan-price-block">
+                <span class="plan-currency">$</span>
+                <span class="plan-price" id="price-val-gold">14.500</span>
+                <span class="plan-period" id="price-period-gold">/ mes</span>
+              </div>
+            </div>
+            <div class="plan-commission-callout featured">
+              Comisión reducida: <strong style="color: #065F46;">8% por trabajo cerrado</strong>
+            </div>
+            <ul class="plan-features-list">
+              <li><span>✓</span> <strong>Presupuestos ILIMITADOS</strong></li>
+              <li><span>✓</span> <strong>Insignia Dorada "PRO Destacado"</strong></li>
+              <li><span>✓</span> <strong>Alertas prioritarias por WhatsApp</strong></li>
+              <li><span>✓</span> Primeras posiciones en búsquedas</li>
+              <li><span>✓</span> Liberación acelerada de fondos en 2 hs</li>
+              <li><span>✓</span> Seguro de herramientas hasta $200.000</li>
+            </ul>
+            <button class="btn btn-primary plan-action-btn" id="btn-plan-gold" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);" onclick="selectProSubscription('gold')">
+              Suscribirme a PRO Destacado
+            </button>
+          </div>
+
+          <!-- Plan 3: Empresas / Cuadrillas -->
+          <div class="pricing-plan-card" id="plan-card-platinum">
+            <div class="plan-header">
+              <h4 class="plan-title">Cuadrilla & Empresas</h4>
+              <p class="plan-desc">Para empresas de servicios, constructoras y cuadrillas múltiples.</p>
+              <div class="plan-price-block">
+                <span class="plan-currency">$</span>
+                <span class="plan-price" id="price-val-platinum">28.900</span>
+                <span class="plan-period" id="price-period-platinum">/ mes</span>
+              </div>
+            </div>
+            <div class="plan-commission-callout">
+              Comisión mínima: <strong>5% por trabajo cerrado</strong>
+            </div>
+            <ul class="plan-features-list">
+              <li><span>✓</span> <strong>Hasta 5 operarios matriculados</strong></li>
+              <li><span>✓</span> Facturación electrónica ARCA integrada</li>
+              <li><span>✓</span> Cobertura de caución y ART ampliada</li>
+              <li><span>✓</span> Presupuestos y licitaciones ilimitadas</li>
+              <li><span>✓</span> Soporte VIP prioritario 24/7</li>
+              <li><span>✓</span> Ejecutivo de cuentas asignado</li>
+            </ul>
+            <button class="btn btn-secondary plan-action-btn" id="btn-plan-platinum" onclick="selectProSubscription('platinum')">
+              Activar Plan Empresa
+            </button>
+          </div>
+
+        </div>
+
+        <div style="margin-top: 20px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px; text-align: center; font-size: 0.82rem; color: var(--color-text-secondary);">
+          💳 Podés pagar tu suscripción mensual mediante tarjeta de crédito o débito a través de Mercado Pago. Cancelás cuando quieras sin penalidad.
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 6: PANEL DE ADMINISTRADOR / MASTER BACKOFFICE (CONTROL DE NEGOCIO)
+       ======================================================================== -->
+  <div id="modal-admin-backoffice" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="admin-panel-title">
+    <div class="modal-container" style="max-width: 1040px; width: 96%; max-height: 92vh;">
+      
+      <!-- Cabecera de Administración -->
+      <div class="modal-header" style="background: #0F172A; color: #FFFFFF; border-radius: 16px 16px 0 0; padding: 20px 28px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 42px; height: 42px; background: rgba(16, 185, 129, 0.2); border: 1.5px solid var(--color-primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">
+            📊
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <h3 id="admin-panel-title" class="modal-title" style="color: #FFFFFF; font-size: 1.25rem; margin: 0;">Sademy Master Backoffice</h3>
+              <span class="badge-tag" style="background: #10B981; color: #FFFFFF; font-weight: 800; font-size: 0.72rem;">PRODUCCIÓN ACTIVA</span>
+            </div>
+            <p style="font-size: 0.78rem; color: #94A3B8; margin: 3px 0 0;">
+              Control de comisiones, volumen de transacciones (GMV), custodia de pagos y verificación de matrículas.
+            </p>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeAdminBackofficeModal()" aria-label="Cerrar modal" style="color: #FFFFFF; background: rgba(255,255,255,0.1);">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding: 24px 28px; background: #F8FAFC;">
+        
+        <!-- Tarjetas de Métricas Financieras (KPIs de Ingresos de la Plataforma) -->
+        <div class="admin-kpi-grid">
+          
+          <div class="admin-kpi-card">
+            <div class="kpi-label">Volumen Transaccionado (GMV)</div>
+            <div class="kpi-value" id="admin-gmv-total">$1.842.500 <span style="font-size: 0.8rem; font-weight: 600; color: #64748B;">ARS</span></div>
+            <div class="kpi-sub positive">
+              <span>↑ +18.4%</span> vs mes anterior
+            </div>
+          </div>
+
+          <div class="admin-kpi-card highlight">
+            <div class="kpi-label" style="color: #065F46;">Comisiones Netas Plataforma</div>
+            <div class="kpi-value" id="admin-fees-total" style="color: #059669;">$248.900 <span style="font-size: 0.8rem; font-weight: 600; color: #047857;">ARS</span></div>
+            <div class="kpi-sub" style="color: #047857;">
+              Take-rate promedio: <strong>13.5%</strong>
+            </div>
+          </div>
+
+          <div class="admin-kpi-card">
+            <div class="kpi-label">Fondos en Custodia Activa</div>
+            <div class="kpi-value" id="admin-escrow-total">$115.000 <span style="font-size: 0.8rem; font-weight: 600; color: #64748B;">ARS</span></div>
+            <div class="kpi-sub" style="color: #D97706;">
+              🔒 3 trabajos en ejecución
+            </div>
+          </div>
+
+          <div class="admin-kpi-card">
+            <div class="kpi-label">Suscripciones PRO Activas</div>
+            <div class="kpi-value" id="admin-pro-subs-count">18 <span style="font-size: 0.8rem; font-weight: 600; color: #64748B;">Profesionales</span></div>
+            <div class="kpi-sub" style="color: #2563EB;">
+              MRR mensual: <strong>$261.000 ARS</strong>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Pestañas del Panel de Administrador -->
+        <div class="admin-tabs-nav" style="margin-top: 20px;">
+          <button class="admin-tab-btn active" id="admin-tab-btn-finanzas" onclick="switchAdminTab('finanzas')">
+            💵 Finanzas & Comisiones
+          </button>
+          <button class="admin-tab-btn" id="admin-tab-btn-matriculas" onclick="switchAdminTab('matriculas')">
+            📑 Validación de Matrículas <span id="admin-pending-badge" class="nav-badge" style="background: #EF4444; color: #FFFFFF; margin-left: 6px;">2</span>
+          </button>
+          <button class="admin-tab-btn" id="admin-tab-btn-custodia" onclick="switchAdminTab('custodia')">
+            🛡️ Fondos en Custodia & PINs
+          </button>
+        </div>
+
+        <!-- Vista 1: Finanzas & Transacciones en Vivo -->
+        <div id="admin-view-finanzas" class="admin-view-pane active">
+          <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; overflow: hidden; margin-top: 14px;">
+            <div style="padding: 14px 18px; border-bottom: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center;">
+              <strong style="font-size: 0.95rem; color: #1E293B;">Registro de Operaciones y Cobro de Comisiones</strong>
+              <span style="font-size: 0.8rem; color: #64748B;">Mercado Pago Gateway Split</span>
+            </div>
+            <div style="overflow-x: auto;">
+              <table class="admin-data-table">
+                <thead>
+                  <tr>
+                    <th>ID Pedido</th>
+                    <th>Cliente</th>
+                    <th>Profesional</th>
+                    <th>Rubro</th>
+                    <th>Total Cobrado</th>
+                    <th>Comisión Sademy</th>
+                    <th>Estado de Pago</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-transactions-tbody">
+                  <!-- Rellenado dinámicamente -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vista 2: Validación de Matrículas -->
+        <div id="admin-view-matriculas" class="admin-view-pane" style="display: none;">
+          <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 12px;" id="admin-matriculas-container">
+            <!-- Rellenado dinámicamente -->
+          </div>
+        </div>
+
+        <!-- Vista 3: Fondos en Custodia y PINs de Seguridad -->
+        <div id="admin-view-custodia" class="admin-view-pane" style="display: none;">
+          <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px; margin-top: 14px;">
+            <h4 style="font-size: 0.95rem; margin-bottom: 8px;">Custodia de Fondos (Escrow Vault)</h4>
+            <p style="font-size: 0.84rem; color: #64748B; margin-bottom: 14px;">
+              Los fondos permanecen en cuenta recaudadora hasta que el cliente proporcione el PIN de 4 dígitos o confirme satisfacción del servicio.
+            </p>
+            <div id="admin-escrow-orders-list" style="display: flex; flex-direction: column; gap: 10px;">
+              <!-- Rellenado dinámicamente -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer" style="padding: 16px 28px; background: #FFFFFF; border-top: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 0.8rem; color: #64748B;">Sademy Platform v2.1 · Panel Administrativo Oficial</span>
+        <button class="btn btn-secondary btn-sm" onclick="closeAdminBackofficeModal()">Cerrar Panel</button>
+      </div>
+
     </div>
   </div>
 
