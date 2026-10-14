@@ -271,7 +271,7 @@ function loadAppState() {
           { id: 'pro-pending-2', name: 'Martín T.', trade: 'Electricista Matriculado', matricula: 'COPIME #3810', zone: 'Palermo, CABA', dni: '32.110.884', docVerified: true }
         ];
       }
-      if (!parsed.currentUser.proPlan) {
+      if (parsed.currentUser && !parsed.currentUser.proPlan) {
         parsed.currentUser.proPlan = 'basic';
       }
       return parsed;
@@ -439,6 +439,50 @@ function closePwaModal() {
 // ============================================================================
 // 4. AUTENTICACIÓN REAL, SESIÓN & MENÚ DE PERFIL DESPLEGABLE
 // ============================================================================
+const PROFILES = {
+  client: {
+    id: 'user-carlos',
+    name: 'Carlos M.',
+    email: 'carlos.m@gmail.com',
+    avatar: 'assets/mascot.jpg',
+    role: 'client',
+    roleLabel: '✓ Cliente Verificado',
+    roleTag: 'Cliente',
+    tagBg: '#ECFDF5',
+    tagColor: '#065F46',
+    verified: true,
+    proPlan: 'basic'
+  },
+  pro: {
+    id: 'user-marcos-pro',
+    name: 'Marcos R.',
+    email: 'marcos.electricista@sademy.com',
+    avatar: 'assets/marcos.jpg',
+    role: 'pro',
+    roleLabel: '★ Profesional Verificado Pro',
+    roleTag: 'Pro Verificado',
+    tagBg: '#D1FAE5',
+    tagColor: '#064E3B',
+    trade: 'Electricista Matriculado',
+    matricula: 'MAT-EL-4982',
+    verified: true,
+    proPlan: 'gold'
+  },
+  admin: {
+    id: 'user-admin-hq',
+    name: 'Sademy HQ',
+    email: 'admin@sademy.com.ar',
+    avatar: 'assets/favicon.svg',
+    role: 'admin',
+    roleLabel: '👑 Administrador Master',
+    roleTag: 'Dueño Admin',
+    tagBg: '#FEF3C7',
+    tagColor: '#92400E',
+    verified: true,
+    proPlan: 'platinum'
+  }
+};
+
 function updateNavAuthState() {
   const user = appState.currentUser;
   const loginBtn = document.getElementById('nav-login-btn');
@@ -453,7 +497,26 @@ function updateNavAuthState() {
   const menuUserEmail = document.getElementById('menu-user-email');
   const menuUserAvatar = document.getElementById('menu-user-avatar');
   const menuUserRoleLabel = document.getElementById('menu-user-role-label');
-  const menuRoleSwitchText = document.getElementById('menu-role-switch-text');
+
+  // Ribbon elementos
+  const ribbon = document.getElementById('active-role-ribbon');
+  const ribbonIcon = document.getElementById('ribbon-role-icon');
+  const ribbonTitle = document.getElementById('ribbon-role-title');
+  const ribbonDesc = document.getElementById('ribbon-role-desc');
+  const ribbonBtn = document.getElementById('ribbon-action-primary');
+
+  // Mobile nav label
+  const mobNavLabel = document.getElementById('mob-nav-perfil-label');
+
+  // Account modal elementos
+  const accAvatar = document.getElementById('account-modal-avatar');
+  const accName = document.getElementById('account-modal-name');
+  const accEmail = document.getElementById('account-modal-email');
+  const accBadge = document.getElementById('account-modal-badge');
+  const accLoggedInSec = document.getElementById('account-logged-in-section');
+  const accGuestSec = document.getElementById('account-guest-section');
+
+  const currentR = appState.currentRole || 'client';
 
   if (user) {
     if (loginBtn) loginBtn.style.display = 'none';
@@ -461,29 +524,147 @@ function updateNavAuthState() {
     if (dropdownWrapper) dropdownWrapper.style.display = 'inline-block';
 
     if (userNameText) userNameText.textContent = user.name;
-    if (userAvatarImg) userAvatarImg.src = user.avatar;
+    if (userAvatarImg) userAvatarImg.src = user.avatar || 'assets/mascot.jpg';
     if (userRoleTag) {
-      userRoleTag.textContent = appState.currentRole === 'pro' ? 'Pro Verificado' : 'Cliente';
-      userRoleTag.style.backgroundColor = appState.currentRole === 'pro' ? '#D1FAE5' : '#ECFDF5';
+      userRoleTag.textContent = user.roleTag || (currentR === 'admin' ? 'Dueño Admin' : (currentR === 'pro' ? 'Pro Verificado' : 'Cliente'));
+      userRoleTag.style.backgroundColor = user.tagBg || (currentR === 'admin' ? '#FEF3C7' : (currentR === 'pro' ? '#D1FAE5' : '#ECFDF5'));
+      userRoleTag.style.color = user.tagColor || (currentR === 'admin' ? '#92400E' : (currentR === 'pro' ? '#064E3B' : '#065F46'));
     }
 
     if (menuUserName) menuUserName.textContent = user.name;
     if (menuUserEmail) menuUserEmail.textContent = user.email;
-    if (menuUserAvatar) menuUserAvatar.src = user.avatar;
-    if (menuUserRoleLabel) {
-      menuUserRoleLabel.textContent = appState.currentRole === 'pro' ? '★ Profesional Verificado Pro' : '✓ Cliente Verificado';
+    if (menuUserAvatar) menuUserAvatar.src = user.avatar || 'assets/mascot.jpg';
+    if (menuUserRoleLabel) menuUserRoleLabel.textContent = user.roleLabel || '✓ Verificado';
+
+    // Sincronizar pills en dropdown
+    ['client', 'pro', 'admin'].forEach(r => {
+      const pill = document.getElementById(`role-pill-${r}`);
+      if (pill) {
+        if (r === currentR) pill.classList.add('active');
+        else pill.classList.remove('active');
+      }
+      const accPill = document.getElementById(`acc-pill-${r}`);
+      if (accPill) {
+        if (r === currentR) accPill.classList.add('active');
+        else accPill.classList.remove('active');
+      }
+      const ribPill = document.getElementById(`ribbon-pill-${r}`);
+      if (ribPill) {
+        if (r === currentR) ribPill.classList.add('active');
+        else ribPill.classList.remove('active');
+      }
+    });
+
+    // Actualizar Ribbon Superior de Control
+    if (ribbon) {
+      ribbon.style.display = 'block';
+      ribbon.className = `active-role-ribbon role-${currentR}`;
+      if (currentR === 'admin') {
+        if (ribbonIcon) ribbonIcon.textContent = '👑';
+        if (ribbonTitle) ribbonTitle.textContent = 'Modo Administrador Dueño (Sademy HQ)';
+        if (ribbonDesc) ribbonDesc.textContent = 'Facturación GMV: $1.842.500 ARS · Comisiones: $248.900 ARS · Custodia: $115.000 ARS';
+        if (ribbonBtn) {
+          ribbonBtn.innerHTML = '👑 Abrir Backoffice';
+          ribbonBtn.onclick = openAdminBackofficeModal;
+        }
+      } else if (currentR === 'pro') {
+        if (ribbonIcon) ribbonIcon.textContent = '⚡';
+        if (ribbonTitle) ribbonTitle.textContent = 'Modo Profesional Pro (Marcos R.)';
+        if (ribbonDesc) ribbonDesc.textContent = 'Saldo disponible: $49.000 ARS · 12 Solicitudes abiertas en tu zona';
+        if (ribbonBtn) {
+          ribbonBtn.innerHTML = '⚡ Ver Solicitudes Pro';
+          ribbonBtn.onclick = () => {
+            const el = document.getElementById('sademy-pro');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          };
+        }
+      } else {
+        if (ribbonIcon) ribbonIcon.textContent = '👤';
+        if (ribbonTitle) ribbonTitle.textContent = 'Modo Cliente Particular (Carlos M.)';
+        if (ribbonDesc) ribbonDesc.textContent = '2 Pedidos activos · Pago protegido en custodia de Sademy';
+        if (ribbonBtn) {
+          ribbonBtn.innerHTML = '📦 Mis Pedidos';
+          ribbonBtn.onclick = openMyOrdersModal;
+        }
+      }
     }
-    if (menuRoleSwitchText) {
-      menuRoleSwitchText.textContent = appState.currentRole === 'pro' ? 'Cambiar a Modo Cliente' : 'Cambiar a Portal Profesional (Pro)';
+
+    // Modal de cuenta
+    if (accAvatar) accAvatar.src = user.avatar || 'assets/mascot.jpg';
+    if (accName) accName.textContent = user.name;
+    if (accEmail) accEmail.textContent = user.email;
+    if (accBadge) {
+      accBadge.textContent = user.roleLabel || '✓ Verificado';
+      accBadge.style.backgroundColor = user.tagBg || '#ECFDF5';
+      accBadge.style.color = user.tagColor || '#065F46';
     }
+    if (accLoggedInSec) accLoggedInSec.style.display = 'block';
+    if (accGuestSec) accGuestSec.style.display = 'none';
+
+    if (mobNavLabel) mobNavLabel.textContent = user.name ? user.name.split(' ')[0] : 'Cuenta';
+
   } else {
+    // Modo Invitado (Sesión Cerrada)
     if (loginBtn) loginBtn.style.display = 'inline-flex';
     if (proBtn) proBtn.style.display = 'inline-flex';
     if (dropdownWrapper) dropdownWrapper.style.display = 'none';
+    if (ribbon) ribbon.style.display = 'none';
+
+    if (accLoggedInSec) accLoggedInSec.style.display = 'none';
+    if (accGuestSec) accGuestSec.style.display = 'block';
+
+    if (mobNavLabel) mobNavLabel.textContent = 'Ingresar';
   }
 
   // Reflejar la vista del rol activo
   applyRoleView(appState.currentRole);
+}
+
+function openAccountModal() {
+  triggerHapticFeedback();
+  playPop();
+  if (!appState.currentUser) {
+    openAuthModal('client');
+    return;
+  }
+  const modal = document.getElementById('modal-account-view');
+  if (modal) modal.classList.add('active');
+}
+
+function closeAccountModal() {
+  const modal = document.getElementById('modal-account-view');
+  if (modal) modal.classList.remove('active');
+}
+
+function switchProfile(roleKey) {
+  triggerHapticFeedback();
+  playSuccessChime();
+
+  const profile = PROFILES[roleKey] || PROFILES.client;
+  appState.currentUser = Object.assign({}, profile);
+  appState.currentRole = roleKey;
+  saveAppState();
+
+  updateNavAuthState();
+  applyRoleView(roleKey);
+  closeUserDropdown();
+  closeAccountModal();
+
+  if (roleKey === 'admin') {
+    showToast('👑 Modo Administrador Dueño Activo', 'Control total de ingresos, comisiones, pagos en custodia y matrículas.');
+    setTimeout(() => {
+      openAdminBackofficeModal();
+    }, 300);
+  } else if (roleKey === 'pro') {
+    showToast('⚡ Modo Profesional Pro Activo', 'Bienvenido Marcos. Podés cotizar solicitudes abiertas y cobrar mediante Mercado Pago.');
+    const proSection = document.getElementById('sademy-pro');
+    if (proSection) {
+      proSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  } else {
+    showToast('👤 Modo Cliente Activo', 'Bienvenido Carlos. Podés buscar oficios verificados y contratar con pago protegido.');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }
 
 function toggleUserDropdown() {
@@ -513,7 +694,7 @@ function handleProNavClick() {
   triggerHapticFeedback();
   playPop();
   if (appState.currentUser && appState.currentUser.role === 'pro') {
-    setRole('pro');
+    switchProfile('pro');
   } else {
     openAuthModal('pro');
   }
@@ -523,31 +704,31 @@ function toggleUserRoleMode() {
   triggerHapticFeedback();
   playPop();
   const newRole = appState.currentRole === 'client' ? 'pro' : 'client';
-  setRole(newRole);
+  switchProfile(newRole);
 }
 
 function setRole(role) {
-  appState.currentRole = role;
-  saveAppState();
-  updateNavAuthState();
-
-  if (role === 'pro') {
-    showToast('Portal Sademy Pro Activo', 'Viendo solicitudes abiertas y oportunidades en tu zona.');
-    const proSection = document.getElementById('sademy-pro');
-    if (proSection) {
-      proSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  } else {
-    showToast('Modo Cliente Activo', 'Buscando y comparando presupuestos con pago protegido.');
-  }
+  switchProfile(role);
 }
 
 function applyRoleView(role) {
   const clientViews = document.querySelectorAll('.view-client-only');
   const proViews = document.querySelectorAll('.view-pro-only');
+  const adminQuickBtn = document.getElementById('nav-admin-quick-btn');
+  const proQuickBtn = document.getElementById('nav-pro-quick-btn');
+
+  if (adminQuickBtn) {
+    adminQuickBtn.style.display = (role === 'admin' && appState.currentUser) ? 'inline-flex' : 'none';
+  }
+  if (proQuickBtn) {
+    proQuickBtn.style.display = (role === 'pro' && appState.currentUser) ? 'inline-flex' : 'none';
+  }
 
   if (role === 'pro') {
     clientViews.forEach(el => el.style.display = 'none');
+    proViews.forEach(el => el.style.display = 'block');
+  } else if (role === 'admin') {
+    clientViews.forEach(el => el.style.display = '');
     proViews.forEach(el => el.style.display = 'block');
   } else {
     clientViews.forEach(el => el.style.display = '');
@@ -559,13 +740,16 @@ function logoutUser() {
   triggerHapticFeedback();
   playPop();
   closeUserDropdown();
-  if (confirm('¿Deseás cerrar tu sesión en Sademy?')) {
-    appState.currentUser = null;
-    appState.currentRole = 'client';
-    saveAppState();
-    updateNavAuthState();
-    showToast('Sesión cerrada', 'Podés ingresar nuevamente con Google en 1 clic.');
-  }
+  closeAccountModal();
+
+  appState.currentUser = null;
+  appState.currentRole = 'guest';
+  saveAppState();
+
+  updateNavAuthState();
+  applyRoleView('guest');
+
+  showToast('Sesión cerrada', 'Has cerrado tu sesión. Podés ingresar nuevamente con Google o elegir un perfil.');
 }
 
 function openAuthModal(initialTab = 'client') {
@@ -606,25 +790,8 @@ function switchAuthTab(tab) {
 function loginWithGoogle(role = 'client') {
   triggerHapticFeedback();
   playSuccessChime();
-  if (role === 'client') {
-    appState.currentUser = {
-      id: 'usr-google-carlos',
-      name: 'Carlos M.',
-      email: 'carlos.m@gmail.com',
-      avatar: 'assets/mascot.jpg',
-      role: 'client',
-      verified: true
-    };
-    appState.currentRole = 'client';
-    saveAppState();
-    closeAuthModal();
-    updateNavAuthState();
-    showToast('¡Sesión iniciada con Google!', 'Bienvenido Carlos. Ya podés solicitar presupuestos y pagar seguro.');
-  } else {
-    showToast('Google vinculado con éxito', 'Por favor, completá los datos de tu oficio y DNI para verificar tu perfil.');
-    const dniInput = document.getElementById('worker-field-dni');
-    if (dniInput) dniInput.focus();
-  }
+  switchProfile(role === 'pro' ? 'pro' : 'client');
+  closeAuthModal();
 }
 
 function loginWithEmail(role = 'client') {
@@ -632,19 +799,18 @@ function loginWithEmail(role = 'client') {
   playSuccessChime();
   const emailInput = document.getElementById('client-auth-email');
   const email = emailInput && emailInput.value.trim() ? emailInput.value.trim() : 'carlos@sademy.com';
-  appState.currentUser = {
-    id: 'usr-email-' + Date.now(),
-    name: email.split('@')[0],
-    email: email,
-    avatar: 'assets/mascot.jpg',
-    role: role,
-    verified: true
-  };
-  appState.currentRole = role;
-  saveAppState();
+  
+  if (role === 'pro') {
+    switchProfile('pro');
+  } else {
+    switchProfile('client');
+  }
+  if (appState.currentUser) {
+    appState.currentUser.email = email;
+    saveAppState();
+    updateNavAuthState();
+  }
   closeAuthModal();
-  updateNavAuthState();
-  showToast('¡Ingreso exitoso!', `Bienvenido a Sademy (${email}).`);
 }
 
 function simulateFileUpload() {
@@ -1146,13 +1312,13 @@ function confirmEscrowPayment() {
 
     // Registrar en contabilidad del Administrador
     const basePrice = quote?.totalPrice || 24500;
-    const feeRate = (appState.currentUser.proPlan === 'gold' ? 0.08 : 0.12);
+    const feeRate = ((appState.currentUser && appState.currentUser.proPlan === 'gold') ? 0.08 : 0.12);
     const platformCommission = Math.round(basePrice * feeRate);
 
     if (!appState.adminTransactions) appState.adminTransactions = [];
     appState.adminTransactions.unshift({
       id: order.id,
-      client: appState.currentUser.name || 'Carlos M.',
+      client: (appState.currentUser && appState.currentUser.name) || 'Carlos M.',
       pro: order.hiredPro.name,
       trade: order.categoryName || 'Electricista',
       amount: basePrice,
@@ -1895,7 +2061,7 @@ function updateSubscriptionPricingUI() {
 }
 
 function highlightActiveSubscriptionCard() {
-  const currentPlan = appState.currentUser.proPlan || 'basic';
+  const currentPlan = (appState.currentUser && appState.currentUser.proPlan) || 'basic';
   const btnBasic = document.getElementById('btn-plan-basic');
   const btnGold = document.getElementById('btn-plan-gold');
   const btnPlat = document.getElementById('btn-plan-platinum');
@@ -1909,8 +2075,10 @@ function selectProSubscription(planId) {
   triggerHapticFeedback();
   playSuccessChime();
 
-  appState.currentUser.proPlan = planId;
-  saveAppState();
+  if (appState.currentUser) {
+    appState.currentUser.proPlan = planId;
+    saveAppState();
+  }
 
   highlightActiveSubscriptionCard();
   updateNavAuthState();

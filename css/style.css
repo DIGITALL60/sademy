@@ -286,6 +286,40 @@ button, input, select, textarea {
   display: flex;
 }
 
+.profile-switch-pills-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.profile-role-pill {
+  flex: 1;
+  padding: 6px 4px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  border: 1px solid #CBD5E1;
+  background: #FFFFFF;
+  color: #475569;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+  outline: none;
+}
+
+.profile-role-pill:hover {
+  background: #F1F5F9;
+  border-color: #94A3B8;
+  color: #0F172A;
+}
+
+.profile-role-pill.active {
+  background: #0F172A;
+  color: #FFFFFF;
+  border-color: #0F172A;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.25);
+}
+
 @keyframes userMenuPop {
   from {
     opacity: 0;
@@ -1793,15 +1827,16 @@ button, input, select, textarea {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(17, 24, 39, 0.6);
-  backdrop-filter: blur(4px);
+  background-color: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   z-index: 999;
   display: none;
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
   opacity: 0;
-  transition: opacity var(--transition-normal);
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .modal-overlay.active {
@@ -1816,14 +1851,31 @@ button, input, select, textarea {
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: var(--shadow-xl);
-  border: 1px solid var(--color-border);
-  transform: translateY(20px);
-  transition: transform var(--transition-bounce);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  transform: translateY(24px) scale(0.97);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .modal-overlay.active .modal-container {
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
+}
+
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+  .modal-container {
+    max-width: 100%;
+    width: 100%;
+    border-radius: 28px 28px 0 0;
+    max-height: 88vh;
+    transform: translateY(100%);
+  }
+  .modal-overlay.active .modal-container {
+    transform: translateY(0);
+  }
 }
 
 .modal-header {
@@ -1983,36 +2035,45 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
-   TOAST NOTIFICATIONS
+   DYNAMIC ISLAND / SAMSUNG ONEUI FLOATING TOAST NOTIFICATIONS
    ========================================================================== */
 .toast-container {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 1000;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+  width: 92%;
+  max-width: 480px;
 }
 
 .toast {
-  background-color: #FFFFFF;
-  border: 1px solid var(--color-border);
-  border-left: 4px solid var(--color-primary);
-  border-radius: var(--radius-md);
-  padding: 14px 18px;
-  box-shadow: var(--shadow-lg);
+  pointer-events: auto;
+  background: rgba(15, 23, 42, 0.94);
+  color: #FFFFFF;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-full);
+  padding: 10px 18px;
+  box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.4), 0 0 1px rgba(255, 255, 255, 0.3) inset;
   display: flex;
   align-items: center;
   gap: 12px;
-  min-width: 300px;
-  max-width: 420px;
-  transform: translateX(120%);
-  transition: transform var(--transition-bounce);
+  width: 100%;
+  transform: translateY(-50px) scale(0.94);
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .toast.show {
-  transform: translateX(0);
+  transform: translateY(0) scale(1);
+  opacity: 1;
 }
 
 .toast-mascot {
@@ -2021,21 +2082,28 @@ button, input, select, textarea {
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
+  border: 1.5px solid #10B981;
 }
 
 .toast-content {
   flex: 1;
+  min-width: 0;
 }
 
 .toast-title {
   font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--color-text-main);
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.25;
 }
 
 .toast-msg {
-  font-size: 0.8rem;
-  color: var(--color-text-secondary);
+  font-size: 0.78rem;
+  color: #94A3B8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1px;
 }
 
 /* ==========================================================================
@@ -3132,6 +3200,227 @@ input:checked + .switch-slider:before {
   }
 }
 
+/* ==========================================================================
+   BARRA DE ESTADO Y CONTROL DEL ROL ACTIVO (APPLE & SAMSUNG SAAS STYLE)
+   ========================================================================== */
+.active-role-ribbon {
+  background: #0F172A;
+  color: #FFFFFF;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.85rem;
+  transition: all var(--transition-normal);
+  position: relative;
+  z-index: 95;
+}
 
+.active-role-ribbon.role-admin {
+  background: linear-gradient(90deg, #0F172A 0%, #1E293B 100%);
+  border-bottom: 2.5px solid #F59E0B;
+}
 
+.active-role-ribbon.role-pro {
+  background: linear-gradient(90deg, #064E3B 0%, #065F46 100%);
+  border-bottom: 2.5px solid #10B981;
+}
+
+.active-role-ribbon.role-client {
+  background: linear-gradient(90deg, #F0FDF4 0%, #ECFDF5 100%);
+  color: #065F46;
+  border-bottom: 2px solid #A7F3D0;
+}
+
+.active-role-ribbon-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.ribbon-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ribbon-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.ribbon-text-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.ribbon-text-group strong {
+  font-size: 0.88rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.ribbon-text-group span {
+  font-size: 0.74rem;
+  opacity: 0.88;
+}
+
+.ribbon-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ribbon-action-btn {
+  background: #FFFFFF;
+  color: #0F172A;
+  font-weight: 700;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ribbon-action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+}
+
+.role-client .ribbon-action-btn {
+  background: #059669;
+  color: #FFFFFF;
+}
+
+.role-pro .ribbon-action-btn {
+  background: #F59E0B;
+  color: #0F172A;
+}
+
+.role-admin .ribbon-action-btn {
+  background: #F59E0B;
+  color: #0F172A;
+}
+
+.ribbon-role-switch {
+  display: flex;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 3px;
+  border-radius: 8px;
+  gap: 3px;
+}
+
+.role-client .ribbon-role-switch {
+  background: rgba(6, 95, 70, 0.12);
+}
+
+.ribbon-pill {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-size: 0.73rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: all var(--transition-fast);
+}
+
+.ribbon-pill:hover, .ribbon-pill.active {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.role-client .ribbon-pill:hover, .role-client .ribbon-pill.active {
+  background: #059669;
+  color: #FFFFFF;
+}
+
+.ribbon-logout-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(239, 68, 68, 0.25);
+  color: #FECACA;
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.ribbon-logout-btn:hover {
+  background: #EF4444;
+  color: #FFFFFF;
+  border-color: #EF4444;
+}
+
+.role-client .ribbon-logout-btn {
+  background: #FEE2E2;
+  color: #DC2626;
+  border-color: #FECACA;
+}
+
+/* Ajustes Responsive para Celulares y Tablets */
+@media (max-width: 768px) {
+  .brand-wordmark {
+    font-size: 1.45rem;
+  }
+  .brand-logo {
+    margin-right: 8px;
+    gap: 8px;
+  }
+  .brand-mascot-icon {
+    width: 34px;
+    height: 34px;
+  }
+  .nav-actions {
+    gap: 6px;
+  }
+  .nav-user-pill-btn .nav-user-name {
+    display: none;
+  }
+  .user-profile-menu {
+    right: -10px;
+    width: 290px;
+    max-width: calc(100vw - 20px);
+  }
+  .active-role-ribbon-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .ribbon-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* ==========================================================================
+   FEEDBACK TÁCTIL Y MICRO-INTERACCIONES (APPLE & SAMSUNG ONEUI)
+   ========================================================================== */
+.btn, .mob-nav-item, .profile-role-pill, .ribbon-action-btn, .ribbon-pill, .ribbon-logout-btn, .nav-user-pill-btn {
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.btn:active, .ribbon-action-btn:active, .nav-user-pill-btn:active {
+  transform: scale(0.97) !important;
+}
+
+.mob-nav-item:active {
+  transform: scale(0.92) !important;
+}
+
+.profile-role-pill:active, .ribbon-pill:active {
+  transform: scale(0.94) !important;
+}
 

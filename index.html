@@ -87,18 +87,33 @@
         </button>
 
         <!-- Botón Ingresar (Cuando no hay sesión) -->
-        <button id="nav-login-btn" class="btn btn-secondary btn-sm" onclick="openAuthModal('client')">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-          Ingresar
+        <button id="nav-login-btn" class="btn btn-secondary btn-sm" onclick="openAuthModal('client')" style="display: none; align-items: center; gap: 8px;">
+          <svg class="google-icon-svg" width="16" height="16" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          <span>Ingresar con Google</span>
         </button>
 
         <!-- Botón Soy Profesional (Para trabajadores) -->
-        <button id="nav-pro-btn" class="btn btn-soft btn-sm" onclick="handleProNavClick()">
+        <button id="nav-pro-btn" class="btn btn-soft btn-sm" onclick="handleProNavClick()" style="display: none;">
           Soy Profesional
         </button>
 
+        <!-- Botón Rápido de Administrador (Visible en modo Admin) -->
+        <button id="nav-admin-quick-btn" class="btn btn-sm" onclick="openAdminBackofficeModal()" style="display: none; background: #0F172A; color: #FFFFFF; font-weight: 700; align-items: center; gap: 6px;">
+          <span>👑</span> Backoffice Dueño
+        </button>
+
+        <!-- Botón Rápido de Profesional (Visible en modo Pro) -->
+        <button id="nav-pro-quick-btn" class="btn btn-sm" onclick="document.getElementById('sademy-pro').scrollIntoView({behavior: 'smooth'})" style="display: none; background: #059669; color: #FFFFFF; font-weight: 700; align-items: center; gap: 6px;">
+          <span>⚡</span> Sademy Pro
+        </button>
+
         <!-- Menú de Usuario Autenticado (Estilo Apple / OneUI con blur y tarjeta) -->
-        <div id="nav-user-dropdown-wrapper" class="nav-user-dropdown-wrapper" style="display: none;">
+        <div id="nav-user-dropdown-wrapper" class="nav-user-dropdown-wrapper">
           <button id="nav-user-pill-btn" class="nav-user-pill-btn" onclick="toggleUserDropdown()" aria-expanded="false" title="Abrir opciones de cuenta">
             <img id="nav-user-avatar-img" src="assets/mascot.jpg" class="nav-user-avatar" alt="Avatar usuario">
             <span id="nav-user-name-text" class="nav-user-name">Carlos M.</span>
@@ -115,32 +130,55 @@
                 <span id="menu-user-role-label" class="menu-user-badge">✓ Cliente Verificado</span>
               </div>
             </div>
+
+            <!-- Selector de Perfiles Rápido -->
+            <div style="padding: 10px 14px; background: #F8FAFC; border-radius: 12px; margin: 4px 10px;">
+              <span style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #64748B; letter-spacing: 0.04em; display: block; margin-bottom: 6px;">Cambiar Rol de Usuario:</span>
+              <div class="profile-switch-pills-row">
+                <button type="button" id="role-pill-client" class="profile-role-pill active" onclick="switchProfile('client')">
+                  👤 Cliente
+                </button>
+                <button type="button" id="role-pill-pro" class="profile-role-pill" onclick="switchProfile('pro')">
+                  ⚡ Pro
+                </button>
+                <button type="button" id="role-pill-admin" class="profile-role-pill" onclick="switchProfile('admin')">
+                  👑 Dueño
+                </button>
+              </div>
+            </div>
+
             <div class="user-menu-divider"></div>
-            <a href="javascript:void(0)" onclick="closeUserDropdown(); openMyOrdersModal();" class="user-menu-item">
+
+            <a href="javascript:void(0)" onclick="closeUserDropdown(); openMyOrdersModal();" class="user-menu-item view-client-only">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
               <span>Mis Pedidos</span>
               <span id="menu-orders-badge" class="nav-badge">2</span>
             </a>
-            <a href="javascript:void(0)" onclick="toggleUserRoleMode(); closeUserDropdown();" id="menu-toggle-role-link" class="user-menu-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
-              <span id="menu-role-switch-text">Cambiar a Portal Profesional (Pro)</span>
+
+            <a href="javascript:void(0)" onclick="closeUserDropdown(); switchProfile('pro');" class="user-menu-item view-pro-only">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              <span>Portal Sademy PRO (Oportunidades)</span>
             </a>
+
             <a href="javascript:void(0)" onclick="closeUserDropdown(); openProSubscriptionsModal();" class="user-menu-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
               <span>Membresías Sademy PRO</span>
               <span class="nav-badge" style="background: #F59E0B; color: #FFF;">PRO</span>
             </a>
+
             <a href="javascript:void(0)" onclick="closeUserDropdown(); openAdminBackofficeModal();" class="user-menu-item" style="color: #065F46; font-weight: 700;">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-              <span>Panel Dueño & Comisiones</span>
+              <span>Panel Master Dueño & Comisiones</span>
               <span class="nav-badge" style="background: var(--color-primary); color: #FFF;">ADMIN</span>
             </a>
+
             <a href="javascript:void(0)" onclick="triggerPwaInstall(); closeUserDropdown();" class="user-menu-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
               <span>Instalar Aplicación en Pantalla</span>
             </a>
+
             <div class="user-menu-divider"></div>
-            <button onclick="logoutUser()" class="user-menu-item user-menu-logout">
+            <button type="button" onclick="logoutUser()" class="user-menu-item user-menu-logout" style="width: 100%; border: none; background: transparent; cursor: pointer; text-align: left;">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
               <span>Cerrar Sesión</span>
             </button>
@@ -155,6 +193,36 @@
       </div>
     </div>
   </header>
+
+  <!-- Barra de Control del Rol Activo (Visible según el perfil: Administrador / Pro / Cliente) -->
+  <aside id="active-role-ribbon" class="active-role-ribbon" style="display: none;">
+    <div class="container active-role-ribbon-content">
+      <div class="ribbon-meta">
+        <span id="ribbon-role-icon" class="ribbon-icon">👑</span>
+        <div class="ribbon-text-group">
+          <strong id="ribbon-role-title">Modo Administrador Dueño Activo</strong>
+          <span id="ribbon-role-desc">Sademy HQ · Control de finanzas, comisiones y aprobaciones</span>
+        </div>
+      </div>
+      <div class="ribbon-actions">
+        <!-- Botón contextual de la barra -->
+        <button type="button" id="ribbon-action-primary" class="ribbon-action-btn" onclick="openAdminBackofficeModal()">
+          👑 Abrir Backoffice
+        </button>
+        <!-- Selector rápido de rol -->
+        <div class="ribbon-role-switch">
+          <button type="button" id="ribbon-pill-client" class="ribbon-pill" onclick="switchProfile('client')" title="Cambiar a Cliente">👤 Cliente</button>
+          <button type="button" id="ribbon-pill-pro" class="ribbon-pill" onclick="switchProfile('pro')" title="Cambiar a Pro">⚡ Pro</button>
+          <button type="button" id="ribbon-pill-admin" class="ribbon-pill" onclick="switchProfile('admin')" title="Cambiar a Admin Dueño">👑 Dueño</button>
+        </div>
+        <!-- Botón Cerrar Sesión Directo -->
+        <button type="button" class="ribbon-logout-btn" onclick="logoutUser()" title="Cerrar sesión">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span>Salir</span>
+        </button>
+      </div>
+    </div>
+  </aside>
 
   <!-- ========================================================================
        HERO SECTION
@@ -1492,6 +1560,38 @@
             <span>Continuar con Google</span>
           </button>
 
+          <!-- Selector Rápido de Perfiles para Pruebas y Acceso Inmediato -->
+          <div style="margin-top: 16px; background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 12px; padding: 14px;">
+            <span style="font-size: 0.76rem; text-transform: uppercase; font-weight: 800; color: #475569; display: block; margin-bottom: 8px;">
+              ⚡ O ingresá directamente con un perfil activo:
+            </span>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <button type="button" class="btn btn-outline-pwa btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700; background: #FFFFFF; text-align: left; padding: 8px 12px;" onclick="switchProfile('client'); closeAuthModal();">
+                <span style="font-size: 1.2rem;">👤</span>
+                <div style="text-align: left; flex: 1;">
+                  <strong style="color: #0F172A; font-size: 0.85rem; display: block;">Carlos M. (Cliente)</strong>
+                  <span style="font-size: 0.72rem; color: #64748B;">Buscá oficios y recibí presupuestos protegidos</span>
+                </div>
+              </button>
+
+              <button type="button" class="btn btn-outline-pwa btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700; background: #FFFFFF; text-align: left; padding: 8px 12px;" onclick="switchProfile('pro'); closeAuthModal();">
+                <span style="font-size: 1.2rem;">⚡</span>
+                <div style="text-align: left; flex: 1;">
+                  <strong style="color: #059669; font-size: 0.85rem; display: block;">Marcos R. (Profesional Pro)</strong>
+                  <span style="font-size: 0.72rem; color: #64748B;">Electricista matriculado, cotizá y cobrá con MP</span>
+                </div>
+              </button>
+
+              <button type="button" class="btn btn-outline-pwa btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700; background: #FFFFFF; text-align: left; padding: 8px 12px;" onclick="switchProfile('admin'); closeAuthModal();">
+                <span style="font-size: 1.2rem;">👑</span>
+                <div style="text-align: left; flex: 1;">
+                  <strong style="color: #0F172A; font-size: 0.85rem; display: block;">Sademy HQ (Dueño / Administrador)</strong>
+                  <span style="font-size: 0.72rem; color: #64748B;">Control total de ingresos, comisiones y matrículas</span>
+                </div>
+              </button>
+            </div>
+          </div>
+
           <div style="margin-top: 18px; background-color: var(--color-surface-light); border-radius: 12px; padding: 14px; border: 1px solid var(--color-border);">
             <div style="font-size: 0.82rem; font-weight: 700; color: var(--color-text-main); margin-bottom: 6px;">
               ¿Por qué registrarte como cliente?
@@ -2088,7 +2188,115 @@
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
       <span>Garantía</span>
     </button>
+    <button id="mob-nav-btn-perfil" class="mob-nav-item" onclick="openAccountModal()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      <span id="mob-nav-perfil-label">Cuenta</span>
+    </button>
   </nav>
+
+  <!-- ========================================================================
+       MODAL: MI CUENTA, PERFILES Y CIERRE DE SESIÓN (ESTILO APPLE / SAMSUNG)
+       ======================================================================== -->
+  <div id="modal-account-view" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-account-title">
+    <div class="modal-container" style="max-width: 500px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <img id="account-modal-avatar" src="assets/mascot.jpg" alt="Avatar" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2.5px solid var(--color-primary);">
+          <div>
+            <h3 id="account-modal-name" class="modal-title" style="font-size: 1.2rem; margin: 0;">Carlos M.</h3>
+            <p id="account-modal-email" style="font-size: 0.8rem; color: var(--color-text-secondary); margin: 2px 0 0;">carlos.m@gmail.com</p>
+            <span id="account-modal-badge" class="badge-tag" style="background: #ECFDF5; color: #065F46; font-weight: 700; margin-top: 4px; display: inline-block;">✓ Cliente Verificado</span>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeAccountModal()" aria-label="Cerrar modal">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding-top: 16px;">
+        
+        <!-- Selector de Perfiles Rápido -->
+        <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 14px; margin-bottom: 16px;">
+          <span style="font-size: 0.74rem; text-transform: uppercase; font-weight: 800; color: #475569; letter-spacing: 0.04em; display: block; margin-bottom: 10px;">
+            Cambiar Rol de Usuario en 1 Clic:
+          </span>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+            <button type="button" id="acc-pill-client" class="profile-role-pill active" onclick="switchProfile('client'); closeAccountModal();">
+              <span style="font-size: 1.15rem; display: block; margin-bottom: 2px;">👤</span>
+              <strong>Cliente</strong>
+            </button>
+            <button type="button" id="acc-pill-pro" class="profile-role-pill" onclick="switchProfile('pro'); closeAccountModal();">
+              <span style="font-size: 1.15rem; display: block; margin-bottom: 2px;">⚡</span>
+              <strong>Pro</strong>
+            </button>
+            <button type="button" id="acc-pill-admin" class="profile-role-pill" onclick="switchProfile('admin'); closeAccountModal();">
+              <span style="font-size: 1.15rem; display: block; margin-bottom: 2px;">👑</span>
+              <strong>Dueño</strong>
+            </button>
+          </div>
+        </div>
+
+        <!-- Acciones Rápidas del Rol -->
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <button type="button" onclick="closeAccountModal(); openMyOrdersModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700;">
+            <span style="font-size: 1rem;">📦</span>
+            <div style="text-align: left;">
+              <div style="color: #0F172A;">Mis Pedidos & Garantía Escrow</div>
+              <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Ver pedidos en curso y PIN de conformidad</div>
+            </div>
+          </button>
+
+          <button type="button" onclick="closeAccountModal(); switchProfile('pro');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700;">
+            <span style="font-size: 1rem;">⚡</span>
+            <div style="text-align: left;">
+              <div style="color: #047857;">Portal Sademy PRO</div>
+              <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">12 solicitudes abiertas para cotizar en tu zona</div>
+            </div>
+          </button>
+
+          <button type="button" onclick="closeAccountModal(); openAdminBackofficeModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700;">
+            <span style="font-size: 1rem;">👑</span>
+            <div style="text-align: left;">
+              <div style="color: #92400E;">Panel Master Dueño (ADMIN)</div>
+              <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Control de comisiones, balances y matrículas</div>
+            </div>
+          </button>
+
+          <button type="button" onclick="closeAccountModal(); openProSubscriptionsModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 600;">
+            <span style="font-size: 1rem;">💎</span>
+            <div style="text-align: left;">
+              <div>Membresías Sademy PRO</div>
+              <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Comisión reducida hasta el 5%</div>
+            </div>
+          </button>
+
+          <button type="button" onclick="closeAccountModal(); triggerPwaInstall();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 600;">
+            <span style="font-size: 1rem;">📲</span>
+            <div style="text-align: left;">
+              <div>Instalar Aplicación en Pantalla</div>
+              <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Acceso directo como app nativa</div>
+            </div>
+          </button>
+        </div>
+
+        <div style="height: 1px; background: #E2E8F0; margin: 16px 0;"></div>
+
+        <!-- Botón Cerrar Sesión Claro y Destacado -->
+        <div id="account-logged-in-section">
+          <button type="button" onclick="logoutUser(); closeAccountModal();" class="btn btn-sm" style="width: 100%; background: #FEE2E2; color: #B91C1C; border: 1.5px solid #FECACA; font-weight: 800; justify-content: center; gap: 8px; padding: 12px; cursor: pointer;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            <span>Cerrar Sesión</span>
+          </button>
+        </div>
+
+        <div id="account-guest-section" style="display: none; text-align: center;">
+          <p style="font-size: 0.85rem; color: #64748B; margin-bottom: 12px;">Navegando como Invitado. Elegí un perfil o ingresá con Google.</p>
+          <button type="button" class="btn-google" style="width: 100%; margin-bottom: 8px;" onclick="closeAccountModal(); openAuthModal('client');">
+            <span>Iniciar Sesión con Google</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
 
   <!-- Lógica y funcionalidades interactivas -->
   <script src="js/app.js"></script>
