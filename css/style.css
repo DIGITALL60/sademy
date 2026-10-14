@@ -383,6 +383,11 @@ button, input, select, textarea {
   margin: 6px 0;
 }
 
+.user-menu-role-group {
+  display: flex;
+  flex-direction: column;
+}
+
 .user-menu-item {
   display: flex;
   align-items: center;

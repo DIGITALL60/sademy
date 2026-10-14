@@ -572,11 +572,8 @@ function updateNavAuthState() {
         if (ribbonTitle) ribbonTitle.textContent = 'Modo Profesional Pro (Marcos R.)';
         if (ribbonDesc) ribbonDesc.textContent = 'Saldo disponible: $49.000 ARS · 12 Solicitudes abiertas en tu zona';
         if (ribbonBtn) {
-          ribbonBtn.innerHTML = '⚡ Ver Solicitudes Pro';
-          ribbonBtn.onclick = () => {
-            const el = document.getElementById('sademy-pro');
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-          };
+          ribbonBtn.innerHTML = '⚡ Portal Sademy Pro';
+          ribbonBtn.onclick = () => openProDashboardModal('oportunidades');
         }
       } else {
         if (ribbonIcon) ribbonIcon.textContent = '👤';
@@ -636,6 +633,62 @@ function closeAccountModal() {
   if (modal) modal.classList.remove('active');
 }
 
+/* ==========================================================================
+   PORTAL DEDICADO SADEMY PRO (DASHBOARD SIN SCROLL)
+   ========================================================================== */
+function openProDashboardModal(initialTab = 'oportunidades') {
+  triggerHapticFeedback();
+  playPop();
+  switchProDashboardTab(initialTab);
+  const modal = document.getElementById('modal-pro-dashboard');
+  if (modal) modal.classList.add('active');
+}
+
+function closeProDashboardModal() {
+  const modal = document.getElementById('modal-pro-dashboard');
+  if (modal) modal.classList.remove('active');
+}
+
+function switchProDashboardTab(tabName) {
+  triggerHapticFeedback();
+  playPop();
+  const tabs = ['oportunidades', 'billetera', 'cotizaciones', 'membresia'];
+  tabs.forEach(t => {
+    const btn = document.getElementById(`pro-dash-tab-btn-${t}`);
+    const view = document.getElementById(`pro-dash-view-${t}`);
+    if (btn) {
+      if (t === tabName) btn.classList.add('active');
+      else btn.classList.remove('active');
+    }
+    if (view) {
+      if (t === tabName) view.style.display = 'block';
+      else view.style.display = 'none';
+    }
+  });
+}
+
+function withdrawProFunds() {
+  triggerHapticFeedback();
+  playSuccessChime();
+  showToast('💸 Retiro Solicitado con Éxito', 'Se transfirieron $49.000 ARS a tu cuenta vinculada de Marcos R. Comprobante enviado por email.');
+  const balText = document.getElementById('pro-dash-balance-text');
+  const bigBal = document.getElementById('pro-wallet-big-balance');
+  if (balText) balText.textContent = '$0 ARS';
+  if (bigBal) bigBal.innerHTML = '$0 <span style="font-size: 1rem; font-weight: 600;">ARS</span>';
+}
+
+function openClientWarrantyModal() {
+  triggerHapticFeedback();
+  playPop();
+  const modal = document.getElementById('modal-client-warranty');
+  if (modal) modal.classList.add('active');
+}
+
+function closeClientWarrantyModal() {
+  const modal = document.getElementById('modal-client-warranty');
+  if (modal) modal.classList.remove('active');
+}
+
 function switchProfile(roleKey) {
   triggerHapticFeedback();
   playSuccessChime();
@@ -657,10 +710,9 @@ function switchProfile(roleKey) {
     }, 300);
   } else if (roleKey === 'pro') {
     showToast('⚡ Modo Profesional Pro Activo', 'Bienvenido Marcos. Podés cotizar solicitudes abiertas y cobrar mediante Mercado Pago.');
-    const proSection = document.getElementById('sademy-pro');
-    if (proSection) {
-      proSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    setTimeout(() => {
+      openProDashboardModal('oportunidades');
+    }, 300);
   } else {
     showToast('👤 Modo Cliente Activo', 'Bienvenido Carlos. Podés buscar oficios verificados y contratar con pago protegido.');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -694,7 +746,7 @@ function handleProNavClick() {
   triggerHapticFeedback();
   playPop();
   if (appState.currentUser && appState.currentUser.role === 'pro') {
-    switchProfile('pro');
+    openProDashboardModal('oportunidades');
   } else {
     openAuthModal('pro');
   }
@@ -714,6 +766,7 @@ function setRole(role) {
 function applyRoleView(role) {
   const clientViews = document.querySelectorAll('.view-client-only');
   const proViews = document.querySelectorAll('.view-pro-only');
+  const adminViews = document.querySelectorAll('.view-admin-only');
   const adminQuickBtn = document.getElementById('nav-admin-quick-btn');
   const proQuickBtn = document.getElementById('nav-pro-quick-btn');
 
@@ -726,13 +779,21 @@ function applyRoleView(role) {
 
   if (role === 'pro') {
     clientViews.forEach(el => el.style.display = 'none');
-    proViews.forEach(el => el.style.display = 'block');
+    proViews.forEach(el => el.style.display = 'flex');
+    adminViews.forEach(el => el.style.display = 'none');
   } else if (role === 'admin') {
-    clientViews.forEach(el => el.style.display = '');
-    proViews.forEach(el => el.style.display = 'block');
-  } else {
-    clientViews.forEach(el => el.style.display = '');
+    clientViews.forEach(el => el.style.display = 'none');
     proViews.forEach(el => el.style.display = 'none');
+    adminViews.forEach(el => el.style.display = 'flex');
+  } else if (role === 'client') {
+    clientViews.forEach(el => el.style.display = 'flex');
+    proViews.forEach(el => el.style.display = 'none');
+    adminViews.forEach(el => el.style.display = 'none');
+  } else {
+    // guest
+    clientViews.forEach(el => el.style.display = 'none');
+    proViews.forEach(el => el.style.display = 'none');
+    adminViews.forEach(el => el.style.display = 'none');
   }
 }
 

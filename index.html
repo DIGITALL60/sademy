@@ -108,7 +108,7 @@
         </button>
 
         <!-- Botón Rápido de Profesional (Visible en modo Pro) -->
-        <button id="nav-pro-quick-btn" class="btn btn-sm" onclick="document.getElementById('sademy-pro').scrollIntoView({behavior: 'smooth'})" style="display: none; background: #059669; color: #FFFFFF; font-weight: 700; align-items: center; gap: 6px;">
+        <button id="nav-pro-quick-btn" class="btn btn-sm" onclick="openProDashboardModal()" style="display: none; background: #059669; color: #FFFFFF; font-weight: 700; align-items: center; gap: 6px;">
           <span>⚡</span> Sademy Pro
         </button>
 
@@ -149,28 +149,58 @@
 
             <div class="user-menu-divider"></div>
 
-            <a href="javascript:void(0)" onclick="closeUserDropdown(); openMyOrdersModal();" class="user-menu-item view-client-only">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-              <span>Mis Pedidos</span>
-              <span id="menu-orders-badge" class="nav-badge">2</span>
-            </a>
+            <!-- ================= Items para CLIENTE ================= -->
+            <div class="user-menu-role-group view-client-only">
+              <a href="javascript:void(0)" onclick="closeUserDropdown(); openMyOrdersModal();" class="user-menu-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                <span>Mis Pedidos & Custodia</span>
+                <span id="menu-orders-badge" class="nav-badge">2</span>
+              </a>
+              <a href="javascript:void(0)" onclick="closeUserDropdown(); openNewOrderModal();" class="user-menu-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <span>Pedir Nuevo Presupuesto</span>
+              </a>
+              <a href="javascript:void(0)" onclick="closeUserDropdown(); openClientWarrantyModal();" class="user-menu-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span>Garantía & Fondos Protegidos</span>
+              </a>
+            </div>
 
-            <a href="javascript:void(0)" onclick="closeUserDropdown(); switchProfile('pro');" class="user-menu-item view-pro-only">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-              <span>Portal Sademy PRO (Oportunidades)</span>
-            </a>
+            <!-- ================= Items para PROFESIONAL PRO ================= -->
+            <div class="user-menu-role-group view-pro-only">
+              <a href="javascript:void(0)" onclick="closeUserDropdown(); openProDashboardModal('oportunidades');" class="user-menu-item" style="color: #047857; font-weight: 700;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                <span>Portal Sademy PRO (Oportunidades)</span>
+                <span class="nav-badge" style="background: #10B981; color: #FFF;">12</span>
+              </a>
+              <a href="javascript:void(0)" onclick="closeUserDropdown(); openProDashboardModal('billetera');" class="user-menu-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                <span>Mi Billetera & Cobros ($49.000)</span>
+              </a>
+              <a href="javascript:void(0)" onclick="closeUserDropdown(); openProSubscriptionsModal();" class="user-menu-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                <span>Membresías Sademy PRO</span>
+                <span class="nav-badge" style="background: #F59E0B; color: #FFF;">PRO</span>
+              </a>
+            </div>
 
-            <a href="javascript:void(0)" onclick="closeUserDropdown(); openProSubscriptionsModal();" class="user-menu-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-              <span>Membresías Sademy PRO</span>
-              <span class="nav-badge" style="background: #F59E0B; color: #FFF;">PRO</span>
-            </a>
-
-            <a href="javascript:void(0)" onclick="closeUserDropdown(); openAdminBackofficeModal();" class="user-menu-item" style="color: #065F46; font-weight: 700;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-              <span>Panel Master Dueño & Comisiones</span>
-              <span class="nav-badge" style="background: var(--color-primary); color: #FFF;">ADMIN</span>
-            </a>
+            <!-- ================= Items para ADMINISTRADOR / DUEÑO ================= -->
+            <div class="user-menu-role-group view-admin-only">
+              <a href="javascript:void(0)" onclick="closeUserDropdown(); openAdminBackofficeModal('finanzas');" class="user-menu-item" style="color: #92400E; font-weight: 700;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                <span>Panel Master Dueño & Finanzas</span>
+                <span class="nav-badge" style="background: #0F172A; color: #FFF;">ADMIN</span>
+              </a>
+              <a href="javascript:void(0)" onclick="closeUserDropdown(); openAdminBackofficeModal('matriculas');" class="user-menu-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                <span>Aprobación de Matrículas</span>
+                <span class="nav-badge" style="background: #EF4444; color: #FFF;" id="menu-matriculas-badge">2</span>
+              </a>
+              <a href="javascript:void(0)" onclick="closeUserDropdown(); openAdminBackofficeModal('custodia');" class="user-menu-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <span>Pagos en Custodia (Escrow)</span>
+              </a>
+            </div>
 
             <a href="javascript:void(0)" onclick="triggerPwaInstall(); closeUserDropdown();" class="user-menu-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
@@ -1701,6 +1731,249 @@
   </div>
 
   <!-- ========================================================================
+       MODAL: PORTAL SADEMY PRO (ESPACIO DEDICADO DEL PROFESIONAL - NO SCROLL)
+       ======================================================================== -->
+  <div id="modal-pro-dashboard" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="pro-dash-modal-title">
+    <div class="modal-container" style="max-width: 860px; width: 95%;">
+      
+      <div class="modal-header" style="background: #F8FAFC; border-bottom: 1px solid #E2E8F0; padding: 18px 24px;">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <img src="assets/marcos.jpg" alt="Marcos R." style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2.5px solid #10B981;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <h3 id="pro-dash-modal-title" class="modal-title" style="font-size: 1.25rem; margin: 0;">Portal Sademy PRO</h3>
+              <span class="badge-tag" style="background: #D1FAE5; color: #064E3B; font-weight: 800;">★ COPIME #4829</span>
+            </div>
+            <p style="font-size: 0.82rem; color: #64748B; margin: 2px 0 0;">
+              Marcos R. · Electricista Matriculado · Plan PRO Destacado (8% comisión)
+            </p>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="text-align: right; background: #ECFDF5; border: 1.5px solid #A7F3D0; border-radius: 10px; padding: 6px 12px;">
+            <div style="font-size: 0.68rem; text-transform: uppercase; font-weight: 800; color: #065F46;">Saldo Disponible</div>
+            <div style="font-size: 1.1rem; font-weight: 800; color: #047857;" id="pro-dash-balance-text">$49.000 ARS</div>
+          </div>
+          <button class="modal-close-btn" onclick="closeProDashboardModal()" aria-label="Cerrar modal">&times;</button>
+        </div>
+      </div>
+
+      <!-- Segmented Control Bar estilo iOS / Samsung OneUI -->
+      <div style="display: flex; gap: 6px; padding: 10px 24px; background: #FFFFFF; border-bottom: 1px solid #E2E8F0; overflow-x: auto;">
+        <button type="button" id="pro-dash-tab-btn-oportunidades" class="profile-role-pill active" onclick="switchProDashboardTab('oportunidades')" style="flex: 1; padding: 8px 10px; font-size: 0.8rem;">
+          ⚡ Oportunidades en Vivo (12)
+        </button>
+        <button type="button" id="pro-dash-tab-btn-billetera" class="profile-role-pill" onclick="switchProDashboardTab('billetera')" style="flex: 1; padding: 8px 10px; font-size: 0.8rem;">
+          💰 Billetera & Cobros
+        </button>
+        <button type="button" id="pro-dash-tab-btn-cotizaciones" class="profile-role-pill" onclick="switchProDashboardTab('cotizaciones')" style="flex: 1; padding: 8px 10px; font-size: 0.8rem;">
+          📝 Cotizaciones Enviadas (3)
+        </button>
+        <button type="button" id="pro-dash-tab-btn-membresia" class="profile-role-pill" onclick="switchProDashboardTab('membresia')" style="flex: 1; padding: 8px 10px; font-size: 0.8rem;">
+          💎 Membresía PRO
+        </button>
+      </div>
+
+      <div class="modal-body" style="padding: 20px 24px;">
+        
+        <!-- PESTAÑA 1: OPORTUNIDADES EN VIVO -->
+        <div id="pro-dash-view-oportunidades">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <span style="font-size: 0.85rem; color: #475569; font-weight: 600;">
+              Solicitudes verificadas de clientes buscando tu oficio en tu zona (CABA):
+            </span>
+            <span class="badge-tag" style="background: #ECFDF5; color: #065F46; font-weight: 700;">🟢 En vivo ahora</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 12px;" id="pro-dash-opportunities-list">
+            
+            <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 16px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <strong style="color: #0F172A; font-size: 0.95rem;">Instalación de disyuntor bipolar y recableado de cocina</strong>
+                  <span class="badge-tag" style="background: #FEF3C7; color: #92400E; font-weight: 700;">Urgente</span>
+                </div>
+                <div style="font-size: 0.82rem; color: #64748B; margin-top: 4px;">
+                  📍 Palermo Chico · Publicado hace 14 min por <strong>Agustina V.</strong>
+                </div>
+                <div style="font-size: 0.8rem; color: #059669; font-weight: 600; margin-top: 4px;">
+                  💰 Presupuesto estimado por cliente: $28.000 ARS · Pago protegido en custodia Sademy
+                </div>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="openProQuoteModal('ORD-2026-095', 'Instalación de disyuntor bipolar y recableado')" style="font-weight: 700; white-space: nowrap;">
+                ⚡ Enviar Presupuesto
+              </button>
+            </div>
+
+            <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 16px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <strong style="color: #0F172A; font-size: 0.95rem;">Revisión técnica de tablero y cambio de 4 térmicas</strong>
+                  <span class="badge-tag" style="background: #ECFDF5; color: #065F46; font-weight: 700;">Estándar</span>
+                </div>
+                <div style="font-size: 0.82rem; color: #64748B; margin-top: 4px;">
+                  📍 Belgrano R · Publicado hace 35 min por <strong>Hernán M.</strong>
+                </div>
+                <div style="font-size: 0.8rem; color: #059669; font-weight: 600; margin-top: 4px;">
+                  💰 Presupuesto estimado por cliente: $34.500 ARS · Requiere matrícula oficial
+                </div>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="openProQuoteModal('ORD-2026-091', 'Revisión técnica de tablero y cambio de térmicas')" style="font-weight: 700; white-space: nowrap;">
+                ⚡ Enviar Presupuesto
+              </button>
+            </div>
+
+            <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 16px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <strong style="color: #0F172A; font-size: 0.95rem;">Cortocircuito urgente: departamento sin suministro eléctrico</strong>
+                  <span class="badge-tag" style="background: #FEE2E2; color: #B91C1C; font-weight: 800;">⚡ Guardia 24hs</span>
+                </div>
+                <div style="font-size: 0.82rem; color: #64748B; margin-top: 4px;">
+                  📍 Recoleta · Publicado hace 48 min por <strong>Gonzalo P.</strong>
+                </div>
+                <div style="font-size: 0.8rem; color: #059669; font-weight: 600; margin-top: 4px;">
+                  💰 Presupuesto libre a convenir · Pago directo con tarjeta / MP
+                </div>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="openProQuoteModal('ORD-2026-088', 'Reparación de cortocircuito urgente 24hs')" style="font-weight: 700; white-space: nowrap;">
+                ⚡ Enviar Presupuesto
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- PESTAÑA 2: BILLETERA & COBROS -->
+        <div id="pro-dash-view-billetera" style="display: none;">
+          <div style="background: linear-gradient(135deg, #064E3B 0%, #047857 100%); color: #FFFFFF; border-radius: 16px; padding: 22px; margin-bottom: 20px; box-shadow: 0 10px 25px -5px rgba(6, 78, 59, 0.3);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+              <div>
+                <span style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.9;">Saldo Neto Disponible</span>
+                <h2 style="font-size: 2.1rem; font-weight: 800; margin: 4px 0 2px; color: #FFFFFF;" id="pro-wallet-big-balance">$49.000 <span style="font-size: 1rem; font-weight: 600;">ARS</span></h2>
+                <p style="font-size: 0.8rem; opacity: 0.88; margin: 0;">Fondos verificados y liberados mediante PIN de conformidad de clientes.</p>
+              </div>
+              <button class="btn btn-sm" onclick="withdrawProFunds()" style="background: #FFFFFF; color: #065F46; font-weight: 800; padding: 10px 18px; border-radius: 10px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer;">
+                💸 Transferir a Mercado Pago / CBU
+              </button>
+            </div>
+          </div>
+
+          <h4 style="font-size: 0.92rem; font-weight: 700; color: #1E293B; margin-bottom: 10px;">Cobros Recientes Liberados</h4>
+          <div style="border: 1px solid #E2E8F0; border-radius: 12px; overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem;">
+              <thead style="background: #F8FAFC; text-align: left; border-bottom: 1px solid #E2E8F0;">
+                <tr>
+                  <th style="padding: 10px 14px; color: #64748B;">Orden</th>
+                  <th style="padding: 10px 14px; color: #64748B;">Cliente</th>
+                  <th style="padding: 10px 14px; color: #64748B;">Trabajo</th>
+                  <th style="padding: 10px 14px; color: #64748B;">Monto Bruto</th>
+                  <th style="padding: 10px 14px; color: #64748B;">Comisión Sademy (8%)</th>
+                  <th style="padding: 10px 14px; color: #64748B;">Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid #F1F5F9;">
+                  <td style="padding: 10px 14px; font-weight: 700; color: #0F172A;">ORD-2026-082</td>
+                  <td style="padding: 10px 14px;">Lucía B.</td>
+                  <td style="padding: 10px 14px;">Reparación eléctrica</td>
+                  <td style="padding: 10px 14px; font-weight: 700; color: #065F46;">$24.000 ARS</td>
+                  <td style="padding: 10px 14px; color: #059669;">-$1.920 ARS</td>
+                  <td style="padding: 10px 14px;"><span class="badge-tag" style="background: #DCFCE7; color: #166534; font-weight: 700;">✓ Acreditado</span></td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px 14px; font-weight: 700; color: #0F172A;">ORD-2026-077</td>
+                  <td style="padding: 10px 14px;">Diego F.</td>
+                  <td style="padding: 10px 14px;">Instalación de apliques</td>
+                  <td style="padding: 10px 14px; font-weight: 700; color: #065F46;">$25.000 ARS</td>
+                  <td style="padding: 10px 14px; color: #059669;">-$2.000 ARS</td>
+                  <td style="padding: 10px 14px;"><span class="badge-tag" style="background: #DCFCE7; color: #166534; font-weight: 700;">✓ Acreditado</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- PESTAÑA 3: MIS COTIZACIONES ENVIADAS -->
+        <div id="pro-dash-view-cotizaciones" style="display: none;">
+          <h4 style="font-size: 0.92rem; font-weight: 700; color: #1E293B; margin-bottom: 12px;">Cotizaciones Presentadas a Clientes</h4>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 12px; padding: 14px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong style="color: #0F172A; font-size: 0.9rem;">Instalación de luminaria y dimer en living</strong>
+                <div style="font-size: 0.8rem; color: #64748B; margin-top: 2px;">Cliente: <strong>Carlos M.</strong> · Enviado: Hoy</div>
+              </div>
+              <div style="text-align: right;">
+                <strong style="color: #065F46; font-size: 0.95rem;">$24.500 ARS</strong>
+                <span class="badge-tag" style="background: #FEF3C7; color: #92400E; display: block; margin-top: 2px; font-weight: 700;">En revisión</span>
+              </div>
+            </div>
+            <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 12px; padding: 14px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong style="color: #0F172A; font-size: 0.9rem;">Cableado de red y tomas estabilizados</strong>
+                <div style="font-size: 0.8rem; color: #64748B; margin-top: 2px;">Cliente: <strong>Sofía R.</strong> · Enviado: Ayer</div>
+              </div>
+              <div style="text-align: right;">
+                <strong style="color: #065F46; font-size: 0.95rem;">$38.000 ARS</strong>
+                <span class="badge-tag" style="background: #DCFCE7; color: #166534; display: block; margin-top: 2px; font-weight: 700;">Aceptado</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PESTAÑA 4: MEMBRESÍA PRO -->
+        <div id="pro-dash-view-membresia" style="display: none;">
+          <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 16px; padding: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+            <div>
+              <span class="badge-tag" style="background: #FEF3C7; color: #92400E; font-weight: 800; font-size: 0.75rem;">PLAN ACTIVO</span>
+              <h3 style="margin: 6px 0 2px; font-size: 1.2rem; color: #0F172A;">Plan PRO Destacado</h3>
+              <p style="font-size: 0.84rem; color: #64748B; margin: 0;">Comisión preferencial reducida al <strong>8%</strong> (ahorrás 47% de comisión frente al inicial).</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="closeProDashboardModal(); openProSubscriptionsModal();" style="font-weight: 700;">
+              💎 Administrar Planes PRO
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: GARANTÍA SADEMY Y PAGO EN CUSTODIA (PROTECCIÓN AL CLIENTE)
+       ======================================================================== -->
+  <div id="modal-client-warranty" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="warranty-modal-title">
+    <div class="modal-container" style="max-width: 580px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 40px; height: 40px; border-radius: 50%; background: #ECFDF5; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+            🛡️
+          </div>
+          <div>
+            <h3 id="warranty-modal-title" class="modal-title" style="font-size: 1.25rem;">Garantía & Fondos Protegidos</h3>
+            <p style="font-size: 0.8rem; color: #047857; margin: 0; font-weight: 600;">Custodia segura Sademy Escrow</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeClientWarrantyModal()" aria-label="Cerrar modal">&times;</button>
+      </div>
+      <div class="modal-body" style="padding-top: 16px;">
+        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 14px; padding: 18px; margin-bottom: 16px;">
+          <h4 style="font-size: 0.95rem; color: #0F172A; margin: 0 0 10px;">¿Cómo protege Sademy tu dinero?</h4>
+          <ol style="padding-left: 20px; font-size: 0.85rem; color: #475569; display: flex; flex-direction: column; gap: 8px; line-height: 1.5;">
+            <li><strong>Abonás a la plataforma:</strong> Al aceptar un presupuesto, el pago ingresa a una cuenta de custodia segura de Sademy.</li>
+            <li><strong>El profesional trabaja con garantía:</strong> Sabe que los fondos están garantizados y reservados para su cobro.</li>
+            <li><strong>Vos tenés el control total:</strong> El profesional NO cobra hasta que finalice el trabajo y vos le entregues tu <strong>PIN secreto de Conformidad</strong>.</li>
+            <li><strong>Garantía técnica de 6 meses:</strong> Si el trabajo no cumple con las normas técnicas acordadas, el dinero permanece retenido hasta su correcta resolución.</li>
+          </ol>
+        </div>
+        <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="closeClientWarrantyModal(); openNewOrderModal();">
+          Publicar Pedido con Fondos Protegidos
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
        MODAL 6: MIS PEDIDOS (PANEL DEL CLIENTE)
        ======================================================================== -->
   <div id="modal-my-orders" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="orders-modal-title">
@@ -2234,39 +2507,83 @@
           </div>
         </div>
 
-        <!-- Acciones Rápidas del Rol -->
+        <!-- Acciones Rápidas del Rol Scoped -->
         <div style="display: flex; flex-direction: column; gap: 8px;">
-          <button type="button" onclick="closeAccountModal(); openMyOrdersModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700;">
-            <span style="font-size: 1rem;">📦</span>
-            <div style="text-align: left;">
-              <div style="color: #0F172A;">Mis Pedidos & Garantía Escrow</div>
-              <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Ver pedidos en curso y PIN de conformidad</div>
-            </div>
-          </button>
+          
+          <!-- CLIENTE ONLY -->
+          <div class="user-menu-role-group view-client-only" style="display: flex; flex-direction: column; gap: 8px;">
+            <button type="button" onclick="closeAccountModal(); openMyOrdersModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700;">
+              <span style="font-size: 1rem;">📦</span>
+              <div style="text-align: left;">
+                <div style="color: #0F172A;">Mis Pedidos & Custodia</div>
+                <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Ver pedidos en curso y PIN de conformidad</div>
+              </div>
+            </button>
+            <button type="button" onclick="closeAccountModal(); openNewOrderModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700;">
+              <span style="font-size: 1rem;">➕</span>
+              <div style="text-align: left;">
+                <div style="color: #059669;">Pedir Nuevo Presupuesto</div>
+                <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Cotizaciones rápidas y gratis en 1 min</div>
+              </div>
+            </button>
+            <button type="button" onclick="closeAccountModal(); openClientWarrantyModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 600;">
+              <span style="font-size: 1rem;">🛡️</span>
+              <div style="text-align: left;">
+                <div>Garantía & Fondos Protegidos</div>
+                <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Custodia segura Sademy Escrow</div>
+              </div>
+            </button>
+          </div>
 
-          <button type="button" onclick="closeAccountModal(); switchProfile('pro');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700;">
-            <span style="font-size: 1rem;">⚡</span>
-            <div style="text-align: left;">
-              <div style="color: #047857;">Portal Sademy PRO</div>
-              <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">12 solicitudes abiertas para cotizar en tu zona</div>
-            </div>
-          </button>
+          <!-- PRO ONLY -->
+          <div class="user-menu-role-group view-pro-only" style="display: flex; flex-direction: column; gap: 8px;">
+            <button type="button" onclick="closeAccountModal(); openProDashboardModal('oportunidades');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700;">
+              <span style="font-size: 1rem;">⚡</span>
+              <div style="text-align: left;">
+                <div style="color: #047857;">Portal Sademy PRO (Oportunidades)</div>
+                <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">12 solicitudes abiertas para cotizar en tu zona</div>
+              </div>
+            </button>
+            <button type="button" onclick="closeAccountModal(); openProDashboardModal('billetera');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700;">
+              <span style="font-size: 1rem;">💰</span>
+              <div style="text-align: left;">
+                <div style="color: #065F46;">Mi Billetera & Cobros ($49.000)</div>
+                <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Retirar saldo a Mercado Pago o CBU</div>
+              </div>
+            </button>
+            <button type="button" onclick="closeAccountModal(); openProSubscriptionsModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 600;">
+              <span style="font-size: 1rem;">💎</span>
+              <div style="text-align: left;">
+                <div>Membresías Sademy PRO</div>
+                <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Comisión reducida hasta el 5%</div>
+              </div>
+            </button>
+          </div>
 
-          <button type="button" onclick="closeAccountModal(); openAdminBackofficeModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700;">
-            <span style="font-size: 1rem;">👑</span>
-            <div style="text-align: left;">
-              <div style="color: #92400E;">Panel Master Dueño (ADMIN)</div>
-              <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Control de comisiones, balances y matrículas</div>
-            </div>
-          </button>
-
-          <button type="button" onclick="closeAccountModal(); openProSubscriptionsModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 600;">
-            <span style="font-size: 1rem;">💎</span>
-            <div style="text-align: left;">
-              <div>Membresías Sademy PRO</div>
-              <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Comisión reducida hasta el 5%</div>
-            </div>
-          </button>
+          <!-- ADMIN ONLY -->
+          <div class="user-menu-role-group view-admin-only" style="display: flex; flex-direction: column; gap: 8px;">
+            <button type="button" onclick="closeAccountModal(); openAdminBackofficeModal('finanzas');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700;">
+              <span style="font-size: 1rem;">👑</span>
+              <div style="text-align: left;">
+                <div style="color: #92400E;">Panel Master Dueño & Finanzas</div>
+                <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Control de comisiones y facturación global</div>
+              </div>
+            </button>
+            <button type="button" onclick="closeAccountModal(); openAdminBackofficeModal('matriculas');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700;">
+              <span style="font-size: 1rem;">📜</span>
+              <div style="text-align: left;">
+                <div style="color: #B91C1C;">Aprobación de Matrículas (2)</div>
+                <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Revisión de Gasistas y Electricistas</div>
+              </div>
+            </button>
+            <button type="button" onclick="closeAccountModal(); openAdminBackofficeModal('custodia');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700;">
+              <span style="font-size: 1rem;">🔒</span>
+              <div style="text-align: left;">
+                <div style="color: #065F46;">Fondos en Custodia (Escrow)</div>
+                <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">$115.000 ARS retenidos para liberación con PIN</div>
+              </div>
+            </button>
+          </div>
 
           <button type="button" onclick="closeAccountModal(); triggerPwaInstall();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 600;">
             <span style="font-size: 1rem;">📲</span>
