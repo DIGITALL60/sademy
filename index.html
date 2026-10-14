@@ -5,6 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sademy · Marketplace de Servicios y Oficios Verificados</title>
   <meta name="description" content="Encontrá trabajadores calificados, certificados y de confianza. Electricistas, plomeros, gasistas y más oficios con presupuesto previo, pago seguro y garantía Sademy.">
+  <link rel="canonical" href="https://sademy.com/">
+
+  <!-- OpenGraph Metadata (WhatsApp, Facebook, LinkedIn, iMessage preview) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sademy · Marketplace de Oficios Verificados">
+  <meta property="og:description" content="Contratá electricistas, plomeros y especialistas verificados. Presupuestos sin cargo, pago protegido en custodia y garantía técnica Sademy.">
+  <meta property="og:image" content="assets/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="675">
+  <meta property="og:url" content="https://sademy.com/">
+  <meta property="og:site_name" content="Sademy">
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sademy · Marketplace de Oficios Verificados">
+  <meta name="twitter:description" content="Contratá electricistas, plomeros y especialistas verificados con pago seguro en custodia.">
+  <meta name="twitter:image" content="assets/og-cover.jpg">
   
   <!-- Favicon adaptado al logo circular de Sademy (sin esquinas cuadradas) -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -103,13 +120,15 @@
         </button>
 
         <!-- Botón Rápido de Administrador (Visible en modo Admin) -->
-        <button id="nav-admin-quick-btn" class="btn btn-sm" onclick="openAdminBackofficeModal()" style="display: none; background: #0F172A; color: #FFFFFF; font-weight: 700; align-items: center; gap: 6px;">
-          <span>👑</span> Backoffice Dueño
+        <button id="nav-admin-quick-btn" class="btn btn-sm" onclick="openAdminBackofficeModal()" style="display: none; background: #0F172A; color: #FFFFFF; font-weight: 700; align-items: center; gap: 8px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+          <span>Backoffice</span>
         </button>
 
         <!-- Botón Rápido de Profesional (Visible en modo Pro) -->
-        <button id="nav-pro-quick-btn" class="btn btn-sm" onclick="openProDashboardModal()" style="display: none; background: #059669; color: #FFFFFF; font-weight: 700; align-items: center; gap: 6px;">
-          <span>⚡</span> Sademy Pro
+        <button id="nav-pro-quick-btn" class="btn btn-sm" onclick="openProDashboardModal()" style="display: none; background: #059669; color: #FFFFFF; font-weight: 700; align-items: center; gap: 8px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+          <span>Portal Profesional</span>
         </button>
 
         <!-- Menú de Usuario Autenticado (Estilo Apple / OneUI con blur y tarjeta) -->
@@ -127,22 +146,22 @@
               <div class="menu-user-meta">
                 <strong id="menu-user-name">Carlos M.</strong>
                 <span id="menu-user-email">carlos.m@gmail.com</span>
-                <span id="menu-user-role-label" class="menu-user-badge">✓ Cliente Verificado</span>
+                <span id="menu-user-role-label" class="menu-user-badge">Cliente Verificado</span>
               </div>
             </div>
 
             <!-- Selector de Perfiles Rápido -->
-            <div style="padding: 10px 14px; background: #F8FAFC; border-radius: 12px; margin: 4px 10px;">
-              <span style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #64748B; letter-spacing: 0.04em; display: block; margin-bottom: 6px;">Cambiar Rol de Usuario:</span>
+            <div style="padding: 10px 14px; background: #F8FAFC; border-radius: 12px; margin: 4px 10px; border: 1px solid #E2E8F0;">
+              <span style="font-size: 0.68rem; text-transform: uppercase; font-weight: 700; color: #64748B; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Cambiar Rol de Sesión:</span>
               <div class="profile-switch-pills-row">
                 <button type="button" id="role-pill-client" class="profile-role-pill active" onclick="switchProfile('client')">
-                  👤 Cliente
+                  Cliente
                 </button>
                 <button type="button" id="role-pill-pro" class="profile-role-pill" onclick="switchProfile('pro')">
-                  ⚡ Pro
+                  Profesional
                 </button>
                 <button type="button" id="role-pill-admin" class="profile-role-pill" onclick="switchProfile('admin')">
-                  👑 Dueño
+                  Administrador
                 </button>
               </div>
             </div>
@@ -152,49 +171,49 @@
             <!-- ================= Items para CLIENTE ================= -->
             <div class="user-menu-role-group view-client-only">
               <a href="javascript:void(0)" onclick="closeUserDropdown(); openMyOrdersModal();" class="user-menu-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                <span>Mis Pedidos & Custodia</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                <span>Mis Pedidos y Custodia</span>
                 <span id="menu-orders-badge" class="nav-badge">2</span>
               </a>
               <a href="javascript:void(0)" onclick="closeUserDropdown(); openNewOrderModal();" class="user-menu-item">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                <span>Pedir Nuevo Presupuesto</span>
+                <span>Nuevo Pedido de Servicio</span>
               </a>
               <a href="javascript:void(0)" onclick="closeUserDropdown(); openClientWarrantyModal();" class="user-menu-item">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                <span>Garantía & Fondos Protegidos</span>
+                <span>Garantía y Fondos Protegidos</span>
               </a>
             </div>
 
             <!-- ================= Items para PROFESIONAL PRO ================= -->
             <div class="user-menu-role-group view-pro-only">
               <a href="javascript:void(0)" onclick="closeUserDropdown(); openProDashboardModal('oportunidades');" class="user-menu-item" style="color: #047857; font-weight: 700;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-                <span>Portal Sademy PRO (Oportunidades)</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                <span>Portal Profesional (Oportunidades)</span>
                 <span class="nav-badge" style="background: #10B981; color: #FFF;">12</span>
               </a>
               <a href="javascript:void(0)" onclick="closeUserDropdown(); openProDashboardModal('billetera');" class="user-menu-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-                <span>Mi Billetera & Cobros ($49.000)</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                <span>Billetera y Cobros ($49.000)</span>
               </a>
               <a href="javascript:void(0)" onclick="closeUserDropdown(); openProSubscriptionsModal();" class="user-menu-item">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                <span>Membresías Sademy PRO</span>
+                <span>Membresías Sademy Pro</span>
                 <span class="nav-badge" style="background: #F59E0B; color: #FFF;">PRO</span>
               </a>
             </div>
 
             <!-- ================= Items para ADMINISTRADOR / DUEÑO ================= -->
             <div class="user-menu-role-group view-admin-only">
-              <a href="javascript:void(0)" onclick="closeUserDropdown(); openAdminBackofficeModal('finanzas');" class="user-menu-item" style="color: #92400E; font-weight: 700;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                <span>Panel Master Dueño & Finanzas</span>
+              <a href="javascript:void(0)" onclick="closeUserDropdown(); openAdminBackofficeModal('finanzas');" class="user-menu-item" style="color: #0F172A; font-weight: 700;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="16"></line></svg>
+                <span>Backoffice de Finanzas</span>
                 <span class="nav-badge" style="background: #0F172A; color: #FFF;">ADMIN</span>
               </a>
               <a href="javascript:void(0)" onclick="closeUserDropdown(); openAdminBackofficeModal('matriculas');" class="user-menu-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
                 <span>Aprobación de Matrículas</span>
-                <span class="nav-badge" style="background: #EF4444; color: #FFF;" id="menu-matriculas-badge">2</span>
+                <span class="nav-badge" style="background: #059669; color: #FFF;" id="menu-matriculas-badge">2</span>
               </a>
               <a href="javascript:void(0)" onclick="closeUserDropdown(); openAdminBackofficeModal('custodia');" class="user-menu-item">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
@@ -204,7 +223,7 @@
 
             <a href="javascript:void(0)" onclick="triggerPwaInstall(); closeUserDropdown();" class="user-menu-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
-              <span>Instalar Aplicación en Pantalla</span>
+              <span>Instalar Aplicación en Dispositivo</span>
             </a>
 
             <div class="user-menu-divider"></div>
@@ -228,22 +247,24 @@
   <aside id="active-role-ribbon" class="active-role-ribbon" style="display: none;">
     <div class="container active-role-ribbon-content">
       <div class="ribbon-meta">
-        <span id="ribbon-role-icon" class="ribbon-icon">👑</span>
+        <span id="ribbon-role-icon" class="ribbon-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        </span>
         <div class="ribbon-text-group">
-          <strong id="ribbon-role-title">Modo Administrador Dueño Activo</strong>
-          <span id="ribbon-role-desc">Sademy HQ · Control de finanzas, comisiones y aprobaciones</span>
+          <strong id="ribbon-role-title">Panel de Control · Sademy HQ</strong>
+          <span id="ribbon-role-desc">Administración central de operaciones, cobros y verificación técnica</span>
         </div>
       </div>
       <div class="ribbon-actions">
         <!-- Botón contextual de la barra -->
         <button type="button" id="ribbon-action-primary" class="ribbon-action-btn" onclick="openAdminBackofficeModal()">
-          👑 Abrir Backoffice
+          Abrir Backoffice
         </button>
         <!-- Selector rápido de rol -->
         <div class="ribbon-role-switch">
-          <button type="button" id="ribbon-pill-client" class="ribbon-pill" onclick="switchProfile('client')" title="Cambiar a Cliente">👤 Cliente</button>
-          <button type="button" id="ribbon-pill-pro" class="ribbon-pill" onclick="switchProfile('pro')" title="Cambiar a Pro">⚡ Pro</button>
-          <button type="button" id="ribbon-pill-admin" class="ribbon-pill" onclick="switchProfile('admin')" title="Cambiar a Admin Dueño">👑 Dueño</button>
+          <button type="button" id="ribbon-pill-client" class="ribbon-pill" onclick="switchProfile('client')" title="Cambiar a Cliente">Cliente</button>
+          <button type="button" id="ribbon-pill-pro" class="ribbon-pill" onclick="switchProfile('pro')" title="Cambiar a Profesional">Profesional</button>
+          <button type="button" id="ribbon-pill-admin" class="ribbon-pill" onclick="switchProfile('admin')" title="Cambiar a Administrador">Administrador</button>
         </div>
         <!-- Botón Cerrar Sesión Directo -->
         <button type="button" class="ribbon-logout-btn" onclick="logoutUser()" title="Cerrar sesión">
@@ -290,12 +311,12 @@
             <div class="search-field">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
               <select id="hero-trade-select" aria-label="Seleccionar oficio">
-                <option value="electricidad">⚡ Electricista</option>
-                <option value="plomeria">🔧 Plomería y Sanitarios</option>
-                <option value="gas">🔥 Gasista Matriculado</option>
-                <option value="pintura">🎨 Pintura y Revestimientos</option>
-                <option value="cerrajeria">🔑 Cerrajería 24hs</option>
-                <option value="aire">❄️ Aire Acondicionado</option>
+                <option value="electricidad">Electricidad e Instalaciones</option>
+                <option value="plomeria">Plomería y Sanitarios</option>
+                <option value="gas">Gasista Matriculado</option>
+                <option value="pintura">Pintura y Revestimientos</option>
+                <option value="cerrajeria">Cerrajería y Seguridad</option>
+                <option value="aire">Climatización y Refrigeración</option>
               </select>
             </div>
 
@@ -517,16 +538,16 @@
 
             <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 12px;">
               <div style="background: #ECFDF5; border: 1px solid var(--color-primary-border); border-radius: 12px; padding: 14px;">
-                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                  <span style="font-size: 1.1rem;">🛡️</span>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                   <strong style="font-size: 0.95rem; color: #065F46;">Pago Protegido en Custodia</strong>
                 </div>
                 <p style="font-size: 0.82rem; color: #047857;">Tu dinero nunca va directo al trabajador hasta que el trabajo esté finalizado y des tu visto bueno.</p>
               </div>
 
               <div style="background: #F9FAFB; border: 1px solid var(--color-border); border-radius: 12px; padding: 14px;">
-                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                  <span style="font-size: 1.1rem;">📋</span>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
                   <strong style="font-size: 0.95rem; color: var(--color-text-main);">Seguro contra Daños</strong>
                 </div>
                 <p style="font-size: 0.82rem; color: var(--color-text-secondary);">Cobertura de hasta $500.000 ARS ante cualquier eventualidad imprevista durante el servicio.</p>
@@ -855,7 +876,7 @@
         <!-- Caso 1: Electricidad -->
         <div class="case-card">
           <div class="case-image-container">
-            <span class="case-tag-badge">⚡ Electricidad · Palermo</span>
+            <span class="case-tag-badge">Electricidad · Palermo</span>
             <img id="case-img-1" src="assets/marcos.jpg" alt="Caso Electricidad" class="case-img">
           </div>
           <div class="case-card-body">
@@ -881,7 +902,7 @@
         <!-- Caso 2: Plomería -->
         <div class="case-card">
           <div class="case-image-container">
-            <span class="case-tag-badge">🔧 Plomería · Belgrano</span>
+            <span class="case-tag-badge">Plomería · Belgrano</span>
             <img id="case-img-2" src="assets/sofia.jpg" alt="Caso Plomería" class="case-img">
           </div>
           <div class="case-card-body">
@@ -907,7 +928,7 @@
         <!-- Caso 3: Gas -->
         <div class="case-card">
           <div class="case-image-container">
-            <span class="case-tag-badge">🔥 Gas · Caballito</span>
+            <span class="case-tag-badge">Gas Matriculado · Caballito</span>
             <img id="case-img-3" src="assets/claudio.jpg" alt="Caso Gas" class="case-img">
           </div>
           <div class="case-card-body">
@@ -1089,25 +1110,25 @@
                 <td><strong>Verificación de identidad</strong></td>
                 <td>Nula (solo palabra de conocidos)</td>
                 <td>Cero (perfiles anónimos)</td>
-                <td class="highlight-col">✅ DNI, antecedentes y matrícula comprobados</td>
+                <td class="highlight-col"><span style="color: #059669; font-weight: 800; margin-right: 6px;">✓</span> DNI, antecedentes y matrícula comprobados</td>
               </tr>
               <tr>
                 <td><strong>Presupuestos y precios</strong></td>
                 <td>Inciertos, varían sin aviso</td>
                 <td>Dispares y sin respaldo</td>
-                <td class="highlight-col">✅ Comparativa lado a lado con desglose cerrado</td>
+                <td class="highlight-col"><span style="color: #059669; font-weight: 800; margin-right: 6px;">✓</span> Comparativa lado a lado con desglose cerrado</td>
               </tr>
               <tr>
                 <td><strong>Seguridad de pago</strong></td>
                 <td>Efectivo por adelantado sin garantía</td>
                 <td>Riesgo total de estafa</td>
-                <td class="highlight-col">✅ Pago en custodia Escrow hasta conformidad</td>
+                <td class="highlight-col"><span style="color: #059669; font-weight: 800; margin-right: 6px;">✓</span> Pago en custodia Escrow hasta conformidad</td>
               </tr>
               <tr>
                 <td><strong>Garantía ante roturas</strong></td>
                 <td>El trabajador no suele responder</td>
                 <td>Desaparece tras cobrar</td>
-                <td class="highlight-col">✅ Seguro de Daños Sademy y garantía escrita</td>
+                <td class="highlight-col"><span style="color: #059669; font-weight: 800; margin-right: 6px;">✓</span> Seguro de Daños Sademy y garantía escrita</td>
               </tr>
             </tbody>
           </table>
@@ -1137,10 +1158,10 @@
           <div class="form-group">
             <label class="form-label" for="calc-trade">Seleccioná el rubro</label>
             <select id="calc-trade" class="form-control">
-              <option value="electricidad">⚡ Electricidad (Instalaciones y tableros)</option>
-              <option value="plomeria">🔧 Plomería (Pérdidas, bombas y griferías)</option>
-              <option value="gas">🔥 Gas (Inspecciones y artefactos)</option>
-              <option value="pintura">🎨 Pintura (Interiores y cielorrasos)</option>
+              <option value="electricidad">Electricidad (Instalaciones y tableros)</option>
+              <option value="plomeria">Plomería (Pérdidas, bombas y griferías)</option>
+              <option value="gas">Gas Matriculado (Inspecciones y artefactos)</option>
+              <option value="pintura">Pintura (Interiores y cielorrasos)</option>
             </select>
           </div>
 
@@ -1333,12 +1354,12 @@
           <div class="form-group" style="margin-bottom: 14px;">
             <label class="form-label" for="wizard-trade-select">¿Qué especialidad necesitás?</label>
             <select id="wizard-trade-select" class="form-control">
-              <option value="electricidad">⚡ Electricista</option>
-              <option value="plomeria">🔧 Plomería y Sanitarios</option>
-              <option value="gas">🔥 Gasista Matriculado</option>
-              <option value="pintura">🎨 Pintura</option>
-              <option value="cerrajeria">🔑 Cerrajería</option>
-              <option value="aire">❄️ Aire Acondicionado</option>
+              <option value="electricidad">Electricidad e Instalaciones</option>
+              <option value="plomeria">Plomería y Sanitarios</option>
+              <option value="gas">Gasista Matriculado</option>
+              <option value="pintura">Pintura y Revestimientos</option>
+              <option value="cerrajeria">Cerrajería de Seguridad</option>
+              <option value="aire">Climatización y Refrigeración</option>
             </select>
           </div>
 
@@ -1456,8 +1477,8 @@
             <span style="font-weight: 700; font-size: 1rem; color: var(--color-text-main);">Total a pagar:</span>
             <div id="payment-modal-amount" style="font-size: 1.85rem; font-weight: 900; color: #065F46;">$26.300 <span style="font-size: 0.8rem; font-weight: 700; color: #64748B;">ARS</span></div>
           </div>
-          <div style="margin-top: 8px; background: #ECFDF5; border-radius: 8px; padding: 8px 12px; font-size: 0.78rem; color: #065F46; display: flex; align-items: center; gap: 6px;">
-            <span>🛡️</span>
+          <div style="margin-top: 8px; background: #ECFDF5; border-radius: 8px; padding: 8px 12px; font-size: 0.78rem; color: #065F46; display: flex; align-items: center; gap: 8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" style="flex-shrink: 0;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             <span><strong>Destinado a:</strong> <strong id="payment-modal-pro-name">Marcos R.</strong> (Fondos retenidos en custodia hasta que apruebes el trabajo con tu PIN).</span>
           </div>
         </div>
@@ -1469,8 +1490,11 @@
             <label class="mp-method-card active" onclick="selectPaymentMethodOption('card')">
               <input type="radio" name="mp-method-radio" id="mp-radio-card" checked style="accent-color: #009EE3;">
               <div style="flex: 1;">
-                <div style="font-weight: 700; font-size: 0.88rem; color: #1E293B;">💳 Tarjeta de Crédito o Débito</div>
-                <div style="font-size: 0.75rem; color: #64748B;">Visa, Mastercard, Cabal · Hasta 3 cuotas fijas</div>
+                <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.88rem; color: #1E293B;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                  Tarjeta de Crédito o Débito
+                </div>
+                <div style="font-size: 0.75rem; color: #64748B; margin-left: 24px;">Visa, Mastercard, Cabal · Hasta 3 cuotas fijas</div>
               </div>
               <span class="badge-tag" style="background: #E0F2FE; color: #0369A1; font-weight: 700;">Recomendado</span>
             </label>
@@ -1478,8 +1502,11 @@
             <label class="mp-method-card" onclick="selectPaymentMethodOption('mp-balance')">
               <input type="radio" name="mp-method-radio" id="mp-radio-mp-balance" style="accent-color: #009EE3;">
               <div style="flex: 1;">
-                <div style="font-weight: 700; font-size: 0.88rem; color: #1E293B;">📲 Dinero en Cuenta Mercado Pago</div>
-                <div style="font-size: 0.75rem; color: #64748B;">Acreditación instantánea en 1 segundo con tu app</div>
+                <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.88rem; color: #1E293B;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#009EE3" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                  Dinero en Cuenta Mercado Pago
+                </div>
+                <div style="font-size: 0.75rem; color: #64748B; margin-left: 24px;">Acreditación instantánea en 1 segundo con tu app</div>
               </div>
               <span style="font-size: 0.76rem; color: #059669; font-weight: 700;">Sin comisiones</span>
             </label>
@@ -1487,17 +1514,20 @@
             <label class="mp-method-card" onclick="selectPaymentMethodOption('transfer')">
               <input type="radio" name="mp-method-radio" id="mp-radio-transfer" style="accent-color: #009EE3;">
               <div style="flex: 1;">
-                <div style="font-weight: 700; font-size: 0.88rem; color: #1E293B;">🏦 Transferencia Bancaria (Alias / CVU)</div>
-                <div style="font-size: 0.75rem; color: #64748B;">Alias oficial: <strong style="color: #009EE3;">SADEMY.PAGO.OFICIAL</strong></div>
+                <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.88rem; color: #1E293B;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="21" x2="21" y2="21"></line><line x1="3" y1="10" x2="21" y2="10"></line><polyline points="5 6 12 3 19 6"></polyline><line x1="4" y1="10" x2="4" y2="21"></line><line x1="20" y1="10" x2="20" y2="21"></line></svg>
+                  Transferencia Bancaria (Alias / CVU)
+                </div>
+                <div style="font-size: 0.75rem; color: #64748B; margin-left: 24px;">Alias oficial: <strong style="color: #009EE3;">SADEMY.PAGO.OFICIAL</strong></div>
               </div>
             </label>
           </div>
         </div>
 
         <!-- Explicación de Seguridad con PIN -->
-        <div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 12px; padding: 12px 14px; display: flex; gap: 10px; font-size: 0.8rem; color: #1E40AF;">
-          <span style="font-size: 1.2rem;">🔑</span>
-          <div style="line-height: 1.4;">
+        <div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 12px; padding: 14px 16px; display: flex; gap: 12px; font-size: 0.82rem; color: #1E40AF;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" style="flex-shrink: 0; margin-top: 2px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <div style="line-height: 1.45;">
             <strong>Mecanismo de Seguridad Sademy:</strong> Al pagar, la plataforma genera un <strong>PIN de 4 dígitos</strong> exclusivo para este trabajo. Entregale este PIN al trabajador <em>únicamente</em> cuando veas que la tarea quedó concluida a tu entera conformidad para liberar sus honorarios.
           </div>
         </div>
@@ -1591,32 +1621,32 @@
           </button>
 
           <!-- Selector Rápido de Perfiles para Pruebas y Acceso Inmediato -->
-          <div style="margin-top: 16px; background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 12px; padding: 14px;">
-            <span style="font-size: 0.76rem; text-transform: uppercase; font-weight: 800; color: #475569; display: block; margin-bottom: 8px;">
-              ⚡ O ingresá directamente con un perfil activo:
+          <div style="margin-top: 16px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 14px; padding: 14px;">
+            <span style="font-size: 0.7rem; text-transform: uppercase; font-weight: 700; color: #64748B; letter-spacing: 0.05em; display: block; margin-bottom: 10px;">
+              Acceso rápido para verificación de perfiles:
             </span>
             <div style="display: flex; flex-direction: column; gap: 8px;">
-              <button type="button" class="btn btn-outline-pwa btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700; background: #FFFFFF; text-align: left; padding: 8px 12px;" onclick="switchProfile('client'); closeAuthModal();">
-                <span style="font-size: 1.2rem;">👤</span>
+              <button type="button" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 600; background: #FFFFFF; text-align: left; padding: 10px 14px; border-radius: 10px;" onclick="switchProfile('client'); closeAuthModal();">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 <div style="text-align: left; flex: 1;">
-                  <strong style="color: #0F172A; font-size: 0.85rem; display: block;">Carlos M. (Cliente)</strong>
-                  <span style="font-size: 0.72rem; color: #64748B;">Buscá oficios y recibí presupuestos protegidos</span>
+                  <strong style="color: #0F172A; font-size: 0.86rem; display: block;">Carlos M. (Cliente)</strong>
+                  <span style="font-size: 0.74rem; color: #64748B;">Búsqueda de servicios y contratación con pago protegido</span>
                 </div>
               </button>
 
-              <button type="button" class="btn btn-outline-pwa btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700; background: #FFFFFF; text-align: left; padding: 8px 12px;" onclick="switchProfile('pro'); closeAuthModal();">
-                <span style="font-size: 1.2rem;">⚡</span>
+              <button type="button" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 600; background: #FFFFFF; text-align: left; padding: 10px 14px; border-radius: 10px;" onclick="switchProfile('pro'); closeAuthModal();">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                 <div style="text-align: left; flex: 1;">
-                  <strong style="color: #059669; font-size: 0.85rem; display: block;">Marcos R. (Profesional Pro)</strong>
-                  <span style="font-size: 0.72rem; color: #64748B;">Electricista matriculado, cotizá y cobrá con MP</span>
+                  <strong style="color: #059669; font-size: 0.86rem; display: block;">Marcos R. (Profesional Pro)</strong>
+                  <span style="font-size: 0.74rem; color: #64748B;">Electricista matriculado, cotizaciones y cobros</span>
                 </div>
               </button>
 
-              <button type="button" class="btn btn-outline-pwa btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700; background: #FFFFFF; text-align: left; padding: 8px 12px;" onclick="switchProfile('admin'); closeAuthModal();">
-                <span style="font-size: 1.2rem;">👑</span>
+              <button type="button" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 600; background: #FFFFFF; text-align: left; padding: 10px 14px; border-radius: 10px;" onclick="switchProfile('admin'); closeAuthModal();">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
                 <div style="text-align: left; flex: 1;">
-                  <strong style="color: #0F172A; font-size: 0.85rem; display: block;">Sademy HQ (Dueño / Administrador)</strong>
-                  <span style="font-size: 0.72rem; color: #64748B;">Control total de ingresos, comisiones y matrículas</span>
+                  <strong style="color: #0F172A; font-size: 0.86rem; display: block;">Sademy HQ (Administrador General)</strong>
+                  <span style="font-size: 0.74rem; color: #64748B;">Control de operaciones, comisiones y matrículas</span>
                 </div>
               </button>
             </div>
@@ -1624,12 +1654,12 @@
 
           <div style="margin-top: 18px; background-color: var(--color-surface-light); border-radius: 12px; padding: 14px; border: 1px solid var(--color-border);">
             <div style="font-size: 0.82rem; font-weight: 700; color: var(--color-text-main); margin-bottom: 6px;">
-              ¿Por qué registrarte como cliente?
+              Beneficios del servicio oficial:
             </div>
             <ul style="list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 0.8rem; color: var(--color-text-secondary);">
-              <li>⚡ Publicá pedidos en segundos y recibí cotizaciones gratis.</li>
-              <li>🛡️ Pagos retenidos en custodia hasta tu total conformidad.</li>
-              <li>⭐ Calificá trabajadores y consultá valoraciones auténticas.</li>
+              <li>• Publicación inmediata de solicitudes de trabajo.</li>
+              <li>• Pagos retenidos en custodia hasta la total conformidad del cliente.</li>
+              <li>• Evaluación continua de matrículas y antecedentes técnicos.</li>
             </ul>
           </div>
 
@@ -1679,12 +1709,12 @@
               <div class="form-group">
                 <label class="form-label" for="worker-field-trade">Oficio / Especialidad Principal *</label>
                 <select id="worker-field-trade" class="form-control" required>
-                  <option value="electricista">⚡ Electricista Domiciliario / Industrial</option>
-                  <option value="plomeria">🔧 Plomería y Termofusión</option>
-                  <option value="gas">🔥 Gasista Matriculado (Metrogas / Naturgy)</option>
-                  <option value="pintura">🎨 Pintura y Revestimientos</option>
-                  <option value="cerrajeria">🔑 Cerrajería de Seguridad</option>
-                  <option value="aire">❄️ Refrigeración e Instalación Split</option>
+                  <option value="electricista">Electricista Domiciliario / Industrial</option>
+                  <option value="plomeria">Plomería y Termofusión</option>
+                  <option value="gas">Gasista Matriculado (Metrogas / Naturgy)</option>
+                  <option value="pintura">Pintura y Revestimientos</option>
+                  <option value="cerrajeria">Cerrajería de Seguridad</option>
+                  <option value="aire">Refrigeración e Instalación Split</option>
                 </select>
               </div>
 
@@ -1758,19 +1788,23 @@
         </div>
       </div>
 
-      <!-- Segmented Control Bar estilo iOS / Samsung OneUI -->
+      <!-- Segmented Control Bar estilo iOS / Apple Cupertino -->
       <div style="display: flex; gap: 6px; padding: 10px 24px; background: #FFFFFF; border-bottom: 1px solid #E2E8F0; overflow-x: auto;">
-        <button type="button" id="pro-dash-tab-btn-oportunidades" class="profile-role-pill active" onclick="switchProDashboardTab('oportunidades')" style="flex: 1; padding: 8px 10px; font-size: 0.8rem;">
-          ⚡ Oportunidades en Vivo (12)
+        <button type="button" id="pro-dash-tab-btn-oportunidades" class="profile-role-pill active" onclick="switchProDashboardTab('oportunidades')" style="flex: 1; padding: 8px 10px; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          Solicitudes en Vivo (12)
         </button>
-        <button type="button" id="pro-dash-tab-btn-billetera" class="profile-role-pill" onclick="switchProDashboardTab('billetera')" style="flex: 1; padding: 8px 10px; font-size: 0.8rem;">
-          💰 Billetera & Cobros
+        <button type="button" id="pro-dash-tab-btn-billetera" class="profile-role-pill" onclick="switchProDashboardTab('billetera')" style="flex: 1; padding: 8px 10px; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="6" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="18" y2="12"></line></svg>
+          Billetera & Cobros
         </button>
-        <button type="button" id="pro-dash-tab-btn-cotizaciones" class="profile-role-pill" onclick="switchProDashboardTab('cotizaciones')" style="flex: 1; padding: 8px 10px; font-size: 0.8rem;">
-          📝 Cotizaciones Enviadas (3)
+        <button type="button" id="pro-dash-tab-btn-cotizaciones" class="profile-role-pill" onclick="switchProDashboardTab('cotizaciones')" style="flex: 1; padding: 8px 10px; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          Cotizaciones Enviadas (3)
         </button>
-        <button type="button" id="pro-dash-tab-btn-membresia" class="profile-role-pill" onclick="switchProDashboardTab('membresia')" style="flex: 1; padding: 8px 10px; font-size: 0.8rem;">
-          💎 Membresía PRO
+        <button type="button" id="pro-dash-tab-btn-membresia" class="profile-role-pill" onclick="switchProDashboardTab('membresia')" style="flex: 1; padding: 8px 10px; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          Membresía PRO
         </button>
       </div>
 
@@ -1782,7 +1816,10 @@
             <span style="font-size: 0.85rem; color: #475569; font-weight: 600;">
               Solicitudes verificadas de clientes buscando tu oficio en tu zona (CABA):
             </span>
-            <span class="badge-tag" style="background: #ECFDF5; color: #065F46; font-weight: 700;">🟢 En vivo ahora</span>
+            <span class="badge-tag" style="background: #ECFDF5; color: #065F46; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+              <span style="width: 7px; height: 7px; border-radius: 50%; background: #10B981; display: inline-block;"></span>
+              Activo ahora
+            </span>
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 12px;" id="pro-dash-opportunities-list">
@@ -1794,14 +1831,14 @@
                   <span class="badge-tag" style="background: #FEF3C7; color: #92400E; font-weight: 700;">Urgente</span>
                 </div>
                 <div style="font-size: 0.82rem; color: #64748B; margin-top: 4px;">
-                  📍 Palermo Chico · Publicado hace 14 min por <strong>Agustina V.</strong>
+                  Palermo Chico · Publicado hace 14 min por <strong>Agustina V.</strong>
                 </div>
                 <div style="font-size: 0.8rem; color: #059669; font-weight: 600; margin-top: 4px;">
-                  💰 Presupuesto estimado por cliente: $28.000 ARS · Pago protegido en custodia Sademy
+                  Presupuesto estimado por cliente: $28.000 ARS · Pago protegido en custodia Sademy
                 </div>
               </div>
               <button class="btn btn-primary btn-sm" onclick="openProQuoteModal('ORD-2026-095', 'Instalación de disyuntor bipolar y recableado')" style="font-weight: 700; white-space: nowrap;">
-                ⚡ Enviar Presupuesto
+                Enviar Cotización
               </button>
             </div>
 
@@ -1812,14 +1849,14 @@
                   <span class="badge-tag" style="background: #ECFDF5; color: #065F46; font-weight: 700;">Estándar</span>
                 </div>
                 <div style="font-size: 0.82rem; color: #64748B; margin-top: 4px;">
-                  📍 Belgrano R · Publicado hace 35 min por <strong>Hernán M.</strong>
+                  Belgrano R · Publicado hace 35 min por <strong>Hernán M.</strong>
                 </div>
                 <div style="font-size: 0.8rem; color: #059669; font-weight: 600; margin-top: 4px;">
-                  💰 Presupuesto estimado por cliente: $34.500 ARS · Requiere matrícula oficial
+                  Presupuesto estimado por cliente: $34.500 ARS · Requiere matrícula oficial
                 </div>
               </div>
               <button class="btn btn-primary btn-sm" onclick="openProQuoteModal('ORD-2026-091', 'Revisión técnica de tablero y cambio de térmicas')" style="font-weight: 700; white-space: nowrap;">
-                ⚡ Enviar Presupuesto
+                Enviar Cotización
               </button>
             </div>
 
@@ -1827,17 +1864,17 @@
               <div>
                 <div style="display: flex; align-items: center; gap: 8px;">
                   <strong style="color: #0F172A; font-size: 0.95rem;">Cortocircuito urgente: departamento sin suministro eléctrico</strong>
-                  <span class="badge-tag" style="background: #FEE2E2; color: #B91C1C; font-weight: 800;">⚡ Guardia 24hs</span>
+                  <span class="badge-tag" style="background: #FEE2E2; color: #B91C1C; font-weight: 800;">Guardia 24 hs</span>
                 </div>
                 <div style="font-size: 0.82rem; color: #64748B; margin-top: 4px;">
-                  📍 Recoleta · Publicado hace 48 min por <strong>Gonzalo P.</strong>
+                  Recoleta · Publicado hace 48 min por <strong>Gonzalo P.</strong>
                 </div>
                 <div style="font-size: 0.8rem; color: #059669; font-weight: 600; margin-top: 4px;">
-                  💰 Presupuesto libre a convenir · Pago directo con tarjeta / MP
+                  Presupuesto libre a convenir · Pago directo con tarjeta / MP
                 </div>
               </div>
               <button class="btn btn-primary btn-sm" onclick="openProQuoteModal('ORD-2026-088', 'Reparación de cortocircuito urgente 24hs')" style="font-weight: 700; white-space: nowrap;">
-                ⚡ Enviar Presupuesto
+                Enviar Cotización
               </button>
             </div>
 
@@ -1853,8 +1890,9 @@
                 <h2 style="font-size: 2.1rem; font-weight: 800; margin: 4px 0 2px; color: #FFFFFF;" id="pro-wallet-big-balance">$49.000 <span style="font-size: 1rem; font-weight: 600;">ARS</span></h2>
                 <p style="font-size: 0.8rem; opacity: 0.88; margin: 0;">Fondos verificados y liberados mediante PIN de conformidad de clientes.</p>
               </div>
-              <button class="btn btn-sm" onclick="withdrawProFunds()" style="background: #FFFFFF; color: #065F46; font-weight: 800; padding: 10px 18px; border-radius: 10px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer;">
-                💸 Transferir a Mercado Pago / CBU
+              <button class="btn btn-sm" onclick="withdrawProFunds()" style="background: #FFFFFF; color: #065F46; font-weight: 800; padding: 10px 18px; border-radius: 10px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Transferir a Mercado Pago / CBU
               </button>
             </div>
           </div>
@@ -1929,8 +1967,9 @@
               <h3 style="margin: 6px 0 2px; font-size: 1.2rem; color: #0F172A;">Plan PRO Destacado</h3>
               <p style="font-size: 0.84rem; color: #64748B; margin: 0;">Comisión preferencial reducida al <strong>8%</strong> (ahorrás 47% de comisión frente al inicial).</p>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="closeProDashboardModal(); openProSubscriptionsModal();" style="font-weight: 700;">
-              💎 Administrar Planes PRO
+            <button class="btn btn-primary btn-sm" onclick="closeProDashboardModal(); openProSubscriptionsModal();" style="font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              Administrar Planes PRO
             </button>
           </div>
         </div>
@@ -1946,8 +1985,8 @@
     <div class="modal-container" style="max-width: 580px;">
       <div class="modal-header">
         <div style="display: flex; align-items: center; gap: 10px;">
-          <div style="width: 40px; height: 40px; border-radius: 50%; background: #ECFDF5; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
-            🛡️
+          <div style="width: 40px; height: 40px; border-radius: 50%; background: #ECFDF5; color: #059669; display: flex; align-items: center; justify-content: center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
           <div>
             <h3 id="warranty-modal-title" class="modal-title" style="font-size: 1.25rem;">Garantía & Fondos Protegidos</h3>
@@ -2047,8 +2086,9 @@
           <textarea id="pro-quote-desc" class="form-control" rows="3" placeholder="Detallá los materiales, marcas normalizadas y garantía escrita...">Instalación bajo normas reglamentarias, herramientas homologadas y materiales normalizados. Garantía de 6 meses respaldada por Sademy.</textarea>
         </div>
 
-        <div style="background-color: #ECFDF5; border: 1px solid var(--color-primary-border); border-radius: 12px; padding: 14px; font-size: 0.82rem; color: #065F46; line-height: 1.45;">
-          🔒 <strong>Cobro 100% Protegido:</strong> Si el cliente acepta tu presupuesto, abonará a través de la custodia segura de Sademy. Al dar su conformidad al finalizar, el dinero se transferirá directamente a tu cuenta sin retenciones injustificadas.
+        <div style="background-color: #ECFDF5; border: 1px solid var(--color-primary-border); border-radius: 12px; padding: 14px; font-size: 0.82rem; color: #065F46; line-height: 1.45; display: flex; align-items: flex-start; gap: 8px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#065F46" stroke-width="2" style="flex-shrink: 0; margin-top: 1px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <div><strong>Cobro 100% Protegido:</strong> Si el cliente acepta tu presupuesto, abonará a través de la custodia segura de Sademy. Al dar su conformidad al finalizar, el dinero se transferirá directamente a tu cuenta sin retenciones injustificadas.</div>
         </div>
       </div>
 
@@ -2085,7 +2125,8 @@
         </div>
 
         <div id="pwa-ios-instructions" style="display: none; background: #F9FAFB; border: 1px solid var(--color-border); border-radius: 12px; padding: 14px; text-align: left; font-size: 0.82rem; color: var(--color-text-secondary); width: 100%;">
-          <strong>📱 En iPhone / iPad (Safari):</strong><br>
+          <strong>En iPhone o iPad (Safari):</strong><br>
+          1. Tocá el botón <strong>Compartir</strong> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg> abajo en Safari.<br>
           1. Tocá el botón <strong>Compartir</strong> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg> abajo en Safari.<br>
           2. Seleccioná <strong>"Agregar al inicio"</strong> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>.<br>
           3. ¡Listo! Ya podés usar Sademy como una app nativa.
@@ -2216,7 +2257,7 @@
         </div>
 
         <div style="margin-top: 20px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px; text-align: center; font-size: 0.82rem; color: var(--color-text-secondary);">
-          💳 Podés pagar tu suscripción mensual mediante tarjeta de crédito o débito a través de Mercado Pago. Cancelás cuando quieras sin penalidad.
+          Podés pagar tu suscripción mensual mediante tarjeta de crédito o débito a través de Mercado Pago. Cancelás cuando quieras sin penalidad.
         </div>
 
       </div>
@@ -2232,8 +2273,8 @@
       <!-- Cabecera de Administración -->
       <div class="modal-header" style="background: #0F172A; color: #FFFFFF; border-radius: 16px 16px 0 0; padding: 20px 28px;">
         <div style="display: flex; align-items: center; gap: 12px;">
-          <div style="width: 42px; height: 42px; background: rgba(16, 185, 129, 0.2); border: 1.5px solid var(--color-primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">
-            📊
+          <div style="width: 42px; height: 42px; background: rgba(16, 185, 129, 0.2); border: 1.5px solid var(--color-primary); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
           </div>
           <div>
             <div style="display: flex; align-items: center; gap: 8px;">
@@ -2273,7 +2314,7 @@
             <div class="kpi-label">Fondos en Custodia Activa</div>
             <div class="kpi-value" id="admin-escrow-total">$115.000 <span style="font-size: 0.8rem; font-weight: 600; color: #64748B;">ARS</span></div>
             <div class="kpi-sub" style="color: #D97706;">
-              🔒 3 trabajos en ejecución
+              3 trabajos en ejecución
             </div>
           </div>
 
@@ -2289,14 +2330,17 @@
 
         <!-- Pestañas del Panel de Administrador -->
         <div class="admin-tabs-nav" style="margin-top: 20px;">
-          <button class="admin-tab-btn active" id="admin-tab-btn-finanzas" onclick="switchAdminTab('finanzas')">
-            💵 Finanzas & Comisiones
+          <button class="admin-tab-btn active" id="admin-tab-btn-finanzas" onclick="switchAdminTab('finanzas')" style="display: inline-flex; align-items: center; gap: 8px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            Finanzas & Comisiones
           </button>
-          <button class="admin-tab-btn" id="admin-tab-btn-matriculas" onclick="switchAdminTab('matriculas')">
-            📑 Validación de Matrículas <span id="admin-pending-badge" class="nav-badge" style="background: #EF4444; color: #FFFFFF; margin-left: 6px;">2</span>
+          <button class="admin-tab-btn" id="admin-tab-btn-matriculas" onclick="switchAdminTab('matriculas')" style="display: inline-flex; align-items: center; gap: 8px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            Validación de Matrículas <span id="admin-pending-badge" class="nav-badge" style="background: #EF4444; color: #FFFFFF; margin-left: 6px;">2</span>
           </button>
-          <button class="admin-tab-btn" id="admin-tab-btn-custodia" onclick="switchAdminTab('custodia')">
-            🛡️ Fondos en Custodia & PINs
+          <button class="admin-tab-btn" id="admin-tab-btn-custodia" onclick="switchAdminTab('custodia')" style="display: inline-flex; align-items: center; gap: 8px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            Fondos en Custodia & PINs
           </button>
         </div>
 
@@ -2439,7 +2483,7 @@
     <img src="assets/favicon.svg" alt="Sademy Mascota" class="floating-assistant-img">
     <div>
       <div class="floating-assistant-text">¿Urgencia en casa?</div>
-      <span class="floating-assistant-sub">Cotizá en 1 min ⚡</span>
+      <span class="floating-assistant-sub">Cotizá en 1 min</span>
     </div>
   </div>
 
@@ -2478,7 +2522,7 @@
           <div>
             <h3 id="account-modal-name" class="modal-title" style="font-size: 1.2rem; margin: 0;">Carlos M.</h3>
             <p id="account-modal-email" style="font-size: 0.8rem; color: var(--color-text-secondary); margin: 2px 0 0;">carlos.m@gmail.com</p>
-            <span id="account-modal-badge" class="badge-tag" style="background: #ECFDF5; color: #065F46; font-weight: 700; margin-top: 4px; display: inline-block;">✓ Cliente Verificado</span>
+            <span id="account-modal-badge" class="badge-tag" style="background: #ECFDF5; color: #065F46; font-weight: 700; margin-top: 4px; display: inline-block;">Cliente Verificado</span>
           </div>
         </div>
         <button class="modal-close-btn" onclick="closeAccountModal()" aria-label="Cerrar modal">&times;</button>
@@ -2493,16 +2537,16 @@
           </span>
           <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
             <button type="button" id="acc-pill-client" class="profile-role-pill active" onclick="switchProfile('client'); closeAccountModal();">
-              <span style="font-size: 1.15rem; display: block; margin-bottom: 2px;">👤</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: block; margin: 0 auto 3px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
               <strong>Cliente</strong>
             </button>
             <button type="button" id="acc-pill-pro" class="profile-role-pill" onclick="switchProfile('pro'); closeAccountModal();">
-              <span style="font-size: 1.15rem; display: block; margin-bottom: 2px;">⚡</span>
-              <strong>Pro</strong>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: block; margin: 0 auto 3px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              <strong>Profesional</strong>
             </button>
             <button type="button" id="acc-pill-admin" class="profile-role-pill" onclick="switchProfile('admin'); closeAccountModal();">
-              <span style="font-size: 1.15rem; display: block; margin-bottom: 2px;">👑</span>
-              <strong>Dueño</strong>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: block; margin: 0 auto 3px;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+              <strong>Administrador</strong>
             </button>
           </div>
         </div>
@@ -2512,22 +2556,22 @@
           
           <!-- CLIENTE ONLY -->
           <div class="user-menu-role-group view-client-only" style="display: flex; flex-direction: column; gap: 8px;">
-            <button type="button" onclick="closeAccountModal(); openMyOrdersModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700;">
-              <span style="font-size: 1rem;">📦</span>
+            <button type="button" onclick="closeAccountModal(); openMyOrdersModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 700;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
               <div style="text-align: left;">
                 <div style="color: #0F172A;">Mis Pedidos & Custodia</div>
                 <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Ver pedidos en curso y PIN de conformidad</div>
               </div>
             </button>
-            <button type="button" onclick="closeAccountModal(); openNewOrderModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700;">
-              <span style="font-size: 1rem;">➕</span>
+            <button type="button" onclick="closeAccountModal(); openNewOrderModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 700;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
               <div style="text-align: left;">
                 <div style="color: #059669;">Pedir Nuevo Presupuesto</div>
                 <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Cotizaciones rápidas y gratis en 1 min</div>
               </div>
             </button>
-            <button type="button" onclick="closeAccountModal(); openClientWarrantyModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 600;">
-              <span style="font-size: 1rem;">🛡️</span>
+            <button type="button" onclick="closeAccountModal(); openClientWarrantyModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 600;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
               <div style="text-align: left;">
                 <div>Garantía & Fondos Protegidos</div>
                 <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Custodia segura Sademy Escrow</div>
@@ -2537,22 +2581,22 @@
 
           <!-- PRO ONLY -->
           <div class="user-menu-role-group view-pro-only" style="display: flex; flex-direction: column; gap: 8px;">
-            <button type="button" onclick="closeAccountModal(); openProDashboardModal('oportunidades');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700;">
-              <span style="font-size: 1rem;">⚡</span>
+            <button type="button" onclick="closeAccountModal(); openProDashboardModal('oportunidades');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 700;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
               <div style="text-align: left;">
                 <div style="color: #047857;">Portal Sademy PRO (Oportunidades)</div>
                 <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">12 solicitudes abiertas para cotizar en tu zona</div>
               </div>
             </button>
-            <button type="button" onclick="closeAccountModal(); openProDashboardModal('billetera');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700;">
-              <span style="font-size: 1rem;">💰</span>
+            <button type="button" onclick="closeAccountModal(); openProDashboardModal('billetera');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 700;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#065F46" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="6" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="18" y2="12"></line></svg>
               <div style="text-align: left;">
                 <div style="color: #065F46;">Mi Billetera & Cobros ($49.000)</div>
                 <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Retirar saldo a Mercado Pago o CBU</div>
               </div>
             </button>
-            <button type="button" onclick="closeAccountModal(); openProSubscriptionsModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 600;">
-              <span style="font-size: 1rem;">💎</span>
+            <button type="button" onclick="closeAccountModal(); openProSubscriptionsModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 600;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
               <div style="text-align: left;">
                 <div>Membresías Sademy PRO</div>
                 <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Comisión reducida hasta el 5%</div>
@@ -2562,22 +2606,22 @@
 
           <!-- ADMIN ONLY -->
           <div class="user-menu-role-group view-admin-only" style="display: flex; flex-direction: column; gap: 8px;">
-            <button type="button" onclick="closeAccountModal(); openAdminBackofficeModal('finanzas');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700;">
-              <span style="font-size: 1rem;">👑</span>
+            <button type="button" onclick="closeAccountModal(); openAdminBackofficeModal('finanzas');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 700;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#92400E" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
               <div style="text-align: left;">
                 <div style="color: #92400E;">Panel Master Dueño & Finanzas</div>
                 <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Control de comisiones y facturación global</div>
               </div>
             </button>
-            <button type="button" onclick="closeAccountModal(); openAdminBackofficeModal('matriculas');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700;">
-              <span style="font-size: 1rem;">📜</span>
+            <button type="button" onclick="closeAccountModal(); openAdminBackofficeModal('matriculas');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 700;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
               <div style="text-align: left;">
                 <div style="color: #B91C1C;">Aprobación de Matrículas (2)</div>
                 <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Revisión de Gasistas y Electricistas</div>
               </div>
             </button>
-            <button type="button" onclick="closeAccountModal(); openAdminBackofficeModal('custodia');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 700;">
-              <span style="font-size: 1rem;">🔒</span>
+            <button type="button" onclick="closeAccountModal(); openAdminBackofficeModal('custodia');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 700;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#065F46" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
               <div style="text-align: left;">
                 <div style="color: #065F46;">Fondos en Custodia (Escrow)</div>
                 <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">$115.000 ARS retenidos para liberación con PIN</div>
@@ -2585,8 +2629,8 @@
             </button>
           </div>
 
-          <button type="button" onclick="closeAccountModal(); triggerPwaInstall();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 10px; font-weight: 600;">
-            <span style="font-size: 1rem;">📲</span>
+          <button type="button" onclick="closeAccountModal(); triggerPwaInstall();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 600;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
             <div style="text-align: left;">
               <div>Instalar Aplicación en Pantalla</div>
               <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Acceso directo como app nativa</div>

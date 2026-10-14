@@ -238,7 +238,7 @@ const DEFAULT_CHATS = {
     { sender: 'worker', text: 'Hola Carlos! Vi tu pedido para la instalación de luz en la cocina. Cuento con las herramientas y puedo pasar hoy mismo a las 16:30.', time: '10:45' },
     { sender: 'client', text: 'Excelente Marcos, ¿el presupuesto incluye los conectores rápidos y cables aislados?', time: '10:48' },
     { sender: 'worker', text: 'Sí, exactamente. Todo bajo norma IRAM y con garantía de 6 meses. Si te parece bien podés aceptarlo acá en la plataforma con el pago protegido.', time: '10:50' },
-    { sender: 'system', text: '🛡️ Seguridad Sademy: Para conservar el Seguro de Daños hasta $500.000 y garantía de satisfacción, mantené la contratación y pagos dentro de Sademy.', time: '10:51' }
+    { sender: 'system', text: 'Seguridad Sademy: Para conservar el Seguro de Daños hasta $500.000 y garantía de satisfacción, mantené la contratación y pagos dentro de Sademy.', time: '10:51' }
   ],
   'Sofía L.': [
     { sender: 'worker', text: 'Hola Carlos! Revisé tu solicitud. Si te sirve también puedo hacer una revisión preventiva del tablero general.', time: '11:02' }
@@ -446,7 +446,7 @@ const PROFILES = {
     email: 'carlos.m@gmail.com',
     avatar: 'assets/mascot.jpg',
     role: 'client',
-    roleLabel: '✓ Cliente Verificado',
+    roleLabel: 'Cliente Verificado',
     roleTag: 'Cliente',
     tagBg: '#ECFDF5',
     tagColor: '#065F46',
@@ -459,7 +459,7 @@ const PROFILES = {
     email: 'marcos.electricista@sademy.com',
     avatar: 'assets/marcos.jpg',
     role: 'pro',
-    roleLabel: '★ Profesional Verificado Pro',
+    roleLabel: 'Profesional Verificado Pro',
     roleTag: 'Pro Verificado',
     tagBg: '#D1FAE5',
     tagColor: '#064E3B',
@@ -474,8 +474,8 @@ const PROFILES = {
     email: 'admin@sademy.com.ar',
     avatar: 'assets/favicon.svg',
     role: 'admin',
-    roleLabel: '👑 Administrador Master',
-    roleTag: 'Dueño Admin',
+    roleLabel: 'Administrador General',
+    roleTag: 'Administrador',
     tagBg: '#FEF3C7',
     tagColor: '#92400E',
     verified: true,
@@ -560,27 +560,27 @@ function updateNavAuthState() {
       ribbon.style.display = 'block';
       ribbon.className = `active-role-ribbon role-${currentR}`;
       if (currentR === 'admin') {
-        if (ribbonIcon) ribbonIcon.textContent = '👑';
-        if (ribbonTitle) ribbonTitle.textContent = 'Modo Administrador Dueño (Sademy HQ)';
+        if (ribbonIcon) ribbonIcon.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>';
+        if (ribbonTitle) ribbonTitle.textContent = 'Modo Administrador HQ (Sademy)';
         if (ribbonDesc) ribbonDesc.textContent = 'Facturación GMV: $1.842.500 ARS · Comisiones: $248.900 ARS · Custodia: $115.000 ARS';
         if (ribbonBtn) {
-          ribbonBtn.innerHTML = '👑 Abrir Backoffice';
+          ribbonBtn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: -2px; margin-right: 4px;"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> Abrir Backoffice';
           ribbonBtn.onclick = openAdminBackofficeModal;
         }
       } else if (currentR === 'pro') {
-        if (ribbonIcon) ribbonIcon.textContent = '⚡';
+        if (ribbonIcon) ribbonIcon.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>';
         if (ribbonTitle) ribbonTitle.textContent = 'Modo Profesional Pro (Marcos R.)';
         if (ribbonDesc) ribbonDesc.textContent = 'Saldo disponible: $49.000 ARS · 12 Solicitudes abiertas en tu zona';
         if (ribbonBtn) {
-          ribbonBtn.innerHTML = '⚡ Portal Sademy Pro';
+          ribbonBtn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: -2px; margin-right: 4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Portal Sademy Pro';
           ribbonBtn.onclick = () => openProDashboardModal('oportunidades');
         }
       } else {
-        if (ribbonIcon) ribbonIcon.textContent = '👤';
+        if (ribbonIcon) ribbonIcon.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
         if (ribbonTitle) ribbonTitle.textContent = 'Modo Cliente Particular (Carlos M.)';
         if (ribbonDesc) ribbonDesc.textContent = '2 Pedidos activos · Pago protegido en custodia de Sademy';
         if (ribbonBtn) {
-          ribbonBtn.innerHTML = '📦 Mis Pedidos';
+          ribbonBtn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: -2px; margin-right: 4px;"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> Mis Pedidos';
           ribbonBtn.onclick = openMyOrdersModal;
         }
       }
@@ -670,7 +670,7 @@ function switchProDashboardTab(tabName) {
 function withdrawProFunds() {
   triggerHapticFeedback();
   playSuccessChime();
-  showToast('💸 Retiro Solicitado con Éxito', 'Se transfirieron $49.000 ARS a tu cuenta vinculada de Marcos R. Comprobante enviado por email.');
+  showToast('Retiro Solicitado con Éxito', 'Se transfirieron $49.000 ARS a tu cuenta vinculada de Marcos R. Comprobante enviado por email.');
   const balText = document.getElementById('pro-dash-balance-text');
   const bigBal = document.getElementById('pro-wallet-big-balance');
   if (balText) balText.textContent = '$0 ARS';
@@ -704,17 +704,17 @@ function switchProfile(roleKey) {
   closeAccountModal();
 
   if (roleKey === 'admin') {
-    showToast('👑 Modo Administrador Dueño Activo', 'Control total de ingresos, comisiones, pagos en custodia y matrículas.');
+    showToast('Modo Administrador HQ Activo', 'Control total de ingresos, comisiones, pagos en custodia y matrículas.');
     setTimeout(() => {
       openAdminBackofficeModal();
     }, 300);
   } else if (roleKey === 'pro') {
-    showToast('⚡ Modo Profesional Pro Activo', 'Bienvenido Marcos. Podés cotizar solicitudes abiertas y cobrar mediante Mercado Pago.');
+    showToast('Modo Profesional Pro Activo', 'Bienvenido Marcos. Podés cotizar solicitudes abiertas y cobrar mediante Mercado Pago.');
     setTimeout(() => {
       openProDashboardModal('oportunidades');
     }, 300);
   } else {
-    showToast('👤 Modo Cliente Activo', 'Bienvenido Carlos. Podés buscar oficios verificados y contratar con pago protegido.');
+    showToast('Modo Cliente Activo', 'Bienvenido Carlos. Podés buscar oficios verificados y contratar con pago protegido.');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
@@ -949,7 +949,7 @@ function renderActiveOrderBanner() {
         </div>
         <div>
           <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-            <h4 class="request-heading" style="margin: 0;">🛡️ Fondos en Custodia Segura (${currentOrder.escrowCode || 'ESCROW-ACTIVO'})</h4>
+            <h4 class="request-heading" style="margin: 0;">Fondos en Custodia Segura (${currentOrder.escrowCode || 'ESCROW-ACTIVO'})</h4>
             <span class="badge-tag" style="background: #065F46; color: #FFFFFF; font-weight: 800; font-size: 0.78rem;">PIN: ${currentOrder.conformityPin || '7412'}</span>
           </div>
           <p class="request-subtext" style="margin-top: 4px;">
@@ -1204,7 +1204,7 @@ function renderMyOrdersModalList() {
           ${order.title}
         </h4>
         <p style="font-size: 0.84rem; color: var(--color-text-secondary); margin-bottom: 12px;">
-          📍 ${order.address} · <strong>${order.categoryName}</strong>
+          ${order.address} · <strong>${order.categoryName}</strong>
         </p>
 
         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
@@ -1288,11 +1288,11 @@ function openQuoteDetailModal(quoteId) {
 
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; font-size: 0.85rem;">
       <div style="background: #F9FAFB; padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
-        <strong style="display: block; color: var(--color-text-main); margin-bottom: 4px;">⏱️ Duración estimada</strong>
+        <strong style="display: block; color: var(--color-text-main); margin-bottom: 4px;">Duración estimada</strong>
         <span style="color: var(--color-text-secondary);">${foundQuote.estimatedDuration}</span>
       </div>
       <div style="background: #F9FAFB; padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
-        <strong style="display: block; color: var(--color-text-main); margin-bottom: 4px;">🛡️ Cobertura Sademy</strong>
+        <strong style="display: block; color: var(--color-text-main); margin-bottom: 4px;">Cobertura Sademy</strong>
         <span style="color: var(--color-text-secondary);">${foundQuote.warranty}</span>
       </div>
     </div>
@@ -1594,7 +1594,7 @@ function sendChatMessage() {
     setTimeout(() => {
       appState.chatThreads[currentChatWorker].push({
         sender: 'system',
-        text: '⚠️ Recordatorio de Seguridad: Los números y datos de contacto se habilitan automáticamente una vez confirmado el presupuesto para garantizar tu Seguro contra Daños de hasta $500.000.',
+        text: 'Recordatorio de Seguridad: Los números y datos de contacto se habilitan automáticamente una vez confirmado el presupuesto para garantizar tu Seguro contra Daños de hasta $500.000.',
         time: timeStr
       });
       renderChatMessages();
@@ -1976,14 +1976,14 @@ function toggleCaseView(caseId, state) {
     if (btnBefore) btnBefore.classList.add('active');
     if (btnAfter) btnAfter.classList.remove('active');
     if (descEl && CASE_DATA[caseId]) {
-      descEl.textContent = '⚠️ ESTADO INICIAL: ' + CASE_DATA[caseId].beforeDesc;
+      descEl.textContent = 'Estado previo: ' + CASE_DATA[caseId].beforeDesc;
       descEl.style.color = '#B45309';
     }
   } else {
     if (btnAfter) btnAfter.classList.add('active');
     if (btnBefore) btnBefore.classList.remove('active');
     if (descEl && CASE_DATA[caseId]) {
-      descEl.textContent = '✅ RESULTADO FINAL: ' + CASE_DATA[caseId].afterDesc;
+      descEl.textContent = 'Trabajo certificado: ' + CASE_DATA[caseId].afterDesc;
       descEl.style.color = 'var(--color-text-secondary)';
     }
   }
@@ -2256,8 +2256,8 @@ function renderAdminMatriculas() {
   if (pending.length === 0) {
     container.innerHTML = `
       <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 32px; text-align: center; color: #64748B;">
-        <span style="font-size: 2rem;">🎉</span>
-        <h4 style="margin: 8px 0 4px; color: #1E293B;">¡Cola al día!</h4>
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" style="margin: 0 auto 10px; display: block;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        <h4 style="margin: 8px 0 4px; color: #1E293B;">Cola al día</h4>
         <p style="font-size: 0.86rem; margin: 0;">No hay solicitudes de verificación ni matrículas pendientes de aprobación en este momento.</p>
       </div>
     `;
@@ -2279,7 +2279,7 @@ function renderAdminMatriculas() {
             ${p.trade} · <strong>${p.matricula}</strong> · DNI: ${p.dni} (${p.zone})
           </div>
           <div style="font-size: 0.74rem; color: #059669; font-weight: 600; margin-top: 3px;">
-            ✓ DNI frente/dorso validado · Registro oficial cruzado con base pública
+            DNI validado · Registro oficial cruzado con base pública
           </div>
         </div>
       </div>
@@ -2288,7 +2288,7 @@ function renderAdminMatriculas() {
           Rechazar
         </button>
         <button class="btn btn-primary btn-sm" onclick="approveAdminMatricula('${p.id}')" style="background: #059669; border: none; font-weight: 700;">
-          ✓ Aprobar y Otorgar Tilde
+          Aprobar y Otorgar Tilde
         </button>
       </div>
     </div>
