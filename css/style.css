@@ -787,7 +787,7 @@ button, input, select, textarea {
   text-transform: uppercase;
 }
 
-.quick-chip {
+.quick-chip, .wizard-urgency-chip {
   background-color: var(--color-surface-light);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-full);
@@ -799,7 +799,8 @@ button, input, select, textarea {
   transition: all var(--transition-fast);
 }
 
-.quick-chip:hover, .quick-chip.active {
+.quick-chip:hover, .quick-chip.active,
+.wizard-urgency-chip:hover, .wizard-urgency-chip.active {
   background-color: var(--color-primary-bg);
   border-color: var(--color-primary-border);
   color: #065F46;
@@ -3427,5 +3428,186 @@ input:checked + .switch-slider:before {
 
 .profile-role-pill:active, .ribbon-pill:active {
   transform: scale(0.94) !important;
+}
+
+/* ==========================================================================
+   FACTURA ELECTRÓNICA OFICIAL AFIP / ARCA - FORMATO SADEMY
+   ========================================================================== */
+.invoice-a4-sheet {
+  background: #FFFFFF;
+  width: 100%;
+  max-width: 820px;
+  min-height: 980px;
+  padding: 24px 28px;
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid #CBD5E1;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #000000;
+  font-size: 11px;
+  line-height: 1.35;
+  box-sizing: border-box;
+}
+
+.afip-outer-frame {
+  border: 1.5px solid #000000;
+  border-radius: 4px;
+  position: relative;
+  background: #FFFFFF;
+}
+
+.afip-header-grid {
+  display: grid;
+  grid-template-columns: 1fr 64px 1fr;
+  min-height: 140px;
+  border-bottom: 1.5px solid #000000;
+  position: relative;
+}
+
+.afip-header-left {
+  padding: 16px 20px;
+  border-right: 1.5px solid #000000;
+}
+
+.afip-header-letter-box {
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 62px;
+  height: 54px;
+  background: #FFFFFF;
+  border: 1.5px solid #000000;
+  border-top: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.afip-header-letter {
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.afip-header-code {
+  font-size: 8px;
+  font-weight: 800;
+  margin-top: 2px;
+}
+
+.afip-header-right {
+  padding: 16px 20px;
+  padding-left: 36px;
+}
+
+.afip-subbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 16px;
+  border-bottom: 1.5px solid #000000;
+  background: #F8FAFC;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.afip-client-info {
+  padding: 12px 16px;
+  border-bottom: 1.5px solid #000000;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 24px;
+  font-size: 10.5px;
+}
+
+.afip-items-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10px;
+}
+
+.afip-items-table th {
+  background: #F1F5F9;
+  border-bottom: 1.5px solid #000000;
+  border-right: 1px solid #CBD5E1;
+  padding: 7px 8px;
+  text-align: left;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.afip-items-table th:last-child {
+  border-right: none;
+}
+
+.afip-items-table td {
+  padding: 8px 8px;
+  border-bottom: 1px solid #E2E8F0;
+  border-right: 1px solid #E2E8F0;
+}
+
+.afip-items-table td:last-child {
+  border-right: none;
+}
+
+.afip-totals-box {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1.5px solid #000000;
+  border-bottom: 1.5px solid #000000;
+  background: #F8FAFC;
+}
+
+.afip-totals-table {
+  width: 320px;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.afip-totals-table td {
+  padding: 6px 14px;
+}
+
+.afip-footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: #FFFFFF;
+}
+
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+  #modal-invoice-viewer, #invoice-sheet-container, #invoice-sheet-container * {
+    visibility: visible !important;
+  }
+  #modal-invoice-viewer {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+  #invoice-sheet-container {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 10mm !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+  }
 }
 

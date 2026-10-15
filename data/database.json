@@ -241,6 +241,47 @@
       ]
     },
     {
+      "id": "ORD-2026-085",
+      "clientId": "usr-client-001",
+      "clientName": "Carlos M.",
+      "title": "Apertura de cerradura de seguridad y cambio de combinación",
+      "category": "cerrajeria",
+      "categoryName": "Cerrajería de Seguridad 24h",
+      "description": "Traba mecánica en cerrojo multipunto. Requiere cambio de cilindro computado y nuevas llaves de seguridad.",
+      "address": "Palermo Chico, CABA",
+      "status": "Presupuestos recibidos",
+      "statusBadgeClass": "badge-new",
+      "date": "Hoy, 11:30 hs",
+      "paid": false,
+      "completed": false,
+      "escrowCode": null,
+      "quotes": [
+        {
+          "id": "quote-valeria",
+          "proId": "pro-5",
+          "proName": "Valeria C.",
+          "proTrade": "CERRAJERÍA DE SEGURIDAD 24H",
+          "avatar": "assets/mascot.jpg",
+          "rating": 4.95,
+          "jobsCount": 67,
+          "materialsNote": "Mano de obra calificada + materiales homologados",
+          "laborPrice": 19500,
+          "materialsPrice": 5500,
+          "totalPrice": 25000,
+          "warranty": "6 meses de garantía oficial Sademy",
+          "estimatedDuration": "2 a 3 horas",
+          "availability": "Guardia disponible inmediata",
+          "recommended": true,
+          "breakdownItems": [
+            "Mano de obra calificada por Valeria C. ($19.500)",
+            "Materiales y piezas homologadas ($5.500)",
+            "Verificación de seguridad técnica (Bonificado)",
+            "Custodia de pago protegido Sademy ($0)"
+          ]
+        }
+      ]
+    },
+    {
       "id": "ORD-2026-041",
       "clientId": "usr-client-001",
       "clientName": "Carlos M.",

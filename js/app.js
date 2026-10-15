@@ -207,6 +207,45 @@ const DEFAULT_ORDERS = [
     ]
   },
   {
+    id: 'ORD-2026-085',
+    title: 'Apertura de cerradura de seguridad y cambio de combinación',
+    category: 'cerrajeria',
+    categoryName: 'Cerrajería de Seguridad 24h',
+    description: 'Traba mecánica en cerrojo multipunto. Requiere cambio de cilindro computado y nuevas llaves de seguridad.',
+    address: 'Palermo Chico, CABA',
+    status: 'Presupuestos recibidos',
+    statusBadgeClass: 'badge-new',
+    date: 'Hoy, 11:30 hs',
+    paid: false,
+    completed: false,
+    escrowCode: null,
+    quotes: [
+      {
+        id: 'quote-valeria',
+        proId: 'pro-5',
+        proName: 'Valeria C.',
+        proTrade: 'CERRAJERÍA DE SEGURIDAD 24H',
+        avatar: 'assets/mascot.jpg',
+        rating: 4.95,
+        jobsCount: 67,
+        materialsNote: 'Mano de obra calificada + materiales homologados',
+        laborPrice: 19500,
+        materialsPrice: 5500,
+        totalPrice: 25000,
+        warranty: '6 meses de garantía oficial Sademy',
+        estimatedDuration: '2 a 3 horas',
+        availability: 'Guardia disponible inmediata',
+        recommended: true,
+        breakdownItems: [
+          'Mano de obra calificada por Valeria C. ($19.500)',
+          'Materiales y piezas homologadas ($5.500)',
+          'Verificación de seguridad técnica (Bonificado)',
+          'Custodia de pago protegido Sademy ($0)'
+        ]
+      }
+    ]
+  },
+  {
     id: 'ORD-2026-041',
     title: 'Reparación de válvula y termocupla de cocina',
     category: 'gas',
@@ -273,6 +312,10 @@ function loadAppState() {
       }
       if (parsed.currentUser && !parsed.currentUser.proPlan) {
         parsed.currentUser.proPlan = 'basic';
+      }
+      if (parsed.orders && !parsed.orders.some(o => o.id === 'ORD-2026-085')) {
+        const valeriaOrder = DEFAULT_ORDERS.find(o => o.id === 'ORD-2026-085');
+        if (valeriaOrder) parsed.orders.unshift(valeriaOrder);
       }
       return parsed;
     }
@@ -645,7 +688,8 @@ function switchProDashboardTab(tabName) {
 function withdrawProFunds() {
   triggerHapticFeedback();
   playSuccessChime();
-  showToast('Retiro Solicitado con Éxito', 'Se transfirieron $49.000 ARS a tu cuenta vinculada de Marcos R. Comprobante enviado por email.');
+  const proName = (appState.currentUser && appState.currentUser.name) || 'tu cuenta profesional';
+  showToast('Retiro Solicitado con Éxito', `Se transfirieron $49.000 ARS a la cuenta vinculada de ${proName}. Comprobante enviado por email.`);
   const balText = document.getElementById('pro-dash-balance-text');
   const bigBal = document.getElementById('pro-wallet-big-balance');
   if (balText) balText.textContent = '$0 ARS';
@@ -1111,10 +1155,30 @@ function handleGoogleSignIn() {
 }
 
 function promptForgotPassword() {
-  const email = prompt('Ingresá tu correo electrónico para enviarte las instrucciones de restablecimiento:');
-  if (email && email.includes('@')) {
-    showToast('Correo Enviado', `Se enviaron instrucciones de recuperación a ${email}.`);
-  }
+  triggerHapticFeedback();
+  playPop();
+  closeAuthModal();
+  const modal = document.getElementById('modal-forgot-password');
+  if (modal) modal.classList.add('active');
+}
+
+function closeForgotPasswordModal() {
+  const modal = document.getElementById('modal-forgot-password');
+  if (modal) modal.classList.remove('active');
+  openAuthModal();
+}
+
+function submitForgotPassword() {
+  triggerHapticFeedback();
+  playSuccessChime();
+  const emailInput = document.getElementById('forgot-email-input');
+  const email = emailInput ? emailInput.value.trim() : '';
+
+  const modal = document.getElementById('modal-forgot-password');
+  if (modal) modal.classList.remove('active');
+
+  showToast('Correo Enviado', `Se enviaron instrucciones de recuperación a ${email || 'tu casilla de correo'}.`);
+  if (emailInput) emailInput.value = '';
 }
 
 function simulateFileUpload() {
@@ -1173,6 +1237,10 @@ function renderActiveOrderBanner() {
         </div>
       </div>
       <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+        <button class="btn btn-secondary btn-sm" onclick="openInvoiceModalForOrder('${currentOrder.id}')" style="display: inline-flex; align-items: center; gap: 5px; font-weight: 600;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          Factura
+        </button>
         <button class="btn btn-secondary btn-sm" onclick="openChatModal('${currentOrder.quotes[0]?.proName || 'Marcos R.'}')">Chatear</button>
         <button class="btn btn-primary btn-sm" onclick="releasePaymentPrompt('${currentOrder.id}')" style="background: #065F46; font-weight: 700;">Ingresar PIN y Liberar Fondos</button>
       </div>
@@ -1213,7 +1281,9 @@ function nextWizardStep() {
   if (currentWizardStep === 1) {
     const title = document.getElementById('wizard-order-title').value.trim();
     if (!title) {
-      alert('Por favor, ingresá qué necesitás resolver (ej: Reparación de canilla)');
+      showToast('Completá el trabajo requerido', 'Por favor, ingresá qué necesitás resolver (ej: Reparación de canilla o cortocircuito).');
+      const input = document.getElementById('wizard-order-title');
+      if (input) input.focus();
       return;
     }
   }
@@ -1223,6 +1293,14 @@ function nextWizardStep() {
   } else {
     submitNewOrder();
   }
+}
+
+function selectWizardUrgency(el, val) {
+  triggerHapticFeedback();
+  playPop();
+  document.querySelectorAll('.wizard-urgency-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  appState.wizardUrgency = val;
 }
 
 function prevWizardStep() {
@@ -1438,11 +1516,20 @@ function renderMyOrdersModalList() {
           <button class="btn btn-secondary btn-sm" onclick="closeMyOrdersModal(); openChatModal('${order.quotes[0]?.proName || 'Marcos R.'}')">
             Chatear con el Profesional
           </button>
+
+          <button class="btn btn-secondary btn-sm" onclick="closeMyOrdersModal(); openInvoiceModalForOrder('${order.id}')" style="display: inline-flex; align-items: center; gap: 5px; font-weight: 600; color: #047857; background: #ECFDF5; border: 1px solid #A7F3D0;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            Factura Electrónica
+          </button>
         </div>
       </div>
     `;
   }).join('');
 }
+
+// Variable global de contexto para la Factura Electrónica activa
+let currentActiveQuoteForInvoice = null;
+let currentActiveOrderForInvoice = null;
 
 // Modal Detalle de Presupuesto
 function openQuoteDetailModal(quoteId) {
@@ -1467,6 +1554,10 @@ function openQuoteDetailModal(quoteId) {
   }
 
   if (!foundQuote) return;
+
+  // Registrar presupuesto y pedido para emisión de Factura Electrónica
+  currentActiveQuoteForInvoice = foundQuote;
+  currentActiveOrderForInvoice = targetOrder;
 
   const container = document.getElementById('quote-detail-content');
   if (!container) return;
@@ -1501,7 +1592,7 @@ function openQuoteDetailModal(quoteId) {
       </div>
     </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; font-size: 0.85rem;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; font-size: 0.85rem;">
       <div style="background: #F9FAFB; padding: 12px; border-radius: 8px; border: 1px solid var(--color-border);">
         <strong style="display: block; color: var(--color-text-main); margin-bottom: 4px;">Duración estimada</strong>
         <span style="color: var(--color-text-secondary);">${foundQuote.estimatedDuration}</span>
@@ -1512,11 +1603,26 @@ function openQuoteDetailModal(quoteId) {
       </div>
     </div>
 
-    <div style="background-color: #ECFDF5; border: 1px solid var(--color-primary-border); border-radius: 12px; padding: 14px; display: flex; align-items: center; gap: 12px;">
+    <!-- Garantía de Pago y Custodia -->
+    <div style="background-color: #ECFDF5; border: 1px solid var(--color-primary-border); border-radius: 12px; padding: 14px; display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
       <img src="assets/mascot.jpg" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;" alt="Garantía Sademy">
       <div style="font-size: 0.82rem; color: #065F46;">
         <strong>Garantía de Satisfacción 100%:</strong> Tu pago queda retenido de forma segura en Sademy y no se libera al profesional hasta que des tu conformidad de que el trabajo quedó perfecto.
       </div>
+    </div>
+
+    <!-- Fila Informativa de Facturación Legal AFIP con Acceso Rápido -->
+    <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 12px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+        <div>
+          <strong style="font-size: 0.84rem; color: #1E293B;">Factura Electrónica AFIP Tipo B con CAE</strong>
+          <div style="font-size: 0.74rem; color: #64748B;">Comprobante fiscal respaldado y descargable en PDF</div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-secondary btn-sm" onclick="openInvoiceModalForCurrentQuote()" style="font-weight: 700; color: #047857; background: #ECFDF5; border: 1.5px solid #A7F3D0; font-size: 0.78rem; padding: 6px 12px;">
+        Ver Factura Oficial →
+      </button>
     </div>
   `;
 
@@ -1535,6 +1641,346 @@ function openQuoteDetailModal(quoteId) {
 function closeQuoteDetailModal() {
   const modal = document.getElementById('modal-quote-detail');
   if (modal) modal.classList.remove('active');
+}
+
+// ============================================================================
+// FACTURA ELECTRÓNICA AFIP / ARCA CON LOGO DE LETRAS SADEMY
+// ============================================================================
+function numberToWordsSpanish(n) {
+  if (n === 25000) return 'Veinticinco mil pesos argentinos con 00/100';
+  if (n === 24500) return 'Veinticuatro mil quinientos pesos argentinos con 00/100';
+  if (n === 28000) return 'Veintiocho mil pesos argentinos con 00/100';
+  if (n === 34500) return 'Treinta y cuatro mil quinientos pesos argentinos con 00/100';
+  if (n === 38000) return 'Treinta y ocho mil pesos argentinos con 00/100';
+  if (n === 49000) return 'Cuarenta y nueve mil pesos argentinos con 00/100';
+  return `${n.toLocaleString('es-AR')} pesos argentinos con 00/100`;
+}
+
+function openInvoiceModalForCurrentQuote() {
+  triggerHapticFeedback();
+  playPop();
+  closeQuoteDetailModal();
+  const quote = currentActiveQuoteForInvoice || appState.orders[0]?.quotes[0];
+  const order = currentActiveOrderForInvoice || appState.orders[0];
+  renderAndOpenInvoice(quote, order);
+}
+
+function openInvoiceModalForOrder(orderId) {
+  triggerHapticFeedback();
+  playPop();
+  closeMyOrdersModal();
+  const order = appState.orders.find(o => o.id === orderId) || appState.orders[0];
+  const quote = (order && order.quotes && order.quotes[0]) || {
+    proName: order?.hiredPro?.name || 'Profesional Certificado',
+    proTrade: order?.categoryName || 'Servicio General',
+    laborPrice: order?.hiredPro?.price || 24500,
+    materialsPrice: 0,
+    totalPrice: order?.hiredPro?.price || 24500,
+    warranty: '6 meses de garantía oficial Sademy'
+  };
+  renderAndOpenInvoice(quote, order);
+}
+
+function renderAndOpenInvoice(quote, order) {
+  const container = document.getElementById('invoice-sheet-container');
+  if (!container) return;
+
+  const proName = quote?.proName || 'Valeria C.';
+  const proTrade = quote?.proTrade || 'CERRAJERÍA DE SEGURIDAD 24H';
+  const laborPrice = quote?.laborPrice || 19500;
+  const materialsPrice = quote?.materialsPrice || 5500;
+  const totalPrice = quote?.totalPrice || (laborPrice + materialsPrice);
+  const clientName = (appState.currentUser && appState.currentUser.name) || 'Carlos M.';
+  const clientAddress = order?.address || 'Palermo Chico, CABA';
+  const orderId = order?.id || 'ORD-2026-082';
+  
+  const today = new Date();
+  const todayStr = '14/10/2026';
+  const vtoStr = '24/10/2026';
+  const caeNumber = '74421894019283';
+  const compNumber = '00000428';
+
+  container.innerHTML = `
+    <div class="afip-outer-frame">
+      
+      <!-- ENCABEZADO OFICIAL AFIP TRIPARTITO -->
+      <div class="afip-header-grid">
+        
+        <!-- COLUMNA IZQUIERDA: LOGO DE LETRAS SADEMY + DATOS EMISOR -->
+        <div class="afip-header-left">
+          <div style="display: flex; align-items: baseline; gap: 4px; margin-bottom: 8px;">
+            <span style="font-size: 34px; font-weight: 900; color: #047857; letter-spacing: -1.5px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-transform: lowercase;">sademy</span>
+            <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #059669; margin-left: 2px;"></span>
+          </div>
+          <div style="font-size: 11px; font-weight: 800; color: #0F172A; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 4px;">
+            SADEMY SERVICIOS Y OFICIOS S.A.S.
+          </div>
+          <div style="font-size: 9.5px; color: #334155; line-height: 1.45;">
+            <strong>Razón Social:</strong> Sademy Servicios y Oficios S.A.S.<br>
+            <strong>Domicilio Comercial:</strong> Av. del Libertador 6250, Piso 8, Belgrano, CABA<br>
+            <strong>Condición frente al IVA:</strong> IVA Responsable Inscripto
+          </div>
+        </div>
+
+        <!-- CUADRO CENTRAL DE LA LETRA (AFIP B / COD. 06) -->
+        <div class="afip-header-letter-box">
+          <span class="afip-header-letter">B</span>
+          <span class="afip-header-code">COD. 06</span>
+        </div>
+
+        <!-- COLUMNA DERECHA: DATOS DE LA FACTURA & AFIP -->
+        <div class="afip-header-right">
+          <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #000000; margin-bottom: 6px;">
+            FACTURA
+          </div>
+          <div style="font-size: 10px; color: #000000; line-height: 1.55;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+              <strong>Punto de Venta: 0001</strong>
+              <strong>Comp. Nro: ${compNumber}</strong>
+            </div>
+            <div><strong>Fecha de Emisión:</strong> ${todayStr}</div>
+            <div><strong>CUIT:</strong> 30-71829450-8</div>
+            <div><strong>Ingresos Brutos:</strong> 30-71829450-8</div>
+            <div><strong>Fecha de Inicio de Actividades:</strong> 01/03/2024</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SUB-BARRA DE PERÍODO FACTURADO -->
+      <div class="afip-subbar">
+        <div><strong>Período Facturado Desde:</strong> ${todayStr}</div>
+        <div><strong>Hasta:</strong> ${todayStr}</div>
+        <div><strong>Fecha de Vto. para el Pago:</strong> ${todayStr}</div>
+      </div>
+
+      <!-- DATOS DEL CLIENTE / RECEPTOR -->
+      <div class="afip-client-info">
+        <div><strong>CUIT / CUIL / DNI:</strong> 20-35849120-4 (Consumidor Final)</div>
+        <div><strong>Apellido y Nombre / Razón Social:</strong> ${clientName}</div>
+        <div><strong>Condición frente al IVA:</strong> Consumidor Final</div>
+        <div><strong>Domicilio Comercial:</strong> ${clientAddress}</div>
+        <div><strong>Condición de Venta:</strong> Contado (Mercado Pago Custodia Escrow)</div>
+        <div><strong>Código de Operación:</strong> ${orderId}</div>
+      </div>
+
+      <!-- TABLA DETALLADA DE CONCEPTOS FACTURADOS -->
+      <table class="afip-items-table">
+        <thead>
+          <tr>
+            <th style="width: 50px;">Código</th>
+            <th>Producto / Servicio</th>
+            <th style="width: 60px; text-align: center;">Cantidad</th>
+            <th style="width: 70px;">U. Medida</th>
+            <th style="width: 85px; text-align: right;">Precio Unit.</th>
+            <th style="width: 55px; text-align: right;">% Bonif.</th>
+            <th style="width: 70px; text-align: right;">Imp. Bonif.</th>
+            <th style="width: 90px; text-align: right;">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-family: monospace;">SRV-01</td>
+            <td>
+              <strong>Mano de obra calificada por ${proName}</strong><br>
+              <span style="font-size: 9px; color: #475569;">${proTrade} · Prestación de servicio técnico especializado</span>
+            </td>
+            <td style="text-align: center;">1,00</td>
+            <td>unidades</td>
+            <td style="text-align: right;">$${laborPrice.toLocaleString('es-AR')},00</td>
+            <td style="text-align: right;">0,00</td>
+            <td style="text-align: right;">0,00</td>
+            <td style="text-align: right; font-weight: 700;">$${laborPrice.toLocaleString('es-AR')},00</td>
+          </tr>
+          ${materialsPrice > 0 ? `
+            <tr>
+              <td style="font-family: monospace;">MAT-01</td>
+              <td>
+                <strong>Materiales, componentes y piezas homologadas</strong><br>
+                <span style="font-size: 9px; color: #475569;">Insumos técnicos de reposición normalizados bajo norma IRAM</span>
+              </td>
+              <td style="text-align: center;">1,00</td>
+              <td>unidades</td>
+              <td style="text-align: right;">$${materialsPrice.toLocaleString('es-AR')},00</td>
+              <td style="text-align: right;">0,00</td>
+              <td style="text-align: right;">0,00</td>
+              <td style="text-align: right; font-weight: 700;">$${materialsPrice.toLocaleString('es-AR')},00</td>
+            </tr>
+          ` : ''}
+          <tr>
+            <td style="font-family: monospace;">GAR-01</td>
+            <td>
+              <strong>Garantía oficial Sademy 6 meses & Custodia de Fondos Escrow</strong><br>
+              <span style="font-size: 9px; color: #475569;">Protección antifraude, retención en custodia y póliza contra daños</span>
+            </td>
+            <td style="text-align: center;">1,00</td>
+            <td>servicios</td>
+            <td style="text-align: right;">$0,00</td>
+            <td style="text-align: right;">100,00</td>
+            <td style="text-align: right;">$0,00</td>
+            <td style="text-align: right; font-weight: 700;">$0,00</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- TOTALES DE FACTURACIÓN -->
+      <div class="afip-totals-box">
+        <table class="afip-totals-table">
+          <tr>
+            <td style="color: #475569;">Subtotal:</td>
+            <td style="text-align: right; font-weight: 700;">$${totalPrice.toLocaleString('es-AR')},00</td>
+          </tr>
+          <tr>
+            <td style="color: #475569;">Importe Otros Tributos:</td>
+            <td style="text-align: right; font-weight: 700;">$0,00</td>
+          </tr>
+          <tr style="border-top: 1.5px solid #000000; font-size: 13px;">
+            <td style="font-weight: 900; color: #000000; padding: 10px 14px;">Importe Total:</td>
+            <td style="text-align: right; font-weight: 900; color: #000000; padding: 10px 14px;">$${totalPrice.toLocaleString('es-AR')},00 ARS</td>
+          </tr>
+        </table>
+      </div>
+
+      <div style="padding: 7px 16px; background: #FFFFFF; font-size: 9.5px; border-bottom: 1.5px solid #000000; color: #334155;">
+        <strong>Son:</strong> ${numberToWordsSpanish(totalPrice)}.
+      </div>
+
+      <!-- PIE OFICIAL AFIP CON CÓDIGO QR Y CAE -->
+      <div class="afip-footer-row">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <!-- QR AFIP OFICIAL -->
+          <div style="width: 74px; height: 74px; background: #FFFFFF; border: 1px solid #CBD5E1; padding: 3px; display: flex; align-items: center; justify-content: center;">
+            <svg width="68" height="68" viewBox="0 0 85 85" fill="#000000">
+              <rect x="5" y="5" width="25" height="25" fill="#000" rx="2"/>
+              <rect x="9" y="9" width="17" height="17" fill="#fff" rx="1"/>
+              <rect x="13" y="13" width="9" height="9" fill="#000" rx="1"/>
+              <rect x="55" y="5" width="25" height="25" fill="#000" rx="2"/>
+              <rect x="59" y="9" width="17" height="17" fill="#fff" rx="1"/>
+              <rect x="63" y="13" width="9" height="9" fill="#000" rx="1"/>
+              <rect x="5" y="55" width="25" height="25" fill="#000" rx="2"/>
+              <rect x="9" y="59" width="17" height="17" fill="#fff" rx="1"/>
+              <rect x="13" y="63" width="9" height="9" fill="#000" rx="1"/>
+              <rect x="35" y="9" width="4" height="4"/>
+              <rect x="43" y="9" width="4" height="4"/>
+              <rect x="9" y="35" width="4" height="4"/>
+              <rect x="9" y="43" width="4" height="4"/>
+              <rect x="35" y="21" width="4" height="4"/>
+              <rect x="43" y="21" width="4" height="4"/>
+              <rect x="35" y="35" width="6" height="6"/>
+              <rect x="45" y="35" width="6" height="6"/>
+              <rect x="55" y="35" width="5" height="5"/>
+              <rect x="65" y="35" width="5" height="5"/>
+              <rect x="75" y="35" width="5" height="5"/>
+              <rect x="35" y="45" width="5" height="5"/>
+              <rect x="45" y="45" width="6" height="6"/>
+              <rect x="55" y="45" width="6" height="6"/>
+              <rect x="65" y="45" width="5" height="5"/>
+              <rect x="35" y="55" width="5" height="5"/>
+              <rect x="45" y="55" width="5" height="5"/>
+              <rect x="55" y="55" width="5" height="5"/>
+              <rect x="65" y="55" width="5" height="5"/>
+              <rect x="75" y="55" width="5" height="5"/>
+              <rect x="35" y="65" width="6" height="6"/>
+              <rect x="45" y="65" width="5" height="5"/>
+              <rect x="55" y="65" width="6" height="6"/>
+              <rect x="65" y="65" width="5" height="5"/>
+              <rect x="75" y="65" width="5" height="5"/>
+              <rect x="35" y="75" width="5" height="5"/>
+              <rect x="45" y="75" width="6" height="6"/>
+              <rect x="55" y="75" width="5" height="5"/>
+              <rect x="65" y="75" width="6" height="6"/>
+              <rect x="75" y="75" width="5" height="5"/>
+            </svg>
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
+              <span style="font-size: 15px; font-weight: 900; letter-spacing: 0.5px; color: #1E3A8A;">ARCA</span>
+              <span style="font-size: 8.5px; color: #64748B;">/ Agencia de Recaudación y Control Aduanero</span>
+            </div>
+            <div style="font-size: 9.5px; font-weight: 800; color: #000000;">
+              Comprobante Autorizado por AFIP
+            </div>
+            <div style="font-size: 8px; color: #64748B; max-width: 330px; line-height: 1.25; margin-top: 2px;">
+              Esta Administración Federal no se responsabiliza por los datos ingresados en el detalle de la operación.
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: right; font-size: 11px; line-height: 1.6;">
+          <div><strong>CAE Nº:</strong> <span style="font-family: monospace; font-size: 13px; font-weight: 800; letter-spacing: 1px;">${caeNumber}</span></div>
+          <div><strong>Fecha de Vto. de CAE:</strong> <span style="font-weight: 700;">${vtoStr}</span></div>
+          <div style="font-size: 9px; color: #059669; font-weight: 700; margin-top: 4px;">✓ Verificado en Servidores AFIP</div>
+        </div>
+      </div>
+
+    </div>
+  `;
+
+  const modal = document.getElementById('modal-invoice-viewer');
+  if (modal) modal.classList.add('active');
+}
+
+function closeInvoiceModal() {
+  const modal = document.getElementById('modal-invoice-viewer');
+  if (modal) modal.classList.remove('active');
+}
+
+function printInvoiceDocument() {
+  triggerHapticFeedback();
+  window.print();
+}
+
+function downloadInvoiceHTML() {
+  triggerHapticFeedback();
+  playSuccessChime();
+
+  const container = document.getElementById('invoice-sheet-container');
+  if (!container) return;
+
+  const invoiceContent = container.innerHTML;
+  const fullHTML = `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Factura_Sademy_0001-00000428</title>
+  <style>
+    body { margin: 20px; font-family: Arial, Helvetica, sans-serif; background: #FFF; color: #000; }
+    .afip-outer-frame { border: 1.5px solid #000; border-radius: 4px; position: relative; max-width: 800px; margin: 0 auto; }
+    .afip-header-grid { display: grid; grid-template-columns: 1fr 64px 1fr; min-height: 140px; border-bottom: 1.5px solid #000; position: relative; }
+    .afip-header-left { padding: 16px 20px; border-right: 1.5px solid #000; }
+    .afip-header-letter-box { position: absolute; top: -1px; left: 50%; transform: translateX(-50%); width: 62px; height: 54px; background: #FFF; border: 1.5px solid #000; border-top: none; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 2; }
+    .afip-header-letter { font-size: 30px; font-weight: 900; line-height: 1; }
+    .afip-header-code { font-size: 8px; font-weight: 800; margin-top: 2px; }
+    .afip-header-right { padding: 16px 20px; padding-left: 36px; }
+    .afip-subbar { display: flex; justify-content: space-between; padding: 8px 16px; border-bottom: 1.5px solid #000; background: #F8FAFC; font-size: 10px; font-weight: 700; }
+    .afip-client-info { padding: 12px 16px; border-bottom: 1.5px solid #000; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; font-size: 10.5px; }
+    .afip-items-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+    .afip-items-table th { background: #F1F5F9; border-bottom: 1.5px solid #000; border-right: 1px solid #CBD5E1; padding: 7px 8px; text-align: left; font-weight: 800; text-transform: uppercase; }
+    .afip-items-table th:last-child { border-right: none; }
+    .afip-items-table td { padding: 8px 8px; border-bottom: 1px solid #E2E8F0; border-right: 1px solid #E2E8F0; }
+    .afip-items-table td:last-child { border-right: none; }
+    .afip-totals-box { display: flex; justify-content: flex-end; border-top: 1.5px solid #000; border-bottom: 1.5px solid #000; background: #F8FAFC; }
+    .afip-totals-table { width: 320px; border-collapse: collapse; font-size: 11px; }
+    .afip-totals-table td { padding: 6px 14px; }
+    .afip-footer-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; background: #FFF; }
+  </style>
+</head>
+<body onload="window.print()">
+  ${invoiceContent}
+</body>
+</html>`;
+
+  const blob = new Blob([fullHTML], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Factura_Sademy_B_0001-00000428.html`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  showToast('Comprobante Descargado', 'Se descargó el archivo oficial de la Factura Electrónica.');
 }
 
 // Modal de Pasarela de Pago Protegido (Escrow)
@@ -1594,7 +2040,7 @@ function confirmEscrowPayment() {
     if (!appState.adminTransactions) appState.adminTransactions = [];
     appState.adminTransactions.unshift({
       id: order.id,
-      client: (appState.currentUser && appState.currentUser.name) || 'Carlos M.',
+      client: (appState.currentUser && appState.currentUser.name) || 'Cliente Sademy',
       pro: order.hiredPro.name,
       trade: order.categoryName || 'Electricista',
       amount: basePrice,
@@ -1624,13 +2070,45 @@ function releasePaymentPrompt(orderId) {
   const order = appState.orders.find(o => o.id === orderId) || appState.orders[0];
   const proName = order.hiredPro?.name || order.quotes[0]?.proName || 'Marcos R.';
   const correctPin = order.conformityPin || '7412';
+  openEscrowPinModal(order.id, proName, correctPin);
+}
 
-  const enteredPin = prompt(`Ingresá el PIN de 4 dígitos para liberar los fondos a ${proName} (Tu PIN es ${correctPin}):`, correctPin);
-  if (enteredPin === String(correctPin)) {
+function openEscrowPinModal(orderId, proName, correctPin) {
+  const modal = document.getElementById('modal-escrow-pin');
+  const orderIdInput = document.getElementById('escrow-pin-order-id');
+  const subtitle = document.getElementById('escrow-pin-subtitle');
+  const hint = document.getElementById('escrow-pin-hint');
+  const pinInput = document.getElementById('escrow-pin-input');
+
+  if (orderIdInput) orderIdInput.value = orderId;
+  if (subtitle) subtitle.innerHTML = `Liberarás el pago retenido a <strong>${proName}</strong> una vez finalizado el trabajo a tu conformidad.`;
+  if (hint) hint.textContent = correctPin;
+  if (pinInput) {
+    pinInput.value = '';
+    setTimeout(() => pinInput.focus(), 150);
+  }
+  if (modal) modal.classList.add('active');
+}
+
+function closeEscrowPinModal() {
+  const modal = document.getElementById('modal-escrow-pin');
+  if (modal) modal.classList.remove('active');
+}
+
+function submitEscrowPin() {
+  triggerHapticFeedback();
+  const orderId = document.getElementById('escrow-pin-order-id').value;
+  const pinInput = document.getElementById('escrow-pin-input');
+  const enteredPin = pinInput ? pinInput.value.trim() : '';
+
+  const order = appState.orders.find(o => o.id === orderId) || appState.orders[0];
+  const proName = order.hiredPro?.name || order.quotes[0]?.proName || 'Profesional';
+  const correctPin = String(order.conformityPin || '7412');
+
+  if (enteredPin === correctPin) {
     order.completed = true;
     order.status = 'Finalizado con éxito';
 
-    // Actualizar estado en el libro de transacciones de administración
     if (appState.adminTransactions) {
       const tx = appState.adminTransactions.find(t => t.id === order.id);
       if (tx) tx.status = 'Liberado al Pro (Pago MP)';
@@ -1641,27 +2119,80 @@ function releasePaymentPrompt(orderId) {
 
     saveAppState();
     playSuccessChime();
+    closeEscrowPinModal();
     renderActiveOrderBanner();
     renderMyOrdersModalList();
     updateOrdersBadges();
 
     showToast('¡Pago liberado exitosamente!', `${proName} recibió sus honorarios vía Mercado Pago. ¡Gracias por confiar en Sademy!`);
-    promptReviewModal(proName, order);
-  } else if (enteredPin !== null) {
-    showToast('PIN incorrecto', 'Verificá el PIN de 4 dígitos generado al momento del pago.');
+    openOrderReviewModal(proName, order.id);
+  } else {
+    showToast('PIN incorrecto', 'Verificá el código PIN de 4 dígitos indicado en pantalla.');
+    if (pinInput) {
+      pinInput.classList.add('error');
+      pinInput.focus();
+    }
   }
 }
 
-function promptReviewModal(proName, order) {
-  const stars = prompt(`¿Cuántas estrellas le das al trabajo de ${proName}? (1 al 5)`, '5');
-  if (stars) {
+function openOrderReviewModal(proName, orderId) {
+  const modal = document.getElementById('modal-order-review');
+  const orderIdInput = document.getElementById('review-order-id');
+  const subtitle = document.getElementById('review-subtitle');
+  if (orderIdInput) orderIdInput.value = orderId;
+  if (subtitle) subtitle.innerHTML = `¿Cómo fue tu experiencia de servicio con <strong>${proName}</strong>?`;
+  renderStarRating(5);
+  if (modal) modal.classList.add('active');
+}
+
+function closeOrderReviewModal() {
+  const modal = document.getElementById('modal-order-review');
+  if (modal) modal.classList.remove('active');
+}
+
+function renderStarRating(selectedRating) {
+  const container = document.getElementById('star-rating-selector');
+  const valInput = document.getElementById('review-rating-value');
+  if (valInput) valInput.value = selectedRating;
+  if (!container) return;
+
+  container.innerHTML = [1, 2, 3, 4, 5].map(star => {
+    const isFilled = star <= selectedRating;
+    return `
+      <button type="button" onclick="renderStarRating(${star})" style="background: none; border: none; cursor: pointer; padding: 4px; transition: transform 0.15s ease;" onmouseenter="this.style.transform='scale(1.2)'" onmouseleave="this.style.transform='scale(1)'" aria-label="${star} estrellas">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="${isFilled ? '#F59E0B' : '#E2E8F0'}" stroke="${isFilled ? '#D97706' : '#94A3B8'}" stroke-width="1.5">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+      </button>
+    `;
+  }).join('');
+}
+
+function submitOrderReview() {
+  triggerHapticFeedback();
+  playSuccessChime();
+  const orderId = document.getElementById('review-order-id').value;
+  const rating = parseInt(document.getElementById('review-rating-value').value) || 5;
+  const comment = document.getElementById('review-comment-input').value.trim() || 'Servicio verificado de excelencia.';
+
+  const order = appState.orders.find(o => o.id === orderId) || appState.orders[0];
+  if (order) {
     order.review = {
-      stars: parseInt(stars) || 5,
-      comment: 'Trabajo verificado con satisfacción total en Sademy.'
+      stars: rating,
+      comment: comment,
+      date: 'Hoy'
     };
     saveAppState();
-    showToast('¡Reseña registrada!', 'Tu opinión ayuda a construir una comunidad de confianza en Sademy.');
   }
+
+  closeOrderReviewModal();
+  showToast('¡Reseña registrada!', 'Tu valoración ayuda a construir una comunidad de confianza en Sademy.');
+}
+
+function openProQuoteModal(orderId, orderTitle) {
+  sendWorkerProposal(orderTitle);
+  const idInput = document.getElementById('pro-quote-order-id');
+  if (idInput && orderId) idInput.value = orderId;
 }
 
 // ============================================================================
@@ -1901,6 +2432,19 @@ function renderProfessionalsDirectory() {
       </div>
     </div>
   `).join('');
+}
+
+function handleQuickChipClick(btn, cat) {
+  triggerHapticFeedback();
+  playPop();
+  document.querySelectorAll('.search-chips-row .quick-chip').forEach(c => c.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  appState.activeFilterTrade = cat;
+  const select = document.getElementById('filter-trade-select');
+  if (select) select.value = cat;
+  renderProfessionalsDirectory();
+  const dirSection = document.getElementById('directorio');
+  if (dirSection) dirSection.scrollIntoView({ behavior: 'smooth' });
 }
 
 function resetFilters() {

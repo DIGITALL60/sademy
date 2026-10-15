@@ -135,7 +135,7 @@
         <div id="nav-user-dropdown-wrapper" class="nav-user-dropdown-wrapper">
           <button id="nav-user-pill-btn" class="nav-user-pill-btn" onclick="toggleUserDropdown()" aria-expanded="false" title="Abrir opciones de cuenta">
             <img id="nav-user-avatar-img" src="assets/mascot.jpg" class="nav-user-avatar" alt="Avatar usuario">
-            <span id="nav-user-name-text" class="nav-user-name">Carlos M.</span>
+            <span id="nav-user-name-text" class="nav-user-name">Mi Cuenta</span>
             <span id="nav-user-role-tag" class="nav-user-role-badge">Cliente</span>
             <svg class="chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </button>
@@ -144,8 +144,8 @@
             <div class="user-menu-header">
               <img id="menu-user-avatar" src="assets/mascot.jpg" alt="Usuario" class="menu-user-avatar">
               <div class="menu-user-meta">
-                <strong id="menu-user-name">Carlos M.</strong>
-                <span id="menu-user-email">carlos.m@gmail.com</span>
+                <strong id="menu-user-name">Mi Cuenta</strong>
+                <span id="menu-user-email">usuario@sademy.com</span>
                 <span id="menu-user-role-label" class="menu-user-badge">Cliente Verificado</span>
               </div>
             </div>
@@ -321,11 +321,11 @@
           <!-- Chips de acceso rápido -->
           <div class="search-chips-row">
             <span class="chips-label">Populares:</span>
-            <button class="quick-chip active" data-cat="electricidad">Electricistas</button>
-            <button class="quick-chip" data-cat="plomeria">Plomería</button>
-            <button class="quick-chip" data-cat="gas">Gasistas</button>
-            <button class="quick-chip" data-cat="pintura">Pintura</button>
-            <button class="quick-chip" data-cat="cerrajeria">Cerrajería</button>
+            <button class="quick-chip active" data-cat="electricidad" onclick="handleQuickChipClick(this, 'electricidad')">Electricistas</button>
+            <button class="quick-chip" data-cat="plomeria" onclick="handleQuickChipClick(this, 'plomeria')">Plomería</button>
+            <button class="quick-chip" data-cat="gas" onclick="handleQuickChipClick(this, 'gas')">Gasistas</button>
+            <button class="quick-chip" data-cat="pintura" onclick="handleQuickChipClick(this, 'pintura')">Pintura</button>
+            <button class="quick-chip" data-cat="cerrajeria" onclick="handleQuickChipClick(this, 'cerrajeria')">Cerrajería</button>
           </div>
         </div>
 
@@ -1465,9 +1465,9 @@
           <div class="form-group">
             <label class="form-label">¿Cuándo necesitás que se realice?</label>
             <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px;">
-              <span class="quick-chip active">Urgente Hoy</span>
-              <span class="quick-chip">Esta semana</span>
-              <span class="quick-chip">Programado</span>
+              <button type="button" class="wizard-urgency-chip active" onclick="selectWizardUrgency(this, 'Urgente Hoy')">Urgente Hoy</button>
+              <button type="button" class="wizard-urgency-chip" onclick="selectWizardUrgency(this, 'Esta semana')">Esta semana</button>
+              <button type="button" class="wizard-urgency-chip" onclick="selectWizardUrgency(this, 'Programado')">Programado</button>
             </div>
           </div>
         </div>
@@ -1497,9 +1497,15 @@
         <!-- Contenido inyectado dinámicamente -->
       </div>
 
-      <div class="modal-footer">
-        <button class="btn btn-secondary btn-sm" onclick="closeQuoteDetailModal()">Cerrar</button>
-        <button id="modal-quote-pay-btn" class="btn btn-primary">Aceptar & Pagar Seguro</button>
+      <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="openInvoiceModalForCurrentQuote()" style="display: inline-flex; align-items: center; gap: 7px; font-weight: 700; color: #047857; background: #ECFDF5; border: 1.5px solid #A7F3D0; padding: 9px 14px; border-radius: 10px; cursor: pointer; transition: all 0.2s ease;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          Descargar Factura Electrónica
+        </button>
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <button class="btn btn-secondary btn-sm" onclick="closeQuoteDetailModal()">Cerrar</button>
+          <button id="modal-quote-pay-btn" class="btn btn-primary">Aceptar & Pagar Seguro</button>
+        </div>
       </div>
 
     </div>
@@ -2586,78 +2592,7 @@
   <!-- Contenedor de notificaciones Toast -->
   <div id="toast-container" class="toast-container" aria-live="polite"></div>
 
-  <!-- ========================================================================
-       FOOTER OFICIAL SADEMY CONFORME AL MANUAL
-       ======================================================================== -->
-  <footer class="main-footer">
-    <div class="container">
-      
-      <div class="footer-grid">
-        
-        <!-- Columna de marca -->
-        <div class="footer-brand-col">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <img src="assets/favicon.svg" alt="Sademy" style="width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--color-primary);">
-            <span class="brand-wordmark brand-wordmark-light">sademy</span>
-          </div>
-          <p class="footer-tagline">
-            El marketplace de oficios con trabajadores calificados, certificados y de confianza. Conectamos la necesidad de las personas con soluciones seguras y de calidad.
-          </p>
-          <div style="font-size: 0.8rem; color: #6B7280;">
-            Manual de Identidad Visual · Octubre 2026
-          </div>
-        </div>
 
-        <!-- Columna Oficios -->
-        <div>
-          <h4 class="footer-col-title">Oficios Populares</h4>
-          <ul class="footer-links-list">
-            <li><a href="#oficios" class="footer-link">Electricistas en CABA</a></li>
-            <li><a href="#oficios" class="footer-link">Plomeros Urgencias</a></li>
-            <li><a href="#oficios" class="footer-link">Gasistas Matriculados</a></li>
-            <li><a href="#oficios" class="footer-link">Pintura de Interiores</a></li>
-            <li><a href="#oficios" class="footer-link">Cerrajería 24 Horas</a></li>
-          </ul>
-        </div>
-
-        <!-- Columna Seguridad -->
-        <div>
-          <h4 class="footer-col-title">Confianza y Garantía</h4>
-          <ul class="footer-links-list">
-            <li><a href="#garantia" class="footer-link">Sistema Escrow de Pago</a></li>
-            <li><a href="#como-funciona" class="footer-link">Verificación de Identidad</a></li>
-            <li><a href="#garantia" class="footer-link">Seguro contra Daños</a></li>
-            <li><a href="#calculadora" class="footer-link">Guía de Precios</a></li>
-            <li><a href="#" class="footer-link">Centro de Ayuda</a></li>
-          </ul>
-        </div>
-
-        <!-- Columna Para Profesionales -->
-        <div>
-          <h4 class="footer-col-title">Trabajadores</h4>
-          <ul class="footer-links-list">
-            <li><a href="javascript:void(0)" onclick="setRole('pro')" class="footer-link">Sademy Pro</a></li>
-            <li><a href="javascript:void(0)" onclick="setRole('pro')" class="footer-link">Registrar mi Oficio</a></li>
-            <li><a href="javascript:void(0)" onclick="setRole('pro')" class="footer-link">Validación de Matrícula</a></li>
-            <li><a href="#" class="footer-link">Términos del Servicio</a></li>
-            <li><a href="#" class="footer-link">Privacidad de Datos</a></li>
-          </ul>
-        </div>
-
-      </div>
-
-      <!-- Barra inferior de copyright y disclaimer -->
-      <div class="footer-bottom">
-        <div>
-          © 2026 Sademy · Todos los derechos reservados.
-        </div>
-        <div>
-          Diseñado bajo los lineamientos del Manual de Identidad Visual de Sademy (Octubre 2026).
-        </div>
-      </div>
-
-    </div>
-  </footer>
 
   <!-- Botón Flotante del Asistente Rápido Sademy -->
   <div class="floating-assistant-btn" onclick="openNewOrderModal()" title="¿Tenés una urgencia? Tocá acá para cotizar con profesionales en 1 min">
@@ -2701,8 +2636,8 @@
         <div style="display: flex; align-items: center; gap: 12px;">
           <img id="account-modal-avatar" src="assets/mascot.jpg" alt="Avatar" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2.5px solid var(--color-primary);">
           <div>
-            <h3 id="account-modal-name" class="modal-title" style="font-size: 1.2rem; margin: 0;">Carlos M.</h3>
-            <p id="account-modal-email" style="font-size: 0.8rem; color: var(--color-text-secondary); margin: 2px 0 0;">carlos.m@gmail.com</p>
+            <h3 id="account-modal-name" class="modal-title" style="font-size: 1.2rem; margin: 0;">Mi Cuenta</h3>
+            <p id="account-modal-email" style="font-size: 0.8rem; color: var(--color-text-secondary); margin: 2px 0 0;">usuario@sademy.com</p>
             <span id="account-modal-badge" class="badge-tag" style="background: #ECFDF5; color: #065F46; font-weight: 700; margin-top: 4px; display: inline-block;">Cliente Verificado</span>
           </div>
         </div>
@@ -2829,6 +2764,160 @@
         </div>
 
       </div>
+    </div>
+  <!-- ========================================================================
+       MODAL 1: LIBERACIÓN SEGURA DE FONDOS ESCROW CON PIN
+       ======================================================================== -->
+  <div id="modal-escrow-pin" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-escrow-pin-title">
+    <div class="modal-container" style="max-width: 440px; text-align: center;">
+      <div class="modal-header" style="justify-content: center; position: relative;">
+        <div style="width: 56px; height: 56px; border-radius: 50%; background: #ECFDF5; border: 2px solid #A7F3D0; display: inline-flex; align-items: center; justify-content: center; color: #059669; margin: 0 auto 6px;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+        </div>
+        <button class="modal-close-btn" onclick="closeEscrowPinModal()" aria-label="Cerrar modal" style="position: absolute; right: 16px; top: 16px;">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding: 10px 24px 24px;">
+        <h3 id="modal-escrow-pin-title" class="modal-title" style="font-size: 1.25rem; margin-bottom: 6px;">Liberación Segura de Fondos</h3>
+        <p id="escrow-pin-subtitle" style="font-size: 0.84rem; color: #64748B; margin-bottom: 16px; line-height: 1.4;">
+          Confirmá la conformidad del trabajo para transferir los honorarios al profesional mediante custodia Sademy Escrow.
+        </p>
+
+        <div style="background: #F8FAFC; border: 1.5px dashed #CBD5E1; border-radius: 12px; padding: 12px; margin-bottom: 18px;">
+          <span style="font-size: 0.72rem; text-transform: uppercase; font-weight: 700; color: #475569; letter-spacing: 0.05em; display: block; margin-bottom: 4px;">Tu código PIN de conformidad</span>
+          <span id="escrow-pin-hint" style="font-family: 'SF Mono', Monaco, monospace; font-size: 1.6rem; font-weight: 800; letter-spacing: 6px; color: #047857;">7412</span>
+        </div>
+
+        <form onsubmit="event.preventDefault(); submitEscrowPin();">
+          <input type="hidden" id="escrow-pin-order-id" value="">
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label class="form-label" for="escrow-pin-input" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Ingresá el PIN de 4 dígitos</label>
+            <input type="text" id="escrow-pin-input" class="form-control" maxlength="4" placeholder="••••" autocomplete="off" style="text-align: center; font-size: 1.6rem; letter-spacing: 8px; font-weight: 800; padding: 10px; font-family: monospace; border: 2px solid #CBD5E1; border-radius: 12px;" required>
+          </div>
+
+          <div style="display: flex; gap: 10px;">
+            <button type="button" class="btn btn-secondary" onclick="closeEscrowPinModal()" style="flex: 1;">Cancelar</button>
+            <button type="submit" class="btn btn-primary" style="flex: 1.5; font-weight: 700;">Liberar Pago Ahora</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 2: CALIFICACIÓN Y RESEÑA VERIFICADA SADEMY
+       ======================================================================== -->
+  <div id="modal-order-review" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-review-title">
+    <div class="modal-container" style="max-width: 440px; text-align: center;">
+      <div class="modal-header" style="justify-content: center; position: relative;">
+        <div style="width: 56px; height: 56px; border-radius: 50%; background: #FEF3C7; border: 2px solid #FDE68A; display: inline-flex; align-items: center; justify-content: center; color: #D97706; margin: 0 auto 6px;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#D97706"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </div>
+        <button class="modal-close-btn" onclick="closeOrderReviewModal()" aria-label="Cerrar modal" style="position: absolute; right: 16px; top: 16px;">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding: 10px 24px 24px;">
+        <h3 id="modal-review-title" class="modal-title" style="font-size: 1.25rem; margin-bottom: 4px;">Calificar Servicio</h3>
+        <p id="review-subtitle" style="font-size: 0.84rem; color: #64748B; margin-bottom: 16px;">
+          ¿Cómo fue tu experiencia con el profesional?
+        </p>
+
+        <form onsubmit="event.preventDefault(); submitOrderReview();">
+          <input type="hidden" id="review-order-id" value="">
+          <input type="hidden" id="review-rating-value" value="5">
+
+          <!-- Selector de 5 estrellas con SVG Apple / Monoline -->
+          <div id="star-rating-selector" style="display: flex; justify-content: center; gap: 8px; margin-bottom: 16px;">
+          </div>
+
+          <div class="form-group" style="text-align: left; margin-bottom: 20px;">
+            <label class="form-label" for="review-comment-input" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Comentario de satisfacción</label>
+            <textarea id="review-comment-input" class="form-control" rows="3" placeholder="Puntual, prolijo y matriculado..." style="border-radius: 12px; font-size: 0.88rem;">Excelente trabajo, muy prolijo, puntual y profesional. Totalmente recomendable.</textarea>
+          </div>
+
+          <div style="display: flex; gap: 10px;">
+            <button type="button" class="btn btn-secondary" onclick="closeOrderReviewModal()" style="flex: 1;">Omitir</button>
+            <button type="submit" class="btn btn-primary" style="flex: 1.5; font-weight: 700;">Publicar Reseña</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 3: RECUPERACIÓN DE CONTRASEÑA
+       ======================================================================== -->
+  <div id="modal-forgot-password" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-forgot-title">
+    <div class="modal-container" style="max-width: 420px; text-align: center;">
+      <div class="modal-header" style="justify-content: center; position: relative;">
+        <div style="width: 54px; height: 54px; border-radius: 50%; background: #EFF6FF; border: 2px solid #BFDBFE; display: inline-flex; align-items: center; justify-content: center; color: #2563EB; margin: 0 auto 6px;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        </div>
+        <button class="modal-close-btn" onclick="closeForgotPasswordModal()" aria-label="Cerrar modal" style="position: absolute; right: 16px; top: 16px;">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding: 10px 24px 24px;">
+        <h3 id="modal-forgot-title" class="modal-title" style="font-size: 1.25rem; margin-bottom: 6px;">Recuperar Contraseña</h3>
+        <p style="font-size: 0.84rem; color: #64748B; margin-bottom: 18px; line-height: 1.4;">
+          Ingresá el correo electrónico asociado a tu cuenta Sademy y te enviaremos un código de restablecimiento seguro.
+        </p>
+
+        <form onsubmit="event.preventDefault(); submitForgotPassword();">
+          <div class="form-group" style="text-align: left; margin-bottom: 20px;">
+            <label class="form-label" for="forgot-email-input" style="font-size: 0.8rem; font-weight: 700; color: #334155;">Correo Electrónico</label>
+            <input type="email" id="forgot-email-input" class="form-control" placeholder="tu@correo.com" required style="border-radius: 10px; padding: 11px 14px;">
+          </div>
+
+          <div style="display: flex; gap: 10px;">
+            <button type="button" class="btn btn-secondary" onclick="closeForgotPasswordModal()" style="flex: 1;">Volver</button>
+            <button type="submit" class="btn btn-primary" style="flex: 1.5; font-weight: 700;">Enviar Enlace</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: VISOR Y DESCARGA DE FACTURA ELECTRÓNICA AFIP (SADEMY FORMAT)
+       ======================================================================== -->
+  <div id="modal-invoice-viewer" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-invoice-title" style="z-index: 1200;">
+    <div class="modal-container" style="max-width: 900px; width: 95%; max-height: 92vh; display: flex; flex-direction: column; padding: 0; overflow: hidden; background: #F8FAFC;">
+      
+      <!-- Barra superior de acciones estilo macOS / Apple Cupertino -->
+      <div style="background: #FFFFFF; border-bottom: 1.5px solid #E2E8F0; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; z-index: 10;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 38px; height: 38px; border-radius: 10px; background: #ECFDF5; border: 1.5px solid #A7F3D0; display: flex; align-items: center; justify-content: center; color: #059669;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          </div>
+          <div>
+            <h3 id="modal-invoice-title" style="margin: 0; font-size: 1.15rem; color: #0F172A; font-weight: 800; display: flex; align-items: center; gap: 8px;">
+              Factura Electrónica Oficial
+              <span class="badge-tag" style="background: #ECFDF5; color: #065F46; font-size: 0.72rem; font-weight: 700;">AFIP / ARCA Válida</span>
+            </h3>
+            <span id="modal-invoice-subtitle" style="font-size: 0.78rem; color: #64748B;">Comprobante Tipo B · CUIT 30-71829450-8 · Sademy S.A.S.</span>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="downloadInvoiceHTML()" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 700; padding: 8px 14px; border-radius: 9px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Descargar Comprobante
+          </button>
+          <button type="button" class="btn btn-primary btn-sm" onclick="printInvoiceDocument()" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 700; padding: 8px 16px; border-radius: 9px; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            Imprimir / Guardar PDF
+          </button>
+          <button class="modal-close-btn" onclick="closeInvoiceModal()" aria-label="Cerrar modal">&times;</button>
+        </div>
+      </div>
+
+      <!-- Área de visualización de la Hoja A4 Factura Electrónica -->
+      <div style="flex: 1; overflow-y: auto; padding: 24px; display: flex; justify-content: center; background: #64748B12;">
+        <div id="invoice-sheet-container" class="invoice-a4-sheet">
+          <!-- Inyectado dinámicamente con renderInvoiceHTML() -->
+        </div>
+      </div>
+
     </div>
   </div>
 
