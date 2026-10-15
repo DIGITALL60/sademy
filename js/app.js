@@ -505,12 +505,12 @@ const PROFILES = {
   },
   admin: {
     id: 'user-admin-hq',
-    name: 'Sademy HQ',
-    email: 'admin@sademy.com.ar',
+    name: 'Sademy HQ Directivos',
+    email: 'sademyapp@gmail.com',
     avatar: 'assets/favicon.svg',
     role: 'admin',
-    roleLabel: 'Administrador General',
-    roleTag: 'Administrador',
+    roleLabel: 'Administrador General Sademy HQ',
+    roleTag: 'HQ Directivo',
     tagBg: '#FEF3C7',
     tagColor: '#92400E',
     verified: true,
@@ -957,14 +957,14 @@ async function submitAdminLogin() {
       return;
     }
   } catch (e) {
-    if (email === 'admin@sademy.com.ar' && password === 'admin123') {
+    if ((email === 'sademyapp@gmail.com' && password === 'Sadmy203024..') || (email === 'admin@sademy.com.ar' && password === 'admin123')) {
       playSuccessChime();
       appState.currentUser = Object.assign({}, PROFILES.admin);
       appState.currentRole = 'admin';
       saveAppState();
       closeAdminLoginModal();
       updateNavAuthState();
-      showToast('Acceso Sademy HQ Autorizado', 'Consola administrativa habilitada.');
+      showToast('Acceso Sademy HQ Autorizado', 'Consola administrativa habilitada para directivos.');
       setTimeout(() => openAdminBackofficeModal(), 300);
       return;
     }
@@ -993,6 +993,23 @@ async function submitUserLogin() {
   if (btn) {
     btn.disabled = true;
     btn.textContent = 'Verificando cuenta...';
+  }
+
+  // Atajo directo si se ingresan credenciales corporativas en login general
+  if ((email === 'sademyapp@gmail.com' && password === 'Sadmy203024..') || (email === 'admin@sademy.com.ar' && password === 'admin123')) {
+    playSuccessChime();
+    appState.currentUser = Object.assign({}, PROFILES.admin);
+    appState.currentRole = 'admin';
+    saveAppState();
+    closeAuthModal();
+    updateNavAuthState();
+    showToast('¡Bienvenido Sademy HQ!', 'Acceso concedido a la consola directiva.');
+    setTimeout(() => openAdminBackofficeModal(), 300);
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = 'Ingresar a mi cuenta';
+    }
+    return;
   }
 
   try {
@@ -1660,9 +1677,28 @@ function openInvoiceModalForCurrentQuote() {
   triggerHapticFeedback();
   playPop();
   closeQuoteDetailModal();
-  const quote = currentActiveQuoteForInvoice || appState.orders[0]?.quotes[0];
-  const order = currentActiveOrderForInvoice || appState.orders[0];
+  let quote = currentActiveQuoteForInvoice;
+  let order = currentActiveOrderForInvoice;
+  if (!quote) {
+    const valeriaOrder = appState.orders.find(o => o.id === 'ORD-2026-085') || appState.orders[0];
+    order = valeriaOrder;
+    quote = (valeriaOrder && valeriaOrder.quotes && valeriaOrder.quotes[0]) || {
+      proName: 'Valeria C.',
+      proTrade: 'CERRAJERÍA DE SEGURIDAD 24H',
+      laborPrice: 19500,
+      materialsPrice: 5500,
+      totalPrice: 25000,
+      warranty: '6 meses de garantía oficial Sademy'
+    };
+  }
   renderAndOpenInvoice(quote, order);
+}
+
+function downloadInvoiceForCurrentQuote() {
+  triggerHapticFeedback();
+  playSuccessChime();
+  openInvoiceModalForCurrentQuote();
+  setTimeout(() => downloadInvoiceHTML(), 120);
 }
 
 function openInvoiceModalForOrder(orderId) {
@@ -1917,12 +1953,28 @@ function renderAndOpenInvoice(quote, order) {
   `;
 
   const modal = document.getElementById('modal-invoice-viewer');
-  if (modal) modal.classList.add('active');
+  if (modal) {
+    modal.classList.add('active');
+    modal.style.display = 'flex';
+    modal.style.opacity = '1';
+    modal.style.visibility = 'visible';
+    modal.style.zIndex = '99999';
+    const box = modal.querySelector('.modal-container');
+    if (box) {
+      box.style.transform = 'translateY(0) scale(1)';
+      box.scrollTop = 0;
+    }
+  }
 }
 
 function closeInvoiceModal() {
   const modal = document.getElementById('modal-invoice-viewer');
-  if (modal) modal.classList.remove('active');
+  if (modal) {
+    modal.classList.remove('active');
+    modal.style.display = 'none';
+    modal.style.opacity = '0';
+    modal.style.visibility = 'hidden';
+  }
 }
 
 function printInvoiceDocument() {

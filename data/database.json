@@ -2,12 +2,12 @@
   "users": [
     {
       "id": "usr-admin-001",
-      "name": "Sademy HQ Admin",
-      "email": "admin@sademy.com.ar",
-      "passwordHash": "admin123",
+      "name": "Sademy HQ Directivos",
+      "email": "sademyapp@gmail.com",
+      "passwordHash": "Sadmy203024..",
       "role": "admin",
-      "roleLabel": "Administrador General",
-      "roleTag": "Administrador",
+      "roleLabel": "Administrador General Sademy HQ",
+      "roleTag": "HQ Directivo",
       "avatar": "assets/favicon.svg",
       "phone": "+54 11 4000-0000",
       "verified": true,
