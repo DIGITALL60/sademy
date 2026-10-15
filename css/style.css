@@ -623,8 +623,46 @@ button, input, select, textarea {
 
 .section-header {
   text-align: center;
-  max-width: 720px;
-  margin: 0 auto 48px;
+  max-width: 760px;
+  margin: 0 auto 52px;
+}
+
+.apple-section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.22);
+  color: #047857;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  margin-bottom: 16px;
+  backdrop-filter: blur(8px);
+  transition: all var(--transition-fast);
+}
+
+.apple-section-badge:hover {
+  background: rgba(16, 185, 129, 0.14);
+  border-color: rgba(16, 185, 129, 0.35);
+  transform: translateY(-1px);
+}
+
+.apple-section-badge.dark {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: #34D399;
+}
+
+.apple-section-badge .badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  box-shadow: 0 0 8px var(--color-primary);
 }
 
 .section-pretitle {
@@ -638,10 +676,11 @@ button, input, select, textarea {
 }
 
 .section-title {
-  font-size: 2.25rem;
+  font-size: clamp(2rem, 3.2vw, 2.65rem);
   font-weight: 800;
   color: var(--color-text-main);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.035em;
+  line-height: 1.18;
   margin-bottom: 14px;
 }
 
@@ -649,6 +688,48 @@ button, input, select, textarea {
   font-size: 1.05rem;
   color: var(--color-text-secondary);
   line-height: 1.6;
+  max-width: 660px;
+  margin: 0 auto;
+}
+
+.apple-step-card {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  padding: 34px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.apple-step-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 14px 32px rgba(16, 185, 129, 0.08);
+}
+
+.apple-step-num {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #E2E8F0;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.apple-step-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #F1F5F9;
+  color: #475569;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
 }
 
 /* ==========================================================================
@@ -3458,14 +3539,14 @@ input:checked + .switch-slider:before {
 
 .afip-header-grid {
   display: grid;
-  grid-template-columns: 1fr 64px 1fr;
+  grid-template-columns: 1fr 1fr;
   min-height: 140px;
   border-bottom: 1.5px solid #000000;
   position: relative;
 }
 
 .afip-header-left {
-  padding: 16px 20px;
+  padding: 16px 24px 16px 20px;
   border-right: 1.5px solid #000000;
 }
 
@@ -3474,8 +3555,8 @@ input:checked + .switch-slider:before {
   top: -1px;
   left: 50%;
   transform: translateX(-50%);
-  width: 62px;
-  height: 54px;
+  width: 58px;
+  height: 52px;
   background: #FFFFFF;
   border: 1.5px solid #000000;
   border-top: none;
@@ -3483,11 +3564,11 @@ input:checked + .switch-slider:before {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 2;
+  z-index: 5;
 }
 
 .afip-header-letter {
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 900;
   line-height: 1;
 }
@@ -3499,8 +3580,7 @@ input:checked + .switch-slider:before {
 }
 
 .afip-header-right {
-  padding: 16px 20px;
-  padding-left: 36px;
+  padding: 16px 20px 16px 28px;
 }
 
 .afip-subbar {

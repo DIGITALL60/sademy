@@ -1,5 +1,5 @@
 // Sademy Service Worker - PWA Offline & Cache Manager
-const CACHE_NAME = 'sademy-v20261015_hq';
+const CACHE_NAME = 'sademy-v20261015_apple';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
