@@ -1938,7 +1938,7 @@ button, input, select, textarea {
   background-color: rgba(15, 23, 42, 0.55);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  z-index: 999;
+  z-index: 2000;
   display: none;
   align-items: center;
   justify-content: center;
@@ -1971,18 +1971,39 @@ button, input, select, textarea {
 
 @media (max-width: 768px) {
   .modal-overlay {
-    padding: 0;
-    align-items: flex-end;
+    padding: 0 !important;
+    align-items: flex-end !important;
+    z-index: 2100 !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
   }
   .modal-container {
-    max-width: 100%;
-    width: 100%;
-    border-radius: 28px 28px 0 0;
-    max-height: 88vh;
-    transform: translateY(100%);
+    max-width: 100% !important;
+    width: 100% !important;
+    border-radius: 26px 26px 0 0 !important;
+    max-height: 90vh !important;
+    max-height: 90dvh !important;
+    margin: 0 !important;
+    padding-bottom: max(24px, env(safe-area-inset-bottom, 24px)) !important;
+    transform: translateY(100%) !important;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.25) !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .modal-container::before {
+    content: '' !important;
+    display: block !important;
+    width: 40px !important;
+    height: 5px !important;
+    background: #CBD5E1 !important;
+    border-radius: 9999px !important;
+    margin: 10px auto 4px auto !important;
+    flex-shrink: 0 !important;
   }
   .modal-overlay.active .modal-container {
-    transform: translateY(0);
+    transform: translateY(0) !important;
   }
 }
 
@@ -2304,98 +2325,469 @@ button, input, select, textarea {
 }
 
 @media (max-width: 768px) {
-  /* En celulares, la pantalla de la app es lo primero que se ve (fiel a la captura) */
+  /* ========================================================================
+     VISTA MÓVIL EXACTA SADEMY (FIEL A LA CAPTURA OFICIAL DEL CELULAR)
+     ======================================================================== */
+
+  /* En celulares se oculta el header clásico de escritorio y la cinta admin para que la app empiece directo */
+  .main-header {
+    display: none !important;
+  }
+  .active-role-ribbon {
+    display: none !important;
+  }
+
+  /* Márgenes y espaciado de pantalla móvil */
+  .container {
+    padding: 0 16px !important;
+  }
+
   .hero-section {
-    padding: 16px 0 36px;
+    padding: 12px 0 32px !important;
   }
   .hero-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 28px !important;
   }
+
+  /* 1. La pantalla nativa de la App Sademy es lo primero que se ve */
   .hero-visual-card {
-    order: 1;
-    width: 100%;
+    order: 1 !important;
+    width: 100% !important;
+    margin: 0 !important;
   }
+
   .sademy-app-container {
-    max-width: 100%;
-    border-radius: 22px;
-    padding: 20px 16px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    max-width: 100% !important;
+    border-radius: 0 !important;
+    padding: 4px 0 16px 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: transparent !important;
   }
+
+  /* Barra superior oficial de la App: 'sademy' + botón 'Nuevo pedido' */
+  .phone-top-bar {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 16px !important;
+    padding: 4px 0 10px 0 !important;
+  }
+
+  .phone-top-bar .brand-wordmark {
+    font-size: 1.95rem !important;
+    font-weight: 800 !important;
+    color: var(--color-primary) !important;
+    letter-spacing: -0.04em !important;
+    line-height: 1 !important;
+    animation: none !important;
+  }
+
+  .phone-header-btn {
+    background: #043A2C !important;
+    color: #FFFFFF !important;
+    border-radius: 9999px !important;
+    padding: 9px 20px !important;
+    font-weight: 700 !important;
+    font-size: 0.9rem !important;
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(4, 58, 44, 0.25) !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* Pestañas: Mis pedidos (activo) | Mensajes | Ayuda */
+  .phone-nav-links {
+    display: flex !important;
+    gap: 24px !important;
+    border-bottom: 2px solid #E2E8F0 !important;
+    margin-bottom: 20px !important;
+    padding: 0 !important;
+  }
+
+  .app-tab-link {
+    background: transparent !important;
+    border: none !important;
+    font-size: 1.05rem !important;
+    font-weight: 600 !important;
+    color: #64748B !important;
+    padding: 6px 0 12px 0 !important;
+    cursor: pointer !important;
+    position: relative !important;
+    border-bottom: 3px solid transparent !important;
+    margin-bottom: -2px !important;
+  }
+
+  .app-tab-link.active {
+    color: #0F172A !important;
+    font-weight: 800 !important;
+    border-bottom: 3px solid #0F172A !important;
+  }
+
+  /* Bloque de Título y Subtítulo */
+  .phone-title-block {
+    margin-bottom: 18px !important;
+  }
+
+  .phone-title {
+    font-size: 1.9rem !important;
+    font-weight: 800 !important;
+    color: #0F172A !important;
+    letter-spacing: -0.03em !important;
+    line-height: 1.2 !important;
+    margin-bottom: 6px !important;
+  }
+
+  .phone-subtitle {
+    font-size: 0.98rem !important;
+    color: #475569 !important;
+    line-height: 1.45 !important;
+    margin-bottom: 18px !important;
+  }
+
+  /* Selector de presupuestos: Marcos R. ($24.500) vs Sofía L. ($21.000) */
+  .quotes-toggle-pills-row {
+    display: flex !important;
+    gap: 10px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .quote-pill-btn {
+    padding: 8px 18px !important;
+    border-radius: 9999px !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+  }
+
+  #pill-quote-marcos.active {
+    background: #ECFDF5 !important;
+    border: 1.5px solid #10B981 !important;
+    color: #047857 !important;
+  }
+
+  #pill-quote-sofia {
+    background: #E2E8F0 !important;
+    border: 1.5px solid transparent !important;
+    color: #475569 !important;
+  }
+
+  /* Tarjeta blanca de presupuesto (Marcos R. Electricista) */
+  .prototype-quote-card {
+    background: #FFFFFF !important;
+    border-radius: 24px !important;
+    padding: 22px 18px !important;
+    border: 1.5px solid #E2E8F0 !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05) !important;
+    position: relative !important;
+  }
+
+  .quote-service-icon-wrap {
+    width: 46px !important;
+    height: 46px !important;
+    border-radius: 14px !important;
+    background: #ECFDF5 !important;
+    color: #10B981 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: absolute !important;
+    top: 18px !important;
+    right: 18px !important;
+  }
+
+  .quote-header-info {
+    display: flex !important;
+    gap: 14px !important;
+    align-items: flex-start !important;
+  }
+
+  .quote-worker-avatar {
+    width: 58px !important;
+    height: 58px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    border: 2px solid #E2E8F0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .quote-badges-row {
+    display: flex !important;
+    gap: 6px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .badge-profession {
+    background: #E0F2FE !important;
+    color: #0369A1 !important;
+    font-weight: 800 !important;
+    font-size: 0.72rem !important;
+    padding: 3px 8px !important;
+    border-radius: 6px !important;
+    letter-spacing: 0.04em !important;
+  }
+
+  .badge-new {
+    background: #DCFCE7 !important;
+    color: #15803D !important;
+    font-weight: 800 !important;
+    font-size: 0.72rem !important;
+    padding: 3px 8px !important;
+    border-radius: 6px !important;
+    letter-spacing: 0.04em !important;
+  }
+
+  .quote-worker-name {
+    font-size: 1.4rem !important;
+    font-weight: 800 !important;
+    color: #0F172A !important;
+    margin: 4px 0 2px !important;
+  }
+
+  .quote-includes-text {
+    font-size: 0.9rem !important;
+    color: #64748B !important;
+  }
+
+  .quote-rating-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin-top: 6px !important;
+    font-size: 0.92rem !important;
+  }
+
+  .star-rating {
+    color: #F59E0B !important;
+  }
+
+  /* Fila de Precio y Botones de Acción */
+  .quote-price-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-end !important;
+    margin-top: 16px !important;
+    padding-top: 14px !important;
+    border-top: 1px solid #F1F5F9 !important;
+  }
+
+  .quote-amount {
+    font-size: 1.9rem !important;
+    font-weight: 900 !important;
+    color: #064E3B !important;
+    line-height: 1 !important;
+    margin-top: 4px !important;
+  }
+
+  .quote-price-row button.btn-secondary {
+    background: #F1F5F9 !important;
+    color: #1E293B !important;
+    border: 1px solid #CBD5E1 !important;
+    border-radius: 12px !important;
+    padding: 10px 18px !important;
+    font-weight: 700 !important;
+    font-size: 0.92rem !important;
+    cursor: pointer !important;
+  }
+
+  .quote-price-row button.btn-primary {
+    background: #10B981 !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 10px 18px !important;
+    font-weight: 700 !important;
+    font-size: 0.92rem !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+    cursor: pointer !important;
+  }
+
+  /* Badge de Garantía Sademy abajo de la tarjeta */
+  .prototype-quote-card + div[style*="background: #F0FDF4"] {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    margin-top: 14px !important;
+    padding: 12px 18px !important;
+    background: #F0FDF4 !important;
+    border: 1.5px solid #BBF7D0 !important;
+    border-radius: 9999px !important;
+    font-size: 0.88rem !important;
+    font-weight: 700 !important;
+    color: #065F46 !important;
+  }
+
+  /* 2. El contenido de texto y buscador queda debajo para usuarios que hacen scroll */
   .hero-content {
-    order: 2;
-    width: 100%;
+    order: 2 !important;
+    width: 100% !important;
+    margin-top: 16px !important;
   }
+
   .hero-title {
-    font-size: 1.85rem;
-    line-height: 1.2;
+    font-size: clamp(1.8rem, 6.5vw, 2.3rem) !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.035em !important;
+    font-weight: 800 !important;
+    margin: 8px 0 10px !important;
   }
+
   .hero-description {
-    font-size: 0.95rem;
+    font-size: 0.94rem !important;
+    line-height: 1.45 !important;
+    color: #4B5563 !important;
+    margin-bottom: 16px !important;
   }
 
-  .nav-links {
-    display: none;
+  .hero-search-box {
+    background: #FFFFFF !important;
+    border-radius: 20px !important;
+    padding: 14px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+    border: 1px solid rgba(229, 231, 235, 0.8) !important;
   }
+
   .search-inputs-row {
-    grid-template-columns: 1fr;
-  }
-  .section {
-    padding: 44px 0;
-  }
-  .quotes-comparison-grid, .professionals-grid {
-    grid-template-columns: 1fr;
-  }
-  .footer-grid {
-    grid-template-columns: 1fr;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
   }
 
-  /* Barra nativa inferior para celulares estilo iOS / Samsung OneUI */
+  .search-field {
+    background: #F2F2F7 !important;
+    border-radius: 12px !important;
+    height: 48px !important;
+    padding: 0 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  .search-field input,
+  .search-field select {
+    font-size: 16px !important;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    width: 100% !important;
+    font-weight: 600 !important;
+    color: #111827 !important;
+  }
+
+  .search-chips-row {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    gap: 8px !important;
+    padding: 10px 2px 2px !important;
+  }
+  .search-chips-row::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .quick-chip {
+    flex-shrink: 0 !important;
+    padding: 7px 15px !important;
+    border-radius: 9999px !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    background: #F2F2F7 !important;
+    color: #374151 !important;
+    white-space: nowrap !important;
+  }
+
+  .quick-chip.active {
+    background: #10B981 !important;
+    color: #FFFFFF !important;
+  }
+
+  /* Secciones y Grillas Móviles */
+  .section {
+    padding: 40px 0 !important;
+  }
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+  .quotes-comparison-grid,
+  .professionals-grid,
+  .calculator-box,
+  .steps-grid,
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* ========================================================================
+     BARRA INFERIOR DE PESTAÑAS MÓVIL FIEL A LA CAPTURA
+     ======================================================================== */
   body {
-    padding-bottom: 74px;
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
   }
   .floating-assistant-btn {
     display: none !important;
   }
   .mobile-bottom-nav {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 64px;
-    background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid var(--color-border);
-    justify-content: space-around;
-    align-items: center;
-    z-index: 1000;
-    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+    display: flex !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: calc(58px + env(safe-area-inset-bottom, 8px)) !important;
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-top: 1px solid #E2E8F0 !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+    z-index: 1000 !important;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.04) !important;
+    padding-bottom: env(safe-area-inset-bottom, 8px) !important;
   }
   .mob-nav-item {
-    background: transparent;
-    border: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-    color: var(--color-text-tertiary);
-    font-size: 0.68rem;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 6px 14px;
-    transition: color var(--transition-fast);
+    background: transparent !important;
+    border: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    color: #6B7280 !important;
+    font-size: 0.68rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    padding: 6px 12px !important;
+    transition: color 0.15s ease !important;
+    -webkit-tap-highlight-color: transparent !important;
   }
   .mob-nav-item.active {
-    color: var(--color-primary);
-    font-weight: 700;
+    color: var(--color-primary) !important;
+    font-weight: 700 !important;
   }
   .mob-nav-item svg {
-    stroke-width: 2.2;
+    stroke-width: 2.2 !important;
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  /* Visor de Factura A4 con scroll táctil */
+  #invoice-sheet-container {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 12px 6px !important;
+    max-width: 100% !important;
+  }
+  .invoice-a4-sheet {
+    min-width: 680px !important;
+    margin: 0 auto !important;
   }
 }
 
@@ -3477,40 +3869,7 @@ input:checked + .switch-slider:before {
   border-color: #FECACA;
 }
 
-/* Ajustes Responsive para Celulares y Tablets */
-@media (max-width: 768px) {
-  .brand-wordmark {
-    font-size: 1.45rem;
-  }
-  .brand-logo {
-    margin-right: 8px;
-    gap: 8px;
-  }
-  .brand-mascot-icon {
-    width: 34px;
-    height: 34px;
-  }
-  .nav-actions {
-    gap: 6px;
-  }
-  .nav-user-pill-btn .nav-user-name {
-    display: none;
-  }
-  .user-profile-menu {
-    right: -10px;
-    width: 290px;
-    max-width: calc(100vw - 20px);
-  }
-  .active-role-ribbon-content {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  .ribbon-actions {
-    width: 100%;
-    justify-content: space-between;
-  }
-}
+/* Los estilos responsive consolidados para celulares se encuentran arriba en la sección Apple iOS Cupertino */
 
 /* ==========================================================================
    FEEDBACK TÁCTIL Y MICRO-INTERACCIONES (APPLE & SAMSUNG ONEUI)

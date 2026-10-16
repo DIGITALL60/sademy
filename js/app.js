@@ -5050,6 +5050,15 @@ function cancelFaceIdOnboarding(force = false) {
   if (modal) modal.classList.remove('active');
 }
 
-
-
-
+/* ==========================================================================
+   NAVEGACIÓN MÓVIL ESTILO APPLE IOS CUPERTINO
+   ========================================================================== */
+function switchMobileNav(tab) {
+  try {
+    triggerHapticFeedback();
+    playPop();
+  } catch(e) {}
+  document.querySelectorAll('.mob-nav-item').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('mob-nav-btn-' + tab);
+  if (btn) btn.classList.add('active');
+}

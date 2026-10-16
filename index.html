@@ -2,7 +2,10 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="format-detection" content="telephone=no">
   <title>Sademy · Marketplace de Servicios y Oficios Verificados</title>
   <meta name="description" content="Encontrá trabajadores calificados, certificados y de confianza. Electricistas, plomeros, gasistas y más oficios con presupuesto previo, pago seguro y garantía Sademy.">
   <link rel="canonical" href="https://sademy.com/">
@@ -42,7 +45,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Estilos del Design System Sademy -->
-  <link rel="stylesheet" href="css/style.css?v=20261015_v5_pro">
+  <link rel="stylesheet" href="css/style.css?v=20261016_apple_ios_v2">
 </head>
 <body>
 
@@ -2587,27 +2590,27 @@
     </div>
   </div>
 
-  <!-- Barra de Navegación Inferior Nativa para Celulares (Estilo iOS / Android) -->
+  <!-- Barra de Navegación Inferior Nativa para Celulares (Fiel al diseño oficial Sademy) -->
   <nav class="mobile-bottom-nav" aria-label="Navegación móvil nativa">
-    <button id="mob-nav-btn-pedidos" class="mob-nav-item active" onclick="switchAppTab('pedidos'); window.scrollTo({top: 0, behavior: 'smooth'});">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+    <button id="mob-nav-btn-pedidos" class="mob-nav-item active" onclick="switchMobileNav('pedidos'); switchAppTab('pedidos'); window.scrollTo({top: 0, behavior: 'smooth'});">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
       <span>Presupuestos</span>
     </button>
-    <button id="mob-nav-btn-oficios" class="mob-nav-item" onclick="document.getElementById('directorio').scrollIntoView({behavior: 'smooth'})">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    <button id="mob-nav-btn-oficios" class="mob-nav-item" onclick="switchMobileNav('oficios'); document.getElementById('oficios').scrollIntoView({behavior: 'smooth'})">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
       <span>Oficios</span>
     </button>
-    <button id="mob-nav-btn-mensajes" class="mob-nav-item" onclick="switchAppTab('mensajes'); window.scrollTo({top: 0, behavior: 'smooth'});">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    <button id="mob-nav-btn-mensajes" class="mob-nav-item" onclick="switchMobileNav('mensajes'); switchAppTab('mensajes'); window.scrollTo({top: 0, behavior: 'smooth'});">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
       <span>Mensajes</span>
     </button>
-    <button id="mob-nav-btn-ayuda" class="mob-nav-item" onclick="switchAppTab('ayuda'); window.scrollTo({top: 0, behavior: 'smooth'});">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+    <button id="mob-nav-btn-garantia" class="mob-nav-item" onclick="switchMobileNav('garantia'); switchAppTab('ayuda'); window.scrollTo({top: 0, behavior: 'smooth'});">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
       <span>Garantía</span>
     </button>
-    <button id="mob-nav-btn-perfil" class="mob-nav-item" onclick="openAccountModal()">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-      <span id="mob-nav-perfil-label">Cuenta</span>
+    <button id="mob-nav-btn-perfil" class="mob-nav-item" onclick="switchMobileNav('perfil'); openAccountModal();">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      <span id="mob-nav-perfil-label">Marcos</span>
     </button>
   </nav>
 
