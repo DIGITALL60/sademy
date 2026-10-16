@@ -4077,6 +4077,7 @@ input:checked + .switch-slider:before {
    ======================================================================== */
 
 .apartado-control-bar {
+  display: none !important; /* Producción limpia: No mostrar barra de prueba/roles a los visitantes públicos */
   position: sticky;
   top: 0;
   z-index: 1050;
@@ -4087,6 +4088,10 @@ input:checked + .switch-slider:before {
   padding: 8px 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   transition: all 0.3s ease;
+}
+
+body.sademy-dev-tools .apartado-control-bar {
+  display: block !important;
 }
 
 .apartado-control-container {
@@ -4365,5 +4370,229 @@ input:checked + .switch-slider:before {
     padding: 14px 10px 80px;
   }
 }
+
+/* ========================================================================
+   GOOGLE IDENTITY SERVICES & REGISTRO EN 1 CLIC (APPLE & GOOGLE STANDARDS)
+   ======================================================================== */
+.btn-google-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  color: #1E293B;
+  border-radius: 9999px;
+  padding: 7px 15px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.btn-google-nav:hover {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.btn-google-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #FFFFFF;
+  border: 1.5px solid #CBD5E1;
+  color: #1E293B;
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.btn-google-hero:hover {
+  background: #F8FAFC;
+  border-color: #94A3B8;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1.5px);
+}
+
+/* Modal Google Identity Services Cupertino */
+.modal-google-auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 12000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-google-auth-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.google-auth-card {
+  background: #FFFFFF;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  position: relative;
+  transform: translateY(16px) scale(0.97);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-google-auth-overlay.active .google-auth-card {
+  transform: translateY(0) scale(1);
+}
+
+.google-auth-header {
+  padding: 24px 24px 16px;
+  text-align: center;
+  border-bottom: 1px solid #F1F5F9;
+  position: relative;
+}
+
+.google-auth-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: #F1F5F9;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #64748B;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.google-auth-close-btn:hover {
+  background: #E2E8F0;
+  color: #0F172A;
+}
+
+.google-auth-body {
+  padding: 20px 24px 24px;
+}
+
+.google-account-pill-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1.5px solid #E2E8F0;
+  background: #F8FAFC;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 16px;
+}
+
+.google-account-pill-card:hover {
+  background: #FFFFFF;
+  border-color: #4285F4;
+  box-shadow: 0 4px 12px rgba(66, 133, 244, 0.15);
+}
+
+.google-auth-btn-primary {
+  width: 100%;
+  background: #1A73E8;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 9999px;
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 2px 6px rgba(26, 115, 232, 0.3);
+  transition: all 0.2s ease;
+}
+
+.google-auth-btn-primary:hover {
+  background: #1557B0;
+  box-shadow: 0 4px 12px rgba(26, 115, 232, 0.4);
+}
+
+.google-auth-btn-secondary {
+  width: 100%;
+  background: transparent;
+  color: #1A73E8;
+  border: 1.5px solid #DADCE0;
+  border-radius: 9999px;
+  padding: 10px 20px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 10px;
+}
+
+.google-auth-btn-secondary:hover {
+  background: #F8FAFC;
+  border-color: #BDC1C6;
+}
+
+.google-auth-footer {
+  padding: 12px 24px 16px;
+  background: #F8FAFC;
+  border-top: 1px solid #F1F5F9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  color: #70757A;
+}
+
+.google-auth-footer a {
+  color: #70757A;
+  text-decoration: none;
+  margin-left: 8px;
+}
+
+.google-auth-footer a:hover {
+  color: #1F2937;
+  text-decoration: underline;
+}
+
+/* Spinner Google 4 colores */
+.google-loader-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3.5px solid rgba(66, 133, 244, 0.2);
+  border-top-color: #4285F4;
+  border-right-color: #34A853;
+  border-bottom-color: #FBBC05;
+  border-left-color: #EA4335;
+  border-radius: 50%;
+  animation: googleSpin 0.75s linear infinite;
+  display: inline-block;
+}
+
+@keyframes googleSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 
 

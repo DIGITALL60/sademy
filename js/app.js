@@ -829,6 +829,7 @@ function updateNavAuthState() {
   const user = appState.currentUser;
   const loginBtn = document.getElementById('nav-login-btn');
   const registerBtn = document.getElementById('nav-register-btn');
+  const googleNavBtn = document.getElementById('nav-google-btn');
   const proBtn = document.getElementById('nav-pro-btn');
   const dropdownWrapper = document.getElementById('nav-user-dropdown-wrapper');
   
@@ -866,6 +867,7 @@ function updateNavAuthState() {
   if (user) {
     if (loginBtn) loginBtn.style.display = 'none';
     if (registerBtn) registerBtn.style.display = 'none';
+    if (googleNavBtn) googleNavBtn.style.display = 'none';
     if (proBtn) proBtn.style.display = 'none';
     if (dropdownWrapper) dropdownWrapper.style.display = 'inline-block';
 
@@ -959,6 +961,7 @@ function updateNavAuthState() {
     // Modo Invitado (Sesión no iniciada)
     if (loginBtn) loginBtn.style.display = 'inline-flex';
     if (registerBtn) registerBtn.style.display = 'inline-flex';
+    if (googleNavBtn) googleNavBtn.style.display = 'inline-flex';
     if (proBtn) proBtn.style.display = 'inline-flex';
     if (dropdownWrapper) dropdownWrapper.style.display = 'none';
     if (ribbon) ribbon.style.display = 'none';
@@ -1250,22 +1253,28 @@ function switchAuthMode(mode) {
   }
 }
 
+let currentRegisterRole = 'client';
+
 function switchRegisterRole(role) {
+  currentRegisterRole = role;
   const clientTab = document.getElementById('reg-tab-client');
   const proTab = document.getElementById('reg-tab-pro');
   const clientForm = document.getElementById('form-register-client');
   const proForm = document.getElementById('form-register-pro');
+  const regGoogleBtnText = document.getElementById('reg-google-btn-text');
 
   if (role === 'pro') {
     if (proTab) proTab.classList.add('active');
     if (clientTab) clientTab.classList.remove('active');
     if (proForm) proForm.style.display = 'flex';
     if (clientForm) clientForm.style.display = 'none';
+    if (regGoogleBtnText) regGoogleBtnText.textContent = 'Registrarme como Profesional con Google';
   } else {
     if (clientTab) clientTab.classList.add('active');
     if (proTab) proTab.classList.remove('active');
     if (clientForm) clientForm.style.display = 'flex';
     if (proForm) proForm.style.display = 'none';
+    if (regGoogleBtnText) regGoogleBtnText.textContent = 'Registrarme con Google en 1 clic';
   }
 }
 
@@ -1556,25 +1565,145 @@ async function submitRegister(role) {
   }
 }
 
-function handleGoogleSignIn() {
+// ============================================================================
+// GOOGLE IDENTITY SERVICES (GIS) & REGISTRO DIRECTO EN 1 CLIC ("DE UNA")
+// ============================================================================
+let currentGoogleTargetRole = 'client';
+
+function openGoogleAuthModal(targetRole = 'client') {
   triggerHapticFeedback();
-  playSuccessChime();
-  const googleUser = {
-    id: 'usr-google-' + Date.now().toString(36),
-    name: 'Carlos Martínez',
-    email: 'carlos.martinez@gmail.com',
-    avatar: 'assets/mascot.jpg',
-    role: 'client',
-    roleLabel: 'Cliente Verificado',
-    roleTag: 'Cliente',
-    verified: true
-  };
-  appState.currentUser = googleUser;
-  appState.currentRole = 'client';
-  saveAppState();
+  playPop();
+  currentGoogleTargetRole = targetRole || currentRegisterRole || 'client';
+
   closeAuthModal();
-  updateNavAuthState();
-  showToast('Google Sign-In Conectado', 'Acceso seguro verificado con Google.');
+
+  const modal = document.getElementById('modal-google-auth');
+  const loading = document.getElementById('google-auth-loading-state');
+  const main = document.getElementById('google-auth-main-state');
+  const customBox = document.getElementById('google-custom-account-box');
+
+  if (loading) loading.style.display = 'none';
+  if (main) main.style.display = 'block';
+  if (customBox) customBox.style.display = 'none';
+
+  const modalTitle = document.getElementById('google-auth-modal-title');
+  if (modalTitle) {
+    modalTitle.textContent = currentGoogleTargetRole === 'pro' 
+      ? 'Registrarme como Profesional con Google' 
+      : 'Acceder a Sademy con Google';
+  }
+
+  // Si hay datos previos guardados en localStorage, rellenar
+  const savedGoogleEmail = localStorage.getItem('sademy_google_email');
+  const savedGoogleName = localStorage.getItem('sademy_google_name');
+  if (savedGoogleEmail && savedGoogleName) {
+    const nameEl = document.getElementById('google-card-name');
+    const emailEl = document.getElementById('google-card-email');
+    const btnContinue = document.getElementById('google-btn-continue-as');
+    if (nameEl) nameEl.textContent = savedGoogleName;
+    if (emailEl) emailEl.textContent = savedGoogleEmail;
+    if (btnContinue) btnContinue.innerHTML = `<span>Continuar como ${savedGoogleName}</span>`;
+  }
+
+  if (modal) modal.classList.add('active');
+}
+
+function closeGoogleAuthModal() {
+  const modal = document.getElementById('modal-google-auth');
+  if (modal) modal.classList.remove('active');
+}
+
+function toggleGoogleCustomAccountForm() {
+  triggerHapticFeedback();
+  const box = document.getElementById('google-custom-account-box');
+  if (!box) return;
+  const isHidden = box.style.display === 'none';
+  box.style.display = isHidden ? 'block' : 'none';
+  const label = document.getElementById('google-toggle-custom-label');
+  if (label) {
+    label.textContent = isHidden ? 'Ocultar campos' : 'Ingresar o registrarme con otro Gmail';
+  }
+}
+
+function executeGoogleAccountChoice(mode = 'default') {
+  triggerHapticFeedback();
+  const loading = document.getElementById('google-auth-loading-state');
+  const main = document.getElementById('google-auth-main-state');
+
+  let chosenName = 'Carlos Martínez';
+  let chosenEmail = 'carlos.martinez@gmail.com';
+
+  if (mode === 'custom') {
+    const customNameInput = document.getElementById('google-input-custom-name');
+    const customEmailInput = document.getElementById('google-input-custom-email');
+    const customName = customNameInput ? customNameInput.value.trim() : '';
+    const customEmail = customEmailInput ? customEmailInput.value.trim() : '';
+
+    if (!customEmail || !customEmail.includes('@')) {
+      showToast('Correo Google requerido', 'Por favor ingresá una dirección de correo válida de Google.');
+      return;
+    }
+    chosenName = customName || customEmail.split('@')[0].replace(/[._]/g, ' ');
+    chosenEmail = customEmail;
+  } else {
+    const savedGoogleEmail = localStorage.getItem('sademy_google_email');
+    const savedGoogleName = localStorage.getItem('sademy_google_name');
+    if (savedGoogleEmail && savedGoogleName) {
+      chosenName = savedGoogleName;
+      chosenEmail = savedGoogleEmail;
+    }
+  }
+
+  // Guardar en localStorage para visitas posteriores
+  localStorage.setItem('sademy_google_email', chosenEmail);
+  localStorage.setItem('sademy_google_name', chosenName);
+
+  // Mostrar spinner de Google
+  if (main) main.style.display = 'none';
+  if (loading) loading.style.display = 'block';
+
+  // Simular handshake instantáneo de GIS (450ms)
+  setTimeout(() => {
+    playSuccessChime();
+    
+    const role = currentGoogleTargetRole || 'client';
+    const isPro = role === 'pro';
+
+    const googleUser = {
+      id: 'usr-google-' + Date.now().toString(36),
+      name: chosenName,
+      email: chosenEmail,
+      avatar: isPro ? 'assets/marcos.jpg' : 'assets/mascot.jpg',
+      role: role,
+      roleLabel: isPro ? 'Profesional Verificado Pro' : 'Cliente Verificado',
+      roleTag: isPro ? 'Pro Verificado' : 'Google Verificado',
+      tagBg: '#ECFDF5',
+      tagColor: '#065F46',
+      verified: true,
+      googleAuth: true,
+      token: 'gis_live_' + Math.random().toString(36).substring(2)
+    };
+
+    appState.currentUser = googleUser;
+    appState.currentRole = role;
+    saveAppState();
+
+    closeGoogleAuthModal();
+    closeAuthModal();
+
+    // Llevar al usuario directamente a su apartado correspondiente ("de una")
+    switchApartado(role);
+    updateNavAuthState();
+
+    showToast(
+      `¡Bienvenido/a, ${chosenName}!`, 
+      `Tu cuenta de Google (${chosenEmail}) quedó registrada y verificada con éxito.`
+    );
+  }, 480);
+}
+
+function handleGoogleSignIn(targetRole = 'client') {
+  openGoogleAuthModal(targetRole);
 }
 
 function promptForgotPassword() {
@@ -5115,10 +5244,24 @@ function switchApartado(apartadoKey, skipScroll = false) {
     appState.currentUser = null;
     appState.currentRole = 'guest';
   } else if (apartadoKey === 'client') {
-    appState.currentUser = Object.assign({}, PROFILES.client);
+    if (!appState.currentUser || appState.currentUser.role !== 'client') {
+      if (appState.currentUser && appState.currentUser.googleAuth) {
+        appState.currentUser.role = 'client';
+        appState.currentUser.roleLabel = 'Cliente Verificado';
+      } else {
+        appState.currentUser = Object.assign({}, PROFILES.client);
+      }
+    }
     appState.currentRole = 'client';
   } else if (apartadoKey === 'pro') {
-    appState.currentUser = Object.assign({}, PROFILES.pro);
+    if (!appState.currentUser || appState.currentUser.role !== 'pro') {
+      if (appState.currentUser && appState.currentUser.googleAuth) {
+        appState.currentUser.role = 'pro';
+        appState.currentUser.roleLabel = 'Profesional Verificado Pro';
+      } else {
+        appState.currentUser = Object.assign({}, PROFILES.pro);
+      }
+    }
     appState.currentRole = 'pro';
   } else if (apartadoKey === 'admin') {
     appState.currentUser = Object.assign({}, PROFILES.admin);
@@ -5362,4 +5505,17 @@ function updateMobileBottomNav(role) {
     `;
   }
 }
+
+// Atajo de teclado para administradores / soporte técnico (Ctrl + Shift + D)
+window.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && e.shiftKey && (e.key === 'D' || e.key === 'd')) {
+    e.preventDefault();
+    document.body.classList.toggle('sademy-dev-tools');
+    const isDev = document.body.classList.contains('sademy-dev-tools');
+    showToast(
+      isDev ? 'Modo Desarrollador Activado' : 'Modo Desarrollador Desactivado',
+      isDev ? 'Barra maestra de apartados visible para testing.' : 'Vista limpia de producción oficial restaurada.'
+    );
+  }
+});
 

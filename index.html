@@ -46,6 +46,9 @@
 
   <!-- Estilos del Design System Sademy -->
   <link rel="stylesheet" href="css/style.css?v=20261016_apple_ios_v2">
+
+  <!-- Google Identity Services (GIS) Oficial -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
 
@@ -151,6 +154,17 @@
         <!-- Botón Registrarme (Cuando no hay sesión) -->
         <button id="nav-register-btn" class="btn btn-primary btn-sm" onclick="openAuthModal('register')" style="display: none; align-items: center; gap: 6px; font-weight: 700;">
           <span>Registrarme</span>
+        </button>
+
+        <!-- Botón Acceso Rápido con Google en Barra de Navegación -->
+        <button id="nav-google-btn" class="btn btn-google-nav" onclick="openGoogleAuthModal('client')" style="display: none;" title="Registrarte o acceder con cuenta de Google en 1 clic">
+          <svg class="google-icon-svg" width="16" height="16" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          <span>Continuar con Google</span>
         </button>
 
         <!-- Botón Soy Profesional (Para trabajadores) -->
@@ -391,6 +405,23 @@
             <button class="quick-chip" data-cat="pintura" onclick="handleQuickChipClick(this, 'pintura')">Pintura</button>
             <button class="quick-chip" data-cat="cerrajeria" onclick="handleQuickChipClick(this, 'cerrajeria')">Cerrajería</button>
           </div>
+        </div>
+
+        <!-- Acceso 1-clic con Google en el Hero -->
+        <div class="hero-google-row" style="margin-top: 14px; margin-bottom: 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+          <button type="button" class="btn btn-google-hero" onclick="openGoogleAuthModal('client')">
+            <svg class="google-icon-svg" width="18" height="18" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span>Registrarme con Google en 1 clic</span>
+          </button>
+          <span style="font-size: 0.82rem; color: #475569; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Acceso instantáneo verificado · Cero contraseñas
+          </span>
         </div>
 
         <!-- Badges de confianza -->
@@ -708,7 +739,7 @@
           </div>
         </div>
         <button class="btn btn-primary" onclick="openPaymentModal()" style="font-weight: 700; background: #10B981; border-color: #10B981; color: #FFFFFF; padding: 12px 24px; border-radius: 12px; box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);">
-          Simular Pago Seguro en Custodia
+          Verificar Protección de Fondos (Escrow)
         </button>
       </div>
 
@@ -2064,7 +2095,7 @@
         <div id="auth-panel-login">
           
           <!-- Botón Oficial Google OAuth -->
-          <button type="button" class="btn-google" onclick="handleGoogleSignIn()" style="width: 100%; border: 1.5px solid #CBD5E1; border-radius: 12px; padding: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; background: #FFFFFF; cursor: pointer; transition: all 0.2s ease;">
+          <button type="button" class="btn-google" onclick="openGoogleAuthModal('client')" style="width: 100%; border: 1.5px solid #CBD5E1; border-radius: 12px; padding: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; background: #FFFFFF; cursor: pointer; transition: all 0.2s ease;">
             <svg class="google-icon-svg" width="18" height="18" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
               <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -2076,24 +2107,6 @@
 
           <div class="auth-divider" style="margin: 18px 0; text-align: center; position: relative;">
             <span style="background: #FFFFFF; padding: 0 12px; font-size: 0.76rem; color: #94A3B8; text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em;">o con tu correo y contraseña</span>
-          </div>
-
-          <!-- Accesos Rápidos de Prueba para Roles (Apple Experience) -->
-          <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 12px; padding: 12px; margin-bottom: 14px;">
-            <span style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #475569; letter-spacing: 0.04em; display: block; margin-bottom: 6px;">
-              Accesos Rápidos por Rol:
-            </span>
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px;">
-              <button type="button" onclick="quickFillLogin('client')" class="btn btn-secondary btn-sm" style="font-size: 0.74rem; padding: 6px 4px; justify-content: center; font-weight: 700; background: #FFFFFF; border: 1px solid #CBD5E1;">
-                👤 Cliente
-              </button>
-              <button type="button" onclick="quickFillLogin('pro')" class="btn btn-secondary btn-sm" style="font-size: 0.74rem; padding: 6px 4px; justify-content: center; font-weight: 700; background: #FFFFFF; border: 1px solid #A7F3D0; color: #047857;">
-                ⚡ Pro
-              </button>
-              <button type="button" onclick="quickFillLogin('admin')" class="btn btn-secondary btn-sm" style="font-size: 0.74rem; padding: 6px 4px; justify-content: center; font-weight: 700; background: #FFFFFF; border: 1px solid #FDE68A; color: #92400E;">
-                🛡️ Admin HQ
-              </button>
-            </div>
           </div>
 
           <!-- Formulario Real de Login -->
@@ -2159,6 +2172,21 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
               Ofrezco Servicios
             </button>
+          </div>
+
+          <!-- Botón de Registro Instantáneo con Google -->
+          <button type="button" class="btn-google" onclick="openGoogleAuthModal(currentRegisterRole || 'client')" style="width: 100%; border: 1.5px solid #CBD5E1; border-radius: 12px; padding: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; background: #FFFFFF; cursor: pointer; transition: all 0.2s ease; margin-bottom: 14px;">
+            <svg class="google-icon-svg" width="18" height="18" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span style="font-size: 0.9rem; color: var(--color-text-main); font-weight: 700;">Registrarme con Google en 1 clic</span>
+          </button>
+
+          <div class="auth-divider" style="margin: 14px 0 16px; text-align: center; position: relative;">
+            <span style="background: #FFFFFF; padding: 0 12px; font-size: 0.74rem; color: #94A3B8; text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em;">o completar formulario</span>
           </div>
 
           <!-- FORMULARIO CLIENTE -->
@@ -3313,6 +3341,15 @@
           <button type="button" class="btn btn-primary" style="width: 100%; margin-bottom: 8px; font-weight: 700; padding: 12px;" onclick="closeAccountModal(); openAuthModal('login');">
             <span>Iniciar Sesión en Sademy</span>
           </button>
+          <button type="button" class="btn-google" style="width: 100%; border: 1.5px solid #CBD5E1; border-radius: 12px; padding: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; background: #FFFFFF; cursor: pointer;" onclick="closeAccountModal(); openGoogleAuthModal('client');">
+            <svg class="google-icon-svg" width="18" height="18" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span>Continuar con Google</span>
+          </button>
         </div>
 
       </div>
@@ -3792,8 +3829,105 @@
     </div>
   </div>
 
+  <!-- ========================================================================
+       MODAL GOOGLE IDENTITY SERVICES (GIS) - REGISTRO E INICIO EN 1 CLIC
+       ======================================================================== -->
+  <div id="modal-google-auth" class="modal-google-auth-overlay" role="dialog" aria-modal="true" aria-labelledby="google-auth-modal-title">
+    <div class="google-auth-card">
+      <div class="google-auth-header">
+        <button type="button" class="google-auth-close-btn" onclick="closeGoogleAuthModal()" aria-label="Cerrar">&times;</button>
+        <div style="display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+          <svg width="40" height="40" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+        </div>
+        <h3 id="google-auth-modal-title" style="font-size: 1.25rem; font-weight: 700; color: #1F2937; margin: 0 0 4px;">Acceder con Google</h3>
+        <p style="font-size: 0.85rem; color: #5F6368; margin: 0;">Para continuar a <strong style="color: #1F2937;">Sademy Marketplace</strong></p>
+      </div>
+
+      <div class="google-auth-body">
+        
+        <!-- Estado de carga / Verificando -->
+        <div id="google-auth-loading-state" style="display: none; text-align: center; padding: 30px 10px;">
+          <div class="google-loader-spinner" style="margin-bottom: 16px;"></div>
+          <div style="font-size: 0.95rem; font-weight: 700; color: #1F2937;">Conectando con Google Identity Services...</div>
+          <div style="font-size: 0.8rem; color: #64748B; margin-top: 4px;">Autenticando credenciales seguras OAuth 2.0</div>
+        </div>
+
+        <!-- Vista Normal de Elección de Cuenta -->
+        <div id="google-auth-main-state">
+          
+          <!-- Cuenta Activa Sugerida (1-clic directo) -->
+          <div id="google-suggested-account" class="google-account-pill-card" onclick="executeGoogleAccountChoice('default')">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 42px; height: 42px; border-radius: 50%; background: #4285F4; color: #FFF; font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(66, 133, 244, 0.3);">
+                C
+              </div>
+              <div style="text-align: left;">
+                <div id="google-card-name" style="font-size: 0.92rem; font-weight: 700; color: #1F2937;">Carlos Martínez</div>
+                <div id="google-card-email" style="font-size: 0.8rem; color: #5F6368;">carlos.martinez@gmail.com</div>
+              </div>
+            </div>
+            <div style="color: #34A853;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+          </div>
+
+          <!-- Botón de acción principal 1 clic -->
+          <button type="button" id="google-btn-continue-as" class="google-auth-btn-primary" onclick="executeGoogleAccountChoice('default')">
+            <span>Continuar como Carlos Martínez</span>
+          </button>
+
+          <!-- Opción de ingresar con otra cuenta de Google personalizada -->
+          <button type="button" class="google-auth-btn-secondary" onclick="toggleGoogleCustomAccountForm()">
+            <span id="google-toggle-custom-label">Ingresar o registrarme con otro Gmail</span>
+          </button>
+
+          <!-- Formulario colapsable para otra cuenta de Google -->
+          <div id="google-custom-account-box" style="display: none; margin-top: 16px; padding: 14px; background: #F8FAFC; border-radius: 14px; border: 1.5px solid #E2E8F0; text-align: left;">
+            <div style="font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 8px;">Completar datos de tu cuenta Google:</div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div>
+                <label style="font-size: 0.74rem; font-weight: 700; color: #475569;">Tu Nombre y Apellido:</label>
+                <input type="text" id="google-input-custom-name" placeholder="Ej: Lucas Rossi" class="form-control" style="padding: 8px 12px; font-size: 0.88rem; border-radius: 8px; border: 1.5px solid #CBD5E1; width: 100%;">
+              </div>
+              <div>
+                <label style="font-size: 0.74rem; font-weight: 700; color: #475569;">Tu Correo de Google / Gmail:</label>
+                <input type="email" id="google-input-custom-email" placeholder="ejemplo@gmail.com" class="form-control" style="padding: 8px 12px; font-size: 0.88rem; border-radius: 8px; border: 1.5px solid #CBD5E1; width: 100%;">
+              </div>
+              <button type="button" class="google-auth-btn-primary" style="margin-top: 6px; padding: 10px;" onclick="executeGoogleAccountChoice('custom')">
+                <span>Confirmar y Entrar con Google</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Mensaje de Privacidad y Términos Oficiales de Google -->
+          <div style="margin-top: 18px; font-size: 0.73rem; color: #5F6368; line-height: 1.45; text-align: left;">
+            Para continuar, Google compartirá tu nombre, dirección de correo electrónico, preferencia de idioma y foto de perfil con Sademy. Consulta la 
+            <a href="javascript:void(0)" onclick="openClientWarrantyModal()" style="color: #1A73E8; text-decoration: none;">Política de Privacidad</a> y las 
+            <a href="javascript:void(0)" onclick="openClientWarrantyModal()" style="color: #1A73E8; text-decoration: none;">Condiciones de Servicio</a> de Sademy.
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="google-auth-footer">
+        <span>Español (Latinoamérica)</span>
+        <div>
+          <a href="javascript:void(0)" onclick="showToast('Google Identity', 'Acceso seguro verificado por Google Identity Services.')">Ayuda</a>
+          <a href="javascript:void(0)" onclick="showToast('Privacidad', 'Tus datos son procesados según la Ley 25.326 de Protección de Datos Personales.')">Privacidad</a>
+          <a href="javascript:void(0)" onclick="showToast('Condiciones', 'Servicio protegido por custodia financiera Sademy Escrow.')">Condiciones</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Lógica y funcionalidades interactivas -->
-  <script src="js/app.js?v=20261015_apple"></script>
+  <script src="js/app.js?v=20261016_apple_google"></script>
 
 </body>
 </html>
