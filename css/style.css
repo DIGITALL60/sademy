@@ -309,15 +309,15 @@ button, input, select, textarea {
 
 .profile-role-pill:hover {
   background: #F1F5F9;
-  border-color: #94A3B8;
-  color: #0F172A;
+  border-color: #9CA3AF;
+  color: var(--color-text-main);
 }
 
 .profile-role-pill.active {
-  background: #0F172A;
+  background: var(--color-surface-dark);
   color: #FFFFFF;
-  border-color: #0F172A;
-  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.25);
+  border-color: var(--color-surface-dark);
+  box-shadow: 0 2px 6px rgba(17, 24, 39, 0.25);
 }
 
 @keyframes userMenuPop {
@@ -694,7 +694,7 @@ button, input, select, textarea {
 
 .apple-step-card {
   background: #FFFFFF;
-  border: 1px solid var(--color-border);
+  border: 1.5px solid var(--color-border);
   border-radius: 20px;
   padding: 34px 30px;
   display: flex;
@@ -702,32 +702,52 @@ button, input, select, textarea {
   justify-content: space-between;
   position: relative;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 20px rgba(17, 24, 39, 0.04);
 }
 
 .apple-step-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(16, 185, 129, 0.4);
-  box-shadow: 0 14px 32px rgba(16, 185, 129, 0.08);
+  border-color: var(--color-primary);
+  box-shadow: 0 16px 36px rgba(16, 185, 129, 0.12);
 }
 
 .apple-step-num {
-  font-size: 2.2rem;
+  font-size: 1.45rem;
   font-weight: 900;
-  color: #E2E8F0;
-  letter-spacing: -0.04em;
+  color: var(--color-primary); /* #10B981 Acento primario */
+  background: var(--color-primary-bg); /* #ECFDF5 */
+  border: 1.5px solid var(--color-primary-border); /* #A7F3D0 */
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: -0.02em;
   line-height: 1;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.14);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.apple-step-card:hover .apple-step-num {
+  background: var(--color-primary);
+  color: #FFFFFF;
+  border-color: var(--color-primary);
+  transform: scale(1.08);
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.28);
 }
 
 .apple-step-tag {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  background: #F1F5F9;
-  color: #475569;
-  font-size: 0.74rem;
+  background: var(--color-surface-subtle);
+  color: var(--color-text-main);
+  border: 1px solid var(--color-border);
+  font-size: 0.78rem;
   font-weight: 700;
-  padding: 4px 10px;
+  padding: 5px 12px;
   border-radius: 999px;
   letter-spacing: 0.02em;
 }
@@ -1701,16 +1721,17 @@ button, input, select, textarea {
 }
 
 .escrow-interactive-demo-box {
-  margin-top: 40px;
-  background-color: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--radius-lg);
-  padding: 24px;
+  margin-top: 36px;
+  background-color: var(--color-surface-dark); /* #1F2937 Superficie oficial */
+  border: 1.5px solid var(--color-surface-dark-2); /* #374151 Superficie 2 oficial */
+  border-radius: 20px;
+  padding: 24px 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 20px;
+  box-shadow: 0 12px 30px -6px rgba(17, 24, 39, 0.25);
 }
 
 .escrow-demo-status {
@@ -1723,8 +1744,8 @@ button, input, select, textarea {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background-color: var(--color-primary);
-  box-shadow: 0 0 10px var(--color-primary);
+  background-color: var(--color-primary); /* #10B981 */
+  box-shadow: 0 0 12px var(--color-primary-soft); /* #34D399 */
   animation: pulseDot 2s infinite;
 }
 
@@ -3196,25 +3217,25 @@ input:checked + .switch-slider:before {
 .kpi-value {
   font-size: 1.6rem;
   font-weight: 900;
-  color: #0F172A;
+  color: var(--color-text-main);
   margin: 6px 0 4px;
 }
 
 .kpi-sub {
   font-size: 0.76rem;
-  color: #64748B;
+  color: var(--color-text-tertiary);
   font-weight: 600;
 }
 
 .kpi-sub.positive span {
-  color: #059669;
+  color: var(--color-primary);
   font-weight: 700;
 }
 
 .admin-tabs-nav {
   display: flex;
   gap: 8px;
-  border-bottom: 1px solid #E2E8F0;
+  border-bottom: 1px solid var(--color-border);
   padding-bottom: 8px;
 }
 
@@ -3223,7 +3244,7 @@ input:checked + .switch-slider:before {
   border: none;
   font-size: 0.88rem;
   font-weight: 600;
-  color: #64748B;
+  color: var(--color-text-tertiary);
   padding: 8px 16px;
   border-radius: 8px;
   cursor: pointer;
@@ -3233,12 +3254,12 @@ input:checked + .switch-slider:before {
 }
 
 .admin-tab-btn:hover {
-  background-color: #F1F5F9;
-  color: #0F172A;
+  background-color: var(--color-surface-subtle);
+  color: var(--color-text-main);
 }
 
 .admin-tab-btn.active {
-  background-color: #0F172A;
+  background-color: var(--color-surface-dark);
   color: #FFFFFF;
 }
 
@@ -3260,18 +3281,18 @@ input:checked + .switch-slider:before {
 
 .admin-data-table td {
   padding: 12px 14px;
-  border-bottom: 1px solid #F1F5F9;
-  color: #1E293B;
+  border-bottom: 1px solid var(--color-surface-subtle);
+  color: var(--color-text-main);
   vertical-align: middle;
 }
 
 .admin-data-table tr:hover td {
-  background-color: #F8FAFC;
+  background-color: var(--color-surface-light);
 }
 
 .admin-verification-card {
   background: #FFFFFF;
-  border: 1px solid #E2E8F0;
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 16px 20px;
   display: flex;
@@ -3291,7 +3312,7 @@ input:checked + .switch-slider:before {
    BARRA DE ESTADO Y CONTROL DEL ROL ACTIVO (APPLE & SAMSUNG SAAS STYLE)
    ========================================================================== */
 .active-role-ribbon {
-  background: #0F172A;
+  background: var(--color-surface-dark);
   color: #FFFFFF;
   padding: 8px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -3302,19 +3323,19 @@ input:checked + .switch-slider:before {
 }
 
 .active-role-ribbon.role-admin {
-  background: linear-gradient(90deg, #0F172A 0%, #1E293B 100%);
-  border-bottom: 2.5px solid #F59E0B;
+  background: linear-gradient(90deg, #1F2937 0%, #374151 100%);
+  border-bottom: 2.5px solid var(--color-rating);
 }
 
 .active-role-ribbon.role-pro {
   background: linear-gradient(90deg, #064E3B 0%, #065F46 100%);
-  border-bottom: 2.5px solid #10B981;
+  border-bottom: 2.5px solid var(--color-primary);
 }
 
 .active-role-ribbon.role-client {
   background: linear-gradient(90deg, #F0FDF4 0%, #ECFDF5 100%);
   color: #065F46;
-  border-bottom: 2px solid #A7F3D0;
+  border-bottom: 2px solid var(--color-primary-border);
 }
 
 .active-role-ribbon-content {
@@ -3361,7 +3382,7 @@ input:checked + .switch-slider:before {
 
 .ribbon-action-btn {
   background: #FFFFFF;
-  color: #0F172A;
+  color: var(--color-surface-dark);
   font-weight: 700;
   border: none;
   padding: 6px 14px;
@@ -3380,18 +3401,18 @@ input:checked + .switch-slider:before {
 }
 
 .role-client .ribbon-action-btn {
-  background: #059669;
+  background: var(--color-primary);
   color: #FFFFFF;
 }
 
 .role-pro .ribbon-action-btn {
-  background: #F59E0B;
-  color: #0F172A;
+  background: var(--color-rating);
+  color: var(--color-surface-dark);
 }
 
 .role-admin .ribbon-action-btn {
-  background: #F59E0B;
-  color: #0F172A;
+  background: var(--color-rating);
+  color: var(--color-surface-dark);
 }
 
 .ribbon-role-switch {

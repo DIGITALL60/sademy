@@ -43,6 +43,42 @@
       "proPlan": "gold",
       "verified": true,
       "createdAt": "2026-08-10T11:00:00.000Z"
+    },
+    {
+      "id": "usr-pro-mvb02ciq",
+      "name": "cafeprueba p",
+      "email": "cafepruebap@gmail.com",
+      "passwordHash": "carlos123",
+      "phone": "3472629600",
+      "role": "pro",
+      "roleLabel": "Profesional Verificado Pro",
+      "roleTag": "Pro Verificado",
+      "avatar": "assets/marcos.jpg",
+      "verified": true,
+      "createdAt": "2026-10-16T13:25:00.002Z",
+      "trade": "Plomero y Sanitarista",
+      "dni": "44873400",
+      "matricula": "",
+      "zone": "vm",
+      "proPlan": "basic"
+    },
+    {
+      "id": "usr-pro-mvb65tvy",
+      "name": "Esteban Gasista",
+      "email": "esteban.gas@sademy.com",
+      "passwordHash": "Password2026!",
+      "phone": "11 5566-7788",
+      "role": "pro",
+      "roleLabel": "Profesional Verificado Pro",
+      "roleTag": "Pro Verificado",
+      "avatar": "assets/marcos.jpg",
+      "verified": true,
+      "createdAt": "2026-10-16T16:15:40.174Z",
+      "trade": "Gasista Matriculado",
+      "dni": "32.456.789",
+      "matricula": "METROGAS #8821",
+      "zone": "Belgrano y Nunez, CABA",
+      "proPlan": "basic"
     }
   ],
   "professionals": [
@@ -63,7 +99,12 @@
       "bio": "Especialista en instalaciones eléctricas domiciliarias y comerciales, tableros seccionales, luminaria LED y detección de fugas a tierra.",
       "priceHint": "$16.500",
       "priceUnit": "por trabajo base",
-      "skills": ["Tableros Eléctricos", "Luminarias LED", "Urgencias 24h", "Certificado DCI"],
+      "skills": [
+        "Tableros Eléctricos",
+        "Luminarias LED",
+        "Urgencias 24h",
+        "Certificado DCI"
+      ],
       "completedJobs": 38,
       "responseTime": "< 15 min"
     },
@@ -77,14 +118,19 @@
       "verified": true,
       "certified": true,
       "matricula": "MAT-PL-3104",
-      "rating": 5.0,
+      "rating": 5,
       "reviewsCount": 52,
       "zone": "Belgrano · Núñez · Vicente López",
       "city": "CABA / GBA Norte",
       "bio": "Plomera matriculada con más de 8 años de experiencia. Reparación de pérdidas de agua, destapes con máquina, termofusión y presurizadoras.",
       "priceHint": "$18.000",
       "priceUnit": "por visita técnica",
-      "skills": ["Termofusión Acqua System", "Bombas Rowa", "Destapes", "Griferías FV"],
+      "skills": [
+        "Termofusión Acqua System",
+        "Bombas Rowa",
+        "Destapes",
+        "Griferías FV"
+      ],
       "completedJobs": 52,
       "responseTime": "< 10 min"
     },
@@ -105,7 +151,12 @@
       "bio": "Gasista matriculado habilitado por distribuidoras para firmas de Metrogas / Naturgy. Calderas, estufas tiro balanceado y pruebas de hermeticidad.",
       "priceHint": "$22.000",
       "priceUnit": "por inspección reglamentaria",
-      "skills": ["Metrogas Habilitado", "Calderas Duales", "Prueba de Hermeticidad", "Trámites Forma 1022"],
+      "skills": [
+        "Metrogas Habilitado",
+        "Calderas Duales",
+        "Prueba de Hermeticidad",
+        "Trámites Forma 1022"
+      ],
       "completedJobs": 84,
       "responseTime": "< 20 min"
     },
@@ -126,7 +177,12 @@
       "bio": "Pintura de interiores y exteriores, tratamiento antihumedad, aplicación de microcemento y enduido profesional. Limpieza impecable garantizada.",
       "priceHint": "$6.500",
       "priceUnit": "por m² mano de obra",
-      "skills": ["Látex y Sintético", "Microcemento", "Tratamiento Antihumedad", "Cielorrasos"],
+      "skills": [
+        "Látex y Sintético",
+        "Microcemento",
+        "Tratamiento Antihumedad",
+        "Cielorrasos"
+      ],
       "completedJobs": 41,
       "responseTime": "< 30 min"
     },
@@ -147,7 +203,12 @@
       "bio": "Apertura judicial y urgente sin rotura de puertas blindadas. Cambio de combinación Mul-T-Lock, cerrojos Trabex y duplicados computados.",
       "priceHint": "$25.000",
       "priceUnit": "apertura urgente",
-      "skills": ["Puertas Blindadas", "Mul-T-Lock", "Cerraduras Magnéticas", "Atención Nocturna"],
+      "skills": [
+        "Puertas Blindadas",
+        "Mul-T-Lock",
+        "Cerraduras Magnéticas",
+        "Atención Nocturna"
+      ],
       "completedJobs": 67,
       "responseTime": "< 12 min"
     },
@@ -168,7 +229,12 @@
       "bio": "Instalación y service oficial de aires acondicionados Split e Inverter. Carga de gas R410A / R32, presurización con nitrógeno y limpieza de filtros.",
       "priceHint": "$35.000",
       "priceUnit": "instalación hasta 3000f",
-      "skills": ["Instalador CACAAV", "Gases Ecológicos", "Inverter", "Garantía Oficial"],
+      "skills": [
+        "Instalador CACAAV",
+        "Gases Ecológicos",
+        "Inverter",
+        "Garantía Oficial"
+      ],
       "completedJobs": 49,
       "responseTime": "< 25 min"
     }
@@ -221,7 +287,7 @@
           "proTrade": "ELECTRICISTA MATRICULADA",
           "proBadge": "VERIFICADA PRO",
           "avatar": "assets/sofia.jpg",
-          "rating": 5.0,
+          "rating": 5,
           "jobsCount": 52,
           "materialsNote": "Mano de obra + diagnóstico de tablero",
           "laborPrice": 18000,
@@ -316,13 +382,65 @@
     "proSubsCount": 18
   },
   "adminTransactions": [
-    { "id": "ORD-2026-041", "client": "Carlos M.", "pro": "Claudio V.", "trade": "Gasista", "amount": 22000, "fee": 2640, "status": "Liberado con éxito", "date": "28 Sep" },
-    { "id": "ORD-2026-039", "client": "Lucía B.", "pro": "Sofía L.", "trade": "Plomería", "amount": 35000, "fee": 4200, "status": "Liberado con éxito", "date": "27 Sep" },
-    { "id": "ORD-2026-035", "client": "Esteban R.", "pro": "Marcos R.", "trade": "Electricidad", "amount": 48000, "fee": 5760, "status": "Liberado con éxito", "date": "25 Sep" },
-    { "id": "ORD-2026-031", "client": "Mariana K.", "pro": "Diego M.", "trade": "Pintura", "amount": 62000, "fee": 7440, "status": "Liberado con éxito", "date": "22 Sep" }
+    {
+      "id": "ORD-2026-041",
+      "client": "Carlos M.",
+      "pro": "Claudio V.",
+      "trade": "Gasista",
+      "amount": 22000,
+      "fee": 2640,
+      "status": "Liberado con éxito",
+      "date": "28 Sep"
+    },
+    {
+      "id": "ORD-2026-039",
+      "client": "Lucía B.",
+      "pro": "Sofía L.",
+      "trade": "Plomería",
+      "amount": 35000,
+      "fee": 4200,
+      "status": "Liberado con éxito",
+      "date": "27 Sep"
+    },
+    {
+      "id": "ORD-2026-035",
+      "client": "Esteban R.",
+      "pro": "Marcos R.",
+      "trade": "Electricidad",
+      "amount": 48000,
+      "fee": 5760,
+      "status": "Liberado con éxito",
+      "date": "25 Sep"
+    },
+    {
+      "id": "ORD-2026-031",
+      "client": "Mariana K.",
+      "pro": "Diego M.",
+      "trade": "Pintura",
+      "amount": 62000,
+      "fee": 7440,
+      "status": "Liberado con éxito",
+      "date": "22 Sep"
+    }
   ],
   "pendingMatriculas": [
-    { "id": "pro-pending-1", "name": "Facundo G.", "trade": "Gasista Matriculado", "matricula": "METROGAS #9214", "zone": "Belgrano, CABA", "dni": "34.819.201", "docVerified": true },
-    { "id": "pro-pending-2", "name": "Martín T.", "trade": "Electricista Matriculado", "matricula": "COPIME #3810", "zone": "Palermo, CABA", "dni": "32.110.884", "docVerified": true }
+    {
+      "id": "pro-pending-1",
+      "name": "Facundo G.",
+      "trade": "Gasista Matriculado",
+      "matricula": "METROGAS #9214",
+      "zone": "Belgrano, CABA",
+      "dni": "34.819.201",
+      "docVerified": true
+    },
+    {
+      "id": "pro-pending-2",
+      "name": "Martín T.",
+      "trade": "Electricista Matriculado",
+      "matricula": "COPIME #3810",
+      "zone": "Palermo, CABA",
+      "dni": "32.110.884",
+      "docVerified": true
+    }
   ]
 }
