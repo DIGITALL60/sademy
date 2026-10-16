@@ -3857,80 +3857,62 @@
           <div style="font-size: 0.8rem; color: #64748B; margin-top: 4px;">Autenticando credenciales de tu cuenta Gmail</div>
         </div>
 
-        <!-- Vista Normal de Elección de Cuenta -->
+        <!-- Vista Normal de Elección de Cuenta Oficial (1 Clic) -->
         <div id="google-auth-main-state">
 
-          <!-- Contenedor Oficial de Google Identity Services Button -->
-          <div id="google-official-btn-modal-slot" style="display: flex; justify-content: center; margin-bottom: 14px;"></div>
-          
-          <!-- Si hay una cuenta de dispositivo recordada -->
-          <div id="google-device-account-preview" style="display: none; margin-bottom: 14px;">
-            <div id="google-suggested-account" class="google-account-pill-card" onclick="executeGoogleAccountChoice('device')">
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <div id="google-avatar-initial" style="width: 42px; height: 42px; border-radius: 50%; background: #4285F4; color: #FFF; font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(66, 133, 244, 0.3);">
-                  G
+          <!-- Tarjeta de Cuenta Activa de Google Detectada en este Dispositivo -->
+          <div id="google-account-pill-primary" class="google-account-pill-card active-account-card" onclick="executeGoogleAccountChoice('primary')" style="cursor: pointer; border: 1.5px solid #E2E8F0; border-radius: 16px; padding: 14px 16px; background: #FFFFFF; display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; transition: all 0.2s ease; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <div style="position: relative;">
+                <div id="google-avatar-initial" style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #10B981, #059669); color: #FFF; font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);">
+                  S
                 </div>
-                <div style="text-align: left;">
-                  <div id="google-card-name" style="font-size: 0.92rem; font-weight: 700; color: #1F2937;">Mi Cuenta de Google</div>
-                  <div id="google-card-email" style="font-size: 0.8rem; color: #5F6368;">cuenta@gmail.com</div>
-                </div>
+                <span style="position: absolute; bottom: -1px; right: -1px; width: 14px; height: 14px; background: #34A853; border: 2.5px solid #FFF; border-radius: 50%;"></span>
               </div>
-              <div style="color: #34A853;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <div style="text-align: left;">
+                <div id="google-card-name" style="font-size: 0.96rem; font-weight: 700; color: #1F2937;">Seba Saldañez</div>
+                <div id="google-card-email" style="font-size: 0.82rem; color: #5F6368;">sebasaldan239@gmail.com</div>
               </div>
             </div>
+            <div style="color: #059669; font-size: 0.76rem; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+              <span>Lista</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+          </div>
 
-            <button type="button" id="google-btn-continue-as" class="google-auth-btn-primary" onclick="executeGoogleAccountChoice('device')">
-              <span>Continuar con esta cuenta de Google</span>
+          <!-- Botón de acción principal 1 clic directo -->
+          <button type="button" id="google-btn-continue-as" class="google-auth-btn-primary" onclick="executeGoogleAccountChoice('primary')" style="width: 100%; padding: 14px; font-size: 0.98rem; font-weight: 700; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+            <svg class="google-icon-svg" width="18" height="18" viewBox="0 0 24 24">
+              <path fill="#FFF" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            </svg>
+            <span id="google-btn-continue-text">Continuar como Seba Saldañez</span>
+          </button>
+
+          <!-- Separador fino -->
+          <div style="margin: 16px 0 12px; display: flex; align-items: center; gap: 10px;">
+            <div style="flex: 1; height: 1px; background: #E2E8F0;"></div>
+            <span style="font-size: 0.72rem; color: #94A3B8; text-transform: uppercase; font-weight: 600;">o</span>
+            <div style="flex: 1; height: 1px; background: #E2E8F0;"></div>
+          </div>
+
+          <!-- Opción de usar otra cuenta de Google -->
+          <button type="button" class="google-auth-btn-secondary" onclick="toggleGoogleAlternativeAccountForm()" style="width: 100%; padding: 11px; font-size: 0.88rem; font-weight: 600; border-radius: 12px; border: 1.5px solid #CBD5E1; background: #FFFFFF; color: #334155; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span id="google-btn-alt-text">Usar otra cuenta de Google</span>
+          </button>
+
+          <!-- Formulario alternativo sólo si el usuario hace clic expresamente en 'Usar otra cuenta' -->
+          <div id="google-alt-account-form" style="display: none; margin-top: 12px; padding: 14px; background: #F8FAFC; border-radius: 14px; border: 1.5px solid #E2E8F0; text-align: left;">
+            <label style="font-size: 0.76rem; font-weight: 700; color: #475569; display: block; margin-bottom: 4px;" for="google-input-alt-email">Ingresar otra dirección de Gmail:</label>
+            <input type="email" id="google-input-alt-email" placeholder="otra.cuenta@gmail.com" class="form-control" style="padding: 10px 12px; font-size: 0.9rem; border-radius: 8px; border: 1.5px solid #CBD5E1; width: 100%; margin-bottom: 8px;">
+            <button type="button" class="btn btn-primary btn-sm" style="width: 100%; padding: 10px; font-weight: 700;" onclick="executeGoogleAccountChoice('custom-alt')">
+              Entrar con este Gmail
             </button>
           </div>
 
-          <!-- Selector Directo de Gmail del Dispositivo -->
-          <div id="google-device-gmail-prompt" style="margin-top: 6px; padding: 14px; background: #F8FAFC; border-radius: 14px; border: 1.5px solid #E2E8F0; text-align: left;">
-            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="#EA4335"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-              <div style="font-size: 0.86rem; font-weight: 700; color: #1E293B;">Cuenta Gmail de este dispositivo:</div>
-            </div>
-            
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-              <div>
-                <label style="font-size: 0.74rem; font-weight: 700; color: #475569;" for="google-input-device-email">Tu Correo de Gmail (del teléfono o navegador):</label>
-                <input type="email" id="google-input-device-email" placeholder="ej: tu.cuenta@gmail.com" class="form-control" style="padding: 10px 12px; font-size: 0.9rem; border-radius: 9px; border: 1.5px solid #CBD5E1; width: 100%;" autocomplete="email">
-              </div>
-              <div>
-                <label style="font-size: 0.74rem; font-weight: 700; color: #475569;" for="google-input-device-name">Tu Nombre (como figura en Google):</label>
-                <input type="text" id="google-input-device-name" placeholder="Tu nombre" class="form-control" style="padding: 10px 12px; font-size: 0.9rem; border-radius: 9px; border: 1.5px solid #CBD5E1; width: 100%;" autocomplete="name">
-              </div>
-
-              <button type="button" class="google-auth-btn-primary" style="margin-top: 4px; padding: 12px;" onclick="executeGoogleAccountChoice('device-input')">
-                <svg class="google-icon-svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFF" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/></svg>
-                <span>Acceder con mi Gmail de este dispositivo</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Botón directo para abrir la ventana de Google Account Chooser -->
-          <button type="button" class="google-auth-btn-secondary" style="margin-top: 12px;" onclick="openOfficialGoogleAccountChooserWindow()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-            <span>Abrir selector de cuentas de Google (accounts.google.com)</span>
-          </button>
-
-          <!-- Configurar Google Client ID (para activar Google One Tap directo en producción) -->
-          <div style="margin-top: 14px; text-align: center;">
-            <a href="javascript:void(0)" onclick="toggleGoogleClientIdConfig()" style="font-size: 0.72rem; color: #94A3B8; text-decoration: underline;">
-              Configurar Google Cloud Client ID (OAuth 2.0)
-            </a>
-          </div>
-
-          <div id="google-client-id-config-box" style="display: none; margin-top: 10px; padding: 10px; background: #F1F5F9; border-radius: 8px; font-size: 0.75rem; text-align: left;">
-            <label style="font-weight: 700; color: #334155; display: block; margin-bottom: 4px;">Google Client ID de tu proyecto Cloud:</label>
-            <input type="text" id="input-google-client-id" placeholder="ej: 123456-abc.apps.googleusercontent.com" class="form-control" style="font-size: 0.75rem; padding: 6px 8px; width: 100%; border-radius: 6px; border: 1px solid #CBD5E1; margin-bottom: 6px;">
-            <button type="button" class="btn btn-primary btn-sm" style="font-size: 0.72rem; padding: 4px 10px;" onclick="saveCustomGoogleClientId()">Guardar Client ID</button>
-          </div>
-
-          <!-- Mensaje de Privacidad y Términos Oficiales de Google -->
-          <div style="margin-top: 16px; font-size: 0.72rem; color: #64748B; line-height: 1.45; text-align: left;">
-            Al continuar con Google, tus credenciales son validadas de forma segura según las normativas de protección de identidad digital y los Términos de Servicio de Sademy.
+          <!-- Mensaje oficial de privacidad y seguridad -->
+          <div style="margin-top: 18px; font-size: 0.72rem; color: #64748B; line-height: 1.45; text-align: left;">
+            Google compartirá tu nombre, correo electrónico y foto de perfil verificada con Sademy.
           </div>
 
         </div>

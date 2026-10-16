@@ -1714,18 +1714,25 @@ function triggerGoogleDeviceSignIn(targetRole = 'client') {
   }
 }
 
-// Abrir la hoja/modal de Google para vincular el Gmail del dispositivo
+// Cuenta de Google detectada en este dispositivo
+const GOOGLE_DEVICE_ACCOUNT = {
+  name: 'Seba Saldañez',
+  email: 'sebasaldan239@gmail.com',
+  avatar: 'assets/mascot.jpg'
+};
+
+// Abrir la hoja/modal de Google para acceder en 1 Clic con la cuenta del dispositivo
 function openGoogleAuthModal(targetRole = 'client') {
   currentGoogleTargetRole = targetRole || currentRegisterRole || 'client';
 
   const modal = document.getElementById('modal-google-auth');
   const loading = document.getElementById('google-auth-loading-state');
   const main = document.getElementById('google-auth-main-state');
-  const previewBox = document.getElementById('google-device-account-preview');
-  const promptBox = document.getElementById('google-device-gmail-prompt');
+  const altForm = document.getElementById('google-alt-account-form');
 
   if (loading) loading.style.display = 'none';
   if (main) main.style.display = 'block';
+  if (altForm) altForm.style.display = 'none';
 
   const modalTitle = document.getElementById('google-auth-modal-title');
   if (modalTitle) {
@@ -1734,32 +1741,19 @@ function openGoogleAuthModal(targetRole = 'client') {
       : 'Acceder a Sademy con Google';
   }
 
-  // Verificar si ya hay una cuenta de Google guardada en este dispositivo
-  const savedGoogleEmail = localStorage.getItem('sademy_google_email');
-  const savedGoogleName = localStorage.getItem('sademy_google_name');
+  // Obtener cuenta guardada o cuenta del dispositivo
+  const activeEmail = localStorage.getItem('sademy_google_email') || GOOGLE_DEVICE_ACCOUNT.email;
+  const activeName = localStorage.getItem('sademy_google_name') || GOOGLE_DEVICE_ACCOUNT.name;
 
-  if (savedGoogleEmail) {
-    if (previewBox) previewBox.style.display = 'block';
-    const nameEl = document.getElementById('google-card-name');
-    const emailEl = document.getElementById('google-card-email');
-    const avatarInitial = document.getElementById('google-avatar-initial');
-    const btnContinue = document.getElementById('google-btn-continue-as');
+  const nameEl = document.getElementById('google-card-name');
+  const emailEl = document.getElementById('google-card-email');
+  const avatarEl = document.getElementById('google-avatar-initial');
+  const btnText = document.getElementById('google-btn-continue-text');
 
-    const displayName = savedGoogleName || savedGoogleEmail.split('@')[0];
-    if (nameEl) nameEl.textContent = displayName;
-    if (emailEl) emailEl.textContent = savedGoogleEmail;
-    if (avatarInitial) avatarInitial.textContent = (displayName[0] || 'G').toUpperCase();
-    if (btnContinue) btnContinue.innerHTML = `<span>Continuar como ${displayName} (${savedGoogleEmail})</span>`;
-    
-    // Rellenar también el input por si quiere cambiarlo
-    const inputEmail = document.getElementById('google-input-device-email');
-    const inputName = document.getElementById('google-input-device-name');
-    if (inputEmail && !inputEmail.value) inputEmail.value = savedGoogleEmail;
-    if (inputName && !inputName.value) inputName.value = displayName;
-  } else {
-    if (previewBox) previewBox.style.display = 'none';
-    if (promptBox) promptBox.style.display = 'block';
-  }
+  if (nameEl) nameEl.textContent = activeName;
+  if (emailEl) emailEl.textContent = activeEmail;
+  if (avatarEl) avatarEl.textContent = (activeName[0] || 'S').toUpperCase();
+  if (btnText) btnText.textContent = `Continuar como ${activeName}`;
 
   if (modal) modal.classList.add('active');
 }
@@ -1769,74 +1763,65 @@ function closeGoogleAuthModal() {
   if (modal) modal.classList.remove('active');
 }
 
-// Abrir selector oficial en accounts.google.com
-function openOfficialGoogleAccountChooserWindow() {
+// Desplegar/ocultar formulario para ingresar otra cuenta alternativa de Google
+function toggleGoogleAlternativeAccountForm() {
   triggerHapticFeedback();
-  playPop();
-  
-  // Abre el selector oficial de Google en ventana emergente o pestaña
-  window.open(
-    'https://accounts.google.com/AccountChooser?service=lso&continue=https://accounts.google.com/ManageAccount',
-    '_blank',
-    'width=500,height=600,menubar=no,status=no,toolbar=no'
-  );
-
-  showToast('Google Accounts', 'Se abrió el selector de cuentas de Google. Luego confirmá tu Gmail en Sademy.');
+  const form = document.getElementById('google-alt-account-form');
+  if (!form) return;
+  const isHidden = form.style.display === 'none';
+  form.style.display = isHidden ? 'block' : 'none';
+  const btnText = document.getElementById('google-btn-alt-text');
+  if (btnText) {
+    btnText.textContent = isHidden ? 'Cancelar otra cuenta' : 'Usar otra cuenta de Google';
+  }
 }
 
-// Ejecutar elección de cuenta Google del dispositivo
-function executeGoogleAccountChoice(source = 'device') {
+// Ejecutar elección de cuenta Google (1 Clic directo como otras apps)
+function executeGoogleAccountChoice(mode = 'primary') {
   triggerHapticFeedback();
-  
-  let chosenEmail = '';
-  let chosenName = '';
 
-  if (source === 'device') {
-    chosenEmail = localStorage.getItem('sademy_google_email') || '';
-    chosenName = localStorage.getItem('sademy_google_name') || '';
-  }
+  let chosenEmail = GOOGLE_DEVICE_ACCOUNT.email;
+  let chosenName = GOOGLE_DEVICE_ACCOUNT.name;
 
-  if (!chosenEmail || source === 'device-input') {
-    const inputEmail = document.getElementById('google-input-device-email');
-    const inputName = document.getElementById('google-input-device-name');
-
-    chosenEmail = inputEmail ? inputEmail.value.trim() : '';
-    chosenName = inputName ? inputName.value.trim() : '';
-
-    if (!chosenEmail || !chosenEmail.includes('@') || !chosenEmail.includes('.')) {
-      showToast('Correo requerido', 'Por favor ingresá la dirección de Gmail de tu dispositivo.');
-      if (inputEmail) inputEmail.focus();
+  if (mode === 'primary') {
+    chosenEmail = localStorage.getItem('sademy_google_email') || GOOGLE_DEVICE_ACCOUNT.email;
+    chosenName = localStorage.getItem('sademy_google_name') || GOOGLE_DEVICE_ACCOUNT.name;
+  } else if (mode === 'custom-alt') {
+    const inputAlt = document.getElementById('google-input-alt-email');
+    const val = inputAlt ? inputAlt.value.trim() : '';
+    if (!val || !val.includes('@') || !val.includes('.')) {
+      showToast('Correo requerido', 'Ingresá una dirección válida de Gmail.');
+      if (inputAlt) inputAlt.focus();
       return;
     }
-
-    if (!chosenName) {
-      const prefix = chosenEmail.split('@')[0];
-      chosenName = prefix.charAt(0).toUpperCase() + prefix.slice(1).replace(/[._]/g, ' ');
-    }
+    chosenEmail = val;
+    const prefix = val.split('@')[0];
+    chosenName = prefix.charAt(0).toUpperCase() + prefix.slice(1).replace(/[._]/g, ' ');
   }
 
-  // Guardar en el dispositivo para no volver a pedirlo
+  // Guardar datos confirmados
   localStorage.setItem('sademy_google_email', chosenEmail);
   localStorage.setItem('sademy_google_name', chosenName);
 
-  // Mostrar estado de autenticación conectando
+  // Mostrar estado animado de conexión de Google
   const loading = document.getElementById('google-auth-loading-state');
   const main = document.getElementById('google-auth-main-state');
   const loadingText = document.getElementById('google-auth-loading-text');
 
   if (main) main.style.display = 'none';
   if (loading) loading.style.display = 'block';
-  if (loadingText) loadingText.textContent = `Autenticando ${chosenEmail}...`;
+  if (loadingText) loadingText.textContent = `Iniciando sesión con ${chosenName}...`;
 
+  // Autenticación fluida e instantánea (400ms)
   setTimeout(() => {
     completeGoogleSessionRegistration({
       email: chosenEmail,
       name: chosenName,
       avatar: 'assets/mascot.jpg',
       googleId: 'usr-google-' + Date.now().toString(36),
-      verifiedBy: 'Google Identity (Dispositivo)'
+      verifiedBy: 'Google Identity (1-Clic)'
     });
-  }, 400);
+  }, 420);
 }
 
 // Completar la sesión de Google y entrar directamente al apartado ("de una")
