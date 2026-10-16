@@ -1579,6 +1579,14 @@ const GOOGLE_CONFIG = {
   }
 };
 
+// Limpiar cualquier residuo de prueba mock anterior
+try {
+  if (localStorage.getItem('sademy_google_email') === 'carlos.martinez@gmail.com') {
+    localStorage.removeItem('sademy_google_email');
+    localStorage.removeItem('sademy_google_name');
+  }
+} catch (e) {}
+
 // Inicialización de Google Identity Services (GIS)
 function initGoogleIdentityServices() {
   if (typeof google === 'undefined' || !google.accounts || !google.accounts.id) {
