@@ -1572,8 +1572,8 @@ let currentGoogleTargetRole = 'client';
 
 // Configuración de Google Identity Services
 const GOOGLE_CONFIG = {
-  // Client ID de Google Cloud OAuth 2.0 (se guarda localmente si el usuario o admin lo configura)
-  clientId: localStorage.getItem('sademy_google_client_id') || window.SADEMY_GOOGLE_CLIENT_ID || '',
+  // Client ID oficial de Google Cloud Console creado por Seba Saldañez
+  clientId: localStorage.getItem('sademy_google_client_id') || '150112955028-3danfpt2d6icf35kgkqk910f6bdkab83.apps.googleusercontent.com',
   hasValidClientId() {
     return Boolean(this.clientId && this.clientId.includes('.apps.googleusercontent.com'));
   }
@@ -1684,6 +1684,58 @@ function handleGoogleCredentialResponse(response) {
   });
 }
 
+// Abrir la ventana emergente OFICIAL de Google (accounts.google.com)
+function openOfficialGoogleOAuthPopup(targetRole = 'client') {
+  currentGoogleTargetRole = targetRole || currentRegisterRole || 'client';
+
+  // 1. Intentar con el Token Client oficial de Google Identity Services
+  if (window.google && window.google.accounts && window.google.accounts.oauth2 && GOOGLE_CONFIG.hasValidClientId()) {
+    try {
+      const client = google.accounts.oauth2.initTokenClient({
+        client_id: GOOGLE_CONFIG.clientId,
+        scope: 'email profile openid',
+        callback: async (tokenResponse) => {
+          if (tokenResponse && tokenResponse.access_token) {
+            try {
+              // Obtener los datos reales de la cuenta de Google
+              const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                headers: { Authorization: `Bearer ${tokenResponse.access_token}` }
+              });
+              const profile = await res.json();
+              completeGoogleSessionRegistration({
+                email: profile.email,
+                name: profile.name || profile.given_name || profile.email.split('@')[0],
+                avatar: profile.picture || 'assets/mascot.jpg',
+                googleId: profile.sub,
+                verifiedBy: 'Google OAuth 2.0 Oficial (accounts.google.com)'
+              });
+            } catch (err) {
+              console.error('[Sademy Google] Error obteniendo perfil de Google:', err);
+              openGoogleAuthModal(currentGoogleTargetRole);
+            }
+          }
+        }
+      });
+
+      // Dispara la ventana oficial emergente de Google ("Elige una cuenta para ir a Sademy")
+      client.requestAccessToken({ prompt: 'select_account' });
+      return;
+    } catch (e) {
+      console.warn('[Sademy Google] Error al lanzar popup OAuth:', e);
+    }
+  }
+
+  // 2. Si Google One Tap está disponible
+  if (window.google && window.google.accounts && window.google.accounts.id && GOOGLE_CONFIG.hasValidClientId()) {
+    try {
+      window.google.accounts.id.prompt();
+    } catch (e) {}
+  }
+
+  // 3. Fallback instantáneo con selector adaptativo
+  openGoogleAuthModal(currentGoogleTargetRole);
+}
+
 // Disparador principal cuando el usuario toca "Continuar con Google"
 function triggerGoogleDeviceSignIn(targetRole = 'client') {
   triggerHapticFeedback();
@@ -1693,25 +1745,8 @@ function triggerGoogleDeviceSignIn(targetRole = 'client') {
   // Cerrar modal de login regular
   closeAuthModal();
 
-  // 1. Si Google Identity Services tiene Client ID, intentar One Tap nativo inmediato
-  if (window.google && window.google.accounts && window.google.accounts.id && GOOGLE_CONFIG.hasValidClientId()) {
-    window.google.accounts.id.prompt((notification) => {
-      // Si el One Tap fue cerrado o no se puede desplegar, abrir la hoja de selección del dispositivo
-      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-        openGoogleAuthModal(currentGoogleTargetRole);
-      }
-    });
-    // Si no falla en 600ms, dejar que One Tap actúe; pero abrir modal si el usuario sigue en la pantalla
-    setTimeout(() => {
-      const modal = document.getElementById('modal-google-auth');
-      if (!appState.currentUser && (!modal || !modal.classList.contains('active'))) {
-        openGoogleAuthModal(currentGoogleTargetRole);
-      }
-    }, 450);
-  } else {
-    // 2. Abrir la hoja adaptativa para seleccionar el Gmail del dispositivo
-    openGoogleAuthModal(currentGoogleTargetRole);
-  }
+  // Abrir directamente la ventana oficial de Google OAuth 2.0 (accounts.google.com)
+  openOfficialGoogleOAuthPopup(currentGoogleTargetRole);
 }
 
 // Cuenta de Google detectada en este dispositivo
