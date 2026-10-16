@@ -72,11 +72,47 @@
   <!-- Barra de progreso de scroll ultra-fina -->
   <div id="scroll-progress-bar" class="scroll-progress-bar"></div>
 
+  <!-- ========================================================================
+       BARRA MAESTRA DE APARTADOS (VISITANTE, CLIENTE, PRO, ADMINISTRADOR)
+       Design System Apple Cupertino: navegación rápida e independiente por roles
+       ======================================================================== -->
+  <nav id="apartado-control-bar" class="apartado-control-bar" aria-label="Selector de apartados Sademy">
+    <div class="apartado-control-container">
+      <div class="apartado-brand-mini">
+        <img src="assets/favicon.svg" alt="Sademy" class="apartado-brand-icon">
+        <span class="apartado-brand-text">sademy</span>
+        <span class="apartado-mode-badge" id="apartado-current-mode-badge">🌐 Visitante</span>
+      </div>
+
+      <div class="apartado-segmented-control" role="tablist" aria-label="Espacios de trabajo">
+        <button type="button" id="apartado-btn-guest" class="apartado-btn active" role="tab" aria-selected="true" onclick="switchApartado('guest')">
+          <span class="apartado-icon">🌐</span>
+          <span class="apartado-label">Visitante</span>
+        </button>
+        <button type="button" id="apartado-btn-client" class="apartado-btn" role="tab" aria-selected="false" onclick="switchApartado('client')">
+          <span class="apartado-icon">👤</span>
+          <span class="apartado-label">Cliente</span>
+          <span class="apartado-chip">2</span>
+        </button>
+        <button type="button" id="apartado-btn-pro" class="apartado-btn" role="tab" aria-selected="false" onclick="switchApartado('pro')">
+          <span class="apartado-icon">⚡</span>
+          <span class="apartado-label">Trabajador Pro</span>
+          <span class="apartado-chip chip-pro">$49k</span>
+        </button>
+        <button type="button" id="apartado-btn-admin" class="apartado-btn" role="tab" aria-selected="false" onclick="switchApartado('admin')">
+          <span class="apartado-icon">🛡️</span>
+          <span class="apartado-label">Administrador</span>
+          <span class="apartado-chip chip-admin">HQ</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
   <!-- Header & Navegación Principal Oficial -->
   <header class="main-header">
     <div class="navbar">
       <!-- Logo y Mascota oficial conforme al Manual de Identidad (Giro cada 10s) -->
-      <a href="#hero" class="brand-logo" aria-label="Sademy Inicio">
+      <a href="javascript:void(0)" onclick="switchApartado('guest')" class="brand-logo" aria-label="Sademy Inicio">
         <img src="assets/favicon.svg" alt="Mascota oficial Sademy" class="brand-mascot-icon">
         <span class="brand-wordmark">sademy</span>
       </a>
@@ -84,17 +120,17 @@
       <!-- Enlaces de navegación -->
       <nav class="main-nav" aria-label="Navegación principal">
         <ul class="nav-links">
-          <li><a href="#oficios" class="nav-link">Oficios</a></li>
+          <li><a href="#oficios" onclick="switchApartado('guest')" class="nav-link">Oficios</a></li>
           <li>
-            <a href="javascript:void(0)" onclick="openMyOrdersModal()" class="nav-link">
+            <a href="javascript:void(0)" onclick="switchApartado('client')" class="nav-link">
               Mis Pedidos
               <span id="nav-orders-badge" class="nav-badge" title="Pedidos activos">2</span>
             </a>
           </li>
-          <li><a href="#directorio" class="nav-link">Profesionales</a></li>
-          <li><a href="#como-funciona" class="nav-link">Cómo Funciona & Garantía</a></li>
-          <li><a href="#calculadora" class="nav-link">Precios Estimados</a></li>
-          <li><a href="#galeria-trabajos" class="nav-link">Galería Verificada</a></li>
+          <li><a href="#directorio" onclick="switchApartado('guest')" class="nav-link">Profesionales</a></li>
+          <li><a href="#como-funciona" onclick="switchApartado('guest')" class="nav-link">Cómo Funciona & Garantía</a></li>
+          <li><a href="#calculadora" onclick="switchApartado('guest')" class="nav-link">Precios Estimados</a></li>
+          <li><a href="#galeria-trabajos" onclick="switchApartado('guest')" class="nav-link">Galería Verificada</a></li>
         </ul>
       </nav>
 
@@ -118,18 +154,18 @@
         </button>
 
         <!-- Botón Soy Profesional (Para trabajadores) -->
-        <button id="nav-pro-btn" class="btn btn-soft btn-sm" onclick="handleProNavClick()" style="display: none;">
+        <button id="nav-pro-btn" class="btn btn-soft btn-sm" onclick="switchApartado('pro')" style="display: none;">
           Soy Profesional
         </button>
 
         <!-- Botón Rápido de Administrador (Visible en modo Admin) -->
-        <button id="nav-admin-quick-btn" class="btn btn-sm" onclick="openAdminBackofficeModal()" style="display: none; background: var(--color-surface-dark); color: #FFFFFF; font-weight: 700; align-items: center; gap: 8px;">
+        <button id="nav-admin-quick-btn" class="btn btn-sm" onclick="switchApartado('admin')" style="display: none; background: var(--color-surface-dark); color: #FFFFFF; font-weight: 700; align-items: center; gap: 8px;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
           <span>Backoffice</span>
         </button>
 
         <!-- Botón Rápido de Profesional (Visible en modo Pro) -->
-        <button id="nav-pro-quick-btn" class="btn btn-sm" onclick="openProDashboardModal()" style="display: none; background: var(--color-primary); color: #FFFFFF; font-weight: 700; align-items: center; gap: 8px;">
+        <button id="nav-pro-quick-btn" class="btn btn-sm" onclick="switchApartado('pro')" style="display: none; background: var(--color-primary); color: #FFFFFF; font-weight: 700; align-items: center; gap: 8px;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
           <span>Portal Profesional</span>
         </button>
@@ -285,6 +321,13 @@
   </aside>
 
   <!-- ========================================================================
+       APARTADO 1: VISITANTE DEDICADO (MARKETPLACE PÚBLICO)
+       Espacio exclusivo para visitantes: landing, oficios, directorio y calculadora
+       ======================================================================== -->
+  <main id="main-content">
+  <div id="apartado-view-guest" class="apartado-view active">
+
+  <!-- ========================================================================
        HERO SECTION
        ======================================================================== -->
   <section id="hero" class="hero-section">
@@ -368,202 +411,69 @@
 
       </div>
 
-      <!-- Interfaz Central de la Aplicación Sademy (Fiel al Diseño Móvil y Adaptado a PC) -->
+      <!-- Cotizador y Preview en Vivo para Visitantes (Público) -->
       <div class="hero-visual-card">
-        <div class="sademy-app-container" id="sademy-app-view">
-          
-          <!-- Barra superior de la App -->
-          <div class="phone-top-bar">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span class="brand-wordmark" style="font-size: 1.6rem; animation: none;">sademy</span>
+        <div class="hero-guest-preview-card">
+          <div class="hero-guest-preview-header">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <img src="assets/favicon.svg" alt="Sademy" style="width: 34px; height: 34px; border-radius: 50%;">
+              <div>
+                <strong style="font-size: 1.05rem; color: #0F172A; display: block;">Pedí Presupuestos en 3 Pasos</strong>
+                <span style="font-size: 0.78rem; color: #64748B;">Sin cargo ni compromiso · Profesionales certificados</span>
+              </div>
             </div>
-            <button class="phone-header-btn" onclick="openNewOrderModal()">
-              Nuevo pedido
-            </button>
+            <span class="badge-tag" style="background: #ECFDF5; color: #047857; font-weight: 800; font-size: 0.72rem;">100% GRATIS</span>
           </div>
 
-          <!-- Navegación de pestañas: Mis pedidos / Mensajes / Ayuda -->
-          <div class="phone-nav-links">
-            <button id="app-tab-btn-pedidos" class="app-tab-link active" onclick="switchAppTab('pedidos')">Mis pedidos</button>
-            <button id="app-tab-btn-mensajes" class="app-tab-link" onclick="switchAppTab('mensajes')">Mensajes</button>
-            <button id="app-tab-btn-ayuda" class="app-tab-link" onclick="switchAppTab('ayuda')">Ayuda</button>
+          <!-- Pasos interactivos para el visitante -->
+          <div class="guest-step-card" onclick="openNewOrderModal()" style="cursor: pointer;">
+            <div class="guest-step-number">1</div>
+            <div style="flex: 1;">
+              <strong style="font-size: 0.88rem; color: #0F172A; display: block;">Elegí el oficio que necesitás</strong>
+              <p style="font-size: 0.78rem; color: #64748B; margin: 2px 0 0;">Electricistas, plomeros, gasistas, albañiles y técnicos evaluados.</p>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </div>
 
-          <!-- Vista 1: Mis Pedidos & Presupuestos Recibidos -->
-          <div id="app-view-pedidos" class="app-view-pane active">
-            <!-- Título y subtítulo del pedido -->
-            <div class="phone-title-block">
-              <h2 class="phone-title">Presupuestos recibidos</h2>
-              <p class="phone-subtitle">2 profesionales respondieron a tu pedido de instalación de luz en cocina.</p>
+          <div class="guest-step-card" onclick="openNewOrderModal()" style="cursor: pointer;">
+            <div class="guest-step-number">2</div>
+            <div style="flex: 1;">
+              <strong style="font-size: 0.88rem; color: #0F172A; display: block;">Describí brevemente tu trabajo</strong>
+              <p style="font-size: 0.78rem; color: #64748B; margin: 2px 0 0;">Indicá qué querés resolver y en qué zona o barrio te encontrás.</p>
             </div>
-
-            <!-- Selector para alternar entre las cotizaciones recibidas -->
-            <div class="quotes-toggle-pills-row">
-              <button id="pill-quote-marcos" class="quote-pill-btn active" onclick="selectAppQuote('marcos')">
-                Marcos R. ($24.500)
-              </button>
-              <button id="pill-quote-sofia" class="quote-pill-btn" onclick="selectAppQuote('sofia')">
-                Sofía L. ($21.000)
-              </button>
-            </div>
-
-            <!-- Tarjeta 1: Marcos R. Electricista (Fiel a la captura oficial) -->
-            <div id="quote-card-marcos" class="prototype-quote-card">
-              <div class="quote-service-icon-wrap">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                </svg>
-              </div>
-
-              <div class="quote-header-info">
-                <img src="assets/marcos.jpg" alt="Marcos R. Electricista" class="quote-worker-avatar" onerror="this.src='assets/mascot.jpg'">
-                <div style="flex: 1;">
-                  <div class="quote-badges-row">
-                    <span class="badge-tag badge-profession">ELECTRICISTA</span>
-                    <span class="badge-tag badge-new">NUEVO</span>
-                  </div>
-                  <h3 class="quote-worker-name">Marcos R.</h3>
-                  <p class="quote-includes-text">Incluye materiales y mano de obra</p>
-                  
-                  <div class="quote-rating-row" style="margin-top: 6px;">
-                    <div class="star-rating">★★★★★</div>
-                    <span style="font-weight: 700; color: #111827;">4.9</span>
-                    <span style="color: var(--color-text-tertiary); font-weight: normal;">· 38 trabajos</span>
-                  </div>
-                </div>
-              </div>
-
-              <div style="border-top: 1px solid #F3F4F6; margin: 4px 0 2px;"></div>
-
-              <div class="quote-price-row">
-                <div>
-                  <div style="font-size: 0.72rem; color: #9CA3AF; text-transform: uppercase; font-weight: 700; line-height: 1.2;">PRESUPUESTO<br>CERRADO</div>
-                  <div class="quote-amount" style="color: #065F46; font-size: 1.55rem; font-weight: 800; margin-top: 2px;">$24.500 <span style="font-size: 0.74rem; color: #9CA3AF; font-weight: 600;">ARS</span></div>
-                </div>
-                <div style="display: flex; gap: 8px; align-items: center;">
-                  <button class="btn btn-secondary btn-sm" onclick="openChatModal('Marcos R.')" style="border-radius: 10px; padding: 8px 16px; font-weight: 600;">
-                    Chatear
-                  </button>
-                  <button class="btn btn-primary btn-sm" onclick="openQuoteDetailModal('quote-marcos')" style="border-radius: 10px; padding: 8px 18px; font-weight: 700;">
-                    Ver Presupuesto
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Tarjeta 2: Sofía L. Electricista Matriculada -->
-            <div id="quote-card-sofia" class="prototype-quote-card" style="display: none;">
-              <div class="quote-service-icon-wrap">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                </svg>
-              </div>
-
-              <div class="quote-header-info">
-                <img src="assets/sofia.jpg" alt="Sofía L. Plomera" class="quote-worker-avatar" onerror="this.src='assets/mascot.jpg'">
-                <div style="flex: 1;">
-                  <div class="quote-badges-row">
-                    <span class="badge-tag badge-profession">ELECTRICISTA MATRICULADA</span>
-                    <span class="badge-tag badge-new">VERIFICADA PRO</span>
-                  </div>
-                  <h3 class="quote-worker-name">Sofía L.</h3>
-                  <p class="quote-includes-text">Mano de obra + diagnóstico de tablero</p>
-                  
-                  <div class="quote-rating-row" style="margin-top: 6px;">
-                    <div class="star-rating">★★★★★</div>
-                    <span style="font-weight: 700; color: #111827;">5.0</span>
-                    <span style="color: var(--color-text-tertiary); font-weight: normal;">· 52 trabajos</span>
-                  </div>
-                </div>
-              </div>
-
-              <div style="border-top: 1px solid #F3F4F6; margin: 4px 0 2px;"></div>
-
-              <div class="quote-price-row">
-                <div>
-                  <div style="font-size: 0.72rem; color: #9CA3AF; text-transform: uppercase; font-weight: 700; line-height: 1.2;">PRESUPUESTO<br>CERRADO</div>
-                  <div class="quote-amount" style="color: #065F46; font-size: 1.55rem; font-weight: 800; margin-top: 2px;">$21.000 <span style="font-size: 0.74rem; color: #9CA3AF; font-weight: 600;">ARS</span></div>
-                </div>
-                <div style="display: flex; gap: 8px; align-items: center;">
-                  <button class="btn btn-secondary btn-sm" onclick="openChatModal('Sofía L.')" style="border-radius: 10px; padding: 8px 16px; font-weight: 600;">
-                    Chatear
-                  </button>
-                  <button class="btn btn-primary btn-sm" onclick="openQuoteDetailModal('quote-sofia')" style="border-radius: 10px; padding: 8px 18px; font-weight: 700;">
-                    Ver Presupuesto
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Sello flotante de la mascota oficial -->
-            <div class="floating-mascot-badge" style="position: static; margin-top: 16px; justify-content: center;">
-              <img src="assets/mascot.jpg" alt="Mascota Sademy" class="floating-mascot-img">
-              <span class="floating-mascot-text">Garantía Sademy Activa · Pago Protegido</span>
-            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </div>
 
-          <!-- Vista 2: Mensajes -->
-          <div id="app-view-mensajes" class="app-view-pane" style="display: none;">
-            <div class="phone-title-block">
-              <h2 class="phone-title">Mensajes</h2>
-              <p class="phone-subtitle">Comunicate directamente con los profesionales asignados.</p>
+          <div class="guest-step-card" onclick="openNewOrderModal()" style="cursor: pointer;">
+            <div class="guest-step-number">3</div>
+            <div style="flex: 1;">
+              <strong style="font-size: 0.88rem; color: #0F172A; display: block;">Recibí presupuestos y pagá con garantía</strong>
+              <p style="font-size: 0.78rem; color: #64748B; margin: 2px 0 0;">Tu dinero queda protegido en custodia hasta que el trabajo esté terminado.</p>
             </div>
-
-            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
-              <div class="chat-thread-card" onclick="openChatModal('Marcos R.')">
-                <img src="assets/marcos.jpg" class="chat-thread-avatar" alt="Marcos R.">
-                <div style="flex: 1; overflow: hidden;">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <strong style="font-size: 0.95rem; color: var(--color-text-main);">Marcos R. (Electricista)</strong>
-                    <span style="font-size: 0.74rem; color: var(--color-text-muted);">10:50 hs</span>
-                  </div>
-                  <p style="font-size: 0.82rem; color: var(--color-text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px;">
-                    Sí, exactamente. Todo bajo norma IRAM y con garantía de 6 meses...
-                  </p>
-                </div>
-              </div>
-
-              <div class="chat-thread-card" onclick="openChatModal('Sofía L.')">
-                <img src="assets/sofia.jpg" class="chat-thread-avatar" alt="Sofía L.">
-                <div style="flex: 1; overflow: hidden;">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <strong style="font-size: 0.95rem; color: var(--color-text-main);">Sofía L. (Plomera Pro)</strong>
-                    <span style="font-size: 0.74rem; color: var(--color-text-muted);">11:02 hs</span>
-                  </div>
-                  <p style="font-size: 0.82rem; color: var(--color-text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px;">
-                    Hola Carlos! Revisé tu solicitud y puedo pasar mañana por la mañana...
-                  </p>
-                </div>
-              </div>
-            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </div>
 
-          <!-- Vista 3: Ayuda & Cobertura -->
-          <div id="app-view-ayuda" class="app-view-pane" style="display: none;">
-            <div class="phone-title-block">
-              <h2 class="phone-title">Centro de Ayuda</h2>
-              <p class="phone-subtitle">Tu tranquilidad garantizada en cada contratación.</p>
-            </div>
-
-            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 12px;">
-              <div style="background: #ECFDF5; border: 1px solid var(--color-primary-border); border-radius: 12px; padding: 14px;">
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                  <strong style="font-size: 0.95rem; color: #065F46;">Pago Protegido en Custodia</strong>
-                </div>
-                <p style="font-size: 0.82rem; color: #047857;">Tu dinero nunca va directo al trabajador hasta que el trabajo esté finalizado y des tu visto bueno.</p>
+          <!-- Ticker de profesionales en línea -->
+          <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 14px; padding: 12px 14px; margin: 14px 0; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="display: flex;">
+                <img src="assets/marcos.jpg" alt="Marcos" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 2px solid #FFFFFF;">
+                <img src="assets/sofia.jpg" alt="Sofía" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 2px solid #FFFFFF; margin-left: -8px;">
+                <img src="assets/claudio.jpg" alt="Claudio" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 2px solid #FFFFFF; margin-left: -8px;">
               </div>
-
-              <div style="background: #F9FAFB; border: 1px solid var(--color-border); border-radius: 12px; padding: 14px;">
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-                  <strong style="font-size: 0.95rem; color: var(--color-text-main);">Seguro contra Daños</strong>
-                </div>
-                <p style="font-size: 0.82rem; color: var(--color-text-secondary);">Cobertura de hasta $500.000 ARS ante cualquier eventualidad imprevista durante el servicio.</p>
-              </div>
+              <span style="font-size: 0.78rem; color: #475569; font-weight: 600;">14 profesionales de guardia en CABA</span>
             </div>
+            <span style="width: 9px; height: 9px; border-radius: 50%; background: #10B981; display: inline-block;" title="Online"></span>
           </div>
 
+          <button class="btn btn-primary" onclick="openNewOrderModal()" style="width: 100%; justify-content: center; padding: 14px; font-weight: 800; font-size: 0.95rem; border-radius: 14px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);">
+            Solicitar Presupuestos Gratis
+          </button>
+
+          <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; font-size: 0.75rem; color: #64748B;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <span>Garantía de Satisfacción y Pago Protegido Sademy</span>
+          </div>
         </div>
       </div>
 
@@ -1232,9 +1142,639 @@
         </div>
       </div>
 
-    </div>
   </footer>
-  <div id="modal-new-order" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-wizard-title">
+  </div> <!-- ==================== FIN APARTADO 1: VISITANTE ==================== -->
+
+  <!-- ========================================================================
+       APARTADO 2: CLIENTE DEDICADO (PORTAL PRIVADO DE CLIENTE)
+       Espacio exclusivo para clientes: pedidos activos, presupuestos y chat
+       ======================================================================== -->
+  <div id="apartado-view-client" class="apartado-view" style="display: none;">
+    <div class="client-portal-wrapper">
+      
+      <!-- Banner de bienvenida al cliente -->
+      <div class="client-welcome-banner">
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 1.5rem;">👤</span>
+            <h1 style="font-size: 1.35rem; font-weight: 800; margin: 0; color: #FFFFFF;">Mi Portal de Cliente · Carlos M.</h1>
+          </div>
+          <p style="font-size: 0.85rem; color: #94A3B8; margin: 4px 0 0;">
+            2 pedidos en curso · Pago retenido en custodia Sademy · Cobertura técnica activa
+          </p>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <button class="btn btn-primary btn-sm" onclick="openNewOrderModal()" style="font-weight: 700; border-radius: 10px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Nuevo Pedido
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="switchApartado('guest')" style="background: rgba(255,255,255,0.12); color: #FFF; border: none; border-radius: 10px;">
+            Explorar Marketplace
+          </button>
+        </div>
+      </div>
+
+      <!-- Interfaz Central de la Aplicación Sademy (Fiel al Diseño Móvil y de la Captura Oficial) -->
+      <div class="sademy-app-container" id="sademy-app-view">
+        
+        <!-- Barra superior de la App -->
+        <div class="phone-top-bar">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="brand-wordmark" style="font-size: 1.6rem; animation: none;">sademy</span>
+          </div>
+          <button class="phone-header-btn" onclick="openNewOrderModal()">
+            Nuevo pedido
+          </button>
+        </div>
+
+        <!-- Navegación de pestañas: Mis pedidos / Mensajes / Ayuda -->
+        <div class="phone-nav-links">
+          <button id="app-tab-btn-pedidos" class="app-tab-link active" onclick="switchAppTab('pedidos')">Mis pedidos</button>
+          <button id="app-tab-btn-mensajes" class="app-tab-link" onclick="switchAppTab('mensajes')">Mensajes</button>
+          <button id="app-tab-btn-ayuda" class="app-tab-link" onclick="switchAppTab('ayuda')">Ayuda</button>
+        </div>
+
+        <!-- Vista 1: Mis Pedidos & Presupuestos Recibidos -->
+        <div id="app-view-pedidos" class="app-view-pane active">
+          <!-- Título y subtítulo del pedido -->
+          <div class="phone-title-block">
+            <h2 class="phone-title">Presupuestos recibidos</h2>
+            <p class="phone-subtitle">2 profesionales respondieron a tu pedido de instalación de luz en cocina.</p>
+          </div>
+
+          <!-- Selector para alternar entre las cotizaciones recibidas -->
+          <div class="quotes-toggle-pills-row">
+            <button id="pill-quote-marcos" class="quote-pill-btn active" onclick="selectAppQuote('marcos')">
+              Marcos R. ($24.500)
+            </button>
+            <button id="pill-quote-sofia" class="quote-pill-btn" onclick="selectAppQuote('sofia')">
+              Sofía L. ($21.000)
+            </button>
+          </div>
+
+          <!-- Tarjeta 1: Marcos R. Electricista (Fiel a la captura oficial) -->
+          <div id="quote-card-marcos" class="prototype-quote-card">
+            <div class="quote-service-icon-wrap">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+            </div>
+
+            <div class="quote-header-info">
+              <img src="assets/marcos.jpg" alt="Marcos R. Electricista" class="quote-worker-avatar" onerror="this.src='assets/mascot.jpg'">
+              <div style="flex: 1;">
+                <div class="quote-badges-row">
+                  <span class="badge-tag badge-profession">ELECTRICISTA</span>
+                  <span class="badge-tag badge-new">NUEVO</span>
+                </div>
+                <h3 class="quote-worker-name">Marcos R.</h3>
+                <p class="quote-includes-text">Incluye materiales y mano de obra</p>
+                
+                <div class="quote-rating-row" style="margin-top: 6px;">
+                  <div class="star-rating">★★★★★</div>
+                  <span style="font-weight: 700; color: #111827;">4.9</span>
+                  <span style="color: var(--color-text-tertiary); font-weight: normal;">· 38 trabajos</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="border-top: 1px solid #F3F4F6; margin: 4px 0 2px;"></div>
+
+            <div class="quote-price-row">
+              <div>
+                <div style="font-size: 0.72rem; color: #9CA3AF; text-transform: uppercase; font-weight: 700; line-height: 1.2;">PRESUPUESTO<br>CERRADO</div>
+                <div class="quote-amount" style="color: #065F46; font-size: 1.55rem; font-weight: 800; margin-top: 2px;">$24.500 <span style="font-size: 0.74rem; color: #9CA3AF; font-weight: 600;">ARS</span></div>
+              </div>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <button class="btn btn-secondary btn-sm" onclick="openChatModal('Marcos R.')" style="border-radius: 10px; padding: 8px 16px; font-weight: 600;">
+                  Chatear
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="openQuoteDetailModal('quote-marcos')" style="border-radius: 10px; padding: 8px 18px; font-weight: 700;">
+                  Ver Presupuesto
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tarjeta 2: Sofía L. Electricista Matriculada -->
+          <div id="quote-card-sofia" class="prototype-quote-card" style="display: none;">
+            <div class="quote-service-icon-wrap">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+            </div>
+
+            <div class="quote-header-info">
+              <img src="assets/sofia.jpg" alt="Sofía L. Plomera" class="quote-worker-avatar" onerror="this.src='assets/mascot.jpg'">
+              <div style="flex: 1;">
+                <div class="quote-badges-row">
+                  <span class="badge-tag badge-profession">ELECTRICISTA MATRICULADA</span>
+                  <span class="badge-tag badge-new">VERIFICADA PRO</span>
+                </div>
+                <h3 class="quote-worker-name">Sofía L.</h3>
+                <p class="quote-includes-text">Mano de obra + diagnóstico de tablero</p>
+                
+                <div class="quote-rating-row" style="margin-top: 6px;">
+                  <div class="star-rating">★★★★★</div>
+                  <span style="font-weight: 700; color: #111827;">5.0</span>
+                  <span style="color: var(--color-text-tertiary); font-weight: normal;">· 52 trabajos</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="border-top: 1px solid #F3F4F6; margin: 4px 0 2px;"></div>
+
+            <div class="quote-price-row">
+              <div>
+                <div style="font-size: 0.72rem; color: #9CA3AF; text-transform: uppercase; font-weight: 700; line-height: 1.2;">PRESUPUESTO<br>CERRADO</div>
+                <div class="quote-amount" style="color: #065F46; font-size: 1.55rem; font-weight: 800; margin-top: 2px;">$21.000 <span style="font-size: 0.74rem; color: #9CA3AF; font-weight: 600;">ARS</span></div>
+              </div>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <button class="btn btn-secondary btn-sm" onclick="openChatModal('Sofía L.')" style="border-radius: 10px; padding: 8px 16px; font-weight: 600;">
+                  Chatear
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="openQuoteDetailModal('quote-sofia')" style="border-radius: 10px; padding: 8px 18px; font-weight: 700;">
+                  Ver Presupuesto
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sello flotante de la mascota oficial -->
+          <div class="floating-mascot-badge" style="position: static; margin-top: 16px; justify-content: center;">
+            <img src="assets/mascot.jpg" alt="Mascota Sademy" class="floating-mascot-img">
+            <span class="floating-mascot-text">Garantía Sademy Activa · Pago Protegido</span>
+          </div>
+        </div>
+
+        <!-- Vista 2: Mensajes -->
+        <div id="app-view-mensajes" class="app-view-pane" style="display: none;">
+          <div class="phone-title-block">
+            <h2 class="phone-title">Mensajes</h2>
+            <p class="phone-subtitle">Comunicate directamente con los profesionales asignados.</p>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+            <div class="chat-thread-card" onclick="openChatModal('Marcos R.')">
+              <img src="assets/marcos.jpg" class="chat-thread-avatar" alt="Marcos R.">
+              <div style="flex: 1; overflow: hidden;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <strong style="font-size: 0.95rem; color: var(--color-text-main);">Marcos R. (Electricista)</strong>
+                  <span style="font-size: 0.74rem; color: var(--color-text-muted);">10:50 hs</span>
+                </div>
+                <p style="font-size: 0.82rem; color: var(--color-text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px;">
+                  Sí, exactamente. Todo bajo norma IRAM y con garantía de 6 meses...
+                </p>
+              </div>
+            </div>
+
+            <div class="chat-thread-card" onclick="openChatModal('Sofía L.')">
+              <img src="assets/sofia.jpg" class="chat-thread-avatar" alt="Sofía L.">
+              <div style="flex: 1; overflow: hidden;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <strong style="font-size: 0.95rem; color: var(--color-text-main);">Sofía L. (Plomera Pro)</strong>
+                  <span style="font-size: 0.74rem; color: var(--color-text-muted);">11:02 hs</span>
+                </div>
+                <p style="font-size: 0.82rem; color: var(--color-text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px;">
+                  Hola Carlos! Revisé tu solicitud y puedo pasar mañana por la mañana...
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vista 3: Ayuda & Cobertura -->
+        <div id="app-view-ayuda" class="app-view-pane" style="display: none;">
+          <div class="phone-title-block">
+            <h2 class="phone-title">Centro de Ayuda</h2>
+            <p class="phone-subtitle">Tu tranquilidad garantizada en cada contratación.</p>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 12px;">
+            <div style="background: #ECFDF5; border: 1px solid var(--color-primary-border); border-radius: 12px; padding: 14px;">
+              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <strong style="font-size: 0.95rem; color: #065F46;">Pago Protegido en Custodia</strong>
+              </div>
+              <p style="font-size: 0.82rem; color: #047857;">Tu dinero nunca va directo al trabajador hasta que el trabajo esté finalizado y des tu visto bueno.</p>
+            </div>
+
+            <div style="background: #F9FAFB; border: 1px solid var(--color-border); border-radius: 12px; padding: 14px;">
+              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                <strong style="font-size: 0.95rem; color: var(--color-text-main);">Seguro contra Daños</strong>
+              </div>
+              <p style="font-size: 0.82rem; color: var(--color-text-secondary);">Cobertura de hasta $500.000 ARS ante cualquier eventualidad imprevista durante el servicio.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Historial de Pedidos Anteriores del Cliente -->
+      <div style="margin-top: 32px; background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 20px; padding: 22px 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h3 style="margin: 0; font-size: 1.1rem; color: #0F172A; font-weight: 800;">Historial de Pedidos Realizados</h3>
+          <span class="badge-tag" style="background: #F1F5F9; color: #475569; font-weight: 700;">1 trabajo completado</span>
+        </div>
+
+        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 14px; padding: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <img src="assets/sofia.jpg" alt="Sofía" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid #10B981;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <strong style="font-size: 0.95rem; color: #0F172A;">Reparación de pérdida de bacha en cocina</strong>
+                <span class="badge-tag" style="background: #ECFDF5; color: #065F46; font-weight: 700;">FINALIZADO</span>
+              </div>
+              <div style="font-size: 0.82rem; color: #64748B; margin-top: 2px;">
+                Atendido por <strong>Sofía L. (Plomera)</strong> · Calificado con ★★★★★ 5.0
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-weight: 800; color: #0F172A; font-size: 1.05rem;">$18.000 ARS</span>
+            <button class="btn btn-secondary btn-sm" onclick="showToast('Factura Descargada', 'Comprobante fiscal AFIP enviado a tu correo.')" style="border-radius: 8px; font-size: 0.8rem;">
+              Ver Factura C
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div> <!-- ==================== FIN APARTADO 2: CLIENTE ==================== -->
+
+  <!-- ========================================================================
+       APARTADO 3: TRABAJADOR PRO DEDICADO (WORKSPACE PROFESIONAL)
+       Espacio exclusivo para profesionales: CRM, Oportunidades, Billetera y Facturación
+       ======================================================================== -->
+  <div id="apartado-view-pro" class="apartado-view" style="display: none;">
+    <div class="pro-workspace-wrapper">
+      
+      <!-- Header de Pro Workspace -->
+      <div class="pro-workspace-header">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <img src="assets/marcos.jpg" alt="Marcos R." style="width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2.5px solid #10B981;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <h1 style="font-size: 1.35rem; font-weight: 800; margin: 0; color: #0F172A;">Workspace Sademy PRO</h1>
+              <span class="badge-tag" style="background: #D1FAE5; color: #064E3B; font-weight: 800;">★ COPIME #4829</span>
+            </div>
+            <p style="font-size: 0.85rem; color: #64748B; margin: 2px 0 0;">
+              Marcos R. · Electricista Matriculado · Plan PRO Destacado (8% comisión)
+            </p>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="startFaceIdOnboarding(appState.currentUser)" style="font-weight: 700; border-radius: 9px; padding: 8px 12px; font-size: 0.82rem; background: #FFFFFF; border: 1.5px solid #CBD5E1; color: var(--color-surface-dark); display: inline-flex; align-items: center; gap: 6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2"><path d="M7 3H5a2 2 0 0 0-2 2v2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><path d="M17 21h2a2 2 0 0 0 2-2v-2"></path><circle cx="12" cy="11" r="3"></circle><path d="M12 14v1"></path><path d="M9 9h.01"></path><path d="M15 9h.01"></path></svg>
+            FaceID Perfil
+          </button>
+          <button type="button" class="btn btn-primary btn-sm" onclick="openWorkerCreateInvoiceModal()" style="font-weight: 700; background: #059669; border-radius: 9px; padding: 8px 14px; font-size: 0.82rem; display: inline-flex; align-items: center; gap: 6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Emitir Factura AFIP
+          </button>
+          <button class="btn btn-sm" onclick="withdrawProFunds()" style="background: #047857; color: #FFFFFF; font-weight: 800; border-radius: 9px; padding: 8px 14px; font-size: 0.82rem;">
+            Retirar $49.000 ARS
+          </button>
+        </div>
+      </div>
+
+      <!-- Tarjetas KPI Pro -->
+      <div class="pro-kpi-grid">
+        <div class="pro-kpi-card" style="border-left: 4px solid #10B981;">
+          <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #065F46;">Saldo Disponible</div>
+          <div style="font-size: 1.55rem; font-weight: 800; color: #047857; margin-top: 4px;">$49.000 <span style="font-size: 0.75rem; color: #64748B;">ARS</span></div>
+          <div style="font-size: 0.75rem; color: #10B981; font-weight: 600; margin-top: 4px;">Retiro directo a CBU / MP</div>
+        </div>
+
+        <div class="pro-kpi-card">
+          <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #64748B;">Solicitudes en tu zona</div>
+          <div style="font-size: 1.55rem; font-weight: 800; color: #0F172A; margin-top: 4px;">12 activas</div>
+          <div style="font-size: 0.75rem; color: #475569; margin-top: 4px;">Palermo, Belgrano y Recoleta</div>
+        </div>
+
+        <div class="pro-kpi-card">
+          <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #64748B;">Trabajos Completados</div>
+          <div style="font-size: 1.55rem; font-weight: 800; color: #0F172A; margin-top: 4px;">38 <span style="font-size: 0.85rem; color: #F59E0B;">★ 4.9</span></div>
+          <div style="font-size: 0.75rem; color: #10B981; font-weight: 600; margin-top: 4px;">98% satisfacción positiva</div>
+        </div>
+
+        <div class="pro-kpi-card">
+          <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #64748B;">Estado de Verificación</div>
+          <div style="font-size: 1.25rem; font-weight: 800; color: #047857; margin-top: 6px;">100% Verificado</div>
+          <div style="font-size: 0.75rem; color: #64748B; margin-top: 4px;">Matrícula COPIME + Face ID</div>
+        </div>
+      </div>
+
+      <!-- Pestañas Pro del Workspace -->
+      <div style="display: flex; gap: 6px; padding: 10px 0; border-bottom: 2px solid #E2E8F0; margin-bottom: 20px; overflow-x: auto;">
+        <button type="button" id="pro-ws-tab-crm" class="profile-role-pill active" onclick="switchProWorkspaceSubtab('crm')" style="padding: 9px 16px; font-size: 0.85rem; font-weight: 800; display: flex; align-items: center; gap: 6px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          Sademy CRM Pro (5)
+        </button>
+        <button type="button" id="pro-ws-tab-oportunidades" class="profile-role-pill" onclick="switchProWorkspaceSubtab('oportunidades')" style="padding: 9px 16px; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          Oportunidades en Vivo (12)
+        </button>
+        <button type="button" id="pro-ws-tab-billetera" class="profile-role-pill" onclick="switchProWorkspaceSubtab('billetera')" style="padding: 9px 16px; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="6" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="18" y2="12"></line></svg>
+          Billetera & Retiros
+        </button>
+        <button type="button" id="pro-ws-tab-cotizaciones" class="profile-role-pill" onclick="switchProWorkspaceSubtab('cotizaciones')" style="padding: 9px 16px; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          Facturas AFIP Emitidas
+        </button>
+      </div>
+
+      <!-- Contenedor Pestaña CRM -->
+      <div id="pro-ws-view-crm">
+        <!-- Renderizado dinámicamente con renderWorkerCrmDashboard() -->
+      </div>
+
+      <!-- Contenedor Pestaña Oportunidades -->
+      <div id="pro-ws-view-oportunidades" style="display: none;">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 16px; padding: 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <div style="display: align-items: center; gap: 8px;">
+                <strong style="color: #0F172A; font-size: 1rem;">Instalación de disyuntor bipolar y recableado de cocina</strong>
+                <span class="badge-tag" style="background: #FEF3C7; color: #92400E; font-weight: 700;">Urgente</span>
+              </div>
+              <div style="font-size: 0.84rem; color: #64748B; margin-top: 4px;">
+                Palermo Chico · Publicado hace 14 min por <strong>Agustina V.</strong>
+              </div>
+              <div style="font-size: 0.82rem; color: var(--color-primary); font-weight: 700; margin-top: 4px;">
+                Presupuesto estimado: $28.000 ARS · Pago en custodia Sademy garantizado
+              </div>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="openProQuoteModal('ORD-2026-095', 'Instalación de disyuntor bipolar y recableado')" style="font-weight: 700;">
+              Enviar Cotización
+            </button>
+          </div>
+
+          <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 16px; padding: 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <strong style="color: #0F172A; font-size: 1rem;">Revisión técnica de tablero y cambio de 4 térmicas</strong>
+                <span class="badge-tag" style="background: #ECFDF5; color: #065F46; font-weight: 700;">Estándar</span>
+              </div>
+              <div style="font-size: 0.84rem; color: #64748B; margin-top: 4px;">
+                Belgrano R · Publicado hace 42 min por <strong>Martín P.</strong>
+              </div>
+              <div style="font-size: 0.82rem; color: var(--color-primary); font-weight: 700; margin-top: 4px;">
+                Presupuesto estimado: $32.000 ARS · Pago en custodia Sademy garantizado
+              </div>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="openProQuoteModal('ORD-2026-096', 'Revisión técnica de tablero')" style="font-weight: 700;">
+              Enviar Cotización
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contenedor Pestaña Billetera -->
+      <div id="pro-ws-view-billetera" style="display: none;">
+        <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 16px; padding: 24px;">
+          <h3 style="margin: 0 0 16px; font-size: 1.15rem; color: #0F172A; font-weight: 800;">Retiro de Fondos Inmediato</h3>
+          <p style="font-size: 0.85rem; color: #64748B; margin-bottom: 20px;">
+            Podés transferir tus cobros disponibles a cualquier cuenta bancaria (CBU) o billetera virtual (CVU / Alias) sin comisiones adicionales.
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px;">
+              <span style="font-size: 0.72rem; text-transform: uppercase; font-weight: 700; color: #64748B;">Saldo Disponible</span>
+              <strong style="font-size: 1.4rem; color: #047857; display: block; margin-top: 2px;">$49.000 ARS</strong>
+            </div>
+            <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px;">
+              <span style="font-size: 0.72rem; text-transform: uppercase; font-weight: 700; color: #64748B;">En Custodia Pendiente</span>
+              <strong style="font-size: 1.4rem; color: #0F172A; display: block; margin-top: 2px;">$24.500 ARS</strong>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <input type="text" id="ws-withdraw-alias" value="marcos.electricista.mp" placeholder="CBU, CVU o Alias..." style="flex: 1; min-width: 200px; padding: 12px 14px; border: 1.5px solid #CBD5E1; border-radius: 12px; font-size: 0.95rem;">
+            <button class="btn btn-primary" onclick="withdrawProFunds()" style="padding: 12px 20px; font-weight: 800;">
+              Solicitar Transferencia
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contenedor Pestaña Cotizaciones & Facturas -->
+      <div id="pro-ws-view-cotizaciones" style="display: none;">
+        <div id="pro-ws-invoices-list-container">
+          <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 16px; padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h3 style="margin: 0; font-size: 1.1rem; color: #0F172A; font-weight: 800;">Facturas AFIP Emitidas a Clientes</h3>
+              <button class="btn btn-primary btn-sm" onclick="openWorkerCreateInvoiceModal()" style="font-weight: 700;">
+                + Nueva Factura
+              </button>
+            </div>
+            <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+              <div>
+                <strong style="color: #0F172A;">Factura C #0001-00000042</strong> · Cliente: Carlos M. · CUIT: 20-38492019-3
+                <div style="font-size: 0.8rem; color: #64748B; margin-top: 2px;">CAE: 74829104928104 · Vto: 26/10/2026 · Monto: $24.500 ARS</div>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="viewWorkerInvoice('INV-0042')" style="font-weight: 700; border-radius: 8px;">
+                Ver Factura Oficial
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div> <!-- ==================== FIN APARTADO 3: TRABAJADOR PRO ==================== -->
+
+  <!-- ========================================================================
+       APARTADO 4: ADMINISTRADOR DEDICADO (SADEMY HQ MASTER CONSOLE)
+       Espacio exclusivo para administradores: métricas, matrículas y custodia
+       ======================================================================== -->
+  <div id="apartado-view-admin" class="apartado-view" style="display: none;">
+    <div class="admin-backoffice-wrapper">
+      
+      <!-- Header de Sademy HQ -->
+      <div class="admin-hq-header">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 1.6rem;">
+            🛡️
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <h1 style="font-size: 1.35rem; font-weight: 800; margin: 0; color: #FFFFFF;">Sademy HQ · Consola Directiva</h1>
+              <span class="badge-tag" style="background: rgba(255,255,255,0.2); color: #FFFFFF; font-weight: 800;">ADMIN MASTER</span>
+            </div>
+            <p style="font-size: 0.85rem; color: #94A3B8; margin: 2px 0 0;">
+              Supervisión de operaciones, aprobación técnica y custodia legal de fondos
+            </p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <button class="btn btn-sm" onclick="switchApartado('guest')" style="background: rgba(255,255,255,0.15); color: #FFFFFF; font-weight: 700; border-radius: 9px; border: none; padding: 8px 14px;">
+            Salir a Marketplace
+          </button>
+        </div>
+      </div>
+
+      <!-- Métricas Ejecutivas de la Plataforma -->
+      <div class="pro-kpi-grid">
+        <div class="pro-kpi-card">
+          <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #64748B;">GMV Total Transaccionado</div>
+          <div style="font-size: 1.55rem; font-weight: 800; color: #0F172A; margin-top: 4px;">$1.842.500 <span style="font-size: 0.75rem; color: #64748B;">ARS</span></div>
+          <div style="font-size: 0.75rem; color: #10B981; font-weight: 600; margin-top: 4px;">+28% este mes</div>
+        </div>
+
+        <div class="pro-kpi-card" style="border-left: 4px solid #10B981;">
+          <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #065F46;">Comisiones Sademy (Neto)</div>
+          <div style="font-size: 1.55rem; font-weight: 800; color: #047857; margin-top: 4px;">$248.900 <span style="font-size: 0.75rem; color: #64748B;">ARS</span></div>
+          <div style="font-size: 0.75rem; color: #10B981; font-weight: 600; margin-top: 4px;">Margen promedio 13.5%</div>
+        </div>
+
+        <div class="pro-kpi-card">
+          <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #64748B;">Fondos en Custodia Activa</div>
+          <div style="font-size: 1.55rem; font-weight: 800; color: #0F172A; margin-top: 4px;">$115.000 <span style="font-size: 0.75rem; color: #64748B;">ARS</span></div>
+          <div style="font-size: 0.75rem; color: #6366F1; font-weight: 600; margin-top: 4px;">6 órdenes en ejecución</div>
+        </div>
+
+        <div class="pro-kpi-card">
+          <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #64748B;">Técnicos Verificados</div>
+          <div style="font-size: 1.55rem; font-weight: 800; color: #0F172A; margin-top: 4px;">142 <span style="font-size: 0.85rem; color: #10B981;">✓</span></div>
+          <div style="font-size: 0.75rem; color: #EF4444; font-weight: 700; margin-top: 4px;">2 matrículas pendientes</div>
+        </div>
+      </div>
+
+      <!-- Pestañas Admin -->
+      <div style="display: flex; gap: 6px; padding: 10px 0; border-bottom: 2px solid #E2E8F0; margin-bottom: 20px; overflow-x: auto;">
+        <button type="button" id="admin-ws-tab-matriculas" class="profile-role-pill active" onclick="switchAdminWorkspaceSubtab('matriculas')" style="padding: 9px 16px; font-size: 0.85rem; font-weight: 800; display: flex; align-items: center; gap: 6px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+          Aprobación de Matrículas (2)
+        </button>
+        <button type="button" id="admin-ws-tab-custodia" class="profile-role-pill" onclick="switchAdminWorkspaceSubtab('custodia')" style="padding: 9px 16px; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          Supervisión Custodia Escrow
+        </button>
+        <button type="button" id="admin-ws-tab-finanzas" class="profile-role-pill" onclick="switchAdminWorkspaceSubtab('finanzas')" style="padding: 9px 16px; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="16"></line></svg>
+          Finanzas & Comisiones
+        </button>
+      </div>
+
+      <!-- Subvista Matrículas -->
+      <div id="admin-ws-view-matriculas">
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 16px; padding: 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+            <div style="display: flex; gap: 14px; align-items: center;">
+              <div style="width: 50px; height: 50px; border-radius: 50%; background: #EFF6FF; color: #1D4ED8; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem;">
+                FG
+              </div>
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <strong style="color: #0F172A; font-size: 1rem;">Facundo G.</strong>
+                  <span class="badge-tag" style="background: #EFF6FF; color: #1D4ED8; font-weight: 700;">GASISTA MATRICULADO</span>
+                </div>
+                <div style="font-size: 0.84rem; color: #64748B; margin-top: 3px;">
+                  Matrícula: <strong>METROGAS #44812</strong> · DNI: 34.892.109 · Zona: Villa Crespo
+                </div>
+                <div style="font-size: 0.78rem; color: #059669; font-weight: 600; margin-top: 3px;">
+                  Documentación cargada: Foto frontal y dorsal carnet oficial + Certificado antecedentes penales
+                </div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-secondary btn-sm" onclick="showToast('Revisión Solicitada', 'Se notificó al técnico para re-subir foto legible.')" style="border-radius: 8px; font-weight: 600;">
+                Solicitar Reenvío
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="approveWorkerLicense(this, 'Facundo G.', 'METROGAS #44812')" style="border-radius: 8px; font-weight: 700; background: #059669;">
+                Aprobar Matrícula
+              </button>
+            </div>
+          </div>
+
+          <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 16px; padding: 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+            <div style="display: flex; gap: 14px; align-items: center;">
+              <div style="width: 50px; height: 50px; border-radius: 50%; background: #FEF3C7; color: #B45309; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem;">
+                MT
+              </div>
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <strong style="color: #0F172A; font-size: 1rem;">Martín T.</strong>
+                  <span class="badge-tag" style="background: #FEF3C7; color: #B45309; font-weight: 700;">TÉCNICO REFRIGERACIÓN</span>
+                </div>
+                <div style="font-size: 0.84rem; color: #64748B; margin-top: 3px;">
+                  Certificación: <strong>CACAAV #9011</strong> · DNI: 32.140.582 · Zona: Colegiales
+                </div>
+                <div style="font-size: 0.78rem; color: #059669; font-weight: 600; margin-top: 3px;">
+                  Documentación cargada: Matrícula de gases refrigerantes habilitante
+                </div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-secondary btn-sm" onclick="showToast('Revisión Solicitada', 'Se notificó al técnico.')" style="border-radius: 8px; font-weight: 600;">
+                Solicitar Reenvío
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="approveWorkerLicense(this, 'Martín T.', 'CACAAV #9011')" style="border-radius: 8px; font-weight: 700; background: #059669;">
+                Aprobar Matrícula
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subvista Custodia -->
+      <div id="admin-ws-view-custodia" style="display: none;">
+        <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 16px; padding: 20px;">
+          <h3 style="margin: 0 0 14px; font-size: 1.1rem; color: #0F172A; font-weight: 800;">Órdenes en Custodia Activa (Escrow)</h3>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+              <div>
+                <strong style="color: #0F172A;">#ORD-902: Instalación de luz cocina</strong> · Cliente: Carlos M. · Pro: Marcos R.
+                <div style="font-size: 0.8rem; color: #64748B; margin-top: 2px;">Monto en retención: $24.500 ARS · Estado: Aguardando visita del pro</div>
+              </div>
+              <span class="badge-tag" style="background: #ECFDF5; color: #065F46; font-weight: 700;">EN CUSTODIA SEGURA</span>
+            </div>
+
+            <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+              <div>
+                <strong style="color: #0F172A;">#ORD-901: Cambio de grifería baño</strong> · Cliente: Laura B. · Pro: Sofía L.
+                <div style="font-size: 0.8rem; color: #64748B; margin-top: 2px;">Monto en retención: $18.000 ARS · Estado: Trabajo concluido, aguarda PIN</div>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="showToast('Pago Liberado', 'Se acreditó el saldo al trabajador con mediación Sademy HQ.')" style="font-size: 0.8rem; border-radius: 8px;">
+                Liberar Pago
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subvista Finanzas -->
+      <div id="admin-ws-view-finanzas" style="display: none;">
+        <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 16px; padding: 20px;">
+          <h3 style="margin: 0 0 14px; font-size: 1.1rem; color: #0F172A; font-weight: 800;">Reporte Consolidado de Facturación</h3>
+          <p style="font-size: 0.85rem; color: #64748B; margin-bottom: 16px;">
+            Comisiones retenidas automáticamente mediante split payments con Mercado Pago y facturación electrónica a profesionales.
+          </p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+            <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px;">
+              <span style="font-size: 0.72rem; color: #64748B; text-transform: uppercase; font-weight: 700;">Comisión Base (Clientes)</span>
+              <strong style="font-size: 1.2rem; color: #0F172A; display: block; margin-top: 2px;">5% del trabajo</strong>
+            </div>
+            <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px;">
+              <span style="font-size: 0.72rem; color: #64748B; text-transform: uppercase; font-weight: 700;">Comisión Trabajadores Pro</span>
+              <strong style="font-size: 1.2rem; color: #047857; display: block; margin-top: 2px;">8% (reducido)</strong>
+            </div>
+            <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px;">
+              <span style="font-size: 0.72rem; color: #64748B; text-transform: uppercase; font-weight: 700;">Comisión No Matriculados</span>
+              <strong style="font-size: 1.2rem; color: #0F172A; display: block; margin-top: 2px;">15% estándar</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div> <!-- ==================== FIN APARTADO 4: ADMINISTRADOR ==================== -->
+  </main> <!-- ==================== FIN #main-content ==================== -->
     <div class="modal-container">
       
       <div class="modal-header">
@@ -2591,7 +3131,7 @@
   </div>
 
   <!-- Barra de Navegación Inferior Nativa para Celulares (Fiel al diseño oficial Sademy) -->
-  <nav class="mobile-bottom-nav" aria-label="Navegación móvil nativa">
+  <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Navegación móvil nativa">
     <button id="mob-nav-btn-pedidos" class="mob-nav-item active" onclick="switchMobileNav('pedidos'); switchAppTab('pedidos'); window.scrollTo({top: 0, behavior: 'smooth'});">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
       <span>Presupuestos</span>

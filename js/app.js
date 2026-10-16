@@ -689,6 +689,10 @@ document.addEventListener('DOMContentLoaded', () => {
   updateNavAuthState();
   updateOrdersBadges();
   renderMyOrdersModalList();
+
+  // Inicializar apartado persistido o por defecto Visitante (Público)
+  const savedApartado = localStorage.getItem('sademy_apartado') || 'guest';
+  switchApartado(savedApartado, true);
 });
 
 // Registro del Service Worker para PWA
@@ -1087,7 +1091,9 @@ function switchProfile(roleKey) {
                         appState.currentRole === 'admin' && 
                         (appState.currentUser.email === 'sademyapp@gmail.com' || appState.currentUser.email === 'admin@sademy.com.ar');
     if (isAuthAdmin) {
-      openAdminBackofficeModal();
+      closeUserDropdown();
+      closeAccountModal();
+      switchApartado('admin');
     } else {
       playPop();
       showToast('Acceso Restringido · Sademy HQ', 'Debés validar las credenciales oficiales de Sademy para ingresar.');
@@ -1099,24 +1105,17 @@ function switchProfile(roleKey) {
   }
 
   playSuccessChime();
-  const profile = PROFILES[roleKey] || PROFILES.client;
-  appState.currentUser = Object.assign({}, profile);
-  appState.currentRole = roleKey;
-  saveAppState();
-
-  updateNavAuthState();
-  applyRoleView(roleKey);
   closeUserDropdown();
   closeAccountModal();
 
+  switchApartado(roleKey);
+
   if (roleKey === 'pro') {
-    showToast('Modo Profesional Pro Activo', 'Bienvenido Marcos. Podés cotizar solicitudes abiertas y gestionar tu CRM.');
-    setTimeout(() => {
-      openProDashboardModal('crm');
-    }, 300);
+    showToast('Modo Profesional Pro Activo', 'Bienvenido Marcos. Tu Workspace de Oportunidades y CRM está listo.');
+  } else if (roleKey === 'client') {
+    showToast('Modo Cliente Activo', 'Bienvenido Carlos. Accediendo a tus pedidos activos y presupuestos.');
   } else {
-    showToast('Modo Cliente Activo', 'Bienvenido Carlos. Podés buscar oficios verificados y contratar con pago protegido.');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    showToast('Modo Visitante Activo', 'Explorando el marketplace público.');
   }
 }
 
@@ -1209,9 +1208,7 @@ function logoutUser() {
   appState.currentRole = 'guest';
   saveAppState();
 
-  updateNavAuthState();
-  applyRoleView('guest');
-
+  switchApartado('guest');
   showToast('Sesión cerrada', 'Has cerrado tu sesión de forma segura.');
 }
 
@@ -5062,3 +5059,307 @@ function switchMobileNav(tab) {
   const btn = document.getElementById('mob-nav-btn-' + tab);
   if (btn) btn.classList.add('active');
 }
+
+/* ==========================================================================
+   ARQUITECTURA DE APARTADOS INDEPENDIENTES (SADEMY 2026)
+   Separación limpia de roles: Visitante, Cliente, Trabajador Pro, Administrador
+   ========================================================================== */
+
+function switchApartado(apartadoKey, skipScroll = false) {
+  triggerHapticFeedback();
+  playPop();
+
+  const validKeys = ['guest', 'client', 'pro', 'admin'];
+  if (!validKeys.includes(apartadoKey)) apartadoKey = 'guest';
+
+  // 1. Actualizar botones de la barra maestra estilo Apple Cupertino
+  validKeys.forEach(k => {
+    const btn = document.getElementById(`apartado-btn-${k}`);
+    if (btn) {
+      if (k === apartadoKey) {
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+      } else {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-selected', 'false');
+      }
+    }
+  });
+
+  // 2. Actualizar badge de modo activo en la barra
+  const modeBadge = document.getElementById('apartado-current-mode-badge');
+  if (modeBadge) {
+    const labels = {
+      guest: '🌐 Visitante',
+      client: '👤 Cliente',
+      pro: '⚡ Pro ($49k)',
+      admin: '🛡️ Admin HQ'
+    };
+    modeBadge.textContent = labels[apartadoKey] || '🌐 Visitante';
+  }
+
+  // 3. Mostrar el apartado seleccionado y ocultar los otros 3 (no se mezclan)
+  validKeys.forEach(k => {
+    const view = document.getElementById(`apartado-view-${k}`);
+    if (view) {
+      if (k === apartadoKey) {
+        view.style.display = 'block';
+      } else {
+        view.style.display = 'none';
+      }
+    }
+  });
+
+  // 4. Sincronizar el usuario y rol en el estado global (appState)
+  if (apartadoKey === 'guest') {
+    appState.currentUser = null;
+    appState.currentRole = 'guest';
+  } else if (apartadoKey === 'client') {
+    appState.currentUser = Object.assign({}, PROFILES.client);
+    appState.currentRole = 'client';
+  } else if (apartadoKey === 'pro') {
+    appState.currentUser = Object.assign({}, PROFILES.pro);
+    appState.currentRole = 'pro';
+  } else if (apartadoKey === 'admin') {
+    appState.currentUser = Object.assign({}, PROFILES.admin);
+    appState.currentRole = 'admin';
+  }
+  saveAppState();
+  updateNavAuthState();
+
+  // 5. Cargar contenido dinámico según el apartado
+  if (apartadoKey === 'pro') {
+    renderWorkerCrmInWorkspace();
+  } else if (apartadoKey === 'admin') {
+    renderAdminBackoffice();
+  }
+
+  // 6. Actualizar barra de navegación inferior en celulares
+  updateMobileBottomNav(apartadoKey);
+
+  // 7. Persistir en localStorage
+  localStorage.setItem('sademy_apartado', apartadoKey);
+
+  // 8. Scroll suave al inicio de página si no se omite
+  if (!skipScroll) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function renderWorkerCrmInWorkspace() {
+  const container = document.getElementById('pro-ws-view-crm');
+  if (!container) return;
+  const clients = appState.proCrmClients || DEFAULT_PRO_CRM_CLIENTS;
+
+  let cardsHtml = '';
+  clients.forEach(client => {
+    const cleanPhone = (client.phone || '').replace(/\D/g, '');
+    const waLink = `https://wa.me/549${cleanPhone}?text=Hola%20${encodeURIComponent(client.name)},%20te%20contacto%20desde%20Sademy%20por%20tu%20servicio.`;
+    const statusBadges = {
+      'presupuestado': '<span class="badge-tag" style="background:#FEF3C7; color:#92400E; font-weight:700;">Presupuestado</span>',
+      'en_curso': '<span class="badge-tag" style="background:#DBEAFE; color:#1E40AF; font-weight:700;">En Curso</span>',
+      'por_cobrar': '<span class="badge-tag" style="background:#FEE2E2; color:#991B1B; font-weight:700;">A Cobrar</span>',
+      'finalizado': '<span class="badge-tag" style="background:#ECFDF5; color:#065F46; font-weight:700;">Completado</span>'
+    };
+    const statusBadge = statusBadges[client.status] || '<span class="badge-tag">Activo</span>';
+
+    cardsHtml += `
+      <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 16px; padding: 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.02);">
+        <div style="display: flex; gap: 14px; align-items: center;">
+          <div style="width: 46px; height: 46px; border-radius: 50%; background: #ECFDF5; color: #047857; font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; border: 2px solid #A7F3D0;">
+            ${(client.name || 'C').charAt(0)}
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <strong style="color: #0F172A; font-size: 1rem;">${client.name}</strong>
+              ${statusBadge}
+            </div>
+            <div style="font-size: 0.82rem; color: #64748B; margin-top: 3px;">
+              📍 ${client.address || 'CABA'} · 📞 ${client.phone}
+            </div>
+            <div style="font-size: 0.8rem; color: #047857; font-weight: 700; margin-top: 3px;">
+              Último trabajo: ${client.lastJobTitle || 'Instalación eléctrica'} ($${(client.totalBilled || 0).toLocaleString('es-AR')} ARS)
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <a href="${waLink}" target="_blank" rel="noopener" class="btn btn-sm" style="background: #25D366; color: #FFFFFF; font-weight: 700; border-radius: 9px; padding: 8px 14px; display: inline-flex; align-items: center; gap: 6px; text-decoration: none;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.97.531 1.95.813 2.796.814 3.183 0 5.77-2.586 5.77-5.767 0-3.18-2.587-5.766-5.77-5.766zm0 10.375c-.754 0-1.636-.233-2.355-.66l-.169-.1-1.581.415.422-1.542-.11-.175c-.469-.747-.745-1.597-.744-2.482 0-2.539 2.067-4.605 4.607-4.605 2.54 0 4.607 2.067 4.607 4.605 0 2.539-2.067 4.605-4.607 4.605z"/></svg>
+            WhatsApp
+          </a>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="openCrmClientDetailModal('${client.id}')" style="border-radius: 9px; font-weight: 600; padding: 8px 14px;">
+            Ver Ficha
+          </button>
+        </div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = `
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+        <span style="font-size: 0.88rem; color: #475569; font-weight: 700;">
+          5 Clientes registrados en tu agenda profesional:
+        </span>
+        <button class="btn btn-primary btn-sm" onclick="openCrmNewClientModal()" style="font-weight: 700;">
+          + Nuevo Cliente
+        </button>
+      </div>
+      ${cardsHtml}
+    </div>
+  `;
+}
+
+function switchProWorkspaceSubtab(subtab) {
+  triggerHapticFeedback();
+  playPop();
+
+  const subtabs = ['crm', 'oportunidades', 'billetera', 'cotizaciones'];
+  subtabs.forEach(s => {
+    const btn = document.getElementById(`pro-ws-tab-${s}`);
+    const view = document.getElementById(`pro-ws-view-${s}`);
+    if (btn) {
+      if (s === subtab) btn.classList.add('active');
+      else btn.classList.remove('active');
+    }
+    if (view) {
+      if (s === subtab) view.style.display = 'block';
+      else view.style.display = 'none';
+    }
+  });
+
+  if (subtab === 'crm') {
+    renderWorkerCrmInWorkspace();
+  }
+}
+
+function switchAdminWorkspaceSubtab(subtab) {
+  triggerHapticFeedback();
+  playPop();
+
+  const subtabs = ['matriculas', 'custodia', 'finanzas'];
+  subtabs.forEach(s => {
+    const btn = document.getElementById(`admin-ws-tab-${s}`);
+    const view = document.getElementById(`admin-ws-view-${s}`);
+    if (btn) {
+      if (s === subtab) btn.classList.add('active');
+      else btn.classList.remove('active');
+    }
+    if (view) {
+      if (s === subtab) view.style.display = 'block';
+      else view.style.display = 'none';
+    }
+  });
+}
+
+function approveWorkerLicense(btnEl, proName, matricula) {
+  triggerHapticFeedback();
+  playSuccessChime();
+  if (btnEl) {
+    btnEl.disabled = true;
+    btnEl.textContent = '✓ Aprobado Oficial';
+    btnEl.style.background = '#047857';
+  }
+  showToast('Matrícula Aprobada Oficialmente', `${proName} (${matricula}) ha sido validado en Sademy HQ y su perfil ahora cuenta con el sello Verificado Pro.`);
+}
+
+function updateMobileBottomNav(role) {
+  const nav = document.getElementById('mobile-bottom-nav');
+  if (!nav) return;
+
+  if (role === 'guest') {
+    nav.innerHTML = `
+      <button id="mob-nav-btn-inicio" class="mob-nav-item active" onclick="switchMobileNav('inicio'); window.scrollTo({top: 0, behavior: 'smooth'});">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span>Inicio</span>
+      </button>
+      <button id="mob-nav-btn-oficios" class="mob-nav-item" onclick="switchMobileNav('oficios'); document.getElementById('oficios')?.scrollIntoView({behavior: 'smooth'})">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <span>Oficios</span>
+      </button>
+      <button id="mob-nav-btn-pedir" class="mob-nav-item" onclick="openNewOrderModal()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.4"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+        <span style="color: #10B981; font-weight: 800;">Cotizar</span>
+      </button>
+      <button id="mob-nav-btn-garantia" class="mob-nav-item" onclick="switchMobileNav('garantia'); document.getElementById('como-funciona')?.scrollIntoView({behavior: 'smooth'})">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <span>Garantía</span>
+      </button>
+      <button id="mob-nav-btn-login" class="mob-nav-item" onclick="openAuthModal('login')">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+        <span>Ingresar</span>
+      </button>
+    `;
+  } else if (role === 'client') {
+    nav.innerHTML = `
+      <button id="mob-nav-btn-pedidos" class="mob-nav-item active" onclick="switchMobileNav('pedidos'); switchAppTab('pedidos'); window.scrollTo({top: 0, behavior: 'smooth'});">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+        <span>Presupuestos</span>
+      </button>
+      <button id="mob-nav-btn-oficios" class="mob-nav-item" onclick="switchApartado('guest'); document.getElementById('oficios')?.scrollIntoView({behavior: 'smooth'})">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <span>Oficios</span>
+      </button>
+      <button id="mob-nav-btn-mensajes" class="mob-nav-item" onclick="switchMobileNav('mensajes'); switchAppTab('mensajes'); window.scrollTo({top: 0, behavior: 'smooth'});">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <span>Mensajes</span>
+      </button>
+      <button id="mob-nav-btn-garantia" class="mob-nav-item" onclick="switchMobileNav('garantia'); switchAppTab('ayuda'); window.scrollTo({top: 0, behavior: 'smooth'});">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <span>Garantía</span>
+      </button>
+      <button id="mob-nav-btn-perfil" class="mob-nav-item" onclick="openAccountModal()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        <span>Carlos</span>
+      </button>
+    `;
+  } else if (role === 'pro') {
+    nav.innerHTML = `
+      <button id="mob-nav-btn-crm" class="mob-nav-item active" onclick="switchMobileNav('crm'); switchProWorkspaceSubtab('crm'); window.scrollTo({top: 0, behavior: 'smooth'});">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        <span>Sademy CRM</span>
+      </button>
+      <button id="mob-nav-btn-oportunidades" class="mob-nav-item" onclick="switchMobileNav('oportunidades'); switchProWorkspaceSubtab('oportunidades'); window.scrollTo({top: 0, behavior: 'smooth'});">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        <span>Oportunidades</span>
+      </button>
+      <button id="mob-nav-btn-billetera" class="mob-nav-item" onclick="switchMobileNav('billetera'); switchProWorkspaceSubtab('billetera'); window.scrollTo({top: 0, behavior: 'smooth'});">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="6" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="18" y2="12"></line></svg>
+        <span>Billetera</span>
+      </button>
+      <button id="mob-nav-btn-facturas" class="mob-nav-item" onclick="openWorkerCreateInvoiceModal()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+        <span>Facturar</span>
+      </button>
+      <button id="mob-nav-btn-perfil" class="mob-nav-item" onclick="openAccountModal()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        <span>Marcos Pro</span>
+      </button>
+    `;
+  } else if (role === 'admin') {
+    nav.innerHTML = `
+      <button id="mob-nav-btn-matriculas" class="mob-nav-item active" onclick="switchMobileNav('matriculas'); switchAdminWorkspaceSubtab('matriculas'); window.scrollTo({top: 0, behavior: 'smooth'});">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+        <span>Matrículas</span>
+      </button>
+      <button id="mob-nav-btn-custodia" class="mob-nav-item" onclick="switchMobileNav('custodia'); switchAdminWorkspaceSubtab('custodia'); window.scrollTo({top: 0, behavior: 'smooth'});">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        <span>Custodia</span>
+      </button>
+      <button id="mob-nav-btn-finanzas" class="mob-nav-item" onclick="switchMobileNav('finanzas'); switchAdminWorkspaceSubtab('finanzas'); window.scrollTo({top: 0, behavior: 'smooth'});">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="16"></line></svg>
+        <span>Finanzas</span>
+      </button>
+      <button id="mob-nav-btn-market" class="mob-nav-item" onclick="switchApartado('guest')">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        <span>Market</span>
+      </button>
+      <button id="mob-nav-btn-perfil" class="mob-nav-item" onclick="openAccountModal()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+        <span>HQ Admin</span>
+      </button>
+    `;
+  }
+}
+
