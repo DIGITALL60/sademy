@@ -157,7 +157,7 @@
         </button>
 
         <!-- Botón Acceso Rápido con Google en Barra de Navegación -->
-        <button id="nav-google-btn" class="btn btn-google-nav" onclick="openGoogleAuthModal('client')" style="display: none;" title="Registrarte o acceder con cuenta de Google en 1 clic">
+        <button id="nav-google-btn" class="btn btn-google-nav" onclick="triggerGoogleDeviceSignIn('client')" style="display: none;" title="Registrarte o acceder con cuenta de Google en 1 clic">
           <svg class="google-icon-svg" width="16" height="16" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
             <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -409,7 +409,7 @@
 
         <!-- Acceso 1-clic con Google en el Hero -->
         <div class="hero-google-row" style="margin-top: 14px; margin-bottom: 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
-          <button type="button" class="btn btn-google-hero" onclick="openGoogleAuthModal('client')">
+          <button type="button" class="btn btn-google-hero" onclick="triggerGoogleDeviceSignIn('client')">
             <svg class="google-icon-svg" width="18" height="18" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
               <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -2095,7 +2095,7 @@
         <div id="auth-panel-login">
           
           <!-- Botón Oficial Google OAuth -->
-          <button type="button" class="btn-google" onclick="openGoogleAuthModal('client')" style="width: 100%; border: 1.5px solid #CBD5E1; border-radius: 12px; padding: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; background: #FFFFFF; cursor: pointer; transition: all 0.2s ease;">
+          <button type="button" class="btn-google" onclick="triggerGoogleDeviceSignIn('client')" style="width: 100%; border: 1.5px solid #CBD5E1; border-radius: 12px; padding: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; background: #FFFFFF; cursor: pointer; transition: all 0.2s ease;">
             <svg class="google-icon-svg" width="18" height="18" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
               <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -2175,7 +2175,7 @@
           </div>
 
           <!-- Botón de Registro Instantáneo con Google -->
-          <button type="button" class="btn-google" onclick="openGoogleAuthModal(currentRegisterRole || 'client')" style="width: 100%; border: 1.5px solid #CBD5E1; border-radius: 12px; padding: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; background: #FFFFFF; cursor: pointer; transition: all 0.2s ease; margin-bottom: 14px;">
+          <button type="button" class="btn-google" onclick="triggerGoogleDeviceSignIn(currentRegisterRole || 'client')" style="width: 100%; border: 1.5px solid #CBD5E1; border-radius: 12px; padding: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; background: #FFFFFF; cursor: pointer; transition: all 0.2s ease; margin-bottom: 14px;">
             <svg class="google-icon-svg" width="18" height="18" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
               <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -3341,7 +3341,7 @@
           <button type="button" class="btn btn-primary" style="width: 100%; margin-bottom: 8px; font-weight: 700; padding: 12px;" onclick="closeAccountModal(); openAuthModal('login');">
             <span>Iniciar Sesión en Sademy</span>
           </button>
-          <button type="button" class="btn-google" style="width: 100%; border: 1.5px solid #CBD5E1; border-radius: 12px; padding: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; background: #FFFFFF; cursor: pointer;" onclick="closeAccountModal(); openGoogleAuthModal('client');">
+          <button type="button" class="btn-google" style="width: 100%; border: 1.5px solid #CBD5E1; border-radius: 12px; padding: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; background: #FFFFFF; cursor: pointer;" onclick="closeAccountModal(); triggerGoogleDeviceSignIn('client');">
             <svg class="google-icon-svg" width="18" height="18" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
               <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -3830,14 +3830,14 @@
   </div>
 
   <!-- ========================================================================
-       MODAL GOOGLE IDENTITY SERVICES (GIS) - REGISTRO E INICIO EN 1 CLIC
+       MODAL GOOGLE IDENTITY SERVICES (GIS) - REGISTRO E INICIO DIRECTO CON GMAIL
        ======================================================================== -->
   <div id="modal-google-auth" class="modal-google-auth-overlay" role="dialog" aria-modal="true" aria-labelledby="google-auth-modal-title">
     <div class="google-auth-card">
       <div class="google-auth-header">
         <button type="button" class="google-auth-close-btn" onclick="closeGoogleAuthModal()" aria-label="Cerrar">&times;</button>
         <div style="display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px;">
-          <svg width="40" height="40" viewBox="0 0 24 24">
+          <svg width="36" height="36" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
             <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
             <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
@@ -3845,70 +3845,92 @@
           </svg>
         </div>
         <h3 id="google-auth-modal-title" style="font-size: 1.25rem; font-weight: 700; color: #1F2937; margin: 0 0 4px;">Acceder con Google</h3>
-        <p style="font-size: 0.85rem; color: #5F6368; margin: 0;">Para continuar a <strong style="color: #1F2937;">Sademy Marketplace</strong></p>
+        <p style="font-size: 0.85rem; color: #5F6368; margin: 0;">Para continuar a <strong style="color: #1F2937;">Sademy</strong> con la cuenta de este dispositivo</p>
       </div>
 
       <div class="google-auth-body">
         
-        <!-- Estado de carga / Verificando -->
-        <div id="google-auth-loading-state" style="display: none; text-align: center; padding: 30px 10px;">
+        <!-- Estado de carga / Conexión activa -->
+        <div id="google-auth-loading-state" style="display: none; text-align: center; padding: 26px 10px;">
           <div class="google-loader-spinner" style="margin-bottom: 16px;"></div>
-          <div style="font-size: 0.95rem; font-weight: 700; color: #1F2937;">Conectando con Google Identity Services...</div>
-          <div style="font-size: 0.8rem; color: #64748B; margin-top: 4px;">Autenticando credenciales seguras OAuth 2.0</div>
+          <div style="font-size: 0.95rem; font-weight: 700; color: #1F2937;" id="google-auth-loading-text">Conectando con Google...</div>
+          <div style="font-size: 0.8rem; color: #64748B; margin-top: 4px;">Autenticando credenciales de tu cuenta Gmail</div>
         </div>
 
         <!-- Vista Normal de Elección de Cuenta -->
         <div id="google-auth-main-state">
+
+          <!-- Contenedor Oficial de Google Identity Services Button -->
+          <div id="google-official-btn-modal-slot" style="display: flex; justify-content: center; margin-bottom: 14px;"></div>
           
-          <!-- Cuenta Activa Sugerida (1-clic directo) -->
-          <div id="google-suggested-account" class="google-account-pill-card" onclick="executeGoogleAccountChoice('default')">
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <div style="width: 42px; height: 42px; border-radius: 50%; background: #4285F4; color: #FFF; font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(66, 133, 244, 0.3);">
-                C
+          <!-- Si hay una cuenta de dispositivo recordada -->
+          <div id="google-device-account-preview" style="display: none; margin-bottom: 14px;">
+            <div id="google-suggested-account" class="google-account-pill-card" onclick="executeGoogleAccountChoice('device')">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div id="google-avatar-initial" style="width: 42px; height: 42px; border-radius: 50%; background: #4285F4; color: #FFF; font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(66, 133, 244, 0.3);">
+                  G
+                </div>
+                <div style="text-align: left;">
+                  <div id="google-card-name" style="font-size: 0.92rem; font-weight: 700; color: #1F2937;">Mi Cuenta de Google</div>
+                  <div id="google-card-email" style="font-size: 0.8rem; color: #5F6368;">cuenta@gmail.com</div>
+                </div>
               </div>
-              <div style="text-align: left;">
-                <div id="google-card-name" style="font-size: 0.92rem; font-weight: 700; color: #1F2937;">Carlos Martínez</div>
-                <div id="google-card-email" style="font-size: 0.8rem; color: #5F6368;">carlos.martinez@gmail.com</div>
+              <div style="color: #34A853;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
               </div>
             </div>
-            <div style="color: #34A853;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </div>
+
+            <button type="button" id="google-btn-continue-as" class="google-auth-btn-primary" onclick="executeGoogleAccountChoice('device')">
+              <span>Continuar con esta cuenta de Google</span>
+            </button>
           </div>
 
-          <!-- Botón de acción principal 1 clic -->
-          <button type="button" id="google-btn-continue-as" class="google-auth-btn-primary" onclick="executeGoogleAccountChoice('default')">
-            <span>Continuar como Carlos Martínez</span>
-          </button>
-
-          <!-- Opción de ingresar con otra cuenta de Google personalizada -->
-          <button type="button" class="google-auth-btn-secondary" onclick="toggleGoogleCustomAccountForm()">
-            <span id="google-toggle-custom-label">Ingresar o registrarme con otro Gmail</span>
-          </button>
-
-          <!-- Formulario colapsable para otra cuenta de Google -->
-          <div id="google-custom-account-box" style="display: none; margin-top: 16px; padding: 14px; background: #F8FAFC; border-radius: 14px; border: 1.5px solid #E2E8F0; text-align: left;">
-            <div style="font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 8px;">Completar datos de tu cuenta Google:</div>
+          <!-- Selector Directo de Gmail del Dispositivo -->
+          <div id="google-device-gmail-prompt" style="margin-top: 6px; padding: 14px; background: #F8FAFC; border-radius: 14px; border: 1.5px solid #E2E8F0; text-align: left;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#EA4335"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              <div style="font-size: 0.86rem; font-weight: 700; color: #1E293B;">Cuenta Gmail de este dispositivo:</div>
+            </div>
+            
             <div style="display: flex; flex-direction: column; gap: 10px;">
               <div>
-                <label style="font-size: 0.74rem; font-weight: 700; color: #475569;">Tu Nombre y Apellido:</label>
-                <input type="text" id="google-input-custom-name" placeholder="Ej: Lucas Rossi" class="form-control" style="padding: 8px 12px; font-size: 0.88rem; border-radius: 8px; border: 1.5px solid #CBD5E1; width: 100%;">
+                <label style="font-size: 0.74rem; font-weight: 700; color: #475569;" for="google-input-device-email">Tu Correo de Gmail (del teléfono o navegador):</label>
+                <input type="email" id="google-input-device-email" placeholder="ej: tu.cuenta@gmail.com" class="form-control" style="padding: 10px 12px; font-size: 0.9rem; border-radius: 9px; border: 1.5px solid #CBD5E1; width: 100%;" autocomplete="email">
               </div>
               <div>
-                <label style="font-size: 0.74rem; font-weight: 700; color: #475569;">Tu Correo de Google / Gmail:</label>
-                <input type="email" id="google-input-custom-email" placeholder="ejemplo@gmail.com" class="form-control" style="padding: 8px 12px; font-size: 0.88rem; border-radius: 8px; border: 1.5px solid #CBD5E1; width: 100%;">
+                <label style="font-size: 0.74rem; font-weight: 700; color: #475569;" for="google-input-device-name">Tu Nombre (como figura en Google):</label>
+                <input type="text" id="google-input-device-name" placeholder="Tu nombre" class="form-control" style="padding: 10px 12px; font-size: 0.9rem; border-radius: 9px; border: 1.5px solid #CBD5E1; width: 100%;" autocomplete="name">
               </div>
-              <button type="button" class="google-auth-btn-primary" style="margin-top: 6px; padding: 10px;" onclick="executeGoogleAccountChoice('custom')">
-                <span>Confirmar y Entrar con Google</span>
+
+              <button type="button" class="google-auth-btn-primary" style="margin-top: 4px; padding: 12px;" onclick="executeGoogleAccountChoice('device-input')">
+                <svg class="google-icon-svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#FFF" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/></svg>
+                <span>Acceder con mi Gmail de este dispositivo</span>
               </button>
             </div>
           </div>
 
+          <!-- Botón directo para abrir la ventana de Google Account Chooser -->
+          <button type="button" class="google-auth-btn-secondary" style="margin-top: 12px;" onclick="openOfficialGoogleAccountChooserWindow()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            <span>Abrir selector de cuentas de Google (accounts.google.com)</span>
+          </button>
+
+          <!-- Configurar Google Client ID (para activar Google One Tap directo en producción) -->
+          <div style="margin-top: 14px; text-align: center;">
+            <a href="javascript:void(0)" onclick="toggleGoogleClientIdConfig()" style="font-size: 0.72rem; color: #94A3B8; text-decoration: underline;">
+              Configurar Google Cloud Client ID (OAuth 2.0)
+            </a>
+          </div>
+
+          <div id="google-client-id-config-box" style="display: none; margin-top: 10px; padding: 10px; background: #F1F5F9; border-radius: 8px; font-size: 0.75rem; text-align: left;">
+            <label style="font-weight: 700; color: #334155; display: block; margin-bottom: 4px;">Google Client ID de tu proyecto Cloud:</label>
+            <input type="text" id="input-google-client-id" placeholder="ej: 123456-abc.apps.googleusercontent.com" class="form-control" style="font-size: 0.75rem; padding: 6px 8px; width: 100%; border-radius: 6px; border: 1px solid #CBD5E1; margin-bottom: 6px;">
+            <button type="button" class="btn btn-primary btn-sm" style="font-size: 0.72rem; padding: 4px 10px;" onclick="saveCustomGoogleClientId()">Guardar Client ID</button>
+          </div>
+
           <!-- Mensaje de Privacidad y Términos Oficiales de Google -->
-          <div style="margin-top: 18px; font-size: 0.73rem; color: #5F6368; line-height: 1.45; text-align: left;">
-            Para continuar, Google compartirá tu nombre, dirección de correo electrónico, preferencia de idioma y foto de perfil con Sademy. Consulta la 
-            <a href="javascript:void(0)" onclick="openClientWarrantyModal()" style="color: #1A73E8; text-decoration: none;">Política de Privacidad</a> y las 
-            <a href="javascript:void(0)" onclick="openClientWarrantyModal()" style="color: #1A73E8; text-decoration: none;">Condiciones de Servicio</a> de Sademy.
+          <div style="margin-top: 16px; font-size: 0.72rem; color: #64748B; line-height: 1.45; text-align: left;">
+            Al continuar con Google, tus credenciales son validadas de forma segura según las normativas de protección de identidad digital y los Términos de Servicio de Sademy.
           </div>
 
         </div>
@@ -3919,7 +3941,7 @@
         <span>Español (Latinoamérica)</span>
         <div>
           <a href="javascript:void(0)" onclick="showToast('Google Identity', 'Acceso seguro verificado por Google Identity Services.')">Ayuda</a>
-          <a href="javascript:void(0)" onclick="showToast('Privacidad', 'Tus datos son procesados según la Ley 25.326 de Protección de Datos Personales.')">Privacidad</a>
+          <a href="javascript:void(0)" onclick="showToast('Privacidad', 'Tus datos son procesados según la Ley 25.326.')">Privacidad</a>
           <a href="javascript:void(0)" onclick="showToast('Condiciones', 'Servicio protegido por custodia financiera Sademy Escrow.')">Condiciones</a>
         </div>
       </div>

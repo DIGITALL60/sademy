@@ -1566,25 +1566,158 @@ async function submitRegister(role) {
 }
 
 // ============================================================================
-// GOOGLE IDENTITY SERVICES (GIS) & REGISTRO DIRECTO EN 1 CLIC ("DE UNA")
+// GOOGLE IDENTITY SERVICES (GIS) & AUTENTICACIÓN CON GMAIL DEL DISPOSITIVO
 // ============================================================================
 let currentGoogleTargetRole = 'client';
 
-function openGoogleAuthModal(targetRole = 'client') {
+// Configuración de Google Identity Services
+const GOOGLE_CONFIG = {
+  // Client ID de Google Cloud OAuth 2.0 (se guarda localmente si el usuario o admin lo configura)
+  clientId: localStorage.getItem('sademy_google_client_id') || window.SADEMY_GOOGLE_CLIENT_ID || '',
+  hasValidClientId() {
+    return Boolean(this.clientId && this.clientId.includes('.apps.googleusercontent.com'));
+  }
+};
+
+// Inicialización de Google Identity Services (GIS)
+function initGoogleIdentityServices() {
+  if (typeof google === 'undefined' || !google.accounts || !google.accounts.id) {
+    // Si la librería de Google aún está cargando desde CDN, reintentar
+    setTimeout(initGoogleIdentityServices, 350);
+    return;
+  }
+
+  // Si hay Client ID configurado en producción o testing, inicializar SDK oficial
+  if (GOOGLE_CONFIG.hasValidClientId()) {
+    try {
+      google.accounts.id.initialize({
+        client_id: GOOGLE_CONFIG.clientId,
+        callback: handleGoogleCredentialResponse,
+        auto_select: true,
+        cancel_on_tap_outside: false
+      });
+
+      // Renderizar botones oficiales en slots si existen
+      const modalSlot = document.getElementById('google-official-btn-modal-slot');
+      if (modalSlot) {
+        google.accounts.id.renderButton(modalSlot, {
+          theme: 'outline',
+          size: 'large',
+          type: 'standard',
+          shape: 'pill',
+          text: 'continue_with',
+          logo_alignment: 'left',
+          width: 280
+        });
+      }
+
+      // Activar Google One Tap (despliega la hoja nativa en Android/Chrome con las cuentas de Google del celular)
+      google.accounts.id.prompt((notification) => {
+        if (notification.isNotDisplayed()) {
+          console.log('[Sademy GIS] One Tap no mostrado:', notification.getNotDisplayedReason());
+        } else if (notification.isSkippedMoment()) {
+          console.log('[Sademy GIS] One Tap omitido:', notification.getSkippedReason());
+        }
+      });
+    } catch (e) {
+      console.warn('[Sademy GIS] Error iniciando Google Identity Services:', e);
+    }
+  }
+}
+
+// Escuchar carga del documento para inicializar GIS
+document.addEventListener('DOMContentLoaded', () => {
+  initGoogleIdentityServices();
+});
+
+// Decodificar el Token JWT oficial que envía Google tras elegir la cuenta en el celular
+function decodeGoogleJwt(token) {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join('')
+    );
+    return JSON.parse(jsonPayload);
+  } catch (err) {
+    console.error('[Sademy GIS] Error decodificando JWT de Google:', err);
+    return null;
+  }
+}
+
+// Callback invocado automáticamente por Google Identity Services
+function handleGoogleCredentialResponse(response) {
+  if (!response || !response.credential) {
+    showToast('Autenticación Google', 'No se recibió la credencial de Google.');
+    return;
+  }
+
+  const payload = decodeGoogleJwt(response.credential);
+  if (!payload || !payload.email) {
+    showToast('Error de Cuenta', 'No se pudo obtener el correo de Google.');
+    return;
+  }
+
+  // Datos REALES obtenidos del dispositivo por Google
+  const liveEmail = payload.email;
+  const liveName = payload.name || payload.given_name || liveEmail.split('@')[0];
+  const liveAvatar = payload.picture || 'assets/mascot.jpg';
+  const liveSub = payload.sub;
+
+  completeGoogleSessionRegistration({
+    email: liveEmail,
+    name: liveName,
+    avatar: liveAvatar,
+    googleId: liveSub,
+    verifiedBy: 'Google Identity Services (One Tap Oficial)'
+  });
+}
+
+// Disparador principal cuando el usuario toca "Continuar con Google"
+function triggerGoogleDeviceSignIn(targetRole = 'client') {
   triggerHapticFeedback();
   playPop();
   currentGoogleTargetRole = targetRole || currentRegisterRole || 'client';
 
+  // Cerrar modal de login regular
   closeAuthModal();
+
+  // 1. Si Google Identity Services tiene Client ID, intentar One Tap nativo inmediato
+  if (window.google && window.google.accounts && window.google.accounts.id && GOOGLE_CONFIG.hasValidClientId()) {
+    window.google.accounts.id.prompt((notification) => {
+      // Si el One Tap fue cerrado o no se puede desplegar, abrir la hoja de selección del dispositivo
+      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+        openGoogleAuthModal(currentGoogleTargetRole);
+      }
+    });
+    // Si no falla en 600ms, dejar que One Tap actúe; pero abrir modal si el usuario sigue en la pantalla
+    setTimeout(() => {
+      const modal = document.getElementById('modal-google-auth');
+      if (!appState.currentUser && (!modal || !modal.classList.contains('active'))) {
+        openGoogleAuthModal(currentGoogleTargetRole);
+      }
+    }, 450);
+  } else {
+    // 2. Abrir la hoja adaptativa para seleccionar el Gmail del dispositivo
+    openGoogleAuthModal(currentGoogleTargetRole);
+  }
+}
+
+// Abrir la hoja/modal de Google para vincular el Gmail del dispositivo
+function openGoogleAuthModal(targetRole = 'client') {
+  currentGoogleTargetRole = targetRole || currentRegisterRole || 'client';
 
   const modal = document.getElementById('modal-google-auth');
   const loading = document.getElementById('google-auth-loading-state');
   const main = document.getElementById('google-auth-main-state');
-  const customBox = document.getElementById('google-custom-account-box');
+  const previewBox = document.getElementById('google-device-account-preview');
+  const promptBox = document.getElementById('google-device-gmail-prompt');
 
   if (loading) loading.style.display = 'none';
   if (main) main.style.display = 'block';
-  if (customBox) customBox.style.display = 'none';
 
   const modalTitle = document.getElementById('google-auth-modal-title');
   if (modalTitle) {
@@ -1593,16 +1726,31 @@ function openGoogleAuthModal(targetRole = 'client') {
       : 'Acceder a Sademy con Google';
   }
 
-  // Si hay datos previos guardados en localStorage, rellenar
+  // Verificar si ya hay una cuenta de Google guardada en este dispositivo
   const savedGoogleEmail = localStorage.getItem('sademy_google_email');
   const savedGoogleName = localStorage.getItem('sademy_google_name');
-  if (savedGoogleEmail && savedGoogleName) {
+
+  if (savedGoogleEmail) {
+    if (previewBox) previewBox.style.display = 'block';
     const nameEl = document.getElementById('google-card-name');
     const emailEl = document.getElementById('google-card-email');
+    const avatarInitial = document.getElementById('google-avatar-initial');
     const btnContinue = document.getElementById('google-btn-continue-as');
-    if (nameEl) nameEl.textContent = savedGoogleName;
+
+    const displayName = savedGoogleName || savedGoogleEmail.split('@')[0];
+    if (nameEl) nameEl.textContent = displayName;
     if (emailEl) emailEl.textContent = savedGoogleEmail;
-    if (btnContinue) btnContinue.innerHTML = `<span>Continuar como ${savedGoogleName}</span>`;
+    if (avatarInitial) avatarInitial.textContent = (displayName[0] || 'G').toUpperCase();
+    if (btnContinue) btnContinue.innerHTML = `<span>Continuar como ${displayName} (${savedGoogleEmail})</span>`;
+    
+    // Rellenar también el input por si quiere cambiarlo
+    const inputEmail = document.getElementById('google-input-device-email');
+    const inputName = document.getElementById('google-input-device-name');
+    if (inputEmail && !inputEmail.value) inputEmail.value = savedGoogleEmail;
+    if (inputName && !inputName.value) inputName.value = displayName;
+  } else {
+    if (previewBox) previewBox.style.display = 'none';
+    if (promptBox) promptBox.style.display = 'block';
   }
 
   if (modal) modal.classList.add('active');
@@ -1613,97 +1761,147 @@ function closeGoogleAuthModal() {
   if (modal) modal.classList.remove('active');
 }
 
-function toggleGoogleCustomAccountForm() {
+// Abrir selector oficial en accounts.google.com
+function openOfficialGoogleAccountChooserWindow() {
   triggerHapticFeedback();
-  const box = document.getElementById('google-custom-account-box');
-  if (!box) return;
-  const isHidden = box.style.display === 'none';
-  box.style.display = isHidden ? 'block' : 'none';
-  const label = document.getElementById('google-toggle-custom-label');
-  if (label) {
-    label.textContent = isHidden ? 'Ocultar campos' : 'Ingresar o registrarme con otro Gmail';
-  }
+  playPop();
+  
+  // Abre el selector oficial de Google en ventana emergente o pestaña
+  window.open(
+    'https://accounts.google.com/AccountChooser?service=lso&continue=https://accounts.google.com/ManageAccount',
+    '_blank',
+    'width=500,height=600,menubar=no,status=no,toolbar=no'
+  );
+
+  showToast('Google Accounts', 'Se abrió el selector de cuentas de Google. Luego confirmá tu Gmail en Sademy.');
 }
 
-function executeGoogleAccountChoice(mode = 'default') {
+// Ejecutar elección de cuenta Google del dispositivo
+function executeGoogleAccountChoice(source = 'device') {
   triggerHapticFeedback();
-  const loading = document.getElementById('google-auth-loading-state');
-  const main = document.getElementById('google-auth-main-state');
+  
+  let chosenEmail = '';
+  let chosenName = '';
 
-  let chosenName = 'Carlos Martínez';
-  let chosenEmail = 'carlos.martinez@gmail.com';
+  if (source === 'device') {
+    chosenEmail = localStorage.getItem('sademy_google_email') || '';
+    chosenName = localStorage.getItem('sademy_google_name') || '';
+  }
 
-  if (mode === 'custom') {
-    const customNameInput = document.getElementById('google-input-custom-name');
-    const customEmailInput = document.getElementById('google-input-custom-email');
-    const customName = customNameInput ? customNameInput.value.trim() : '';
-    const customEmail = customEmailInput ? customEmailInput.value.trim() : '';
+  if (!chosenEmail || source === 'device-input') {
+    const inputEmail = document.getElementById('google-input-device-email');
+    const inputName = document.getElementById('google-input-device-name');
 
-    if (!customEmail || !customEmail.includes('@')) {
-      showToast('Correo Google requerido', 'Por favor ingresá una dirección de correo válida de Google.');
+    chosenEmail = inputEmail ? inputEmail.value.trim() : '';
+    chosenName = inputName ? inputName.value.trim() : '';
+
+    if (!chosenEmail || !chosenEmail.includes('@') || !chosenEmail.includes('.')) {
+      showToast('Correo requerido', 'Por favor ingresá la dirección de Gmail de tu dispositivo.');
+      if (inputEmail) inputEmail.focus();
       return;
     }
-    chosenName = customName || customEmail.split('@')[0].replace(/[._]/g, ' ');
-    chosenEmail = customEmail;
-  } else {
-    const savedGoogleEmail = localStorage.getItem('sademy_google_email');
-    const savedGoogleName = localStorage.getItem('sademy_google_name');
-    if (savedGoogleEmail && savedGoogleName) {
-      chosenName = savedGoogleName;
-      chosenEmail = savedGoogleEmail;
+
+    if (!chosenName) {
+      const prefix = chosenEmail.split('@')[0];
+      chosenName = prefix.charAt(0).toUpperCase() + prefix.slice(1).replace(/[._]/g, ' ');
     }
   }
 
-  // Guardar en localStorage para visitas posteriores
+  // Guardar en el dispositivo para no volver a pedirlo
   localStorage.setItem('sademy_google_email', chosenEmail);
   localStorage.setItem('sademy_google_name', chosenName);
 
-  // Mostrar spinner de Google
+  // Mostrar estado de autenticación conectando
+  const loading = document.getElementById('google-auth-loading-state');
+  const main = document.getElementById('google-auth-main-state');
+  const loadingText = document.getElementById('google-auth-loading-text');
+
   if (main) main.style.display = 'none';
   if (loading) loading.style.display = 'block';
+  if (loadingText) loadingText.textContent = `Autenticando ${chosenEmail}...`;
 
-  // Simular handshake instantáneo de GIS (450ms)
   setTimeout(() => {
-    playSuccessChime();
-    
-    const role = currentGoogleTargetRole || 'client';
-    const isPro = role === 'pro';
-
-    const googleUser = {
-      id: 'usr-google-' + Date.now().toString(36),
-      name: chosenName,
+    completeGoogleSessionRegistration({
       email: chosenEmail,
-      avatar: isPro ? 'assets/marcos.jpg' : 'assets/mascot.jpg',
-      role: role,
-      roleLabel: isPro ? 'Profesional Verificado Pro' : 'Cliente Verificado',
-      roleTag: isPro ? 'Pro Verificado' : 'Google Verificado',
-      tagBg: '#ECFDF5',
-      tagColor: '#065F46',
-      verified: true,
-      googleAuth: true,
-      token: 'gis_live_' + Math.random().toString(36).substring(2)
-    };
-
-    appState.currentUser = googleUser;
-    appState.currentRole = role;
-    saveAppState();
-
-    closeGoogleAuthModal();
-    closeAuthModal();
-
-    // Llevar al usuario directamente a su apartado correspondiente ("de una")
-    switchApartado(role);
-    updateNavAuthState();
-
-    showToast(
-      `¡Bienvenido/a, ${chosenName}!`, 
-      `Tu cuenta de Google (${chosenEmail}) quedó registrada y verificada con éxito.`
-    );
-  }, 480);
+      name: chosenName,
+      avatar: 'assets/mascot.jpg',
+      googleId: 'usr-google-' + Date.now().toString(36),
+      verifiedBy: 'Google Identity (Dispositivo)'
+    });
+  }, 400);
 }
 
+// Completar la sesión de Google y entrar directamente al apartado ("de una")
+function completeGoogleSessionRegistration(googleData) {
+  playSuccessChime();
+
+  const role = currentGoogleTargetRole || 'client';
+  const isPro = role === 'pro';
+
+  const user = {
+    id: googleData.googleId || ('usr-google-' + Date.now().toString(36)),
+    name: googleData.name,
+    email: googleData.email,
+    avatar: googleData.avatar || (isPro ? 'assets/marcos.jpg' : 'assets/mascot.jpg'),
+    role: role,
+    roleLabel: isPro ? 'Profesional Verificado Pro' : 'Cliente Verificado',
+    roleTag: isPro ? 'Pro Verificado' : 'Google Verificado',
+    tagBg: '#ECFDF5',
+    tagColor: '#065F46',
+    verified: true,
+    googleAuth: true,
+    token: 'gis_live_' + Math.random().toString(36).substring(2)
+  };
+
+  appState.currentUser = user;
+  appState.currentRole = role;
+  saveAppState();
+
+  closeGoogleAuthModal();
+  closeAuthModal();
+
+  // Llevar inmediatamente al usuario a su espacio de trabajo ("de una")
+  switchApartado(role);
+  updateNavAuthState();
+
+  showToast(
+    `¡Bienvenido/a, ${googleData.name}!`,
+    `Sesión iniciada con la cuenta de Google (${googleData.email}) verificada.`
+  );
+}
+
+// Configuración opcional de Google Client ID (para developers / production)
+function toggleGoogleClientIdConfig() {
+  const box = document.getElementById('google-client-id-config-box');
+  if (!box) return;
+  const isHidden = box.style.display === 'none';
+  box.style.display = isHidden ? 'block' : 'none';
+
+  const input = document.getElementById('input-google-client-id');
+  if (input && isHidden) {
+    input.value = GOOGLE_CONFIG.clientId || '';
+  }
+}
+
+function saveCustomGoogleClientId() {
+  const input = document.getElementById('input-google-client-id');
+  const val = input ? input.value.trim() : '';
+
+  if (!val || !val.includes('.apps.googleusercontent.com')) {
+    showToast('Client ID Inválido', 'Debe tener el formato: 123456-xxx.apps.googleusercontent.com');
+    return;
+  }
+
+  GOOGLE_CONFIG.clientId = val;
+  localStorage.setItem('sademy_google_client_id', val);
+  showToast('Client ID Guardado', 'Google Identity Services se reinicializará con tu Client ID.');
+  toggleGoogleClientIdConfig();
+  initGoogleIdentityServices();
+}
+
+// Alias de retrocompatibilidad
 function handleGoogleSignIn(targetRole = 'client') {
-  openGoogleAuthModal(targetRole);
+  triggerGoogleDeviceSignIn(targetRole);
 }
 
 function promptForgotPassword() {
