@@ -1268,13 +1268,13 @@ function switchRegisterRole(role) {
     if (clientTab) clientTab.classList.remove('active');
     if (proForm) proForm.style.display = 'flex';
     if (clientForm) clientForm.style.display = 'none';
-    if (regGoogleBtnText) regGoogleBtnText.textContent = 'Registrarme como Profesional con Google';
+    if (regGoogleBtnText) regGoogleBtnText.textContent = 'Continuar con Google';
   } else {
     if (clientTab) clientTab.classList.add('active');
     if (proTab) proTab.classList.remove('active');
     if (clientForm) clientForm.style.display = 'flex';
     if (proForm) proForm.style.display = 'none';
-    if (regGoogleBtnText) regGoogleBtnText.textContent = 'Registrarme con Google en 1 clic';
+    if (regGoogleBtnText) regGoogleBtnText.textContent = 'Continuar con Google';
   }
 }
 
