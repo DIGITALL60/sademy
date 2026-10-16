@@ -284,6 +284,11 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                 <span>Pagos en Custodia (Escrow)</span>
               </a>
+              <a href="javascript:void(0)" onclick="closeUserDropdown(); openAdminBackofficeModal('usuarios');" class="user-menu-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <span>Directorio de Usuarios</span>
+                <span class="nav-badge" style="background: var(--color-primary); color: #FFF;" id="menu-users-badge">4</span>
+              </a>
             </div>
 
             <a href="javascript:void(0)" onclick="triggerPwaInstall(); closeUserDropdown();" class="user-menu-item">
@@ -3085,6 +3090,10 @@
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
             Fondos en Custodia & PINs
           </button>
+          <button class="admin-tab-btn" id="admin-tab-btn-usuarios" onclick="switchAdminTab('usuarios')" style="display: inline-flex; align-items: center; gap: 8px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            Usuarios Registrados <span id="admin-users-badge" class="nav-badge" style="background: #10B981; color: #FFFFFF; margin-left: 6px;">4</span>
+          </button>
         </div>
 
         <!-- Vista 1: Finanzas & Transacciones en Vivo -->
@@ -3131,6 +3140,65 @@
             </p>
             <div id="admin-escrow-orders-list" style="display: flex; flex-direction: column; gap: 10px;">
               <!-- Rellenado dinámicamente -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Vista 4: Usuarios Registrados (Directorio Central de Cuentas) -->
+        <div id="admin-view-usuarios" class="admin-view-pane" style="display: none;">
+          <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; overflow: hidden; margin-top: 14px;">
+            <div style="padding: 16px 20px; border-bottom: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: #FAFAFA;">
+              <div>
+                <strong style="font-size: 0.95rem; color: var(--color-text-main);">Base de Usuarios Registrados (Clientes & Profesionales)</strong>
+                <p style="font-size: 0.78rem; color: #64748B; margin: 2px 0 0;">Cuentas dadas de alta vía Google OAuth o formulario en Sademy</p>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <input type="text" id="admin-users-search" placeholder="Buscar por nombre o correo..." oninput="filterAdminUsersTable()" style="padding: 7px 12px; font-size: 0.82rem; border: 1.5px solid #CBD5E1; border-radius: 8px; width: 220px;">
+                <select id="admin-users-role-filter" onchange="filterAdminUsersTable()" style="padding: 7px 10px; font-size: 0.82rem; border: 1.5px solid #CBD5E1; border-radius: 8px; background: #FFF;">
+                  <option value="all">Todos los roles</option>
+                  <option value="client">Clientes</option>
+                  <option value="pro">Profesionales</option>
+                  <option value="google">Solo Google OAuth</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Mini KPIs de Cuentas -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; padding: 14px 20px; background: #F8FAFC; border-bottom: 1px solid #E2E8F0;">
+              <div style="background: #FFF; padding: 10px 14px; border-radius: 8px; border: 1px solid #E2E8F0;">
+                <div style="font-size: 0.72rem; color: #64748B; font-weight: 700; text-transform: uppercase;">Total Registrados</div>
+                <div id="admin-stat-total-users" style="font-size: 1.25rem; font-weight: 800; color: #1E293B; margin-top: 2px;">0</div>
+              </div>
+              <div style="background: #FFF; padding: 10px 14px; border-radius: 8px; border: 1px solid #E2E8F0;">
+                <div style="font-size: 0.72rem; color: #047857; font-weight: 700; text-transform: uppercase;">Clientes Activos</div>
+                <div id="admin-stat-clients-count" style="font-size: 1.25rem; font-weight: 800; color: #065F46; margin-top: 2px;">0</div>
+              </div>
+              <div style="background: #FFF; padding: 10px 14px; border-radius: 8px; border: 1px solid #E2E8F0;">
+                <div style="font-size: 0.72rem; color: #1D4ED8; font-weight: 700; text-transform: uppercase;">Profesionales</div>
+                <div id="admin-stat-pros-count" style="font-size: 1.25rem; font-weight: 800; color: #1D4ED8; margin-top: 2px;">0</div>
+              </div>
+              <div style="background: #FFF; padding: 10px 14px; border-radius: 8px; border: 1px solid #E2E8F0;">
+                <div style="font-size: 0.72rem; color: #B45309; font-weight: 700; text-transform: uppercase;">Google OAuth</div>
+                <div id="admin-stat-google-count" style="font-size: 1.25rem; font-weight: 800; color: #B45309; margin-top: 2px;">0</div>
+              </div>
+            </div>
+
+            <div style="overflow-x: auto;">
+              <table class="admin-data-table">
+                <thead>
+                  <tr>
+                    <th>Usuario</th>
+                    <th>Email / Cuenta</th>
+                    <th>Rol en Sademy</th>
+                    <th>Método de Alta</th>
+                    <th>Fecha de Registro</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-users-tbody">
+                  <!-- Rellenado dinámicamente -->
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -3314,6 +3382,13 @@
               <div style="text-align: left;">
                 <div style="color: #065F46;">Fondos en Custodia (Escrow)</div>
                 <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">$115.000 ARS retenidos para liberación con PIN</div>
+              </div>
+            </button>
+            <button type="button" onclick="closeAccountModal(); openAdminBackofficeModal('usuarios');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 700;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              <div style="text-align: left;">
+                <div style="color: #2563EB;">Directorio de Usuarios Registrados</div>
+                <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Clientes y Profesionales creados (Google y Directos)</div>
               </div>
             </button>
           </div>
@@ -3932,7 +4007,7 @@
   </div>
 
   <!-- Lógica y funcionalidades interactivas -->
-  <script src="js/app.js?v=20261016_google_official_btn"></script>
+  <script src="js/app.js?v=20261016_admin_users_view"></script>
 
 </body>
 </html>

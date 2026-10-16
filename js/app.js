@@ -288,6 +288,89 @@ const DEFAULT_CHATS = {
 };
 
 // ============================================================================
+// BASE DE DATOS CENTRAL DE USUARIOS REGISTRADOS (CLIENTES Y PROFESIONALES)
+// ============================================================================
+const DEFAULT_REGISTERED_USERS = [
+  {
+    id: 'usr-client-01',
+    name: 'Carlos Martínez',
+    email: 'carlos.m@gmail.com',
+    role: 'client',
+    roleLabel: 'Cliente Verificado',
+    authMethod: 'Google OAuth',
+    avatar: 'assets/mascot.jpg',
+    createdAt: '15/10/2026 14:20',
+    verified: true
+  },
+  {
+    id: 'usr-pro-01',
+    name: 'Marcos Rodríguez',
+    email: 'marcos.electricista@sademy.com',
+    role: 'pro',
+    roleLabel: 'Profesional Matriculado',
+    authMethod: 'Formulario Directo',
+    avatar: 'assets/marcos.jpg',
+    createdAt: '12/10/2026 09:15',
+    verified: true
+  },
+  {
+    id: 'usr-pro-02',
+    name: 'Sofía Lorenzi',
+    email: 'sofia.plomeria@sademy.com',
+    role: 'pro',
+    roleLabel: 'Profesional Matriculado',
+    authMethod: 'Formulario Directo',
+    avatar: 'assets/mascot.jpg',
+    createdAt: '10/10/2026 11:40',
+    verified: true
+  },
+  {
+    id: 'usr-pro-03',
+    name: 'Claudio Vega',
+    email: 'claudio.gas@sademy.com',
+    role: 'pro',
+    roleLabel: 'Profesional Matriculado',
+    authMethod: 'Google OAuth',
+    avatar: 'assets/mascot.jpg',
+    createdAt: '08/10/2026 16:05',
+    verified: true
+  }
+];
+
+function recordRegisteredUser(user) {
+  if (!user || !user.email) return;
+  if (!appState.registeredUsers) {
+    appState.registeredUsers = [...DEFAULT_REGISTERED_USERS];
+  }
+  const cleanEmail = user.email.toLowerCase().trim();
+  const existingIdx = appState.registeredUsers.findIndex(u => u.email.toLowerCase().trim() === cleanEmail);
+  const now = new Date();
+  const nowStr = now.toLocaleDateString('es-AR') + ' ' + now.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+
+  const isPro = user.role === 'pro';
+  const isGoogle = user.googleAuth || (user.authMethod && user.authMethod.toLowerCase().includes('google'));
+
+  const record = {
+    id: user.id || ('usr-' + Date.now().toString(36)),
+    name: user.name || 'Usuario Sademy',
+    email: user.email,
+    role: isPro ? 'pro' : 'client',
+    roleLabel: user.roleLabel || (isPro ? 'Profesional Verificado Pro' : 'Cliente Verificado'),
+    authMethod: isGoogle ? 'Google OAuth Oficial' : (user.authMethod || 'Formulario Directo'),
+    avatar: user.avatar || (isPro ? 'assets/marcos.jpg' : 'assets/mascot.jpg'),
+    createdAt: existingIdx >= 0 ? appState.registeredUsers[existingIdx].createdAt : nowStr,
+    lastLogin: nowStr,
+    verified: true
+  };
+
+  if (existingIdx >= 0) {
+    appState.registeredUsers[existingIdx] = Object.assign(appState.registeredUsers[existingIdx], record);
+  } else {
+    appState.registeredUsers.unshift(record);
+  }
+}
+
+// ============================================================================
 // BASE DE DATOS CRM INTEGRADA PARA TRABAJADORES SADEMY PRO
 // ============================================================================
 const DEFAULT_PRO_CRM_CLIENTS = [
@@ -519,6 +602,9 @@ function loadAppState() {
           { id: 'pro-pending-2', name: 'Martín T.', trade: 'Electricista Matriculado', matricula: 'COPIME #3810', zone: 'Palermo, CABA', dni: '32.110.884', docVerified: true }
         ];
       }
+      if (!parsed.registeredUsers || parsed.registeredUsers.length === 0) {
+        parsed.registeredUsers = [...DEFAULT_REGISTERED_USERS];
+      }
       if (parsed.currentUser && !parsed.currentUser.proPlan) {
         parsed.currentUser.proPlan = 'basic';
       }
@@ -616,6 +702,7 @@ function loadAppState() {
       { id: 'pro-pending-1', name: 'Facundo G.', trade: 'Gasista Matriculado', matricula: 'METROGAS #9214', zone: 'Belgrano, CABA', dni: '34.819.201', docVerified: true },
       { id: 'pro-pending-2', name: 'Martín T.', trade: 'Electricista Matriculado', matricula: 'COPIME #3810', zone: 'Palermo, CABA', dni: '32.110.884', docVerified: true }
     ],
+    registeredUsers: DEFAULT_REGISTERED_USERS,
     workerInvoices: [
       {
         id: 'INV-2026-00428',
@@ -1521,6 +1608,7 @@ async function submitRegister(role) {
       playSuccessChime();
       appState.currentUser = data.user;
       appState.currentRole = data.user.role;
+      recordRegisteredUser(data.user);
       saveAppState();
       closeAuthModal();
       updateNavAuthState();
@@ -1549,6 +1637,7 @@ async function submitRegister(role) {
     };
     appState.currentUser = newUser;
     appState.currentRole = newUser.role;
+    recordRegisteredUser(newUser);
     saveAppState();
     closeAuthModal();
     updateNavAuthState();
@@ -1883,6 +1972,7 @@ function completeGoogleSessionRegistration(googleData) {
 
   appState.currentUser = user;
   appState.currentRole = role;
+  recordRegisteredUser(user);
   saveAppState();
 
   closeGoogleAuthModal();
@@ -4178,7 +4268,7 @@ function switchAdminTab(tabName) {
   triggerHapticFeedback();
   playPop();
 
-  const tabs = ['finanzas', 'matriculas', 'custodia'];
+  const tabs = ['finanzas', 'matriculas', 'custodia', 'usuarios'];
   tabs.forEach(t => {
     const btn = document.getElementById(`admin-tab-btn-${t}`);
     const view = document.getElementById(`admin-view-${t}`);
@@ -4191,6 +4281,10 @@ function switchAdminTab(tabName) {
       else view.style.display = 'none';
     }
   });
+
+  if (tabName === 'usuarios') {
+    renderAdminUsers();
+  }
 }
 
 function renderAdminBackoffice() {
@@ -4217,6 +4311,9 @@ function renderAdminBackoffice() {
 
   // 4. Renderizar pedidos en custodia
   renderAdminEscrow();
+
+  // 5. Renderizar usuarios registrados en la base
+  renderAdminUsers();
 }
 
 function renderAdminTransactions() {
@@ -4380,6 +4477,131 @@ function renderAdminEscrow() {
       </button>
     </div>
   `).join('');
+}
+
+function filterAdminUsersTable() {
+  const q = document.getElementById('admin-users-search')?.value || '';
+  const r = document.getElementById('admin-users-role-filter')?.value || 'all';
+  renderAdminUsers(q, r);
+}
+
+function renderAdminUsers(filterQuery = '', roleFilter = 'all') {
+  if (!appState.registeredUsers) {
+    appState.registeredUsers = [...DEFAULT_REGISTERED_USERS];
+  }
+
+  // Si hay un usuario logueado actualmente y no está registrado en la lista, registrarlo automáticamente
+  if (appState.currentUser && appState.currentUser.email) {
+    const exists = appState.registeredUsers.some(u => u.email.toLowerCase().trim() === appState.currentUser.email.toLowerCase().trim());
+    if (!exists) {
+      recordRegisteredUser(appState.currentUser);
+    }
+  }
+
+  const allUsers = appState.registeredUsers || [];
+
+  // Actualizar contadores y badges
+  const totalCount = allUsers.length;
+  const clientsCount = allUsers.filter(u => u.role === 'client').length;
+  const prosCount = allUsers.filter(u => u.role === 'pro').length;
+  const googleCount = allUsers.filter(u => (u.authMethod && u.authMethod.includes('Google')) || u.googleAuth).length;
+
+  const totalEl = document.getElementById('admin-stat-total-users');
+  const clientsEl = document.getElementById('admin-stat-clients-count');
+  const prosEl = document.getElementById('admin-stat-pros-count');
+  const googleEl = document.getElementById('admin-stat-google-count');
+  const badgeEl = document.getElementById('admin-users-badge');
+  const menuBadgeEl = document.getElementById('menu-users-badge');
+
+  if (totalEl) totalEl.textContent = totalCount;
+  if (clientsEl) clientsEl.textContent = clientsCount;
+  if (prosEl) prosEl.textContent = prosCount;
+  if (googleEl) googleEl.textContent = googleCount;
+  if (badgeEl) badgeEl.textContent = totalCount;
+  if (menuBadgeEl) menuBadgeEl.textContent = totalCount;
+
+  // Filtrado
+  const query = (filterQuery || '').toLowerCase().trim();
+  const filtered = allUsers.filter(u => {
+    const matchQuery = !query || 
+      (u.name && u.name.toLowerCase().includes(query)) || 
+      (u.email && u.email.toLowerCase().includes(query)) ||
+      (u.roleLabel && u.roleLabel.toLowerCase().includes(query));
+    
+    let matchRole = true;
+    if (roleFilter === 'client') matchRole = u.role === 'client';
+    else if (roleFilter === 'pro') matchRole = u.role === 'pro';
+    else if (roleFilter === 'google') matchRole = (u.authMethod && u.authMethod.includes('Google')) || u.googleAuth;
+
+    return matchQuery && matchRole;
+  });
+
+  const tbody = document.getElementById('admin-users-tbody');
+  if (!tbody) return;
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="6" style="text-align: center; color: #94A3B8; padding: 28px;">
+          No se encontraron usuarios registrados con el criterio de búsqueda.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(u => {
+    const isPro = u.role === 'pro';
+    const isGoogle = (u.authMethod && u.authMethod.includes('Google')) || u.googleAuth;
+    const initial = (u.name ? u.name.charAt(0) : 'U').toUpperCase();
+
+    return `
+      <tr>
+        <td>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 34px; height: 34px; border-radius: 50%; background: ${isPro ? '#E0E7FF' : '#ECFDF5'}; color: ${isPro ? '#4338CA' : '#047857'}; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; flex-shrink: 0;">
+              ${initial}
+            </div>
+            <div>
+              <strong style="color: #0F172A; font-size: 0.88rem; display: block;">${u.name || 'Sin Nombre'}</strong>
+              <span style="font-size: 0.72rem; color: #64748B;">ID: ${u.id || '-'}</span>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 0.84rem; font-weight: 600; color: #334155;">${u.email}</span>
+            ${isGoogle ? `
+              <span title="Autenticado con Google Identity Oficial" style="display: inline-flex; align-items: center;">
+                <svg width="14" height="14" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+              </span>
+            ` : ''}
+          </div>
+        </td>
+        <td>
+          <span class="badge-tag" style="background: ${isPro ? '#EEF2FF' : '#ECFDF5'}; color: ${isPro ? '#3730A3' : '#065F46'}; font-weight: 700; font-size: 0.74rem;">
+            ${isPro ? 'Profesional Pro' : 'Cliente'}
+          </span>
+        </td>
+        <td>
+          <span style="font-size: 0.8rem; font-weight: 600; color: ${isGoogle ? '#0284C7' : '#475569'}; display: inline-flex; align-items: center; gap: 4px;">
+            ${isGoogle ? 'Google OAuth' : 'Formulario'}
+          </span>
+        </td>
+        <td>
+          <span style="font-size: 0.78rem; color: #64748B;">
+            ${u.createdAt || '16/10/2026'}
+          </span>
+        </td>
+        <td>
+          <span class="badge-tag" style="background: #DCFCE7; color: #166534; font-weight: 700; font-size: 0.72rem; display: inline-flex; align-items: center; gap: 4px;">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Activo
+          </span>
+        </td>
+      </tr>
+    `;
+  }).join('');
 }
 
 // ============================================================================
