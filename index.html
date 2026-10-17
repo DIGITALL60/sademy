@@ -83,10 +83,10 @@
           <span class="brand-wordmark">sademy</span>
         </a>
 
-        <!-- Selector de Ubicación estilo Screen 2 -->
-        <button type="button" class="header-location-pill" onclick="cycleCitySelection()" title="Cambiar ciudad" style="display: inline-flex; align-items: center; gap: 6px; background: #FFFFFF; border: 1.5px solid var(--color-border); padding: 5px 12px; border-radius: 999px; font-size: 0.82rem; font-weight: 600; color: var(--color-text-secondary); cursor: pointer; transition: all 0.2s ease;">
+        <!-- Selector de Ubicación estilo Screen 2: Villa María, Córdoba -->
+        <button type="button" class="header-location-pill" onclick="openLocationModal()" title="Cambiar ubicación o activar GPS" style="display: inline-flex; align-items: center; gap: 6px; background: #FFFFFF; border: 1.5px solid var(--color-border); padding: 5px 12px; border-radius: 999px; font-size: 0.82rem; font-weight: 600; color: var(--color-text-secondary); cursor: pointer; transition: all 0.2s ease;">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1A7A52" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-          <span id="nav-city-text">Córdoba, Córdoba</span>
+          <span id="nav-city-text">Villa María, Córdoba</span>
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </button>
       </div>
@@ -210,10 +210,15 @@
 
             <!-- ================= Items para PROFESIONAL PRO ================= -->
             <div class="user-menu-role-group view-pro-only">
-              <a href="javascript:void(0)" onclick="closeUserDropdown(); openProDashboardModal('crm');" class="user-menu-item" style="color: #047857; font-weight: 800; background: #ECFDF5; border-radius: 8px;">
+              <a href="javascript:void(0)" onclick="closeUserDropdown(); openProDashboardModal('crm', 'balance');" class="user-menu-item" style="color: #047857; font-weight: 800; background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                <span>CRM Finanzas & Gastos</span>
+                <span class="badge-tag" style="background: #10B981; color: #FFF; font-size: 0.68rem; font-weight: 800; padding: 2px 6px;">+32.5%</span>
+              </a>
+              <a href="javascript:void(0)" onclick="closeUserDropdown(); openProDashboardModal('crm', 'clientes');" class="user-menu-item">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                <span>Sademy CRM (Clientes & Cobros)</span>
-                <span class="nav-badge" style="background: #10B981; color: #FFF;">5</span>
+                <span>Clientes & Historial</span>
+                <span class="nav-badge" style="background: #64748B; color: #FFF;">5</span>
               </a>
               <a href="javascript:void(0)" onclick="closeUserDropdown(); openProDashboardModal('oportunidades');" class="user-menu-item">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
@@ -316,11 +321,11 @@
   <section id="hero" class="hero-section" style="background: var(--color-bg-base); padding: 36px 0 36px; border-bottom: 1px solid var(--color-border);">
     <div class="container hero-clean-container">
       
-      <!-- Selector de Ubicación Rápido -->
+      <!-- Selector de Ubicación Rápido Hero -->
       <div style="display: flex; justify-content: center; margin-bottom: 16px;">
-        <button type="button" class="location-badge-picker" onclick="cycleCitySelection()" title="Hacé clic para cambiar de ciudad" style="display: inline-flex; align-items: center; gap: 8px; background: #FFFFFF; border: 1.5px solid var(--color-border); padding: 6px 16px; border-radius: 999px; font-size: 0.88rem; font-weight: 600; color: var(--color-text-secondary); cursor: pointer; box-shadow: var(--shadow-xs); transition: all 0.2s ease;">
+        <button type="button" class="location-badge-picker" onclick="openLocationModal()" title="Hacé clic para cambiar tu barrio o activar GPS" style="display: inline-flex; align-items: center; gap: 8px; background: #FFFFFF; border: 1.5px solid var(--color-border); padding: 6px 16px; border-radius: 999px; font-size: 0.88rem; font-weight: 600; color: var(--color-text-secondary); cursor: pointer; box-shadow: var(--shadow-xs); transition: all 0.2s ease;">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A7A52" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-          <span id="hero-current-city">Córdoba, Córdoba</span>
+          <span id="hero-current-city">Villa María, Córdoba</span>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </button>
       </div>
@@ -2289,6 +2294,146 @@
   </div>
 
   <!-- ========================================================================
+       MODAL: SELECTOR DE UBICACIÓN & DETECCIÓN GPS (VILLA MARÍA & CERCANÍAS)
+       ======================================================================== -->
+  <div id="modal-location-selector" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="location-modal-title">
+    <div class="modal-container" style="max-width: 480px; width: 94%; background: #FAF9F5; border-radius: 24px; padding: 26px 22px;">
+      
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 38px; height: 38px; border-radius: 12px; background: #EAF5EE; color: #1A7A52; display: flex; align-items: center; justify-content: center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          </div>
+          <div>
+            <span style="font-size: 0.74rem; font-weight: 800; color: #1A7A52; text-transform: uppercase; letter-spacing: 0.04em;">Ubicación & Proximidad</span>
+            <h3 id="location-modal-title" style="font-size: 1.25rem; font-weight: 800; color: #1A201C; margin: 2px 0 0;">Villa María, Córdoba</h3>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeLocationModal()" aria-label="Cerrar modal">&times;</button>
+      </div>
+
+      <p style="font-size: 0.86rem; color: #525B56; margin: 0 0 16px; line-height: 1.45;">
+        Activá tu ubicación para mostrarte en vivo los profesionales matriculados más cercanos a tu domicilio con tiempo de llegada en minutos.
+      </p>
+
+      <!-- Botón Primario: Detección GPS Real -->
+      <button type="button" class="btn btn-primary" onclick="requestUserGeolocation()" style="width: 100%; padding: 13px 18px; border-radius: 14px; background: #1A7A52; font-weight: 800; font-size: 0.92rem; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 18px; box-shadow: 0 4px 14px rgba(26, 122, 82, 0.25);">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+        <span>Usar mi ubicación GPS actual</span>
+      </button>
+
+      <!-- Estado de detección de distancia -->
+      <div id="location-detected-banner" style="display: none; background: #ECFDF5; border: 1.5px solid #A7F3D0; border-radius: 12px; padding: 10px 14px; margin-bottom: 14px; font-size: 0.82rem; color: #065F46; font-weight: 700;">
+        📍 Ubicación GPS activa: ordenando profesionales por cercanía a tu posición.
+      </div>
+
+      <!-- Selector por Barrio en Villa María / Villa Nueva -->
+      <div style="font-size: 0.78rem; font-weight: 800; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px;">
+        O seleccioná tu barrio en Villa María / Villa Nueva:
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; max-height: 220px; overflow-y: auto; padding-right: 4px;" id="neighborhoods-grid-list">
+        <button type="button" class="neighborhood-pill-btn active" onclick="selectNeighborhoodLocation('centro')">
+          <strong>Centro</strong>
+          <span>Villa María</span>
+        </button>
+        <button type="button" class="neighborhood-pill-btn" onclick="selectNeighborhoodLocation('ameghino')">
+          <strong>B° Ameghino</strong>
+          <span>Villa María</span>
+        </button>
+        <button type="button" class="neighborhood-pill-btn" onclick="selectNeighborhoodLocation('san_juan')">
+          <strong>B° San Juan Bautista</strong>
+          <span>Villa María</span>
+        </button>
+        <button type="button" class="neighborhood-pill-btn" onclick="selectNeighborhoodLocation('santa_ana')">
+          <strong>B° Santa Ana</strong>
+          <span>Villa María</span>
+        </button>
+        <button type="button" class="neighborhood-pill-btn" onclick="selectNeighborhoodLocation('palermo')">
+          <strong>B° Palermo</strong>
+          <span>Villa María</span>
+        </button>
+        <button type="button" class="neighborhood-pill-btn" onclick="selectNeighborhoodLocation('parque_norte')">
+          <strong>B° Parque Norte</strong>
+          <span>Villa María</span>
+        </button>
+        <button type="button" class="neighborhood-pill-btn" onclick="selectNeighborhoodLocation('guemes')">
+          <strong>B° Güemes</strong>
+          <span>Villa María</span>
+        </button>
+        <button type="button" class="neighborhood-pill-btn" onclick="selectNeighborhoodLocation('rivadavia')">
+          <strong>B° Rivadavia</strong>
+          <span>Villa María</span>
+        </button>
+        <button type="button" class="neighborhood-pill-btn" onclick="selectNeighborhoodLocation('villa_nueva')">
+          <strong>Villa Nueva Centro</strong>
+          <span>Costanera Río</span>
+        </button>
+      </div>
+
+      <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 0.76rem; color: #78716C;">Zona de cobertura oficial:</span>
+        <span style="font-size: 0.76rem; font-weight: 700; color: #1A7A52;">Villa María & Villa Nueva (Radio 15 km)</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: REGISTRAR NUEVO GASTO OPERATIVO (CRM FINANCIERO SADEMY PRO)
+       ======================================================================== -->
+  <div id="modal-crm-new-expense" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="new-expense-title">
+    <div class="modal-container" style="max-width: 440px; width: 94%; background: #FAF9F5; border-radius: 22px; padding: 24px;">
+      
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <div>
+          <span style="font-size: 0.74rem; font-weight: 800; color: #DC2626; text-transform: uppercase;">Control de Finanzas Profesional</span>
+          <h3 id="new-expense-title" style="font-size: 1.2rem; font-weight: 800; color: #1A201C; margin: 2px 0 0;">Registrar Gasto de Trabajo</h3>
+        </div>
+        <button class="modal-close-btn" onclick="closeCrmNewExpenseModal()" aria-label="Cerrar modal">&times;</button>
+      </div>
+
+      <p style="font-size: 0.84rem; color: #525B56; margin: 0 0 16px;">
+        Anotá repuestos, combustible o insumos comprados en Villa María para calcular tu ganancia neta real del mes.
+      </p>
+
+      <form onsubmit="event.preventDefault(); submitCrmNewExpense();" style="display: flex; flex-direction: column; gap: 12px;">
+        <div>
+          <label style="font-size: 0.78rem; font-weight: 700; color: #1A201C; display: block; margin-bottom: 4px;">Concepto / Detalle del Gasto</label>
+          <input type="text" id="expense-concept-input" required placeholder="Ej: Caño termofusión 25mm y codos" style="width: 100%; padding: 11px 13px; border: 1.5px solid var(--color-border); border-radius: 12px; font-size: 0.9rem; background: #FFFFFF;">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div>
+            <label style="font-size: 0.78rem; font-weight: 700; color: #1A201C; display: block; margin-bottom: 4px;">Monto (ARS)</label>
+            <input type="number" id="expense-amount-input" required min="100" placeholder="$24.500" style="width: 100%; padding: 11px 13px; border: 1.5px solid var(--color-border); border-radius: 12px; font-size: 0.9rem; background: #FFFFFF; font-weight: 800; color: #DC2626;">
+          </div>
+          <div>
+            <label style="font-size: 0.78rem; font-weight: 700; color: #1A201C; display: block; margin-bottom: 4px;">Categoría</label>
+            <select id="expense-category-input" style="width: 100%; padding: 11px 13px; border: 1.5px solid var(--color-border); border-radius: 12px; font-size: 0.9rem; background: #FFFFFF;">
+              <option value="Materiales y Repuestos">Materiales / Insumos</option>
+              <option value="Combustible y Traslados">Combustible / YPF</option>
+              <option value="Herramientas y Mantenimiento">Herramientas</option>
+              <option value="Monotributo y Tributos">Monotributo / ARCA</option>
+              <option value="Otros Gastos">Otros</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size: 0.78rem; font-weight: 700; color: #1A201C; display: block; margin-bottom: 4px;">Comercio / Proveedor (Villa María)</label>
+          <input type="text" id="expense-vendor-input" placeholder="Ej: Ferretería Central / Corralón Alem" style="width: 100%; padding: 11px 13px; border: 1.5px solid var(--color-border); border-radius: 12px; font-size: 0.9rem; background: #FFFFFF;">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="padding: 13px; font-size: 0.92rem; font-weight: 800; border-radius: 12px; background: #DC2626; color: #FFFFFF; border: none; margin-top: 6px;">
+          Guardar Gasto y Actualizar Balance
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================
        MODAL: RECONOCIMIENTO FACIAL BIOMÉTRICO OBLIGATORIO SADEMY FACE-ID
        ======================================================================== -->
   <div id="modal-pro-face-id" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="face-id-title" style="z-index: 1200; backdrop-filter: blur(16px); background: rgba(17, 24, 39, 0.88);">
@@ -2465,9 +2610,9 @@
 
       <!-- Segmented Control Bar estilo iOS / Apple Cupertino -->
       <div style="display: flex; gap: 6px; padding: 10px 24px; background: #FFFFFF; border-bottom: 1px solid #E2E8F0; overflow-x: auto;">
-        <button type="button" id="pro-dash-tab-btn-crm" class="profile-role-pill" onclick="switchProDashboardTab('crm')" style="flex: 1.2; padding: 8px 10px; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 800;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-          Sademy CRM Pro (5)
+        <button type="button" id="pro-dash-tab-btn-crm" class="profile-role-pill" onclick="switchProDashboardTab('crm')" style="flex: 1.3; padding: 8px 10px; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 800;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+          CRM Finanzas & Gastos (+32%)
         </button>
         <button type="button" id="pro-dash-tab-btn-oportunidades" class="profile-role-pill active" onclick="switchProDashboardTab('oportunidades')" style="flex: 1; padding: 8px 10px; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 6px;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>

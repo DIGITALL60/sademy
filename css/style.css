@@ -5174,4 +5174,107 @@ body.sademy-dev-tools .apartado-control-bar {
   pointer-events: none;
 }
 
+/* ==========================================================================
+   VILLA MARÍA GEOLOCATION & PRO FINANCIAL CRM STYLES (2026)
+   ========================================================================== */
+.neighborhood-pill-btn {
+  background: #FFFFFF;
+  border: 1.5px solid var(--color-border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.neighborhood-pill-btn:hover {
+  border-color: #1A7A52;
+  background: #F4FAF6;
+  transform: translateY(-1px);
+}
+
+.neighborhood-pill-btn.active {
+  border-color: #1A7A52;
+  background: #EAF5EE;
+}
+
+.neighborhood-pill-btn strong {
+  font-size: 0.85rem;
+  color: #1A201C;
+}
+
+.neighborhood-pill-btn span {
+  font-size: 0.72rem;
+  color: #78716C;
+}
+
+/* Banner de Crecimiento Financiero estilo Apple */
+.crm-growth-banner {
+  background: linear-gradient(135deg, #ECFDF5 0%, #FFFFFF 100%);
+  border: 1.5px solid #A7F3D0;
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 22px;
+  box-shadow: 0 4px 18px rgba(16, 185, 129, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.crm-growth-banner::after {
+  content: '';
+  position: absolute;
+  right: -20px;
+  bottom: -20px;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, rgba(52, 211, 153, 0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Tarjetas Bento de Premios Sademy */
+.crm-reward-card {
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 18px 20px;
+  transition: all 0.22s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.crm-reward-card:hover {
+  border-color: #10B981;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+  transform: translateY(-2px);
+}
+
+/* Mini barras de evolución mensual */
+.crm-monthly-bar {
+  flex: 1;
+  background: #E2E8F0;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 90px;
+  padding: 4px;
+  position: relative;
+}
+
+.crm-monthly-bar-fill {
+  background: #94A3B8;
+  border-radius: 6px;
+  width: 100%;
+  transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.crm-monthly-bar-fill.active {
+  background: linear-gradient(180deg, #10B981 0%, #059669 100%);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+}
+
+
 

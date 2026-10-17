@@ -20,9 +20,12 @@ const PROFESSIONALS_DATA = [
     matricula: 'MAT-PL-5120',
     rating: 4.8,
     reviewsCount: 124,
-    zone: 'Nueva Córdoba · Centro · Güemes',
-    city: 'Córdoba, Córdoba',
-    bio: 'Trabajo hace 5 años en el rubro de la plomería. Realizo instalaciones, reparaciones y mantenimiento en hogares y comercios.',
+    zone: 'Centro · Av. Dante Alighieri',
+    city: 'Villa María, Córdoba',
+    lat: -32.4110,
+    lng: -63.2420,
+    currentDistance: '0.8 km',
+    bio: 'Especialista en plomería residencial y comercial en Villa María. Instalaciones de agua y gas, destapes y urgencias.',
     priceHint: '$15.000',
     priceUnit: 'por trabajo base',
     skills: ['Plomería', 'Gasistas', 'Instalaciones'],
@@ -41,9 +44,12 @@ const PROFESSIONALS_DATA = [
     matricula: 'MAT-EL-3914',
     rating: 4.7,
     reviewsCount: 88,
-    zone: 'Cerro de las Rosas · Villa Belgrano',
-    city: 'Córdoba, Córdoba',
-    bio: 'Técnico electricista matriculado con 7 años de experiencia en instalaciones de obra, tableros y reparaciones.',
+    zone: 'B° Ameghino · Salta y Vélez Sarsfield',
+    city: 'Villa María, Córdoba',
+    lat: -32.4020,
+    lng: -63.2380,
+    currentDistance: '1.4 km',
+    bio: 'Electricista matriculado ERSEPT con 7 años de experiencia en Villa María en tableros, recableados y luminaria LED.',
     priceHint: '$18.000',
     priceUnit: 'por trabajo base',
     skills: ['Electricidad', 'Tableros', 'Iluminación'],
@@ -53,7 +59,7 @@ const PROFESSIONALS_DATA = [
   {
     id: 'pro-santiago',
     name: 'Santiago Gómez',
-    trade: 'Gasista Matriculado',
+    trade: 'Gasista Matriculado Ecogas',
     category: 'gas',
     avatar: 'assets/claudio.jpg',
     badge: 'Verificado',
@@ -62,9 +68,12 @@ const PROFESSIONALS_DATA = [
     matricula: 'ECOGAS-7721',
     rating: 4.6,
     reviewsCount: 76,
-    zone: 'Alberdi · Alto Alberdi · General Paz',
-    city: 'Córdoba, Córdoba',
-    bio: 'Gasista matriculado Ecogas. Inspecciones reglamentarias, tendido de cañerías y artefactos con prueba de hermeticidad.',
+    zone: 'B° San Juan Bautista · Av. Universidad',
+    city: 'Villa María, Córdoba',
+    lat: -32.4180,
+    lng: -63.2510,
+    currentDistance: '2.1 km',
+    bio: 'Gasista matriculado habilitado por Ecogas en Villa María y Villa Nueva. Pruebas de hermeticidad y trámites oficiales.',
     priceHint: '$22.000',
     priceUnit: 'por trabajo base',
     skills: ['Gasistas', 'Termotanques', 'Estufas'],
@@ -83,9 +92,12 @@ const PROFESSIONALS_DATA = [
     matricula: 'MAT-OB-1823',
     rating: 4.5,
     reviewsCount: 62,
-    zone: 'Córdoba Capital y Alrededores',
-    city: 'Córdoba, Córdoba',
-    bio: 'Maestro mayor de obra. Refacciones de cocinas y baños, colocación de cerámicos y revoques finos.',
+    zone: 'B° Palermo · Villa María',
+    city: 'Villa María, Córdoba',
+    lat: -32.4250,
+    lng: -63.2350,
+    currentDistance: '2.7 km',
+    bio: 'Maestro mayor de obra en Villa María. Refacciones integrales, colocación de porcelanatos, revoques y contrapisos.',
     priceHint: '$25.000',
     priceUnit: 'por jornada base',
     skills: ['Albañilería', 'Cerámicos', 'Refacciones'],
@@ -95,28 +107,31 @@ const PROFESSIONALS_DATA = [
   {
     id: 'pro-1',
     name: 'Marcos R.',
-    trade: 'Electricista Matriculado',
+    trade: 'Electricista Matriculado ERSEPT',
     category: 'electricidad',
     avatar: 'assets/marcos.jpg',
     badge: 'Nuevo Calificado',
     verified: true,
     certified: true,
-    matricula: 'MAT-EL-4982',
+    matricula: 'ERSEPT #4982',
     rating: 4.9,
     reviewsCount: 38,
-    zone: 'Palermo · Recoleta · Colegiales',
-    city: 'CABA',
-    bio: 'Especialista en instalaciones eléctricas domiciliarias y comerciales, tableros seccionales, luminaria LED y detección de fugas a tierra.',
+    zone: 'B° Parque Norte · Villa María',
+    city: 'Villa María, Córdoba',
+    lat: -32.3920,
+    lng: -63.2300,
+    currentDistance: '3.2 km',
+    bio: 'Especialista en instalaciones eléctricas en Villa María. Tableros seccionales, luminaria LED y detección de fugas a tierra.',
     priceHint: '$16.500',
     priceUnit: 'por trabajo base',
-    skills: ['Tableros Eléctricos', 'Luminarias LED', 'Urgencias 24h', 'Certificado DCI'],
+    skills: ['Tableros Eléctricos', 'Luminarias LED', 'Urgencias 24h', 'Certificado ERSEPT'],
     completedJobs: 38,
     responseTime: '< 15 min'
   },
   {
     id: 'pro-2',
     name: 'Sofía L.',
-    trade: 'Plomería y Sanitarios',
+    trade: 'Plomería y Sanitarios Pro',
     category: 'plomeria',
     avatar: 'assets/sofia.jpg',
     badge: 'Verificada Pro',
@@ -125,9 +140,12 @@ const PROFESSIONALS_DATA = [
     matricula: 'MAT-PL-3104',
     rating: 5.0,
     reviewsCount: 52,
-    zone: 'Belgrano · Núñez · Vicente López',
-    city: 'CABA / GBA Norte',
-    bio: 'Plomera matriculada con más de 8 años de experiencia. Reparación de pérdidas de agua, destapes con máquina, termofusión y presurizadoras.',
+    zone: 'B° Santa Ana · Villa María',
+    city: 'Villa María, Córdoba',
+    lat: -32.3990,
+    lng: -63.2450,
+    currentDistance: '1.8 km',
+    bio: 'Plomera matriculada con más de 8 años de trayectoria en Villa María. Pérdidas, termofusión Acqua System y bombas presurizadoras.',
     priceHint: '$18.000',
     priceUnit: 'por visita técnica',
     skills: ['Termofusión Acqua System', 'Bombas Rowa', 'Destapes', 'Griferías FV'],
@@ -137,21 +155,24 @@ const PROFESSIONALS_DATA = [
   {
     id: 'pro-3',
     name: 'Claudio V.',
-    trade: 'Gasista Matriculado de 1ra',
+    trade: 'Gasista Matriculado Ecogas',
     category: 'gas',
     avatar: 'assets/claudio.jpg',
     badge: 'Matriculado Oficial',
     verified: true,
     certified: true,
-    matricula: 'METROGAS #84920',
+    matricula: 'ECOGAS #84920',
     rating: 4.9,
     reviewsCount: 84,
-    zone: 'Caballito · Almagro · Flores',
-    city: 'CABA',
-    bio: 'Gasista matriculado habilitado por distribuidoras para firmas de Metrogas / Naturgy. Calderas, estufas tiro balanceado y pruebas de hermeticidad.',
+    zone: 'Villa Nueva Centro · Costanera',
+    city: 'Villa Nueva, Córdoba',
+    lat: -32.4230,
+    lng: -63.2500,
+    currentDistance: '2.4 km',
+    bio: 'Gasista matriculado habilitado por Ecogas para firmas reglamentarias en Villa Nueva y Villa María. Calderas, calefones y tiro balanceado.',
     priceHint: '$22.000',
     priceUnit: 'por inspección reglamentaria',
-    skills: ['Metrogas Habilitado', 'Calderas Duales', 'Prueba de Hermeticidad', 'Trámites Forma 1022'],
+    skills: ['Ecogas Habilitado', 'Calderas Duales', 'Prueba de Hermeticidad', 'Trámites Forma 1022'],
     completedJobs: 84,
     responseTime: '< 20 min'
   },
@@ -167,9 +188,12 @@ const PROFESSIONALS_DATA = [
     matricula: 'REG-PNT-119',
     rating: 4.8,
     reviewsCount: 41,
-    zone: 'Villa Urquiza · Villa del Parque',
-    city: 'CABA',
-    bio: 'Pintura de interiores y exteriores, tratamiento antihumedad, aplicación de microcemento y enduido profesional. Limpieza impecable garantizada.',
+    zone: 'B° Güemes · Villa María',
+    city: 'Villa María, Córdoba',
+    lat: -32.4080,
+    lng: -63.2280,
+    currentDistance: '1.9 km',
+    bio: 'Pintura de interiores y frentes en Villa María, tratamiento antihumedad, aplicación de microcemento y enduido profesional.',
     priceHint: '$6.500',
     priceUnit: 'por m² mano de obra',
     skills: ['Látex y Sintético', 'Microcemento', 'Tratamiento Antihumedad', 'Cielorrasos'],
@@ -188,9 +212,12 @@ const PROFESSIONALS_DATA = [
     matricula: 'CER-SEC-992',
     rating: 4.95,
     reviewsCount: 67,
-    zone: 'Centro · San Telmo · Retiro',
-    city: 'CABA',
-    bio: 'Apertura de puertas sin rotura, cambio de combinaciones, instalación de cerraduras multipunto computarizadas y cerrojos de seguridad.',
+    zone: 'Centro · San Martín y Entre Ríos',
+    city: 'Villa María, Córdoba',
+    lat: -32.4095,
+    lng: -63.2405,
+    currentDistance: '0.6 km',
+    bio: 'Aperturas de urgencia sin rotura en Villa María y Villa Nueva. Cambio de combinación, cerrojos de seguridad y copias computarizadas.',
     priceHint: '$19.000',
     priceUnit: 'urgencia guardia',
     skills: ['Aperturas sin Daño', 'Cerraduras Trabex/Kallay', 'Puertas Blindadas', 'Móvil de Urgencia'],
@@ -209,9 +236,12 @@ const PROFESSIONALS_DATA = [
     matricula: 'CACAAV-7718',
     rating: 4.88,
     reviewsCount: 49,
-    zone: 'Saavedra · San Isidro · San Martín',
-    city: 'GBA Norte',
-    bio: 'Instalación y service oficial de aires acondicionados Split e Inverter. Carga de gas R410A / R32, presurización con nitrógeno y limpieza de filtros.',
+    zone: 'B° Rivadavia · Villa María',
+    city: 'Villa María, Córdoba',
+    lat: -32.4150,
+    lng: -63.2340,
+    currentDistance: '1.5 km',
+    bio: 'Instalación y service de aires acondicionados Split e Inverter en Villa María. Carga de gas R410A / R32 y mantenimiento preventivo.',
     priceHint: '$35.000',
     priceUnit: 'instalación hasta 3000f',
     skills: ['Instalador CACAAV', 'Gases Ecológicos', 'Inverter', 'Garantía Oficial'],
@@ -1235,18 +1265,16 @@ function closeAccountModal() {
 /* ==========================================================================
    PORTAL DEDICADO SADEMY PRO (DASHBOARD SIN SCROLL)
    ========================================================================== */
-function openProDashboardModal(initialTab = 'crm') {
+function openProDashboardModal(initialTab = 'crm', initialCrmSubTab = 'balance') {
   if (appState.currentRole !== 'pro' && appState.currentRole !== 'admin') {
-    triggerHapticFeedback();
-    playPop();
-    showToast('Acceso para Profesionales Verificados', 'El Portal PRO y CRM es de uso exclusivo para técnicos y profesionales matriculados.');
-    openAuthModal('register');
-    switchRegisterRole('pro');
-    return;
+    switchProfile('pro');
   }
 
   triggerHapticFeedback();
   playPop();
+  if (initialTab === 'crm' && initialCrmSubTab) {
+    currentCrmSubTab = initialCrmSubTab;
+  }
   switchProDashboardTab(initialTab);
   renderWorkerInvoicesList();
 
@@ -3907,6 +3935,11 @@ function renderProfessionalsDirectory() {
                 Verificado
               </span>
               <span>·</span>
+              <span style="color: #047857; font-weight: 700; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 2px 7px; border-radius: 999px; font-size: 0.72rem; display: inline-flex; align-items: center; gap: 3px;">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                A ${pro.currentDistance || '1.2 km'} (${pro.zone.split('·')[0].trim()})
+              </span>
+              <span>·</span>
               <span>${expText}</span>
             </div>
             <div style="font-size: 0.84rem; font-weight: 700; color: #1A201C; margin-top: 4px;">
@@ -4469,17 +4502,160 @@ function switchMobileNavTab(tab) {
   }
 }
 
-// Selector de Ciudad
-const CITIES = ['Córdoba, Córdoba', 'CABA, Buenos Aires', 'Rosario, Santa Fe', 'Mendoza, Mendoza'];
+// ============================================================================
+// GEOLOCALIZACIÓN Y SELECCIÓN DE BARRIOS EN VILLA MARÍA / VILLA NUEVA (CÓRDOBA)
+// ============================================================================
+const CITIES = ['Villa María, Córdoba', 'Villa Nueva, Córdoba', 'Córdoba Capital', 'Bell Ville, Córdoba'];
 let currentCityIndex = 0;
+
+const NEIGHBORHOOD_COORDS = {
+  'centro': { name: 'Centro', city: 'Villa María', lat: -32.4110, lng: -63.2420 },
+  'ameghino': { name: 'B° Ameghino', city: 'Villa María', lat: -32.4020, lng: -63.2380 },
+  'san_juan': { name: 'B° San Juan Bautista', city: 'Villa María', lat: -32.4180, lng: -63.2510 },
+  'santa_ana': { name: 'B° Santa Ana', city: 'Villa María', lat: -32.3990, lng: -63.2450 },
+  'palermo': { name: 'B° Palermo', city: 'Villa María', lat: -32.4250, lng: -63.2350 },
+  'parque_norte': { name: 'B° Parque Norte', city: 'Villa María', lat: -32.3920, lng: -63.2300 },
+  'guemes': { name: 'B° Güemes', city: 'Villa María', lat: -32.4080, lng: -63.2280 },
+  'rivadavia': { name: 'B° Rivadavia', city: 'Villa María', lat: -32.4150, lng: -63.2340 },
+  'villa_nueva': { name: 'Villa Nueva Centro', city: 'Villa Nueva', lat: -32.4230, lng: -63.2500 }
+};
+
+function calculateHaversineDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Radio de la Tierra en km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = 
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+function openLocationModal() {
+  triggerHapticFeedback();
+  playPop();
+  const modal = document.getElementById('modal-location-selector');
+  if (modal) modal.classList.add('active');
+}
+
+function closeLocationModal() {
+  const modal = document.getElementById('modal-location-selector');
+  if (modal) modal.classList.remove('active');
+}
+
+function selectNeighborhoodLocation(neighborhoodKey) {
+  triggerHapticFeedback();
+  playPop();
+  const nb = NEIGHBORHOOD_COORDS[neighborhoodKey];
+  if (!nb) return;
+
+  appState.userLocation = {
+    lat: nb.lat,
+    lng: nb.lng,
+    name: `${nb.name}, ${nb.city}`,
+    neighborhoodName: nb.name,
+    key: neighborhoodKey,
+    isGps: false
+  };
+
+  const navCity = document.getElementById('nav-city-text');
+  const heroCity = document.getElementById('hero-current-city');
+  const reqCity = document.getElementById('req-quote-city-label');
+
+  const label = `${nb.name}, ${nb.city}`;
+  if (navCity) navCity.textContent = label;
+  if (heroCity) heroCity.textContent = label;
+  if (reqCity) reqCity.textContent = label;
+
+  document.querySelectorAll('.neighborhood-pill-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+
+  updateProfessionalsDistances();
+  closeLocationModal();
+  showToast('Ubicación fijada', `Mostrando profesionales ordenados por cercanía a ${nb.name}.`);
+}
+
+function requestUserGeolocation() {
+  triggerHapticFeedback();
+  playPop();
+
+  if (!navigator.geolocation) {
+    showToast('GPS no disponible', 'Tu navegador no soporta geolocalización. Usaremos Villa María Centro.');
+    selectNeighborhoodLocation('centro');
+    return;
+  }
+
+  showToast('Detectando ubicación...', 'Solicitando permiso de GPS en tu dispositivo.');
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+      const distToVm = calculateHaversineDistance(lat, lng, -32.4110, -63.2420);
+
+      appState.userLocation = {
+        lat: lat,
+        lng: lng,
+        name: distToVm <= 30 ? 'Villa María (GPS en Vivo)' : 'Villa María (GPS)',
+        isGps: true
+      };
+
+      const navCity = document.getElementById('nav-city-text');
+      const heroCity = document.getElementById('hero-current-city');
+      const reqCity = document.getElementById('req-quote-city-label');
+      const banner = document.getElementById('location-detected-banner');
+
+      if (navCity) navCity.textContent = 'Villa María (GPS)';
+      if (heroCity) heroCity.textContent = 'Villa María (GPS en Vivo)';
+      if (reqCity) reqCity.textContent = 'Villa María (GPS)';
+      if (banner) banner.style.display = 'block';
+
+      updateProfessionalsDistances();
+      playSuccessChime();
+      closeLocationModal();
+
+      showToast(
+        'Ubicación GPS Verificada',
+        `Profesionales ordenados por cercanía real (${distToVm < 1 ? 'En tu zona inmediata' : distToVm.toFixed(1) + ' km'}).`
+      );
+    },
+    (error) => {
+      console.warn('Geolocation denied or unavailable:', error);
+      selectNeighborhoodLocation('centro');
+      showToast('Ubicación predeterminada', 'Se estableció Villa María Centro como punto de referencia.');
+    },
+    { timeout: 10000, enableHighAccuracy: true }
+  );
+}
+
+function updateProfessionalsDistances() {
+  const userLat = appState.userLocation?.lat || -32.4110;
+  const userLng = appState.userLocation?.lng || -63.2420;
+
+  PROFESSIONALS_DATA.forEach(pro => {
+    const proLat = pro.lat || -32.4110;
+    const proLng = pro.lng || -63.2420;
+    const d = calculateHaversineDistance(userLat, userLng, proLat, proLng);
+    pro.currentDistance = d < 1 ? `${Math.round(d * 1000)} m` : `${d.toFixed(1)} km`;
+    pro.currentDistanceKm = d;
+  });
+
+  PROFESSIONALS_DATA.sort((a, b) => (a.currentDistanceKm || 0) - (b.currentDistanceKm || 0));
+
+  renderProfessionalsDirectory();
+}
 
 function cycleCitySelection() {
   triggerHapticFeedback();
   playPop();
   currentCityIndex = (currentCityIndex + 1) % CITIES.length;
   const newCity = CITIES[currentCityIndex];
+  const navCity = document.getElementById('nav-city-text');
   const heroCity = document.getElementById('hero-current-city');
   const reqCity = document.getElementById('req-quote-city-label');
+  if (navCity) navCity.textContent = newCity;
   if (heroCity) heroCity.textContent = newCity;
   if (reqCity) reqCity.textContent = newCity;
   showToast('Ciudad actualizada', `Mostrando profesionales disponibles en ${newCity}.`);
@@ -5442,105 +5618,156 @@ function approveCorporateAccount(inquiryId) {
 }
 
 // ============================================================================
-// 15. SADEMY CRM PRO (GESTIÓN DE CLIENTES, COBROS, HISTORIAL Y DIRECCIONES)
+// 15. SADEMY CRM PRO (FINANZAS, GASTOS, INGRESOS, COMPARATIVAS Y PREMIOS)
 // ============================================================================
 
-let currentCrmSubTab = 'clientes'; // 'clientes' | 'trabajos' | 'cobros'
+const DEFAULT_PRO_FINANCES = {
+  currentMonthName: 'Octubre 2026',
+  previousMonthName: 'Septiembre 2026',
+  currentGrossBilled: 520000,
+  previousGrossBilled: 392500,
+  growthPercent: 32.5,
+  jobsCompleted: 14,
+  sademyFeePaid: 41600, // 8% plan Pro
+  totalExpenses: 84200,
+  netPocketProfit: 394200,
+  historyMonths: [
+    { month: 'Jul', billed: 280000, heightPercent: 54 },
+    { month: 'Ago', billed: 340000, heightPercent: 65 },
+    { month: 'Sep', billed: 392500, heightPercent: 75 },
+    { month: 'Oct', billed: 520000, heightPercent: 100, active: true }
+  ]
+};
+
+const DEFAULT_PRO_EXPENSES = [
+  {
+    id: 'exp-1',
+    date: '16/10/2026',
+    concept: 'Caños termofusión 25mm, codos y llave de paso',
+    category: 'Materiales y Repuestos',
+    vendor: 'Ferretería Central Villa María',
+    amount: 24500
+  },
+  {
+    id: 'exp-2',
+    date: '14/10/2026',
+    concept: 'Carga Combustible Nafta Súper',
+    category: 'Combustible y Traslados',
+    vendor: 'YPF Av. San Martín (Villa María)',
+    amount: 18000
+  },
+  {
+    id: 'exp-3',
+    date: '10/10/2026',
+    concept: 'Pinza amperométrica y juego destornilladores 1000V',
+    category: 'Herramientas y Mantenimiento',
+    vendor: 'Bulonería Ameghino (Villa María)',
+    amount: 28700
+  },
+  {
+    id: 'exp-4',
+    date: '05/10/2026',
+    concept: 'Cuota Monotributo ARCA e Ingresos Brutos Córdoba',
+    category: 'Monotributo y Tributos',
+    vendor: 'ARCA / Rentas Cba',
+    amount: 13000
+  }
+];
+
+const DEFAULT_PRO_REWARDS = [
+  {
+    id: 'rew-zero-commission',
+    title: 'Comisión 0% en tus próximas 3 órdenes',
+    description: 'Bonificación del 100% de la comisión Sademy en tus próximos 3 servicios en Villa María por haber superado tu meta mensual en más del 30%.',
+    badge: 'Meta +30% Superada',
+    benefit: 'Ahorro de hasta $18.000 ARS',
+    claimed: false,
+    actionText: 'Activar Comisión 0%'
+  },
+  {
+    id: 'rew-top-badge',
+    title: 'Insignia Dorada "Top Facturación Villa María"',
+    description: 'Tu perfil se destaca con borde dorado y prioridad en el algoritmo de búsqueda para clientes de Villa María y Villa Nueva.',
+    badge: 'Reputación 5.0',
+    benefit: '3x más solicitudes de clientes',
+    claimed: true,
+    actionText: '✓ Activo en tu perfil'
+  },
+  {
+    id: 'rew-voucher-hardware',
+    title: 'Voucher $25.000 ARS en Ferreterías Adheridas',
+    description: 'Válido para compra de insumos, cañerías o cables en Ferretería Central y Corralón Alem de Villa María.',
+    badge: 'Convenio Sademy Villa María',
+    benefit: '$25.000 ARS bonificados',
+    claimed: false,
+    actionText: 'Reclamar Cupón QR'
+  },
+  {
+    id: 'rew-insurance',
+    title: 'Póliza de Herramientas y ART Bonificada',
+    description: 'Cobertura integral contra robo o daño de instrumental de trabajo por 30 días sin costo otorgada por Sademy.',
+    badge: 'Protección Pro Sademy',
+    benefit: 'Cobertura hasta $1.500.000 ARS',
+    claimed: true,
+    actionText: '✓ Póliza Bonificada'
+  }
+];
+
+let currentCrmSubTab = 'balance'; // 'balance' | 'gastos' | 'premios' | 'clientes' | 'trabajos'
 let currentCrmFilter = '';
+let currentExpenseCategoryFilter = 'all';
 
 function renderWorkerCrmDashboard() {
   const container = document.getElementById('pro-dash-view-crm');
   if (!container) return;
 
+  if (!appState.proExpenses) {
+    appState.proExpenses = [...DEFAULT_PRO_EXPENSES];
+  }
+  if (!appState.proFinances) {
+    appState.proFinances = { ...DEFAULT_PRO_FINANCES };
+  }
+  if (!appState.proRewards) {
+    appState.proRewards = [...DEFAULT_PRO_REWARDS];
+  }
+
+  // Recalcular finanzas en vivo
+  const totalExpenses = appState.proExpenses.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
+  appState.proFinances.totalExpenses = totalExpenses;
+  appState.proFinances.netPocketProfit = appState.proFinances.currentGrossBilled - appState.proFinances.sademyFeePaid - totalExpenses;
+
+  const f = appState.proFinances;
   const clients = appState.proCrmClients || DEFAULT_PRO_CRM_CLIENTS;
-  
-  // Métricas ejecutivas
-  const totalClients = clients.length;
-  let totalJobs = 0;
-  let totalGross = 0;
-  let totalNet = 0;
-
-  clients.forEach(c => {
-    totalJobs += (c.jobsCompleted || (c.history ? c.history.length : 0));
-    totalGross += (c.totalBilled || 0);
-    totalNet += (c.totalNetEarned || 0);
-  });
-
-  const savedFeeTotal = Math.round(totalGross * (0.15 - 0.08));
 
   container.innerHTML = `
-    <!-- Resumen Ejecutivo Superior / Apple Bento Style -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-bottom: 20px;">
-      
-      <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 14px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
-          <span style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #64748B; letter-spacing: 0.04em;">Clientes Activos</span>
-          <span class="badge-tag" style="background: #ECFDF5; color: #065F46; font-size: 0.68rem; font-weight: 800;">Cartera</span>
-        </div>
-        <div style="font-size: 1.45rem; font-weight: 900; color: #111827;">${totalClients} <span style="font-size: 0.82rem; font-weight: 600; color: #64748B;">frecuentes</span></div>
-        <div style="font-size: 0.72rem; color: #059669; font-weight: 600; margin-top: 3px;">100% Calificación 5.0 / 5.0</div>
-      </div>
+    <!-- Barra Superior de Segmented Control Apple iOS -->
+    <div style="display: flex; gap: 6px; margin-bottom: 20px; background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 6px 8px; overflow-x: auto;">
+      <button type="button" id="crm-subtab-btn-balance" onclick="switchCrmSubTab('balance')" class="profile-role-pill ${currentCrmSubTab === 'balance' ? 'active' : ''}" style="flex: 1.3; padding: 8px 12px; font-size: 0.8rem; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        <span>Finanzas & Balance</span>
+        <span class="badge-tag" style="background: #10B981; color: #FFF; font-size: 0.68rem; font-weight: 800; padding: 1px 6px;">+32.5%</span>
+      </button>
 
-      <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 14px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
-          <span style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #64748B; letter-spacing: 0.04em;">Trabajos Realizados</span>
-          <span class="badge-tag" style="background: #EFF6FF; color: #1E40AF; font-size: 0.68rem; font-weight: 800;">Historial</span>
-        </div>
-        <div style="font-size: 1.45rem; font-weight: 900; color: #111827;">${totalJobs} <span style="font-size: 0.82rem; font-weight: 600; color: #64748B;">servicios</span></div>
-        <div style="font-size: 0.72rem; color: #2563EB; font-weight: 600; margin-top: 3px;">Garantías oficiales vigentes</div>
-      </div>
+      <button type="button" id="crm-subtab-btn-gastos" onclick="switchCrmSubTab('gastos')" class="profile-role-pill ${currentCrmSubTab === 'gastos' ? 'active' : ''}" style="flex: 1.1; padding: 8px 12px; font-size: 0.8rem; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+        <span>Gastos ($${(totalExpenses / 1000).toFixed(0)}k)</span>
+      </button>
 
-      <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 14px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
-          <span style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #64748B; letter-spacing: 0.04em;">Facturado Neto</span>
-          <span class="badge-tag" style="background: #ECFDF5; color: #065F46; font-size: 0.68rem; font-weight: 800;">En Billetera</span>
-        </div>
-        <div style="font-size: 1.45rem; font-weight: 900; color: #047857;">$${totalNet.toLocaleString('es-AR')} <span style="font-size: 0.82rem; font-weight: 600;">ARS</span></div>
-        <div style="font-size: 0.72rem; color: #059669; font-weight: 600; margin-top: 3px;">+${totalGross.toLocaleString('es-AR')} ARS bruto</div>
-      </div>
+      <button type="button" id="crm-subtab-btn-premios" onclick="switchCrmSubTab('premios')" class="profile-role-pill ${currentCrmSubTab === 'premios' ? 'active' : ''}" style="flex: 1.1; padding: 8px 12px; font-size: 0.8rem; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        <span>Premios Sademy</span>
+        <span class="badge-tag" style="background: #F59E0B; color: #FFF; font-size: 0.68rem; font-weight: 800; padding: 1px 6px;">4</span>
+      </button>
 
-      <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 14px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
-          <span style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #64748B; letter-spacing: 0.04em;">Ahorro Plan PRO</span>
-          <span class="badge-tag" style="background: #FEF3C7; color: #92400E; font-size: 0.68rem; font-weight: 800;">8% vs 15%</span>
-        </div>
-        <div style="font-size: 1.45rem; font-weight: 900; color: #B45309;">$${savedFeeTotal.toLocaleString('es-AR')} <span style="font-size: 0.82rem; font-weight: 600;">ARS</span></div>
-        <div style="font-size: 0.72rem; color: #92400E; font-weight: 600; margin-top: 3px;">Ahorrados en comisiones</div>
-      </div>
+      <button type="button" id="crm-subtab-btn-clientes" onclick="switchCrmSubTab('clientes')" class="profile-role-pill ${currentCrmSubTab === 'clientes' ? 'active' : ''}" style="flex: 1; padding: 8px 12px; font-size: 0.8rem; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+        <span>Clientes (${clients.length})</span>
+      </button>
 
-    </div>
-
-    <!-- Barra de Herramientas y Subpestañas del CRM -->
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 10px 14px;">
-      
-      <!-- Segmented Switcher de CRM -->
-      <div style="display: flex; gap: 6px;">
-        <button type="button" id="crm-subtab-btn-clientes" onclick="switchCrmSubTab('clientes')" class="profile-role-pill ${currentCrmSubTab === 'clientes' ? 'active' : ''}" style="padding: 7px 14px; font-size: 0.78rem; font-weight: 800; display: inline-flex; align-items: center; gap: 6px;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-          Clientes & Direcciones (${totalClients})
-        </button>
-        <button type="button" id="crm-subtab-btn-trabajos" onclick="switchCrmSubTab('trabajos')" class="profile-role-pill ${currentCrmSubTab === 'trabajos' ? 'active' : ''}" style="padding: 7px 14px; font-size: 0.78rem; font-weight: 800; display: inline-flex; align-items: center; gap: 6px;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-          Historial de Trabajos (${totalJobs})
-        </button>
-        <button type="button" id="crm-subtab-btn-cobros" onclick="switchCrmSubTab('cobros')" class="profile-role-pill ${currentCrmSubTab === 'cobros' ? 'active' : ''}" style="padding: 7px 14px; font-size: 0.78rem; font-weight: 800; display: inline-flex; align-items: center; gap: 6px;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="6" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="18" y2="12"></line></svg>
-          Cobros & Liquidaciones
-        </button>
-      </div>
-
-      <!-- Buscador y Botón Agregar -->
-      <div style="display: flex; align-items: center; gap: 8px; flex: 1; max-width: 440px; justify-content: flex-end;">
-        <div style="position: relative; width: 100%; max-width: 260px;">
-          <input type="text" id="crm-search-input" value="${currentCrmFilter}" oninput="filterWorkerCrm(this.value)" placeholder="Buscar cliente, dirección, zona..." style="width: 100%; font-size: 0.78rem; padding: 7px 12px 7px 30px; border-radius: 9px; border: 1.5px solid #CBD5E1; background: #FFFFFF; outline: none;">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2.2" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        </div>
-        <button type="button" class="btn btn-primary btn-sm" onclick="openCrmNewClientModal()" style="font-size: 0.78rem; font-weight: 800; background: #059669; padding: 7px 13px; border-radius: 9px; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px;">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          Nuevo Cliente
-        </button>
-      </div>
-
+      <button type="button" id="crm-subtab-btn-trabajos" onclick="switchCrmSubTab('trabajos')" class="profile-role-pill ${currentCrmSubTab === 'trabajos' ? 'active' : ''}" style="flex: 1; padding: 8px 12px; font-size: 0.8rem; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+        <span>Trabajos (${f.jobsCompleted})</span>
+      </button>
     </div>
 
     <!-- Contenedor Dinámico de Subvistas -->
@@ -5555,7 +5782,7 @@ function switchCrmSubTab(subTab) {
   playPop();
   currentCrmSubTab = subTab;
 
-  ['clientes', 'trabajos', 'cobros'].forEach(t => {
+  ['balance', 'gastos', 'premios', 'clientes', 'trabajos'].forEach(t => {
     const btn = document.getElementById(`crm-subtab-btn-${t}`);
     if (btn) {
       if (t === subTab) btn.classList.add('active');
@@ -5576,28 +5803,334 @@ function renderCrmSubView() {
   if (!container) return;
 
   const allClients = appState.proCrmClients || DEFAULT_PRO_CRM_CLIENTS;
-  
-  const filteredClients = allClients.filter(c => {
-    if (!currentCrmFilter) return true;
-    const matchName = (c.name || '').toLowerCase().includes(currentCrmFilter);
-    const matchZone = (c.zone || '').toLowerCase().includes(currentCrmFilter);
-    const matchAddress = (c.address || '').toLowerCase().includes(currentCrmFilter);
-    const matchPhone = (c.phone || '').toLowerCase().includes(currentCrmFilter);
-    const matchNotes = (c.notes || '').toLowerCase().includes(currentCrmFilter);
-    const matchJob = (c.history || []).some(h => 
-      (h.title || '').toLowerCase().includes(currentCrmFilter) || 
-      (h.orderId && h.orderId.toLowerCase().includes(currentCrmFilter)) ||
-      (h.escrowCode && h.escrowCode.toLowerCase().includes(currentCrmFilter))
-    );
-    return matchName || matchZone || matchAddress || matchPhone || matchNotes || matchJob;
-  });
 
-  if (currentCrmSubTab === 'clientes') {
+  if (currentCrmSubTab === 'balance') {
+    renderCrmBalanceView(container);
+  } else if (currentCrmSubTab === 'gastos') {
+    renderCrmExpensesView(container);
+  } else if (currentCrmSubTab === 'premios') {
+    renderCrmRewardsView(container);
+  } else if (currentCrmSubTab === 'clientes') {
+    const filteredClients = allClients.filter(c => {
+      if (!currentCrmFilter) return true;
+      const matchName = (c.name || '').toLowerCase().includes(currentCrmFilter);
+      const matchZone = (c.zone || '').toLowerCase().includes(currentCrmFilter);
+      const matchAddress = (c.address || '').toLowerCase().includes(currentCrmFilter);
+      return matchName || matchZone || matchAddress;
+    });
     renderCrmClientsList(filteredClients, container);
   } else if (currentCrmSubTab === 'trabajos') {
-    renderCrmJobsHistory(filteredClients, container);
-  } else if (currentCrmSubTab === 'cobros') {
-    renderCrmPayoutsLedger(filteredClients, container);
+    renderCrmJobsHistory(allClients, container);
+  }
+}
+
+function renderCrmBalanceView(container) {
+  const f = appState.proFinances || DEFAULT_PRO_FINANCES;
+  const growth = f.growthPercent || 32.5;
+
+  container.innerHTML = `
+    <!-- Highlight Banner Apple Cupertino: Este mes facturaste un 32% más que el anterior -->
+    <div class="crm-growth-banner">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px;">
+        <div style="max-width: 620px;">
+          <div style="display: inline-flex; align-items: center; gap: 8px; background: #10B981; color: #FFFFFF; font-size: 0.74rem; font-weight: 800; padding: 4px 12px; border-radius: 999px; text-transform: uppercase; margin-bottom: 10px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+            Récord de Facturación · Villa María
+          </div>
+          <h3 style="font-size: 1.55rem; font-weight: 900; color: #064E3B; margin: 0 0 8px; line-height: 1.25;">
+            ¡Este mes facturaste un ${growth}% más que el mes anterior!
+          </h3>
+          <p style="font-size: 0.92rem; color: #047857; margin: 0; line-height: 1.5;">
+            En ${f.currentMonthName} alcanzaste <strong>$${f.currentGrossBilled.toLocaleString('es-AR')} ARS</strong> frente a $${f.previousGrossBilled.toLocaleString('es-AR')} ARS de ${f.previousMonthName} (+ $${(f.currentGrossBilled - f.previousGrossBilled).toLocaleString('es-AR')} ARS de incremento neto en Villa María).
+          </p>
+        </div>
+
+        <button type="button" class="btn btn-primary" onclick="switchCrmSubTab('premios')" style="background: #047857; font-weight: 800; font-size: 0.85rem; padding: 10px 18px; border-radius: 12px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(4, 120, 87, 0.3);">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          Reclamar Premios Sademy (4)
+        </button>
+      </div>
+
+      <!-- Gráfico Comparativo Mensual Apple Style -->
+      <div style="margin-top: 22px; background: rgba(255, 255, 255, 0.85); border: 1.5px solid #A7F3D0; border-radius: 16px; padding: 18px 22px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+          <strong style="font-size: 0.85rem; color: #064E3B; text-transform: uppercase; letter-spacing: 0.04em;">Evolución de Facturación Mes a Mes (Villa María)</strong>
+          <span class="badge-tag" style="background: #D1FAE5; color: #065F46; font-weight: 800; font-size: 0.74rem;">Meta +30% Superada</span>
+        </div>
+        
+        <div style="display: flex; align-items: flex-end; gap: 16px; height: 115px; padding-top: 10px;">
+          ${f.historyMonths.map(m => `
+            <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%;">
+              <div style="font-size: 0.76rem; font-weight: 800; color: ${m.active ? '#047857' : '#64748B'};">
+                $${(m.billed / 1000).toFixed(0)}k
+              </div>
+              <div style="width: 100%; flex: 1; display: flex; align-items: flex-end;">
+                <div style="width: 100%; height: ${m.heightPercent}%; background: ${m.active ? 'linear-gradient(180deg, #10B981 0%, #059669 100%)' : '#CBD5E1'}; border-radius: 8px 8px 4px 4px; box-shadow: ${m.active ? '0 4px 14px rgba(16, 185, 129, 0.4)' : 'none'};"></div>
+              </div>
+              <span style="font-size: 0.78rem; font-weight: 800; color: ${m.active ? '#064E3B' : '#64748B'};">${m.month} ${m.active ? '★' : ''}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+
+    <!-- Desglose Financiero: Ingresos vs Gastos vs Ganancia Neta Real -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-bottom: 22px;">
+      
+      <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 16px;">
+        <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #64748B; margin-bottom: 4px;">Ingresos Brutos del Mes</div>
+        <div style="font-size: 1.5rem; font-weight: 900; color: #111827;">$${f.currentGrossBilled.toLocaleString('es-AR')} <span style="font-size: 0.8rem; font-weight: 600; color: #64748B;">ARS</span></div>
+        <div style="font-size: 0.74rem; color: #059669; font-weight: 700; margin-top: 4px;">${f.jobsCompleted} servicios en Villa María</div>
+      </div>
+
+      <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 16px;">
+        <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #DC2626; margin-bottom: 4px;">Gastos Operativos Registrados</div>
+        <div style="font-size: 1.5rem; font-weight: 900; color: #DC2626;">-$${f.totalExpenses.toLocaleString('es-AR')} <span style="font-size: 0.8rem; font-weight: 600; color: #DC2626;">ARS</span></div>
+        <div style="font-size: 0.74rem; color: #DC2626; font-weight: 700; margin-top: 4px;">${appState.proExpenses.length} compras de insumos/YPF</div>
+      </div>
+
+      <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 16px;">
+        <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #64748B; margin-bottom: 4px;">Comisión Sademy (8% Plan Pro)</div>
+        <div style="font-size: 1.5rem; font-weight: 900; color: #64748B;">-$${f.sademyFeePaid.toLocaleString('es-AR')} <span style="font-size: 0.8rem; font-weight: 600;">ARS</span></div>
+        <div style="font-size: 0.74rem; color: #059669; font-weight: 700; margin-top: 4px;">Ahorrás 7% frente al plan básico</div>
+      </div>
+
+      <div style="background: #ECFDF5; border: 1.5px solid #A7F3D0; border-radius: 14px; padding: 16px;">
+        <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #065F46; margin-bottom: 4px;">Ganancia Neta de Bolsillo</div>
+        <div style="font-size: 1.6rem; font-weight: 900; color: #047857;">$${f.netPocketProfit.toLocaleString('es-AR')} <span style="font-size: 0.85rem; font-weight: 600;">ARS</span></div>
+        <div style="font-size: 0.74rem; color: #047857; font-weight: 800; margin-top: 4px;">Rentabilidad real: ${((f.netPocketProfit / f.currentGrossBilled) * 100).toFixed(1)}%</div>
+      </div>
+
+    </div>
+
+    <!-- Acciones Rápidas -->
+    <div style="display: flex; justify-content: space-between; align-items: center; background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 14px 18px; flex-wrap: wrap; gap: 12px;">
+      <div>
+        <strong style="color: #111827; font-size: 0.95rem;">¿Compraste materiales o combustible en Villa María?</strong>
+        <p style="font-size: 0.8rem; color: #64748B; margin: 2px 0 0;">Mantené tu balance al día anotando los costos de repuestos y traslados.</p>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="switchCrmSubTab('gastos')" style="font-weight: 700;">Ver Tabla de Gastos</button>
+        <button type="button" class="btn btn-primary btn-sm" onclick="openCrmNewExpenseModal()" style="font-weight: 800; background: #DC2626; color: #FFF; border: none;">+ Registrar Gasto</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderCrmExpensesView(container) {
+  const expenses = appState.proExpenses || DEFAULT_PRO_EXPENSES;
+  const filtered = expenses.filter(e => {
+    if (currentExpenseCategoryFilter === 'all') return true;
+    return e.category === currentExpenseCategoryFilter;
+  });
+
+  const totalFiltered = filtered.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
+
+  container.innerHTML = `
+    <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 16px; overflow: hidden;">
+      
+      <div style="padding: 16px 20px; border-bottom: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: #FAFAFA;">
+        <div>
+          <strong style="font-size: 1rem; color: #111827;">Libro de Gastos & Compras Operativas (Villa María)</strong>
+          <p style="font-size: 0.78rem; color: #64748B; margin: 2px 0 0;">Deducibles de tu ganancia neta para balance contable y fiscal</p>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <select onchange="currentExpenseCategoryFilter = this.value; renderCrmExpensesView(document.getElementById('pro-crm-subview-content'))" style="padding: 7px 12px; font-size: 0.82rem; border: 1.5px solid #CBD5E1; border-radius: 8px; background: #FFF;">
+            <option value="all" ${currentExpenseCategoryFilter === 'all' ? 'selected' : ''}>Todas las categorías</option>
+            <option value="Materiales y Repuestos" ${currentExpenseCategoryFilter === 'Materiales y Repuestos' ? 'selected' : ''}>Materiales y Repuestos</option>
+            <option value="Combustible y Traslados" ${currentExpenseCategoryFilter === 'Combustible y Traslados' ? 'selected' : ''}>Combustible y Traslados</option>
+            <option value="Herramientas y Mantenimiento" ${currentExpenseCategoryFilter === 'Herramientas y Mantenimiento' ? 'selected' : ''}>Herramientas</option>
+            <option value="Monotributo y Tributos" ${currentExpenseCategoryFilter === 'Monotributo y Tributos' ? 'selected' : ''}>Monotributo / Tributos</option>
+          </select>
+          <button type="button" class="btn btn-primary btn-sm" onclick="openCrmNewExpenseModal()" style="font-weight: 800; background: #DC2626; color: #FFF; border: none; padding: 8px 14px; border-radius: 9px;">
+            + Registrar Gasto
+          </button>
+        </div>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table class="admin-data-table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Concepto / Detalle</th>
+              <th>Categoría</th>
+              <th>Comercio / Proveedor</th>
+              <th>Importe</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${filtered.length === 0 ? `
+              <tr><td colspan="6" style="text-align: center; color: #94A3B8; padding: 24px;">No hay gastos registrados en esta categoría.</td></tr>
+            ` : filtered.map(e => `
+              <tr>
+                <td style="font-size: 0.82rem; color: #64748B;">${e.date}</td>
+                <td><strong style="color: #111827; font-size: 0.88rem;">${e.concept}</strong></td>
+                <td>
+                  <span class="badge-tag" style="background: #F1F5F9; color: #334155; font-weight: 700; font-size: 0.72rem;">
+                    ${e.category}
+                  </span>
+                </td>
+                <td style="font-size: 0.84rem; color: #475569;">${e.vendor || 'Villa María'}</td>
+                <td>
+                  <strong style="color: #DC2626; font-size: 0.92rem;">-$${Number(e.amount).toLocaleString('es-AR')} ARS</strong>
+                </td>
+                <td>
+                  <button type="button" onclick="deleteCrmExpense('${e.id}')" style="background: none; border: none; color: #94A3B8; cursor: pointer; padding: 4px;" title="Eliminar gasto">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                  </button>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+
+      <div style="padding: 14px 20px; background: #F8FAFC; border-top: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 0.84rem; color: #64748B;">Total Gastos en la vista:</span>
+        <strong style="font-size: 1.05rem; color: #DC2626;">-$${totalFiltered.toLocaleString('es-AR')} ARS</strong>
+      </div>
+    </div>
+  `;
+}
+
+function renderCrmRewardsView(container) {
+  const rewards = appState.proRewards || DEFAULT_PRO_REWARDS;
+
+  container.innerHTML = `
+    <div>
+      <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 16px; padding: 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+        <div>
+          <div style="display: inline-flex; align-items: center; gap: 6px; background: #FEF3C7; color: #92400E; font-size: 0.72rem; font-weight: 800; padding: 3px 10px; border-radius: 999px; text-transform: uppercase;">
+            🏆 Sademy Pro Rewards Club · Villa María
+          </div>
+          <h3 style="font-size: 1.25rem; font-weight: 900; color: #111827; margin: 4px 0 2px;">
+            Premios Exclusivos por Superar tu Meta Mensual (+30%)
+          </h3>
+          <p style="font-size: 0.84rem; color: #64748B; margin: 0;">
+            Sademy premia el crecimiento y la lealtad de sus profesionales con comisiones bonificadas, seguros y vouchers de compra.
+          </p>
+        </div>
+        <div style="background: #ECFDF5; border: 1.5px solid #A7F3D0; border-radius: 12px; padding: 8px 16px; text-align: right;">
+          <div style="font-size: 0.68rem; font-weight: 800; color: #065F46; text-transform: uppercase;">Crecimiento del Mes</div>
+          <div style="font-size: 1.35rem; font-weight: 900; color: #047857;">+32.5%</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
+        ${rewards.map(r => `
+          <div class="crm-reward-card" style="border: ${r.claimed ? '1.5px solid #A7F3D0' : '1.5px solid #E2E8F0'}; background: ${r.claimed ? '#F9FDFB' : '#FFFFFF'};">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span class="badge-tag" style="background: ${r.claimed ? '#DCFCE7' : '#FEF3C7'}; color: ${r.claimed ? '#166534' : '#92400E'}; font-weight: 800; font-size: 0.7rem;">
+                  ${r.badge}
+                </span>
+                <span style="font-size: 0.74rem; font-weight: 700; color: #059669;">
+                  ${r.benefit}
+                </span>
+              </div>
+              <h4 style="font-size: 1.05rem; font-weight: 800; color: #111827; margin: 0 0 6px;">
+                ${r.title}
+              </h4>
+              <p style="font-size: 0.82rem; color: #64748B; margin: 0 0 16px; line-height: 1.45;">
+                ${r.description}
+              </p>
+            </div>
+
+            <div>
+              ${r.claimed ? `
+                <div style="display: flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 800; color: #059669; padding: 8px 0;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  ${r.actionText}
+                </div>
+              ` : `
+                <button type="button" class="btn btn-primary" onclick="claimSademyReward('${r.id}')" style="width: 100%; padding: 10px; font-size: 0.84rem; font-weight: 800; border-radius: 10px; background: #047857; color: #FFFFFF; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(4, 120, 87, 0.25);">
+                  ${r.actionText}
+                </button>
+              `}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function openCrmNewExpenseModal() {
+  triggerHapticFeedback();
+  playPop();
+  const modal = document.getElementById('modal-crm-new-expense');
+  if (modal) modal.classList.add('active');
+}
+
+function closeCrmNewExpenseModal() {
+  const modal = document.getElementById('modal-crm-new-expense');
+  if (modal) modal.classList.remove('active');
+}
+
+function submitCrmNewExpense() {
+  triggerHapticFeedback();
+  playSuccessChime();
+
+  const concept = document.getElementById('expense-concept-input')?.value || 'Compra de repuestos';
+  const amount = Number(document.getElementById('expense-amount-input')?.value) || 0;
+  const category = document.getElementById('expense-category-input')?.value || 'Materiales y Repuestos';
+  const vendor = document.getElementById('expense-vendor-input')?.value || 'Ferretería Villa María';
+
+  const newExp = {
+    id: `exp-${Date.now()}`,
+    date: new Date().toLocaleDateString('es-AR'),
+    concept: concept.trim(),
+    amount: amount,
+    category: category,
+    vendor: vendor.trim()
+  };
+
+  if (!appState.proExpenses) {
+    appState.proExpenses = [...DEFAULT_PRO_EXPENSES];
+  }
+  appState.proExpenses.unshift(newExp);
+
+  closeCrmNewExpenseModal();
+  renderWorkerCrmDashboard();
+
+  showToast(
+    'Gasto Registrado con Éxito',
+    `Se anotaron -$${amount.toLocaleString('es-AR')} ARS (${concept}). Tu balance neto se actualizó en vivo.`
+  );
+}
+
+function deleteCrmExpense(expenseId) {
+  triggerHapticFeedback();
+  playPop();
+
+  if (appState.proExpenses) {
+    appState.proExpenses = appState.proExpenses.filter(e => e.id !== expenseId);
+    renderWorkerCrmDashboard();
+    showToast('Gasto eliminado', 'El gasto fue removido y el balance neto fue recalculado.');
+  }
+}
+
+function claimSademyReward(rewardId) {
+  triggerHapticFeedback();
+  playSuccessChime();
+
+  if (!appState.proRewards) {
+    appState.proRewards = [...DEFAULT_PRO_REWARDS];
+  }
+
+  const reward = appState.proRewards.find(r => r.id === rewardId);
+  if (reward) {
+    reward.claimed = true;
+    reward.actionText = '✓ Beneficio Activo';
+    renderCrmRewardsView(document.getElementById('pro-crm-subview-content'));
+
+    showToast(
+      '¡Premio Sademy Activado!',
+      `Has activado: "${reward.title}". Tu rendimiento del +32.5% en Villa María te otorga este beneficio exclusivo.`
+    );
   }
 }
 
