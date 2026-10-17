@@ -1231,7 +1231,7 @@ function updateNavAuthState() {
     // Modo Invitado (Sesión no iniciada)
     if (loginBtn) loginBtn.style.display = 'inline-flex';
     if (registerBtn) registerBtn.style.display = 'inline-flex';
-    if (googleNavBtn) googleNavBtn.style.display = 'inline-flex';
+    if (googleNavBtn) googleNavBtn.style.display = 'none';
     if (proBtn) proBtn.style.display = 'inline-flex';
     if (dropdownWrapper) dropdownWrapper.style.display = 'none';
     if (ribbon) ribbon.style.display = 'none';

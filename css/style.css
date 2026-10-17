@@ -5276,5 +5276,33 @@ body.sademy-dev-tools .apartado-control-bar {
   box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
 }
 
+/* Tarjetas Bento del Hero: Acceso a Directorio y CRM */
+.hero-banner-card {
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease !important;
+}
+
+.hero-banner-card:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04) !important;
+}
+
+.hero-banner-card:active {
+  transform: translateY(0) scale(0.99);
+}
+
+/* Navbar action buttons polish */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 900px) {
+  #nav-pro-btn span {
+    font-size: 0.76rem;
+  }
+}
+
+
 
 
