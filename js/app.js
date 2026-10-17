@@ -928,6 +928,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updateNavAuthState();
   updateOrdersBadges();
   renderMyOrdersModalList();
+  renderPriceEstimator('plomeria');
 
   // Inicializar por defecto como Visitante (Marketplace Público Screen 2)
   localStorage.setItem('sademy_apartado', 'guest');
@@ -4024,6 +4025,188 @@ function handleCleanHeroSearch() {
   }
 }
 
+/* ==========================================================================
+   CALCULADORA DE PRECIOS DE REFERENCIA ESTIMATIVOS (APPLE BENTO)
+   ========================================================================== */
+const ESTIMATOR_PRICES_DATA = {
+  plomeria: [
+    {
+      title: 'Reparación de pérdida o cambio de grifería',
+      desc: 'Canilla de cocina o baño, flexible, cuerito y llaves de paso.',
+      price: '$16.000 – $24.000 ARS',
+      time: '1 a 2 horas',
+      badge: 'Frecuente',
+      proCategory: 'plomeria'
+    },
+    {
+      title: 'Destape de cañería o bacha de cocina',
+      desc: 'Desobstrucción mecánica con máquina rotativa y prueba de drenaje.',
+      price: '$22.000 – $32.000 ARS',
+      time: '1 a 2 horas',
+      badge: 'Urgencia',
+      proCategory: 'plomeria'
+    },
+    {
+      title: 'Instalación de termotanque o calefón',
+      desc: 'Conexión de agua fría/caliente, fijación y purgado del sistema.',
+      price: '$48.000 – $68.000 ARS',
+      time: '3 a 4 horas',
+      badge: 'Garantía 6m',
+      proCategory: 'plomeria'
+    }
+  ],
+  electricidad: [
+    {
+      title: 'Instalación de ventilador de techo o apliques',
+      desc: 'Fijación segura, conexionado a llave y balanceo de palas.',
+      price: '$18.000 – $26.000 ARS',
+      time: '1 a 2 horas',
+      badge: 'Frecuente',
+      proCategory: 'electricidad'
+    },
+    {
+      title: 'Cambio de disyuntor y llaves térmicas',
+      desc: 'Adecuación de tablero principal según norma de seguridad AEA.',
+      price: '$26.000 – $38.000 ARS',
+      time: '2 horas',
+      badge: 'Matriculado',
+      proCategory: 'electricidad'
+    },
+    {
+      title: 'Detección de cortocircuito o fuga a tierra',
+      desc: 'Revisión con multímetro de línea para restablecer la luz sin riesgo.',
+      price: '$30.000 – $45.000 ARS',
+      time: '2 a 3 horas',
+      badge: 'Urgencia',
+      proCategory: 'electricidad'
+    }
+  ],
+  gas: [
+    {
+      title: 'Instalación y calibración de cocina',
+      desc: 'Conexión flexible homologado de acero, prueba con agua jabonosa.',
+      price: '$28.000 – $42.000 ARS',
+      time: '1 a 2 horas',
+      badge: 'Matriculado',
+      proCategory: 'gas'
+    },
+    {
+      title: 'Prueba de hermeticidad y habilitación',
+      desc: 'Inspección de cañería general con columna de agua para Ecogas/Naturgy.',
+      price: '$36.000 – $52.000 ARS',
+      time: '2 horas',
+      badge: 'Certificado',
+      proCategory: 'gas'
+    },
+    {
+      title: 'Instalación de estufa tiro balanceado',
+      desc: 'Abertura de pared, tiraje al exterior y fijación de artefacto.',
+      price: '$34.000 – $50.000 ARS',
+      time: '2 a 3 horas',
+      badge: 'Garantía 6m',
+      proCategory: 'gas'
+    }
+  ],
+  pintura: [
+    {
+      title: 'Pintura de habitación hasta 16 m²',
+      desc: 'Empapelado de zócalos, 2 manos de látex lavable de primera marca.',
+      price: '$58.000 – $85.000 ARS',
+      time: '1 a 2 días',
+      badge: 'Completo',
+      proCategory: 'pintura'
+    },
+    {
+      title: 'Enduido y tratamiento de humedad',
+      desc: 'Fijador sellador, lijado fino y reparación de descascarados.',
+      price: '$32.000 – $48.000 ARS',
+      time: '1 día',
+      badge: 'Especialista',
+      proCategory: 'pintura'
+    },
+    {
+      title: 'Pintura de rejas o aberturas metálicas',
+      desc: 'Desoxidante, fondo antióxido y 2 manos de esmalte sintético.',
+      price: '$26.000 – $38.000 ARS',
+      time: '1 día',
+      badge: 'Durabilidad',
+      proCategory: 'pintura'
+    }
+  ]
+};
+
+let currentEstimatorCategory = 'plomeria';
+
+function switchPriceEstimatorTab(cat) {
+  triggerHapticFeedback();
+  playPop();
+  currentEstimatorCategory = cat;
+
+  document.querySelectorAll('.estimator-tab-btn').forEach(btn => {
+    if (btn.getAttribute('data-tab') === cat) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+
+  renderPriceEstimator(cat);
+}
+
+function renderPriceEstimator(cat = 'plomeria') {
+  const container = document.getElementById('price-estimator-cards-container');
+  if (!container) return;
+
+  const items = ESTIMATOR_PRICES_DATA[cat] || ESTIMATOR_PRICES_DATA['plomeria'];
+
+  container.innerHTML = items.map(item => `
+    <div class="estimator-card">
+      <div class="estimator-card-top">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span style="font-size: 0.74rem; font-weight: 800; color: #1A7A52; background: #EAF5EE; padding: 3px 8px; border-radius: 6px;">${item.badge}</span>
+          <span style="font-size: 0.76rem; color: #78716C; font-weight: 600;">${item.time}</span>
+        </div>
+        <h4 class="estimator-job-title">${item.title}</h4>
+        <p class="estimator-job-desc">${item.desc}</p>
+        <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #F1ECE1;">
+          <span class="estimator-price-sub">Rango de mercado estimado:</span>
+          <span class="estimator-price-tag">${item.price}</span>
+        </div>
+      </div>
+      <button type="button" class="estimator-action-btn" onclick="requestQuickJobFromEstimator('${item.proCategory}', '${item.title.replace(/'/g, "\\'")}', '${item.price}')">
+        <span>Solicitar con este precio</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
+  `).join('');
+}
+
+function requestQuickJobFromEstimator(trade, jobTitle, estimatedPrice) {
+  triggerHapticFeedback();
+  playPop();
+
+  const pro = PROFESSIONALS_DATA.find(p => p.category === trade) || PROFESSIONALS_DATA[0];
+  currentRequestPro = pro;
+
+  const modal = document.getElementById('modal-request-quote');
+  if (!modal) return;
+
+  const subtitle = document.getElementById('req-quote-subtitle');
+  if (subtitle) {
+    subtitle.textContent = `${pro.name} te responderá con base en el precio de referencia (${estimatedPrice}).`;
+  }
+  const tradeSelect = document.getElementById('req-quote-trade');
+  if (tradeSelect) {
+    tradeSelect.value = trade;
+  }
+  const descInput = document.getElementById('req-quote-desc');
+  if (descInput) {
+    descInput.value = `${jobTitle} (${estimatedPrice} aprox.)`;
+  }
+
+  modal.classList.add('active');
+}
+
 // Modal Screen 4: Detalle del Profesional
 function openProDetailModal(proId) {
   triggerHapticFeedback();
@@ -4134,6 +4317,11 @@ function submitClientOrderRequest() {
   }
   const successModal = document.getElementById('modal-request-success');
   if (successModal) successModal.classList.add('active');
+
+  // Disparar recepción automática de cotizaciones garantizadas
+  setTimeout(() => {
+    generateAutomatedQuotesForOrder(newOrder.id, newOrder.category);
+  }, 1200);
 }
 
 function closeSuccessModalAndGoHome() {
