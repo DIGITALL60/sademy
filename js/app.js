@@ -9,6 +9,90 @@
 // ============================================================================
 const PROFESSIONALS_DATA = [
   {
+    id: 'pro-matias',
+    name: 'Matías Rojas',
+    trade: 'Plomería y Sanitarios',
+    category: 'plomeria',
+    avatar: 'assets/matias.jpg',
+    badge: 'Verificado',
+    verified: true,
+    certified: true,
+    matricula: 'MAT-PL-5120',
+    rating: 4.8,
+    reviewsCount: 124,
+    zone: 'Nueva Córdoba · Centro · Güemes',
+    city: 'Córdoba, Córdoba',
+    bio: 'Trabajo hace 5 años en el rubro de la plomería. Realizo instalaciones, reparaciones y mantenimiento en hogares y comercios.',
+    priceHint: '$15.000',
+    priceUnit: 'por trabajo base',
+    skills: ['Plomería', 'Gasistas', 'Instalaciones'],
+    completedJobs: 124,
+    responseTime: '< 15 min'
+  },
+  {
+    id: 'pro-lucas',
+    name: 'Lucas Fernández',
+    trade: 'Electricista e Instalaciones',
+    category: 'electricidad',
+    avatar: 'assets/marcos.jpg',
+    badge: 'Verificado',
+    verified: true,
+    certified: true,
+    matricula: 'MAT-EL-3914',
+    rating: 4.7,
+    reviewsCount: 88,
+    zone: 'Cerro de las Rosas · Villa Belgrano',
+    city: 'Córdoba, Córdoba',
+    bio: 'Técnico electricista matriculado con 7 años de experiencia en instalaciones de obra, tableros y reparaciones.',
+    priceHint: '$18.000',
+    priceUnit: 'por trabajo base',
+    skills: ['Electricidad', 'Tableros', 'Iluminación'],
+    completedJobs: 88,
+    responseTime: '< 20 min'
+  },
+  {
+    id: 'pro-santiago',
+    name: 'Santiago Gómez',
+    trade: 'Gasista Matriculado',
+    category: 'gas',
+    avatar: 'assets/claudio.jpg',
+    badge: 'Verificado',
+    verified: true,
+    certified: true,
+    matricula: 'ECOGAS-7721',
+    rating: 4.6,
+    reviewsCount: 76,
+    zone: 'Alberdi · Alto Alberdi · General Paz',
+    city: 'Córdoba, Córdoba',
+    bio: 'Gasista matriculado Ecogas. Inspecciones reglamentarias, tendido de cañerías y artefactos con prueba de hermeticidad.',
+    priceHint: '$22.000',
+    priceUnit: 'por trabajo base',
+    skills: ['Gasistas', 'Termotanques', 'Estufas'],
+    completedJobs: 76,
+    responseTime: '< 30 min'
+  },
+  {
+    id: 'pro-diego',
+    name: 'Diego Torres',
+    trade: 'Albañilería y Construcción',
+    category: 'albanileria',
+    avatar: 'assets/claudio.jpg',
+    badge: 'Verificado',
+    verified: true,
+    certified: true,
+    matricula: 'MAT-OB-1823',
+    rating: 4.5,
+    reviewsCount: 62,
+    zone: 'Córdoba Capital y Alrededores',
+    city: 'Córdoba, Córdoba',
+    bio: 'Maestro mayor de obra. Refacciones de cocinas y baños, colocación de cerámicos y revoques finos.',
+    priceHint: '$25.000',
+    priceUnit: 'por jornada base',
+    skills: ['Albañilería', 'Cerámicos', 'Refacciones'],
+    completedJobs: 62,
+    responseTime: '< 45 min'
+  },
+  {
     id: 'pro-1',
     name: 'Marcos R.',
     trade: 'Electricista Matriculado',
@@ -143,6 +227,57 @@ const STORAGE_KEY = 'sademy_platform_prod_v1';
 
 const DEFAULT_ORDERS = [
   {
+    id: 'ORD-2026-TERM',
+    title: 'Instalación de termotanque',
+    category: 'plomeria',
+    categoryName: 'Plomería',
+    description: 'Instalación completa de termotanque Rheem 80L con conexiones de agua y purgado.',
+    address: 'Nueva Córdoba, Córdoba',
+    status: 'En curso',
+    statusBadgeClass: 'badge-new',
+    date: '12/05/2026',
+    paid: true,
+    completed: false,
+    cancelled: false,
+    thumbnail: 'assets/termotanque.jpg',
+    proName: 'Matías Rojas',
+    quotes: []
+  },
+  {
+    id: 'ORD-2026-VENT',
+    title: 'Instalación de ventilador de techo',
+    category: 'electricidad',
+    categoryName: 'Electricidad',
+    description: 'Colocación y balanceo de ventilador de techo con regulador de 5 velocidades en living.',
+    address: 'Cerro de las Rosas, Córdoba',
+    status: 'Completado',
+    statusBadgeClass: 'badge-completed',
+    date: '03/05/2026',
+    paid: true,
+    completed: true,
+    cancelled: false,
+    thumbnail: 'assets/ventilador.jpg',
+    proName: 'Lucas Fernández',
+    quotes: []
+  },
+  {
+    id: 'ORD-2026-CAN',
+    title: 'Reparación de canilla',
+    category: 'plomeria',
+    categoryName: 'Plomería',
+    description: 'Cambio de vástago y cuerito por goteo continuo en grifería monocomando de baño.',
+    address: 'Centro, Córdoba',
+    status: 'Cancelado',
+    statusBadgeClass: 'badge-cancelled',
+    date: '03/05/2026',
+    paid: false,
+    completed: false,
+    cancelled: true,
+    thumbnail: 'assets/canilla.jpg',
+    proName: 'Matías Rojas',
+    quotes: []
+  },
+  {
     id: 'ORD-2026-084',
     title: 'Instalación de luz en cocina',
     category: 'electricidad',
@@ -273,6 +408,19 @@ const DEFAULT_ORDERS = [
 ];
 
 const DEFAULT_CHATS = {
+  'Matías Rojas': [
+    { sender: 'worker', text: 'Hola! ¿Todavía necesitás el trabajo de plomería?', time: '10:24' },
+    { sender: 'client', text: 'Sí, perfecto. ¿Me podés pasar un presupuesto?', time: '10:26' },
+    { sender: 'worker', text: 'Claro, te paso la propuesta en un momento.', time: '10:28' },
+    {
+      sender: 'worker',
+      attachment: {
+        filename: 'Presupuesto Matías Rojas.pdf',
+        filesize: '2.4 MB'
+      },
+      time: '10:28'
+    }
+  ],
   'Marcos R.': [
     { sender: 'worker', text: 'Hola Carlos! Vi tu pedido para la instalación de luz en la cocina. Cuento con las herramientas y puedo pasar hoy mismo a las 16:30.', time: '10:45' },
     { sender: 'client', text: 'Excelente Marcos, ¿el presupuesto incluye los conectores rápidos y cables aislados?', time: '10:48' },
@@ -608,9 +756,13 @@ function loadAppState() {
       if (parsed.currentUser && !parsed.currentUser.proPlan) {
         parsed.currentUser.proPlan = 'basic';
       }
-      if (parsed.orders && !parsed.orders.some(o => o.id === 'ORD-2026-085')) {
-        const valeriaOrder = DEFAULT_ORDERS.find(o => o.id === 'ORD-2026-085');
-        if (valeriaOrder) parsed.orders.unshift(valeriaOrder);
+      if (!parsed.orders || !parsed.orders.some(o => o.id === 'ORD-2026-TERM')) {
+        parsed.orders = [...DEFAULT_ORDERS];
+      }
+      if (!parsed.chatThreads) {
+        parsed.chatThreads = Object.assign({}, DEFAULT_CHATS);
+      } else if (!parsed.chatThreads['Matías Rojas']) {
+        parsed.chatThreads['Matías Rojas'] = DEFAULT_CHATS['Matías Rojas'];
       }
       if (!parsed.workerInvoices || !Array.isArray(parsed.workerInvoices)) {
         parsed.workerInvoices = [
@@ -777,9 +929,9 @@ document.addEventListener('DOMContentLoaded', () => {
   updateOrdersBadges();
   renderMyOrdersModalList();
 
-  // Inicializar apartado persistido o por defecto Visitante (Público)
-  const savedApartado = localStorage.getItem('sademy_apartado') || 'guest';
-  switchApartado(savedApartado, true);
+  // Inicializar por defecto como Visitante (Marketplace Público Screen 2)
+  localStorage.setItem('sademy_apartado', 'guest');
+  switchApartado('guest', true);
 });
 
 // Registro del Service Worker para PWA
@@ -2321,11 +2473,37 @@ function generateAutomatedQuotesForOrder(orderId, tradeCat) {
   showToast('¡Nuevas cotizaciones recibidas!', `${pro1.name} y ${pro2.name} enviaron propuestas para "${order.title}".`);
 }
 
-// Modal Mis Pedidos Dinámico
-function openMyOrdersModal() {
+let currentOrdersModalTab = 'activos';
+
+function switchOrdersModalSubtab(tab) {
   triggerHapticFeedback();
   playPop();
-  renderMyOrdersModalList();
+  currentOrdersModalTab = tab;
+
+  const btnActivos = document.getElementById('orders-subtab-activos');
+  const btnHistorial = document.getElementById('orders-subtab-historial');
+  if (btnActivos && btnHistorial) {
+    if (tab === 'activos') {
+      btnActivos.style.background = '#1A7A52';
+      btnActivos.style.color = '#FFFFFF';
+      btnHistorial.style.background = 'transparent';
+      btnHistorial.style.color = '#525B56';
+    } else {
+      btnHistorial.style.background = '#1A7A52';
+      btnHistorial.style.color = '#FFFFFF';
+      btnActivos.style.background = 'transparent';
+      btnActivos.style.color = '#525B56';
+    }
+  }
+
+  renderMyOrdersModalList(tab);
+}
+
+// Modal Mis Pedidos Dinámico (Diseño Oficial Screen 6)
+function openMyOrdersModal(initialTab = 'activos') {
+  triggerHapticFeedback();
+  playPop();
+  switchOrdersModalSubtab(initialTab);
   const modal = document.getElementById('modal-my-orders');
   if (modal) modal.classList.add('active');
 }
@@ -2335,77 +2513,62 @@ function closeMyOrdersModal() {
   if (modal) modal.classList.remove('active');
 }
 
-function renderMyOrdersModalList() {
+function renderMyOrdersModalList(tab = currentOrdersModalTab) {
   const container = document.getElementById('my-orders-list-container');
   if (!container) return;
 
-  if (appState.orders.length === 0) {
+  const filteredOrders = appState.orders.filter(order => {
+    if (tab === 'historial') {
+      return order.completed || order.cancelled;
+    } else {
+      return !order.completed && !order.cancelled;
+    }
+  });
+
+  if (filteredOrders.length === 0) {
     container.innerHTML = `
-      <div style="text-align: center; padding: 36px 16px; color: var(--color-text-tertiary);">
-        <p style="font-size: 1rem; font-weight: 700; color: var(--color-text-main); margin-bottom: 6px;">No tenés pedidos activos aún</p>
-        <p style="font-size: 0.85rem; margin-bottom: 16px;">Publicá una solicitud para recibir presupuestos en minutos.</p>
-        <button class="btn btn-primary btn-sm" onclick="closeMyOrdersModal(); openNewOrderModal();">+ Publicar Pedido</button>
+      <div style="text-align: center; padding: 40px 16px; color: var(--color-text-tertiary); background: #FFFFFF; border-radius: 18px; border: 1.5px dashed var(--color-border);">
+        <p style="font-size: 1rem; font-weight: 700; color: var(--color-text-main); margin-bottom: 6px;">
+          ${tab === 'activos' ? 'No tenés pedidos en curso' : 'No tenés pedidos en tu historial'}
+        </p>
+        <p style="font-size: 0.85rem; margin-bottom: 16px;">
+          ${tab === 'activos' ? 'Elegí un profesional para solicitar un presupuesto sin cargo.' : 'Tus servicios completados o finalizados se registrarán acá.'}
+        </p>
+        ${tab === 'activos' ? '<button class="btn btn-primary btn-sm" onclick="closeMyOrdersModal(); openOrderModalWithTrade(\'plomeria\', \'Matías Rojas\');">+ Solicitar Trabajo</button>' : ''}
       </div>
     `;
     return;
   }
 
-  container.innerHTML = appState.orders.map(order => {
+  container.innerHTML = filteredOrders.map(order => {
     const isCompleted = order.completed;
-    const isPaid = order.paid && !order.completed;
-    const hasQuotes = order.quotes && order.quotes.length > 0;
-
-    let statusPillClass = 'badge-new';
-    if (isCompleted) statusPillClass = 'badge-completed';
-    else if (isPaid) statusPillClass = 'badge-profession';
+    const isCancelled = order.cancelled;
+    const statusColor = isCancelled ? '#EF4444' : '#1A7A52';
+    const statusText = order.status || (isCancelled ? 'Cancelado' : (isCompleted ? 'Completado' : 'En curso'));
+    const proName = order.proName || (order.quotes && order.quotes[0]?.proName) || 'Matías Rojas';
+    const thumb = order.thumbnail || (order.category === 'electricidad' ? 'assets/ventilador.jpg' : 'assets/termotanque.jpg');
 
     return `
-      <div style="background-color: #FFFFFF; border: 1.5px solid ${isPaid ? 'var(--color-primary)' : 'var(--color-border)'}; border-radius: 12px; padding: 18px; box-shadow: var(--shadow-xs);">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-          <span class="badge-tag ${statusPillClass}">
-            ${isCompleted ? 'Finalizado con éxito' : isPaid ? 'Pago en Custodia Segura' : `${order.status} (${order.quotes.length} cotizaciones)`}
-          </span>
-          <span style="font-size: 0.78rem; color: var(--color-text-muted); font-weight: 600;">${order.id} · ${order.date}</span>
+      <div class="order-clean-card" onclick="closeMyOrdersModal(); openChatModal('${proName}')" style="background: #FFFFFF; border: 1.5px solid var(--color-border); border-radius: 18px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s ease; box-shadow: var(--shadow-xs);">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div style="width: 54px; height: 54px; border-radius: 14px; overflow: hidden; background: #E5DFD2; flex-shrink: 0;">
+            <img src="${thumb}" alt="${order.title}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='assets/termotanque.jpg'">
+          </div>
+          <div>
+            <h4 style="font-size: 0.98rem; font-weight: 800; color: #1A201C; margin: 0 0 3px;">
+              ${order.title}
+            </h4>
+            <div style="font-size: 0.8rem; color: #78716C; margin-bottom: 4px;">
+              ${order.categoryName || 'Plomería'} · ${order.date || 'Reciente'}
+            </div>
+            <div style="font-size: 0.76rem; font-weight: 700; color: ${statusColor}; display: flex; align-items: center; gap: 5px;">
+              <span style="width: 7px; height: 7px; border-radius: 50%; background: ${statusColor}; display: inline-block;"></span>
+              ${statusText}
+            </div>
+          </div>
         </div>
-        
-        <h4 style="font-size: 1.1rem; font-weight: 800; color: var(--color-text-main); margin-bottom: 4px;">
-          ${order.title}
-        </h4>
-        <p style="font-size: 0.84rem; color: var(--color-text-secondary); margin-bottom: 12px;">
-          ${order.address} · <strong>${order.categoryName}</strong>
-        </p>
-
-        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-          ${hasQuotes && !isPaid && !isCompleted ? `
-            <button class="btn btn-primary btn-sm" onclick="closeMyOrdersModal(); openQuoteDetailModal('${order.quotes[0].id}')">
-              Ver Presupuestos (${order.quotes.length})
-            </button>
-          ` : ''}
-
-          ${isPaid && !isCompleted ? `
-            <button class="btn btn-primary btn-sm" onclick="releasePaymentPrompt('${order.id}')">
-              Liberar Pago al Finalizar
-            </button>
-          ` : ''}
-
-          ${isCompleted && !order.review ? `
-            <button class="btn btn-primary btn-sm" onclick="closeMyOrdersModal(); openOrderReviewModal('${order.hiredPro?.name || order.quotes[0]?.proName || 'Marcos R.'}', '${order.id}')" style="background: #F59E0B; border-color: #D97706; color: #FFFFFF; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
-              ★ Calificar Profesional
-            </button>
-          ` : isCompleted && order.review ? `
-            <button class="btn btn-secondary btn-sm" onclick="closeMyOrdersModal(); openOrderReviewModal('${order.hiredPro?.name || order.quotes[0]?.proName || 'Marcos R.'}', '${order.id}')" style="color: #D97706; background: #FEF3C7; border: 1px solid #FDE68A; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
-              ★ Calificado (${order.review.stars}★)
-            </button>
-          ` : ''}
-
-          <button class="btn btn-secondary btn-sm" onclick="closeMyOrdersModal(); openChatModal('${order.quotes[0]?.proName || 'Marcos R.'}')">
-            Chatear con el Profesional
-          </button>
-
-          <button class="btn btn-secondary btn-sm" onclick="closeMyOrdersModal(); openInvoiceModalForOrder('${order.id}')" style="display: inline-flex; align-items: center; gap: 5px; font-weight: 600; color: #047857; background: #ECFDF5; border: 1px solid #A7F3D0;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-            Factura Electrónica
-          </button>
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </div>
       </div>
     `;
@@ -3584,14 +3747,19 @@ function submitProQuote() {
 // ============================================================================
 // 7. CHAT PERSISTENTE Y ENMASCARAMIENTO ANTIFRAUDE
 // ============================================================================
-let currentChatWorker = 'Marcos R.';
+let currentChatWorker = 'Matías Rojas';
 
-function openChatModal(proName = 'Marcos R.') {
+function openChatModal(proName = 'Matías Rojas') {
   triggerHapticFeedback();
   playPop();
   currentChatWorker = proName;
   const title = document.getElementById('chat-modal-title');
-  if (title) title.textContent = `Chat con ${proName}`;
+  if (title) title.textContent = proName;
+  const avatar = document.getElementById('chat-modal-avatar');
+  if (avatar) {
+    const pro = PROFESSIONALS_DATA.find(p => p.name === proName || p.id === proName);
+    avatar.src = (pro && pro.avatar) || (proName.includes('Matías') ? 'assets/matias.jpg' : 'assets/marcos.jpg');
+  }
   renderChatMessages();
   const modal = document.getElementById('modal-chat');
   if (modal) modal.classList.add('active');
@@ -3607,17 +3775,34 @@ function renderChatMessages() {
   if (!container) return;
 
   const thread = appState.chatThreads[currentChatWorker] || [
-    { sender: 'worker', text: `Hola, soy ${currentChatWorker}. ¿En qué te puedo ayudar?`, time: '10:00' }
+    { sender: 'worker', text: `Hola! ¿En qué te puedo ayudar con tu proyecto?`, time: '10:00' }
   ];
 
   container.innerHTML = thread.map(msg => {
     if (msg.sender === 'system') {
-      return `<div class="chat-bubble system-warning">${msg.text}</div>`;
+      return `<div class="chat-bubble system-warning" style="background: #FFFBEB; border: 1px solid #FDE68A; color: #92400E; font-size: 0.78rem; border-radius: 12px; padding: 10px 14px; text-align: center; margin: 4px 0;">${msg.text}</div>`;
     }
+    if (msg.attachment) {
+      return `
+        <div class="chat-bubble worker" style="background: #FFFFFF; border: 1.5px solid var(--color-border); border-radius: 18px; padding: 12px 14px; box-shadow: var(--shadow-xs); max-width: 85%; align-self: flex-start;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 38px; height: 38px; border-radius: 10px; background: #EAF5EE; color: #1A7A52; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+            </div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.88rem; color: #1A201C;">${msg.attachment.filename}</div>
+              <div style="font-size: 0.75rem; color: #94A3B8;">${msg.attachment.filesize}</div>
+            </div>
+          </div>
+          <div style="font-size: 0.68rem; text-align: right; opacity: 0.75; margin-top: 6px; color: #78716C;">${msg.time}</div>
+        </div>
+      `;
+    }
+    const isClient = msg.sender === 'client';
     return `
-      <div class="chat-bubble ${msg.sender}">
-        <div>${msg.text}</div>
-        <div style="font-size: 0.68rem; text-align: right; opacity: 0.75; margin-top: 4px;">${msg.time}</div>
+      <div class="chat-bubble ${msg.sender}" style="${isClient ? 'background: #1A7A52; color: #FFFFFF; align-self: flex-end; border-radius: 18px 18px 4px 18px; padding: 12px 16px; max-width: 82%;' : 'background: #FFFFFF; color: #1A201C; align-self: flex-start; border-radius: 18px 18px 18px 4px; padding: 12px 16px; border: 1.5px solid var(--color-border); max-width: 82%; box-shadow: var(--shadow-xs);'}">
+        <div style="font-size: 0.92rem; line-height: 1.45;">${msg.text}</div>
+        <div style="font-size: 0.68rem; text-align: right; opacity: ${isClient ? '0.85' : '0.6'}; margin-top: 4px;">${msg.time}</div>
       </div>
     `;
   }).join('');
@@ -3631,10 +3816,6 @@ function sendChatMessage() {
   if (!input) return;
   const text = input.value.trim();
   if (!text) return;
-
-  // Detección anti-bypass de teléfonos / mails antes de pagar
-  const phoneRegex = /(\+?54|11|15)?[0-9\s-]{7,12}/;
-  const hasPhone = phoneRegex.test(text);
 
   const now = new Date();
   const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
@@ -3654,35 +3835,25 @@ function sendChatMessage() {
   saveAppState();
   playPop();
 
-  if (hasPhone) {
-    setTimeout(() => {
-      appState.chatThreads[currentChatWorker].push({
-        sender: 'system',
-        text: 'Recordatorio de Seguridad: Los números y datos de contacto se habilitan automáticamente una vez confirmado el presupuesto para garantizar tu Seguro contra Daños de hasta $500.000.',
-        time: timeStr
-      });
-      renderChatMessages();
-      saveAppState();
-    }, 600);
-    return;
-  }
-
   // Respuesta contextual simulada y persistente
   setTimeout(() => {
     playPop();
     appState.chatThreads[currentChatWorker].push({
       sender: 'worker',
-      text: 'Entendido perfectamente. Ya registré los detalles y tengo los materiales listos para cuando confirmes la contratación.',
+      text: '¡Perfecto! Ya registré tu consulta y en breve te paso más detalles para coordinar.',
       time: timeStr
     });
     renderChatMessages();
     saveAppState();
-  }, 1100);
+  }, 1000);
 }
 
 // ============================================================================
 // 8. DIRECTORIO DE PROFESIONALES Y FILTROS EN VIVO
 // ============================================================================
+let currentDetailPro = null;
+let currentRequestPro = null;
+
 function renderProfessionalsDirectory() {
   const container = document.getElementById('professionals-grid');
   if (!container) return;
@@ -3696,90 +3867,351 @@ function renderProfessionalsDirectory() {
 
   if (filtered.length === 0) {
     container.innerHTML = `
-      <div style="grid-column: 1 / -1; text-align: center; padding: 48px; background: #FFFFFF; border-radius: 16px; border: 1px dashed var(--color-border);">
-        <p style="font-weight: 700; font-size: 1.1rem; color: var(--color-text-main); margin-bottom: 8px;">No se encontraron profesionales con estos filtros</p>
-        <p style="color: var(--color-text-tertiary); font-size: 0.9rem;">Probá restableciendo los filtros o seleccionando otra especialidad.</p>
-        <button class="btn btn-secondary btn-sm" style="margin-top: 14px;" onclick="resetFilters()">Restablecer Filtros</button>
+      <div style="text-align: center; padding: 48px 20px; background: #FFFFFF; border-radius: 20px; border: 1.5px dashed var(--color-border);">
+        <p style="font-weight: 800; font-size: 1.15rem; color: var(--color-text-main); margin-bottom: 8px;">No se encontraron profesionales con estos filtros</p>
+        <p style="color: var(--color-text-secondary); font-size: 0.92rem; margin-bottom: 16px;">Probá restableciendo los filtros o seleccionando otra especialidad.</p>
+        <button class="btn btn-primary btn-sm" onclick="selectCleanTrade('all')">Ver Todos los Oficios</button>
       </div>
     `;
     return;
   }
 
-  container.innerHTML = filtered.map(pro => `
-    <div class="profile-card">
-      <div class="profile-card-top">
-        <img src="${pro.avatar}" alt="${pro.name}" class="profile-avatar" onerror="this.src='assets/mascot.jpg'">
-        <div class="profile-main-meta">
-          <div style="display: flex; align-items: center; justify-content: space-between;">
-            <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--color-text-main);">${pro.name}</h3>
-            ${pro.certified ? `
-              <span title="Matrícula y antecedentes 100% verificados" style="display: inline-flex; align-items: center; gap: 4px; color: var(--color-primary); font-size: 0.75rem; font-weight: 700;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                Verificado
+  const favs = appState.favorites || ['pro-matias'];
+
+  container.innerHTML = filtered.map(pro => {
+    const isFav = favs.includes(pro.id);
+    const expText = pro.skills ? `${pro.skills[0]} · ${pro.completedJobs || 50}+ trabajos` : '5 años de experiencia';
+
+    return `
+      <div class="pro-clean-card" onclick="openProDetailModal('${pro.id}')" style="background: #FFFFFF; border: 1.5px solid var(--color-border); border-radius: 20px; padding: 16px 18px; display: flex; align-items: center; justify-content: space-between; gap: 14px; box-shadow: var(--shadow-xs); cursor: pointer; transition: all 0.22s ease;">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="width: 64px; height: 64px; border-radius: 16px; overflow: hidden; background: #E5DFD2; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+            <img src="${pro.avatar}" alt="${pro.name}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='assets/mascot.jpg'">
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <h3 style="font-size: 1.05rem; font-weight: 800; color: #1A201C; margin: 0;">${pro.name}</h3>
+              ${pro.certified ? `<svg width="15" height="15" viewBox="0 0 24 24" fill="#1A7A52"><circle cx="12" cy="12" r="10"/><path fill="#FFF" d="M9 12l2 2 4-4"/></svg>` : ''}
+            </div>
+            <div style="font-size: 0.82rem; color: #78716C; margin: 2px 0 4px; display: flex; align-items: center; gap: 4px;">
+              <span style="color: #F59E0B; font-weight: 800;">★ ${pro.rating}</span>
+              <span>(${pro.reviewsCount} reseñas)</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: #525B56; flex-wrap: wrap;">
+              <span style="color: #1A7A52; font-weight: 700;">✓ Verificado</span>
+              <span>·</span>
+              <span>${expText}</span>
+            </div>
+            <div style="font-size: 0.84rem; font-weight: 700; color: #1A201C; margin-top: 4px;">
+              Desde <span style="color: #1A7A52;">${pro.priceHint || '$15.000'}</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 12px; flex-shrink: 0;">
+          <button type="button" onclick="event.stopPropagation(); toggleFavoritePro('${pro.id}')" style="background: none; border: none; cursor: pointer; color: ${isFav ? '#1A7A52' : '#CBD5E1'}; padding: 4px;" title="Guardar favorito">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <button type="button" class="btn btn-primary" onclick="event.stopPropagation(); openRequestQuoteModal('${pro.id}')" style="padding: 8px 18px; border-radius: 999px; font-size: 0.85rem; font-weight: 800; background: #1A7A52; color: #FFFFFF; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(26,122,82,0.25);">
+            Solicitar
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function selectCleanTrade(cat) {
+  triggerHapticFeedback();
+  playPop();
+  appState.activeFilterTrade = cat;
+
+  // Actualizar tarjetas en el hero
+  document.querySelectorAll('.hero-trade-card').forEach(card => {
+    if (card.getAttribute('data-cat') === cat) {
+      card.classList.add('active');
+    } else {
+      card.classList.remove('active');
+    }
+  });
+
+  // Actualizar píldoras rápidas
+  document.querySelectorAll('.quick-trade-pill').forEach(pill => {
+    if (pill.getAttribute('data-filter') === cat) {
+      pill.classList.add('active');
+      pill.style.background = '#1A7A52';
+      pill.style.color = '#FFFFFF';
+      pill.style.borderColor = '#1A7A52';
+    } else {
+      pill.classList.remove('active');
+      pill.style.background = '#FFFFFF';
+      pill.style.color = 'var(--color-text-secondary)';
+      pill.style.borderColor = 'var(--color-border)';
+    }
+  });
+
+  // Renderizar banner de categoría (Screen 3)
+  const bannerSlot = document.getElementById('category-trade-banner-slot');
+  if (bannerSlot) {
+    if (cat === 'plomeria') {
+      bannerSlot.style.display = 'block';
+      bannerSlot.innerHTML = `
+        <div class="category-banner-card" style="background: #FFFFFF; border: 1.5px solid var(--color-border); border-radius: 20px; overflow: hidden; margin-bottom: 24px; box-shadow: var(--shadow-xs);">
+          <div style="height: 160px; overflow: hidden; position: relative;">
+            <img src="assets/plomeria_banner.jpg" alt="Plomería en Córdoba" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <div style="padding: 18px 20px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+              <h3 style="font-size: 1.35rem; font-weight: 800; color: #1A201C; margin: 0;">Plomería</h3>
+              <span style="font-size: 0.8rem; font-weight: 700; color: #1A7A52; background: #EAF5EE; padding: 4px 10px; border-radius: 999px;">124 profesionales</span>
+            </div>
+            <p style="font-size: 0.88rem; color: #525B56; margin: 0 0 12px;">Encontrá plomeros cerca tuyo y compará presupuestos.</p>
+            <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid #F1ECE1; font-size: 0.84rem;">
+              <span style="display: flex; align-items: center; gap: 6px; font-weight: 600; color: #1A201C; cursor: pointer;" onclick="cycleCitySelection()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A7A52" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                Córdoba, Córdoba ✏️
               </span>
-            ` : ''}
-          </div>
-          <p style="font-size: 0.86rem; font-weight: 600; color: var(--color-text-secondary);">${pro.trade}</p>
-          <div class="profile-rating-badge">
-            <span style="color: var(--color-rating);">★</span>
-            <span>${pro.rating}</span>
-            <span style="color: var(--color-text-tertiary); font-weight: normal;">(${pro.reviewsCount} reseñas)</span>
+              <span style="font-size: 0.82rem; font-weight: 700; color: #1A7A52;">Precios desde $15.000</span>
+            </div>
           </div>
         </div>
-      </div>
+      `;
+    } else {
+      bannerSlot.style.display = 'none';
+      bannerSlot.innerHTML = '';
+    }
+  }
 
-      <div class="profile-card-body">
-        <p class="profile-bio">${pro.bio}</p>
-        <div style="display: flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--color-text-tertiary);">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span>${pro.zone}</span>
-        </div>
-        <div class="profile-skills-row">
-          ${pro.skills.map(s => `<span class="skill-tag">${s}</span>`).join('')}
-        </div>
-      </div>
+  renderProfessionalsDirectory();
 
-      <div class="profile-card-footer">
-        <div class="profile-price-hint">
-          <span>Referencia desde</span>
-          <strong>${pro.priceHint}</strong>
-        </div>
-        <button class="btn btn-primary btn-sm" onclick="openOrderModalWithTrade('${pro.category}', '${pro.name}')">
-          Pedir Presupuesto
-        </button>
-      </div>
-    </div>
-  `).join('');
+  const dirSection = document.getElementById('directorio');
+  if (dirSection) {
+    dirSection.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function handleCleanHeroSearch() {
+  triggerHapticFeedback();
+  playPop();
+  const input = document.getElementById('hero-search-job-input');
+  if (!input) return;
+  const q = input.value.trim().toLowerCase();
+  if (!q) {
+    selectCleanTrade('all');
+    return;
+  }
+
+  if (q.includes('plom') || q.includes('caño') || q.includes('agua') || q.includes('canilla') || q.includes('termo')) {
+    selectCleanTrade('plomeria');
+  } else if (q.includes('elec') || q.includes('luz') || q.includes('cable') || q.includes('tablero') || q.includes('ventilador')) {
+    selectCleanTrade('electricidad');
+  } else if (q.includes('gas') || q.includes('estufa') || q.includes('calefactor')) {
+    selectCleanTrade('gas');
+  } else if (q.includes('alba') || q.includes('pared') || q.includes('piso') || q.includes('ceram') || q.includes('obra')) {
+    selectCleanTrade('albanileria');
+  } else if (q.includes('pint') || q.includes('color') || q.includes('rodillo')) {
+    selectCleanTrade('pintura');
+  } else {
+    selectCleanTrade('all');
+    showToast('Buscando profesionales', `Resultados para "${q}" en Córdoba.`);
+  }
+}
+
+// Modal Screen 4: Detalle del Profesional
+function openProDetailModal(proId) {
+  triggerHapticFeedback();
+  playPop();
+  const pro = PROFESSIONALS_DATA.find(p => p.id === proId) || PROFESSIONALS_DATA[0];
+  currentDetailPro = pro;
+
+  const avatar = document.getElementById('pro-detail-avatar');
+  const name = document.getElementById('pro-detail-name');
+  const ratingRow = document.getElementById('pro-detail-rating-row');
+  const bio = document.getElementById('pro-detail-bio');
+  const tags = document.getElementById('pro-detail-tags');
+  const cityBadge = document.getElementById('pro-detail-city-badge');
+
+  if (avatar) avatar.src = pro.avatar || 'assets/matias.jpg';
+  if (name) name.textContent = pro.name;
+  if (ratingRow) ratingRow.innerHTML = `<span style="color: #F59E0B; font-weight: 800;">★ ${pro.rating}</span> (${pro.reviewsCount} reseñas)`;
+  if (bio) bio.textContent = pro.bio || `Especialista con más de 5 años de trayectoria en instalaciones y reparaciones.`;
+  if (cityBadge) cityBadge.textContent = `📍 ${pro.city ? pro.city.split(',')[0] : 'Córdoba'}`;
+  if (tags && pro.skills) {
+    tags.innerHTML = pro.skills.map(s => `<span class="badge-tag" style="background: #EAF5EE; color: #1A7A52; font-weight: 700; border-radius: 999px; padding: 4px 12px;">${s}</span>`).join('');
+  }
+
+  const modal = document.getElementById('modal-pro-detail');
+  if (modal) modal.classList.add('active');
+}
+
+function closeProDetailModal() {
+  const modal = document.getElementById('modal-pro-detail');
+  if (modal) modal.classList.remove('active');
+}
+
+function proceedToRequestQuoteFromDetail() {
+  closeProDetailModal();
+  if (currentDetailPro) {
+    openRequestQuoteModal(currentDetailPro.id);
+  } else {
+    openRequestQuoteModal('pro-matias');
+  }
+}
+
+// Modal Screen 5: Solicitar Presupuesto
+function openRequestQuoteModal(proId) {
+  triggerHapticFeedback();
+  playPop();
+  const pro = PROFESSIONALS_DATA.find(p => p.id === proId) || PROFESSIONALS_DATA[0];
+  currentRequestPro = pro;
+
+  const subtitle = document.getElementById('req-quote-subtitle');
+  if (subtitle) {
+    subtitle.textContent = `${pro.name} te responderá en menos de 1 hora.`;
+  }
+  const tradeSelect = document.getElementById('req-quote-trade');
+  if (tradeSelect && pro.category) {
+    tradeSelect.value = pro.category;
+  }
+
+  const modal = document.getElementById('modal-request-quote');
+  if (modal) modal.classList.add('active');
+}
+
+function closeRequestQuoteModal() {
+  const modal = document.getElementById('modal-request-quote');
+  if (modal) modal.classList.remove('active');
+}
+
+// Acción de envío de formulario (Screen 5 -> Screen 13)
+function submitClientOrderRequest() {
+  triggerHapticFeedback();
+  playSuccessChime();
+  closeRequestQuoteModal();
+
+  const pro = currentRequestPro || PROFESSIONALS_DATA[0];
+  const tradeSelect = document.getElementById('req-quote-trade');
+  const descInput = document.getElementById('req-quote-desc');
+  const tradeName = tradeSelect ? tradeSelect.options[tradeSelect.selectedIndex].text : 'Plomería y Sanitarios';
+  const desc = descInput ? descInput.value.trim() : '';
+
+  const newOrder = {
+    id: `ORD-2026-${Math.floor(100 + Math.random() * 900)}`,
+    title: tradeName,
+    category: pro.category || 'plomeria',
+    categoryName: pro.trade || 'Plomería',
+    description: desc || 'Solicitud de presupuesto directo al profesional',
+    address: 'Córdoba, Córdoba',
+    status: 'En curso',
+    statusBadgeClass: 'badge-new',
+    date: 'Hoy',
+    paid: false,
+    completed: false,
+    cancelled: false,
+    proName: pro.name,
+    thumbnail: pro.category === 'electricidad' ? 'assets/ventilador.jpg' : 'assets/termotanque.jpg',
+    quotes: []
+  };
+
+  appState.orders.unshift(newOrder);
+  saveAppState();
+  updateOrdersBadges();
+  renderMyOrdersModalList();
+
+  // Abrir Modal de Confirmación Screen 13
+  const successSub = document.getElementById('success-quote-subtitle');
+  if (successSub) {
+    successSub.textContent = `${pro.name} te responderá en menos de 1 hora.`;
+  }
+  const successModal = document.getElementById('modal-request-success');
+  if (successModal) successModal.classList.add('active');
+}
+
+function closeSuccessModalAndGoHome() {
+  const modal = document.getElementById('modal-request-success');
+  if (modal) modal.classList.remove('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function closeSuccessModalAndOpenOrders() {
+  const modal = document.getElementById('modal-request-success');
+  if (modal) modal.classList.remove('active');
+  openMyOrdersModal('activos');
+}
+
+// Navegación Inferior Móvil (Screen 2)
+function switchMobileNavTab(tab) {
+  triggerHapticFeedback();
+  playPop();
+  ['inicio', 'pedidos', 'profesionales', 'perfil'].forEach(t => {
+    const btn = document.getElementById(`mob-nav-btn-${t}`);
+    if (btn) {
+      if (t === tab) btn.classList.add('active');
+      else btn.classList.remove('active');
+    }
+  });
+
+  if (tab === 'inicio') {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else if (tab === 'pedidos') {
+    openMyOrdersModal('activos');
+  } else if (tab === 'profesionales') {
+    const dir = document.getElementById('directorio');
+    if (dir) dir.scrollIntoView({ behavior: 'smooth' });
+  } else if (tab === 'perfil') {
+    openAccountModal();
+  }
+}
+
+// Selector de Ciudad
+const CITIES = ['Córdoba, Córdoba', 'CABA, Buenos Aires', 'Rosario, Santa Fe', 'Mendoza, Mendoza'];
+let currentCityIndex = 0;
+
+function cycleCitySelection() {
+  triggerHapticFeedback();
+  playPop();
+  currentCityIndex = (currentCityIndex + 1) % CITIES.length;
+  const newCity = CITIES[currentCityIndex];
+  const heroCity = document.getElementById('hero-current-city');
+  const reqCity = document.getElementById('req-quote-city-label');
+  if (heroCity) heroCity.textContent = newCity;
+  if (reqCity) reqCity.textContent = newCity;
+  showToast('Ciudad actualizada', `Mostrando profesionales disponibles en ${newCity}.`);
+}
+
+// Guardar y consultar Favoritos (Screen 8)
+function toggleFavoritePro(proId = 'pro-matias') {
+  triggerHapticFeedback();
+  playPop();
+  if (!appState.favorites) appState.favorites = ['pro-matias'];
+  const idx = appState.favorites.indexOf(proId);
+  if (idx > -1) {
+    appState.favorites.splice(idx, 1);
+    showToast('Favoritos', 'Profesional eliminado de tus guardados.');
+  } else {
+    appState.favorites.push(proId);
+    showToast('Favorito guardado', 'Profesional agregado a tu lista de guardados.');
+  }
+  saveAppState();
+  renderProfessionalsDirectory();
+}
+
+function showFavoritesModal() {
+  triggerHapticFeedback();
+  playPop();
+  appState.activeFilterTrade = 'all';
+  renderProfessionalsDirectory();
+  const dir = document.getElementById('directorio');
+  if (dir) dir.scrollIntoView({ behavior: 'smooth' });
+  showToast('Mis Favoritos', 'Visualizando tus profesionales de confianza.');
 }
 
 function handleQuickChipClick(btn, cat) {
-  triggerHapticFeedback();
-  playPop();
-  document.querySelectorAll('.search-chips-row .quick-chip').forEach(c => c.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  appState.activeFilterTrade = cat;
-  const select = document.getElementById('filter-trade-select');
-  if (select) select.value = cat;
-  renderProfessionalsDirectory();
-  const dirSection = document.getElementById('directorio');
-  if (dirSection) dirSection.scrollIntoView({ behavior: 'smooth' });
+  selectCleanTrade(cat);
 }
 
 function resetFilters() {
-  triggerHapticFeedback();
-  appState.activeFilterTrade = 'all';
-  appState.activeFilterZone = 'all';
-  appState.activeFilterVerifiedOnly = false;
-  
-  const tradeSelect = document.getElementById('filter-trade-select');
-  const zoneSelect = document.getElementById('filter-zone-select');
-  const verifiedCheck = document.getElementById('filter-verified-check');
-
-  if (tradeSelect) tradeSelect.value = 'all';
-  if (zoneSelect) zoneSelect.value = 'all';
-  if (verifiedCheck) verifiedCheck.checked = false;
-
-  renderProfessionalsDirectory();
+  selectCleanTrade('all');
 }
 
 // ============================================================================

@@ -5,24 +5,25 @@
    ========================================================================== */
 
 :root {
-  /* Paleta cromática oficial */
-  --color-bg-base: #FFFFFF;
-  --color-surface-light: #F9FAFB;
-  --color-surface-subtle: #F3F4F6;
-  --color-border: #E5E7EB;
-  --color-border-hover: #D1D5DB;
+  /* Paleta cromática oficial Sademy (Diseño Oficial de Referencia - Fondo Cremita #F9F6ED) */
+  --color-bg-base: #F9F6ED;
+  --color-surface-card: #FFFFFF;
+  --color-surface-light: #F4EFE5;
+  --color-surface-subtle: #EFE9DC;
+  --color-border: #E8E2D5;
+  --color-border-hover: #D8D1C2;
 
   /* Superficies oscuras para contraste controlado */
-  --color-surface-dark: #1F2937;
-  --color-surface-dark-2: #374151;
+  --color-surface-dark: #19221D;
+  --color-surface-dark-2: #2B3830;
 
-  /* Acentos oficiales */
-  --color-primary: #10B981;
-  --color-primary-hover: #059669;
-  --color-primary-active: #047857;
-  --color-primary-soft: #34D399;
-  --color-primary-bg: #ECFDF5;
-  --color-primary-border: #A7F3D0;
+  /* Verde esmeralda bosque oficial Sademy */
+  --color-primary: #1A7A52;
+  --color-primary-hover: #146342;
+  --color-primary-active: #0F4D33;
+  --color-primary-soft: #2E9B6C;
+  --color-primary-bg: #EAF5EE;
+  --color-primary-border: #BCE4CE;
 
   /* Destacado y ratings */
   --color-rating: #F59E0B;
@@ -31,10 +32,10 @@
   --color-danger-bg: #FEF2F2;
 
   /* Tipografía y textos */
-  --color-text-main: #111827;
-  --color-text-secondary: #4B5563;
-  --color-text-tertiary: #6B7280;
-  --color-text-muted: #9CA3AF;
+  --color-text-main: #1A201C;
+  --color-text-secondary: #525B56;
+  --color-text-tertiary: #737D77;
+  --color-text-muted: #9BA49F;
   --color-text-white: #FFFFFF;
 
   /* Sombras suaves y elevación */
@@ -2329,8 +2330,14 @@ button, input, select, textarea {
      VISTA MÓVIL EXACTA SADEMY (FIEL A LA CAPTURA OFICIAL DEL CELULAR)
      ======================================================================== */
 
-  /* En celulares se oculta el header clásico de escritorio y la cinta admin para que la app empiece directo */
+  /* En celulares se muestra el header oficial limpio con logo y acceso rápido */
   .main-header {
+    display: block !important;
+    background: var(--color-bg-base) !important;
+    border-bottom: 1px solid var(--color-border) !important;
+    padding: 8px 0 !important;
+  }
+  .main-nav {
     display: none !important;
   }
   .active-role-ribbon {
@@ -4594,5 +4601,285 @@ body.sademy-dev-tools .apartado-control-bar {
   100% { transform: rotate(360deg); }
 }
 
+/* ==========================================================================
+   REDISEÑO PORTADA LIMPIA, TARJETAS DE OFICIOS Y ONBOARDING GOOGLE PRO (DNI + FACE ID)
+   ========================================================================== */
+.hero-clean-container {
+  max-width: 1080px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 40px 20px 24px;
+}
 
+.hero-clean-title {
+  font-size: 3.1rem;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+  margin: 0 0 16px;
+}
 
+.hero-clean-subtitle {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0 auto 32px;
+  max-width: 620px;
+}
+
+/* Buscador directo y minimalista (Screen 2) */
+.hero-clean-search-wrapper {
+  max-width: 660px;
+  margin: 0 auto 32px;
+  background: #FFFFFF;
+  border: 1.5px solid var(--color-border);
+  border-radius: 999px;
+  padding: 6px 8px 6px 18px;
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.25s ease;
+}
+
+.hero-clean-search-wrapper:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 10px 28px -4px rgba(26, 122, 82, 0.16), 0 0 0 3px rgba(26, 122, 82, 0.1);
+}
+
+.hero-clean-input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  padding: 6px 4px;
+}
+
+.hero-clean-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-main);
+  font-family: inherit;
+}
+
+.hero-clean-input::placeholder {
+  color: #94A3B8;
+  font-weight: 400;
+}
+
+.hero-clean-btn-search {
+  background: var(--color-primary);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(26, 122, 82, 0.3);
+}
+
+.hero-clean-btn-search:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(26, 122, 82, 0.4);
+}
+
+/* Tarjetas visuales de los principales oficios (Screen 2) */
+.hero-clean-trades-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--color-text-main);
+  letter-spacing: -0.01em;
+}
+
+.hero-trades-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.hero-trade-card {
+  background: #FFFFFF;
+  border: 1.5px solid var(--color-border);
+  border-radius: 18px;
+  padding: 22px 14px 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  user-select: none;
+}
+
+.hero-trade-card:hover {
+  border-color: var(--color-primary);
+  background: #FFFFFF;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px -4px rgba(26, 122, 82, 0.16);
+}
+
+.hero-trade-card.active {
+  border-color: var(--color-primary);
+  background: var(--color-primary-bg);
+  box-shadow: 0 0 0 2px rgba(26, 122, 82, 0.25);
+}
+
+.hero-trade-icon-box {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--color-primary-bg);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.hero-trade-card:hover .hero-trade-icon-box {
+  background: var(--color-primary);
+  color: #FFFFFF;
+  transform: scale(1.06);
+}
+
+.hero-trade-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin: 0;
+}
+
+.hero-trade-count {
+  font-size: 0.76rem;
+  color: var(--color-text-tertiary);
+  font-weight: 500;
+}
+
+/* Acceso rápido Google e indicadores de confianza */
+.hero-clean-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding-top: 6px;
+}
+
+.hero-clean-google-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #FFFFFF;
+  border: 1.5px solid #CBD5E1;
+  border-radius: 9999px;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1E293B;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.hero-clean-google-btn:hover {
+  border-color: #4285F4;
+  box-shadow: 0 4px 14px rgba(66, 133, 244, 0.16);
+  transform: translateY(-1px);
+}
+
+.hero-clean-trust-tags {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.82rem;
+  color: #475569;
+  font-weight: 600;
+  flex-wrap: wrap;
+}
+
+.hero-clean-trust-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-clean-trust-tag svg {
+  color: #10B981;
+}
+
+/* Responsive adjustments */
+@media (max-width: 960px) {
+  .hero-clean-title {
+    font-size: 2.3rem;
+  }
+  .hero-trades-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-clean-title {
+    font-size: 1.85rem;
+  }
+  .hero-clean-subtitle {
+    font-size: 1.05rem;
+    margin-bottom: 22px;
+  }
+  .hero-clean-search-wrapper {
+    flex-direction: column;
+    padding: 12px;
+    border-radius: 18px;
+  }
+  .hero-clean-input-group.zone-group {
+    border-left: none;
+    border-top: 1px solid #E2E8F0;
+    width: 100%;
+  }
+  .hero-clean-input-group {
+    width: 100%;
+  }
+  .hero-clean-btn-search {
+    width: 100%;
+    justify-content: center;
+    padding: 13px;
+  }
+  .hero-trades-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .hero-trade-card {
+    padding: 14px 6px 12px;
+  }
+  .hero-trade-icon-box {
+    width: 44px;
+    height: 44px;
+  }
+  .hero-trade-title {
+    font-size: 0.85rem;
+  }
+  .hero-trade-count {
+    font-size: 0.68rem;
+  }
+}

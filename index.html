@@ -115,26 +115,28 @@
   <!-- Header & Navegación Principal Oficial -->
   <header class="main-header">
     <div class="navbar">
-      <!-- Logo y Mascota oficial conforme al Manual de Identidad (Giro cada 10s) -->
-      <a href="javascript:void(0)" onclick="switchApartado('guest')" class="brand-logo" aria-label="Sademy Inicio">
-        <img src="assets/favicon.svg" alt="Mascota oficial Sademy" class="brand-mascot-icon">
-        <span class="brand-wordmark">sademy</span>
-      </a>
+      <!-- Logo y Mascota oficial con Selector de Ubicación -->
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <a href="javascript:void(0)" onclick="switchApartado('guest')" class="brand-logo" aria-label="Sademy Inicio">
+          <img src="assets/favicon.svg" alt="Mascota oficial Sademy" class="brand-mascot-icon">
+          <span class="brand-wordmark">sademy</span>
+        </a>
 
-      <!-- Enlaces de navegación -->
+        <!-- Selector de Ubicación estilo Screen 2 -->
+        <button type="button" class="header-location-pill" onclick="cycleCitySelection()" title="Cambiar ciudad" style="display: inline-flex; align-items: center; gap: 6px; background: #FFFFFF; border: 1.5px solid var(--color-border); padding: 5px 12px; border-radius: 999px; font-size: 0.82rem; font-weight: 600; color: var(--color-text-secondary); cursor: pointer; transition: all 0.2s ease;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1A7A52" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <span id="nav-city-text">Córdoba, Córdoba</span>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+      </div>
+
+      <!-- Enlaces de navegación simplificados y esenciales (Screen 2) -->
       <nav class="main-nav" aria-label="Navegación principal">
         <ul class="nav-links">
+          <li><a href="#hero" onclick="switchApartado('guest')" class="nav-link active">Inicio</a></li>
           <li><a href="#oficios" onclick="switchApartado('guest')" class="nav-link">Oficios</a></li>
-          <li>
-            <a href="javascript:void(0)" onclick="switchApartado('client')" class="nav-link">
-              Mis Pedidos
-              <span id="nav-orders-badge" class="nav-badge" title="Pedidos activos">2</span>
-            </a>
-          </li>
           <li><a href="#directorio" onclick="switchApartado('guest')" class="nav-link">Profesionales</a></li>
-          <li><a href="#como-funciona" onclick="switchApartado('guest')" class="nav-link">Cómo Funciona & Garantía</a></li>
-          <li><a href="#calculadora" onclick="switchApartado('guest')" class="nav-link">Precios Estimados</a></li>
-          <li><a href="#galeria-trabajos" onclick="switchApartado('guest')" class="nav-link">Galería Verificada</a></li>
+          <li><a href="#como-funciona" onclick="switchApartado('guest')" class="nav-link">Cómo funciona</a></li>
         </ul>
       </nav>
 
@@ -348,245 +350,134 @@
   <div id="apartado-view-guest" class="apartado-view active">
 
   <!-- ========================================================================
-       HERO SECTION
+       PORTADA PRINCIPAL SADEMY (DISEÑO OFICIAL SCREEN 2)
        ======================================================================== -->
-  <section id="hero" class="hero-section">
-    <div class="container hero-grid">
+  <section id="hero" class="hero-section" style="background: var(--color-bg-base); padding: 36px 0 36px; border-bottom: 1px solid var(--color-border);">
+    <div class="container hero-clean-container">
       
-      <!-- Contenido Hero -->
-      <div class="hero-content">
-        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-          <div class="live-availability-badge">
-            <span class="pulse-dot-live"></span>
-            <span>14 profesionales verificados de guardia en tu zona ahora mismo</span>
-          </div>
-          <div class="hero-pill">
-            <svg class="hero-pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            </svg>
-            <span class="hero-pill-text">Plataforma Oficial con Matrícula Comprobada</span>
-          </div>
+      <!-- Selector de Ubicación Rápido -->
+      <div style="display: flex; justify-content: center; margin-bottom: 16px;">
+        <button type="button" class="location-badge-picker" onclick="cycleCitySelection()" title="Hacé clic para cambiar de ciudad" style="display: inline-flex; align-items: center; gap: 8px; background: #FFFFFF; border: 1.5px solid var(--color-border); padding: 6px 16px; border-radius: 999px; font-size: 0.88rem; font-weight: 600; color: var(--color-text-secondary); cursor: pointer; box-shadow: var(--shadow-xs); transition: all 0.2s ease;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A7A52" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <span id="hero-current-city">Córdoba, Córdoba</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+      </div>
+
+      <!-- Título y Subtítulo Oficiales (Screen 2) -->
+      <h1 class="hero-clean-title">
+        Encontrá profesionales de confianza para tu hogar.
+      </h1>
+
+      <p class="hero-clean-subtitle">
+        Compará presupuestos y elegí al profesional indicado.
+      </p>
+
+      <!-- Buscador Rediseñado: [ ¿Qué trabajo necesitás? ] + Buscar profesionales → -->
+      <div class="hero-clean-search-wrapper">
+        <div class="hero-clean-input-group">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="hero-search-job-input" class="hero-clean-input" placeholder="¿Qué trabajo necesitás?" onkeydown="if(event.key==='Enter') handleCleanHeroSearch()">
         </div>
 
-        <h1 class="hero-title">
-          El marketplace de oficios con trabajadores <span class="highlight">calificados</span>, certificados y de confianza.
-        </h1>
+        <button type="button" class="hero-clean-btn-search" onclick="handleCleanHeroSearch()" title="Buscar profesionales" aria-label="Buscar profesionales">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <span>Buscar profesionales →</span>
+        </button>
+      </div>
 
-        <p class="hero-description">
-          Conectamos a personas que necesitan resolver trabajos cotidianos con profesionales evaluados en su zona. Recibí presupuestos transparentes y pagá con fondos protegidos hasta tu total conformidad.
-        </p>
-
-        <!-- Buscador interactivo en vivo -->
-        <div class="hero-search-box">
-          <div class="search-inputs-row">
-            
-            <div class="search-field">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-              <select id="hero-trade-select" aria-label="Seleccionar oficio">
-                <option value="electricidad">Electricidad e Instalaciones</option>
-                <option value="plomeria">Plomería y Sanitarios</option>
-                <option value="gas">Gasista Matriculado</option>
-                <option value="pintura">Pintura y Revestimientos</option>
-                <option value="cerrajeria">Cerrajería y Seguridad</option>
-                <option value="aire">Climatización y Refrigeración</option>
-              </select>
-            </div>
-
-            <div class="search-field">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              <input type="text" id="hero-zone-input" value="Palermo, CABA" placeholder="Ciudad o barrio...">
-            </div>
-
-            <button class="btn btn-primary" onclick="openNewOrderModal()">
-              Pedir Presupuestos
-            </button>
-          </div>
-
-          <!-- Chips de acceso rápido -->
-          <div class="search-chips-row">
-            <span class="chips-label">Populares:</span>
-            <button class="quick-chip active" data-cat="electricidad" onclick="handleQuickChipClick(this, 'electricidad')">Electricistas</button>
-            <button class="quick-chip" data-cat="plomeria" onclick="handleQuickChipClick(this, 'plomeria')">Plomería</button>
-            <button class="quick-chip" data-cat="gas" onclick="handleQuickChipClick(this, 'gas')">Gasistas</button>
-            <button class="quick-chip" data-cat="pintura" onclick="handleQuickChipClick(this, 'pintura')">Pintura</button>
-            <button class="quick-chip" data-cat="cerrajeria" onclick="handleQuickChipClick(this, 'cerrajeria')">Cerrajería</button>
-          </div>
+      <!-- Título de Sección Oficios Más Buscados (Screen 2) -->
+      <div id="oficios" style="scroll-margin-top: 80px;">
+        <div class="hero-clean-trades-header">
+          <span>Oficios más buscados</span>
         </div>
 
-        <!-- Acceso 1-clic con Google en el Hero -->
-        <div class="hero-google-row" style="margin-top: 14px; margin-bottom: 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
-          <button type="button" class="btn btn-google-hero" onclick="triggerGoogleDeviceSignIn('client')">
-            <svg class="google-icon-svg" width="18" height="18" viewBox="0 0 24 24">
-              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-            </svg>
-            <span>Continuar con Google</span>
-          </button>
-          <span style="font-size: 0.82rem; color: #475569; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            Acceso instantáneo verificado · Cero contraseñas
+        <!-- Grilla 3x2 de 6 Tarjetas Visuales (Screen 2) -->
+        <div class="hero-trades-grid">
+          
+          <!-- 1. Plomería -->
+          <div class="hero-trade-card" data-cat="plomeria" onclick="selectCleanTrade('plomeria')">
+            <div class="hero-trade-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+            <div class="hero-trade-title">Plomería</div>
+            <div class="hero-trade-count">124 profesionales</div>
+          </div>
+
+          <!-- 2. Electricidad -->
+          <div class="hero-trade-card" data-cat="electricidad" onclick="selectCleanTrade('electricidad')">
+            <div class="hero-trade-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </div>
+            <div class="hero-trade-title">Electricidad</div>
+            <div class="hero-trade-count">98 profesionales</div>
+          </div>
+
+          <!-- 3. Gasistas -->
+          <div class="hero-trade-card" data-cat="gas" onclick="selectCleanTrade('gas')">
+            <div class="hero-trade-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+            </div>
+            <div class="hero-trade-title">Gasistas</div>
+            <div class="hero-trade-count">76 matriculados</div>
+          </div>
+
+          <!-- 4. Albañilería -->
+          <div class="hero-trade-card" data-cat="albanileria" onclick="selectCleanTrade('albanileria')">
+            <div class="hero-trade-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 9v6M15 9v6M12 3v6M12 15v6"/></svg>
+            </div>
+            <div class="hero-trade-title">Albañilería</div>
+            <div class="hero-trade-count">84 especialistas</div>
+          </div>
+
+          <!-- 5. Pintura -->
+          <div class="hero-trade-card" data-cat="pintura" onclick="selectCleanTrade('pintura')">
+            <div class="hero-trade-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 11V4a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v7"/><path d="M3 11h18v2a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4v-2z"/><path d="M14 17v4a2 2 0 0 1-2 2h0a2 2 0 0 1-2-2v-4"/></svg>
+            </div>
+            <div class="hero-trade-title">Pintura</div>
+            <div class="hero-trade-count">115 profesionales</div>
+          </div>
+
+          <!-- 6. Otros -->
+          <div class="hero-trade-card" data-cat="all" onclick="selectCleanTrade('all')">
+            <div class="hero-trade-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </div>
+            <div class="hero-trade-title">Otros</div>
+            <div class="hero-trade-count">+15 categorías</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Acceso Rápido con Google y Confianza -->
+      <div class="hero-clean-meta-row">
+        <button type="button" class="hero-clean-google-btn" onclick="triggerGoogleDeviceSignIn('client')" title="Ingresar en 1 clic con Google">
+          <svg class="google-icon-svg" width="17" height="17" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          <span>Continuar con Google</span>
+        </button>
+
+        <div class="hero-clean-trust-tags">
+          <span class="hero-clean-trust-tag">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Presupuestos gratis
+          </span>
+          <span class="hero-clean-trust-tag">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Profesionales verificados
+          </span>
+          <span class="hero-clean-trust-tag">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Pago protegido Escrow
           </span>
         </div>
-
-        <!-- Badges de confianza -->
-        <div class="hero-trust-row">
-          <div class="trust-item">
-            <span class="trust-check-icon">✓</span>
-            <span>Identidad & Matrícula Comprobada</span>
-          </div>
-          <div class="trust-item">
-            <span class="trust-check-icon">✓</span>
-            <span>Pago retenido en custodia segura</span>
-          </div>
-          <div class="trust-item">
-            <span class="trust-check-icon">✓</span>
-            <span>Garantía de Satisfacción Sademy</span>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Cotizador y Preview en Vivo para Visitantes (Público) -->
-      <div class="hero-visual-card">
-        <div class="hero-guest-preview-card">
-          <div class="hero-guest-preview-header">
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <img src="assets/favicon.svg" alt="Sademy" style="width: 34px; height: 34px; border-radius: 50%;">
-              <div>
-                <strong style="font-size: 1.05rem; color: #0F172A; display: block;">Pedí Presupuestos en 3 Pasos</strong>
-                <span style="font-size: 0.78rem; color: #64748B;">Sin cargo ni compromiso · Profesionales certificados</span>
-              </div>
-            </div>
-            <span class="badge-tag" style="background: #ECFDF5; color: #047857; font-weight: 800; font-size: 0.72rem;">100% GRATIS</span>
-          </div>
-
-          <!-- Pasos interactivos para el visitante -->
-          <div class="guest-step-card" onclick="openNewOrderModal()" style="cursor: pointer;">
-            <div class="guest-step-number">1</div>
-            <div style="flex: 1;">
-              <strong style="font-size: 0.88rem; color: #0F172A; display: block;">Elegí el oficio que necesitás</strong>
-              <p style="font-size: 0.78rem; color: #64748B; margin: 2px 0 0;">Electricistas, plomeros, gasistas, albañiles y técnicos evaluados.</p>
-            </div>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </div>
-
-          <div class="guest-step-card" onclick="openNewOrderModal()" style="cursor: pointer;">
-            <div class="guest-step-number">2</div>
-            <div style="flex: 1;">
-              <strong style="font-size: 0.88rem; color: #0F172A; display: block;">Describí brevemente tu trabajo</strong>
-              <p style="font-size: 0.78rem; color: #64748B; margin: 2px 0 0;">Indicá qué querés resolver y en qué zona o barrio te encontrás.</p>
-            </div>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </div>
-
-          <div class="guest-step-card" onclick="openNewOrderModal()" style="cursor: pointer;">
-            <div class="guest-step-number">3</div>
-            <div style="flex: 1;">
-              <strong style="font-size: 0.88rem; color: #0F172A; display: block;">Recibí presupuestos y pagá con garantía</strong>
-              <p style="font-size: 0.78rem; color: #64748B; margin: 2px 0 0;">Tu dinero queda protegido en custodia hasta que el trabajo esté terminado.</p>
-            </div>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </div>
-
-          <!-- Ticker de profesionales en línea -->
-          <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 14px; padding: 12px 14px; margin: 14px 0; display: flex; align-items: center; justify-content: space-between;">
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <div style="display: flex;">
-                <img src="assets/marcos.jpg" alt="Marcos" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 2px solid #FFFFFF;">
-                <img src="assets/sofia.jpg" alt="Sofía" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 2px solid #FFFFFF; margin-left: -8px;">
-                <img src="assets/claudio.jpg" alt="Claudio" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 2px solid #FFFFFF; margin-left: -8px;">
-              </div>
-              <span style="font-size: 0.78rem; color: #475569; font-weight: 600;">14 profesionales de guardia en CABA</span>
-            </div>
-            <span style="width: 9px; height: 9px; border-radius: 50%; background: #10B981; display: inline-block;" title="Online"></span>
-          </div>
-
-          <button class="btn btn-primary" onclick="openNewOrderModal()" style="width: 100%; justify-content: center; padding: 14px; font-weight: 800; font-size: 0.95rem; border-radius: 14px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);">
-            Solicitar Presupuestos Gratis
-          </button>
-
-          <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; font-size: 0.75rem; color: #64748B;">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            <span>Garantía de Satisfacción y Pago Protegido Sademy</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       SECCIÓN 1: RUBROS Y ESPECIALIDADES (PASO 1)
-       ======================================================================== -->
-  <section id="oficios" class="section">
-    <div class="container">
-      
-      <!-- Contenedor dinámico de pedido activo y fondos en custodia -->
-      <div id="active-order-banner" class="active-request-banner" style="display: none; margin-bottom: 32px;"></div>
-
-      <div class="section-header">
-        <div class="apple-section-badge">
-          <span class="badge-dot"></span>
-          PASO 1 · RUBROS & ESPECIALIDADES
-        </div>
-        <h2 class="section-title">Encontrá el oficio indicado para tu necesidad</h2>
-        <p class="section-desc">
-          Más de 30 categorías de servicios para el hogar, comercios y consorcios con profesionales evaluados y matriculados.
-        </p>
-      </div>
-
-      <div class="categories-grid">
-        
-        <div class="category-card" data-cat="electricidad">
-          <div class="category-icon-wrapper">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-          </div>
-          <h3 class="category-name">Electricistas</h3>
-          <span class="category-count">142 profesionales</span>
-        </div>
-
-        <div class="category-card" data-cat="plomeria">
-          <div class="category-icon-wrapper">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-          </div>
-          <h3 class="category-name">Plomería</h3>
-          <span class="category-count">98 profesionales</span>
-        </div>
-
-        <div class="category-card" data-cat="gas">
-          <div class="category-icon-wrapper">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
-          </div>
-          <h3 class="category-name">Gasistas</h3>
-          <span class="category-count">76 matriculados</span>
-        </div>
-
-        <div class="category-card" data-cat="pintura">
-          <div class="category-icon-wrapper">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 11V4a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v7"/><path d="M3 11h18v2a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4v-2z"/><path d="M14 17v4a2 2 0 0 1-2 2h0a2 2 0 0 1-2-2v-4"/></svg>
-          </div>
-          <h3 class="category-name">Pintura</h3>
-          <span class="category-count">115 profesionales</span>
-        </div>
-
-        <div class="category-card" data-cat="cerrajeria">
-          <div class="category-icon-wrapper">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-          </div>
-          <h3 class="category-name">Cerrajería 24h</h3>
-          <span class="category-count">64 de guardia</span>
-        </div>
-
-        <div class="category-card" data-cat="aire">
-          <div class="category-icon-wrapper">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          </div>
-          <h3 class="category-name">Aire Acondicionado</h3>
-          <span class="category-count">83 instaladores</span>
-        </div>
-
       </div>
 
     </div>
@@ -595,56 +486,45 @@
   <!-- ========================================================================
        SECCIÓN 3: DIRECTORIO DE PROFESIONALES VERIFICADOS (FILTRABLE EN VIVO)
        ======================================================================== -->
-  <section id="directorio" class="section section-bg-light">
-    <div class="container">
+  <section id="directorio" class="section" style="background: var(--color-bg-base); padding: 40px 0;">
+    <div class="container" style="max-width: 900px;">
       
-      <div class="section-header">
-        <div class="apple-section-badge">
-          <span class="badge-dot"></span>
-          PASO 2 · PROFESIONALES DE CONFIANZA
-        </div>
-        <h2 class="section-title">Profesionales cerca de tu domicilio</h2>
-        <p class="section-desc">
-          Perfiles evaluados con verificación biométrica de DNI, matrícula oficial auditada y valoraciones reales de clientes.
+      <!-- Slot para Banner de Categoría Seleccionada (ej. Plomería - Screen 3) -->
+      <div id="category-trade-banner-slot" style="display: none;"></div>
+
+      <div class="section-header" style="text-align: center; margin-bottom: 24px;">
+        <h2 class="section-title" style="font-size: 2rem; font-weight: 800; color: var(--color-text-main); margin-bottom: 6px;">
+          Profesionales cerca tuyo
+        </h2>
+        <p class="section-desc" style="color: var(--color-text-secondary); font-size: 0.98rem; margin: 0 auto; max-width: 580px;">
+          Verificados, con precios de referencia y listos para presupuestar tu trabajo.
         </p>
       </div>
 
-      <!-- Barra de filtros interactiva -->
-      <div class="directory-filters-bar">
-        <div class="filter-group">
-          
-          <select id="filter-trade-select" class="filter-select" aria-label="Filtrar por oficio">
-            <option value="all">Todos los oficios</option>
-            <option value="electricidad">Electricistas</option>
-            <option value="plomeria">Plomería</option>
-            <option value="gas">Gasistas Matriculados</option>
-            <option value="pintura">Pintura</option>
-            <option value="cerrajeria">Cerrajería</option>
-            <option value="aire">Climatización</option>
-          </select>
-
-          <select id="filter-zone-select" class="filter-select" aria-label="Filtrar por zona">
-            <option value="all">Todas las zonas</option>
-            <option value="CABA">Capital Federal (CABA)</option>
-            <option value="GBA Norte">Zona Norte (Vicente López, San Isidro)</option>
-          </select>
-
-          <label class="verified-toggle-label">
-            <input type="checkbox" id="filter-verified-check">
-            <span>Solo con Matrícula Oficial</span>
-          </label>
-
-        </div>
-
-        <div>
-          <button class="btn btn-secondary btn-sm" onclick="resetFilters()">
-            Limpiar filtros
-          </button>
-        </div>
+      <!-- Filtros Rápidos por Oficio estilo Pills (Screen 3) -->
+      <div id="quick-trade-pills-row" style="display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 28px;">
+        <button type="button" class="quick-trade-pill active" data-filter="all" onclick="selectCleanTrade('all')" style="padding: 8px 18px; border-radius: 999px; border: 1.5px solid var(--color-border); background: #FFFFFF; font-size: 0.88rem; font-weight: 700; color: var(--color-text-main); cursor: pointer; transition: all 0.2s ease;">
+          Todos los oficios
+        </button>
+        <button type="button" class="quick-trade-pill" data-filter="plomeria" onclick="selectCleanTrade('plomeria')" style="padding: 8px 18px; border-radius: 999px; border: 1.5px solid var(--color-border); background: #FFFFFF; font-size: 0.88rem; font-weight: 700; color: var(--color-text-secondary); cursor: pointer; transition: all 0.2s ease;">
+          🔧 Plomería
+        </button>
+        <button type="button" class="quick-trade-pill" data-filter="electricidad" onclick="selectCleanTrade('electricidad')" style="padding: 8px 18px; border-radius: 999px; border: 1.5px solid var(--color-border); background: #FFFFFF; font-size: 0.88rem; font-weight: 700; color: var(--color-text-secondary); cursor: pointer; transition: all 0.2s ease;">
+          ⚡ Electricidad
+        </button>
+        <button type="button" class="quick-trade-pill" data-filter="gas" onclick="selectCleanTrade('gas')" style="padding: 8px 18px; border-radius: 999px; border: 1.5px solid var(--color-border); background: #FFFFFF; font-size: 0.88rem; font-weight: 700; color: var(--color-text-secondary); cursor: pointer; transition: all 0.2s ease;">
+          🔥 Gasistas
+        </button>
+        <button type="button" class="quick-trade-pill" data-filter="albanileria" onclick="selectCleanTrade('albanileria')" style="padding: 8px 18px; border-radius: 999px; border: 1.5px solid var(--color-border); background: #FFFFFF; font-size: 0.88rem; font-weight: 700; color: var(--color-text-secondary); cursor: pointer; transition: all 0.2s ease;">
+          🧱 Albañilería
+        </button>
+        <button type="button" class="quick-trade-pill" data-filter="pintura" onclick="selectCleanTrade('pintura')" style="padding: 8px 18px; border-radius: 999px; border: 1.5px solid var(--color-border); background: #FFFFFF; font-size: 0.88rem; font-weight: 700; color: var(--color-text-secondary); cursor: pointer; transition: all 0.2s ease;">
+          🎨 Pintura
+        </button>
       </div>
 
-      <!-- Grid dinámica inyectada por JS con tarjetas de perfiles -->
-      <div id="professionals-grid" class="professionals-grid">
+      <!-- Grid dinámica inyectada por JS con tarjetas de perfiles (Screen 3) -->
+      <div id="professionals-grid" class="professionals-grid" style="display: flex; flex-direction: column; gap: 14px;">
         <!-- Renderizado dinámico vía app.js -->
       </div>
 
@@ -652,533 +532,156 @@
   </section>
 
   <!-- ========================================================================
-       SECCIÓN 3: CÓMO FUNCIONA & PAGO PROTEGIDO ESCROW (PASO 3)
+       SECCIÓN: CÓMO FUNCIONA (DISEÑO OFICIAL SCREEN 9)
        ======================================================================== -->
-  <section id="como-funciona" class="section section-bg-light" style="position: relative;">
-    <span id="garantia" style="position: absolute; top: -80px; visibility: hidden;" aria-hidden="true"></span>
-    <div class="container">
+  <section id="como-funciona" class="section" style="background: var(--color-bg-base); padding: 50px 0;">
+    <div class="container" style="max-width: 860px;">
       
-      <div class="section-header">
-        <div class="apple-section-badge">
-          <span class="badge-dot"></span>
-          PASO 3 · PAGO PROTEGIDO & GARANTÍA ESCROW
-        </div>
-        <h2 class="section-title">Cómo funciona la plataforma Sademy</h2>
-        <p class="section-desc">
-          Un proceso seguro y transparente en 3 etapas. Tu dinero queda en custodia hasta que el trabajo esté terminado y des tu visto bueno con PIN de conformidad.
+      <div style="text-align: center; margin-bottom: 36px;">
+        <h2 style="font-size: 2.1rem; font-weight: 800; color: var(--color-text-main); margin-bottom: 8px;">
+          Cómo funciona
+        </h2>
+        <p style="color: var(--color-text-secondary); font-size: 1.05rem;">
+          Conectamos tus necesidades con profesionales verificados en 3 simples pasos.
         </p>
       </div>
 
-      <!-- 3 Tarjetas Apple del proceso -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 36px;">
+      <!-- 3 Pasos estilo Screen 9 -->
+      <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px;">
         
-        <!-- Tarjeta 1 -->
-        <div class="apple-step-card">
-          <div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-              <span class="apple-step-num" style="display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 14px; background: #ECFDF5; border: 1.5px solid #A7F3D0; color: #10B981; font-size: 1.45rem; font-weight: 900; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.16); line-height: 1; flex-shrink: 0;">01</span>
-              <span class="apple-step-tag">100% Sin Cargo</span>
-            </div>
-            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--color-text-main); margin-bottom: 10px;">
-              Publicá tu solicitud
-            </h3>
-            <p style="font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6;">
-              Describí el trabajo en 2 minutos sin comisiones ni compromiso. Indicá la falla o urgencia y agregá fotos para recibir propuestas precisas.
-            </p>
+        <div style="background: #FFFFFF; border: 1.5px solid var(--color-border); border-radius: 18px; padding: 20px 24px; display: flex; align-items: center; gap: 20px; box-shadow: var(--shadow-xs);">
+          <div style="width: 44px; height: 44px; border-radius: 50%; background: #1A7A52; color: #FFFFFF; font-weight: 800; font-size: 1.25rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            1
           </div>
-          <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--color-border); display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--color-primary); font-weight: 700;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            <span>Cotizaciones en menos de 15 min</span>
+          <div>
+            <h3 style="font-size: 1.08rem; font-weight: 800; color: var(--color-text-main); margin-bottom: 4px;">
+              Buscás el oficio
+            </h3>
+            <p style="font-size: 0.92rem; color: var(--color-text-secondary); margin: 0;">
+              Elegí el rubro que necesitás y seleccioná al profesional que más te convenza.
+            </p>
           </div>
         </div>
 
-        <!-- Tarjeta 2 -->
-        <div class="apple-step-card">
-          <div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-              <span class="apple-step-num" style="display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 14px; background: #ECFDF5; border: 1.5px solid #A7F3D0; color: #10B981; font-size: 1.45rem; font-weight: 900; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.16); line-height: 1; flex-shrink: 0;">02</span>
-              <span class="apple-step-tag">Oficial & Transparente</span>
-            </div>
-            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--color-text-main); margin-bottom: 10px;">
-              Compará presupuestos
-            </h3>
-            <p style="font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6;">
-              Especialistas con matrícula auditada (COPIME/Metrogas) te envían ofertas con desglose exacto de materiales, mano de obra y Factura de Servicio Oficial con Garantía.
-            </p>
+        <div style="background: #FFFFFF; border: 1.5px solid var(--color-border); border-radius: 18px; padding: 20px 24px; display: flex; align-items: center; gap: 20px; box-shadow: var(--shadow-xs);">
+          <div style="width: 44px; height: 44px; border-radius: 50%; background: #1A7A52; color: #FFFFFF; font-weight: 800; font-size: 1.25rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            2
           </div>
-          <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--color-border); display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--color-primary); font-weight: 700; cursor: pointer;" onclick="openInvoiceModal()" title="Hacé clic para previsualizar la Factura de Servicio Oficial">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            <span>Factura de servicio oficial con garantía descargable</span>
-            <span style="font-size: 0.72rem; background: var(--color-primary-bg); color: var(--color-primary); border: 1px solid var(--color-primary-border); padding: 2px 8px; border-radius: 999px; margin-left: auto; font-weight: 800;">Ver Factura ↗</span>
+          <div>
+            <h3 style="font-size: 1.08rem; font-weight: 800; color: var(--color-text-main); margin-bottom: 4px;">
+              Comparás presupuestos
+            </h3>
+            <p style="font-size: 0.92rem; color: var(--color-text-secondary); margin: 0;">
+              Evaluás sus cotizaciones transparentes, reseñas y años de experiencia comprobada.
+            </p>
           </div>
         </div>
 
-        <!-- Tarjeta 3 -->
-        <div class="apple-step-card">
-          <div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-              <span class="apple-step-num" style="display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 14px; background: #ECFDF5; border: 1.5px solid #A7F3D0; color: #10B981; font-size: 1.45rem; font-weight: 900; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.16); line-height: 1; flex-shrink: 0;">03</span>
-              <span class="apple-step-tag">Custodia Segura</span>
-            </div>
-            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--color-text-main); margin-bottom: 10px;">
-              Liberación con tu PIN
-            </h3>
-            <p style="font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6;">
-              Sademy retiene los fondos en cuenta de custodia protegida. El profesional solo cobra cuando verificás el trabajo terminado y le brindás tu PIN de 4 dígitos.
-            </p>
+        <div style="background: #FFFFFF; border: 1.5px solid var(--color-border); border-radius: 18px; padding: 20px 24px; display: flex; align-items: center; gap: 20px; box-shadow: var(--shadow-xs);">
+          <div style="width: 44px; height: 44px; border-radius: 50%; background: #1A7A52; color: #FFFFFF; font-weight: 800; font-size: 1.25rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            3
           </div>
-          <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--color-border); display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--color-primary); font-weight: 700;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            <span>Seguro contra Daños hasta $500.000 ARS</span>
+          <div>
+            <h3 style="font-size: 1.08rem; font-weight: 800; color: var(--color-text-main); margin-bottom: 4px;">
+              Coordinás el trabajo y listo
+            </h3>
+            <p style="font-size: 0.92rem; color: var(--color-text-secondary); margin: 0;">
+              Tu dinero queda protegido en custodia hasta que el trabajo esté terminado. ¡Tu hogar en buenas manos!
+            </p>
           </div>
         </div>
 
       </div>
 
-      <!-- Demostrador interactivo de estado de custodia (Estilo Apple Pro) -->
-      <div class="escrow-interactive-demo-box" style="margin-bottom: 36px; background-color: #1F2937; border: 1.5px solid #374151; border-radius: 20px; padding: 24px 30px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; box-shadow: 0 12px 30px -6px rgba(17, 24, 39, 0.25);">
-        <div class="escrow-demo-status" style="display: flex; align-items: center; gap: 14px;">
-          <div class="status-indicator-dot" style="width: 14px; height: 14px; border-radius: 50%; background-color: #10B981; box-shadow: 0 0 12px #34D399;"></div>
-          <div>
-            <strong style="display: block; color: #FFFFFF; font-size: 1.05rem; font-weight: 800;">Protección Antifraude Sademy Escrow Activa</strong>
-            <span style="color: #9CA3AF; font-size: 0.88rem;">Cero adelantos en mano. Tu dinero permanece bajo custodia hasta tu visto bueno final con PIN.</span>
+      <!-- Tarjeta de Profesionales Verificados con Escudo Verde (Screen 9) -->
+      <div style="background: #EAF5EE; border: 1.5px solid #BCE4CE; border-radius: 18px; padding: 20px 24px; display: flex; align-items: center; gap: 18px; margin-bottom: 48px;">
+        <div style="width: 48px; height: 48px; border-radius: 14px; background: #FFFFFF; color: #1A7A52; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: var(--shadow-xs);">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
+        </div>
+        <div>
+          <strong style="font-size: 1.05rem; color: #146342; display: block; margin-bottom: 2px;">Profesionales verificados</strong>
+          <p style="font-size: 0.88rem; color: #2B573F; margin: 0;">
+            Todos nuestros profesionales pasan por un riguroso proceso de validación de identidad con DNI, biometría facial y experiencia.
+          </p>
+        </div>
+      </div>
+
+      <!-- SECCIÓN: PARA PROFESIONALES (DISEÑO OFICIAL SCREEN 10) -->
+      <div id="para-profesionales" style="background: #FFFFFF; border: 1.5px solid var(--color-border); border-radius: 24px; padding: 36px 32px; box-shadow: var(--shadow-sm); margin-bottom: 48px;">
+        <span style="font-size: 0.82rem; font-weight: 700; color: #1A7A52; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Para profesionales</span>
+        <h3 style="font-size: 1.75rem; font-weight: 800; color: var(--color-text-main); margin-bottom: 8px;">
+          ¿Sos profesional y querés más trabajo?
+        </h3>
+        <p style="color: var(--color-text-secondary); font-size: 1rem; margin-bottom: 24px;">
+          Sumate a Sademy y empezá a recibir solicitudes de clientes verificados en tu zona.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px;">
+          <div style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem; color: var(--color-text-main); font-weight: 600;">
+            <div style="width: 32px; height: 32px; border-radius: 8px; background: #EAF5EE; color: #1A7A52; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            </div>
+            <span>Recibí presupuestos de trabajo directos</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem; color: var(--color-text-main); font-weight: 600;">
+            <div style="width: 32px; height: 32px; border-radius: 8px; background: #EAF5EE; color: #1A7A52; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            </div>
+            <span>Gestioná tus servicios y cobros garantizados desde un solo lugar</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem; color: var(--color-text-main); font-weight: 600;">
+            <div style="width: 32px; height: 32px; border-radius: 8px; background: #EAF5EE; color: #1A7A52; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </div>
+            <span>Aumentá tu visibilidad y reputación con nuestro sistema de ranking</span>
           </div>
         </div>
-        <button class="btn btn-primary" onclick="openPaymentModal()" style="font-weight: 700; background: #10B981; border-color: #10B981; color: #FFFFFF; padding: 12px 24px; border-radius: 12px; box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);">
-          Verificar Protección de Fondos (Escrow)
+
+        <button type="button" class="btn btn-primary" onclick="triggerGoogleDeviceSignIn('pro')" style="padding: 14px 28px; font-weight: 800; font-size: 1rem; border-radius: 14px; background: #1A7A52; box-shadow: 0 4px 14px rgba(26, 122, 82, 0.35);">
+          Quiero ser profesional
         </button>
       </div>
 
-      <!-- Tabla Comparativa: Boca a boca vs Sademy -->
-      <div style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: 36px; box-shadow: var(--shadow-xs);">
-        <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--color-text-main); margin-bottom: 8px;">
-          Por qué Sademy supera al "boca en boca" tradicional
+      <!-- BANNER FINAL: TU HOGAR EN BUENAS MANOS (DISEÑO OFICIAL SCREEN 14) -->
+      <div style="text-align: center; padding: 40px 20px 20px;">
+        <div style="width: 72px; height: 72px; margin: 0 auto 18px; border-radius: 20px; background: #EAF5EE; color: #1A7A52; display: flex; align-items: center; justify-content: center;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        </div>
+        <h3 style="font-size: 1.85rem; font-weight: 800; color: var(--color-text-main); margin-bottom: 8px;">
+          Tu hogar, en buenas manos.
         </h3>
-        <p style="color: var(--color-text-secondary); font-size: 0.92rem; margin-bottom: 24px;">
-          Terminá con los precios inventados en el momento y la incertidumbre de no saber a quién metés en tu casa.
+        <p style="color: var(--color-text-secondary); font-size: 1rem; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto;">
+          Profesionales verificados, presupuestos claros y todo en un solo lugar.
         </p>
-
-        <div class="comparison-table-wrapper">
-          <table class="comparison-table">
-            <thead>
-              <tr>
-                <th>Criterio</th>
-                <th>Boca en boca tradicional</th>
-                <th>Clasificados informales / Redes</th>
-                <th class="highlight-col">Sademy Marketplace</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Verificación de identidad</strong></td>
-                <td>Nula (solo palabra de conocidos)</td>
-                <td>Cero (perfiles anónimos)</td>
-                <td class="highlight-col"><span style="color: var(--color-primary); font-weight: 800; margin-right: 6px;">✓</span> DNI, antecedentes y matrícula comprobados</td>
-              </tr>
-              <tr>
-                <td><strong>Presupuestos y precios</strong></td>
-                <td>Inciertos, varían sin aviso</td>
-                <td>Dispares y sin respaldo</td>
-                <td class="highlight-col"><span style="color: var(--color-primary); font-weight: 800; margin-right: 6px;">✓</span> Comparativa lado a lado con desglose cerrado</td>
-              </tr>
-              <tr>
-                <td><strong>Seguridad de pago</strong></td>
-                <td>Efectivo por adelantado sin garantía</td>
-                <td>Riesgo total de estafa</td>
-                <td class="highlight-col"><span style="color: var(--color-primary); font-weight: 800; margin-right: 6px;">✓</span> Pago en custodia Escrow hasta conformidad con PIN</td>
-              </tr>
-              <tr>
-                <td><strong>Garantía ante roturas</strong></td>
-                <td>El trabajador no suele responder</td>
-                <td>Desaparece tras cobrar</td>
-                <td class="highlight-col"><span style="color: var(--color-primary); font-weight: 800; margin-right: 6px;">✓</span> Seguro de Daños Sademy y garantía escrita de 6 meses</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('hero').scrollIntoView({behavior: 'smooth'})" style="padding: 14px 32px; font-weight: 800; font-size: 1rem; border-radius: 14px; background: #1A7A52; box-shadow: 0 4px 14px rgba(26, 122, 82, 0.35);">
+          Buscar profesionales →
+        </button>
       </div>
 
     </div>
   </section>
 
-  <!-- ========================================================================
-       SECCIÓN 4: CALCULADORA DE PRECIOS ORIENTATIVOS (TRANSPARENCIA)
-       ======================================================================== -->
-  <section id="calculadora" class="section">
-    <div class="container">
-      
-      <div class="section-header">
-        <div class="apple-section-badge">
-          <span class="badge-dot"></span>
-          TRANSPARENCIA · ESTIMADOR DE COSTOS
+  <!-- Footer Limpio y Esencial Sademy Argentina -->
+  <footer class="site-footer" style="background: #19221D; color: #9BA49F; padding: 48px 0 28px; border-top: 1px solid #2B3830;">
+    <div class="container" style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 24px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <img src="assets/favicon.svg" alt="Sademy" style="width: 32px; height: 32px; border-radius: 50%;">
+          <span style="font-size: 1.25rem; font-weight: 800; color: #FFFFFF;">sademy</span>
+          <span style="font-size: 0.86rem; color: #94A3B8; margin-left: 8px;">Profesionales de confianza para tu hogar.</span>
         </div>
-        <h2 class="section-title">Calculadora de referencia de mano de obra</h2>
-        <p class="section-desc">
-          Consultá los valores orientativos de mercado según la especialidad y el tamaño del trabajo antes de contratar.
-        </p>
+        <div style="display: flex; gap: 20px; font-size: 0.88rem; flex-wrap: wrap;">
+          <a href="#hero" style="color: #CBD5E1; text-decoration: none; font-weight: 500;">Inicio</a>
+          <a href="#oficios" style="color: #CBD5E1; text-decoration: none; font-weight: 500;">Oficios</a>
+          <a href="#directorio" style="color: #CBD5E1; text-decoration: none; font-weight: 500;">Profesionales</a>
+          <a href="#como-funciona" style="color: #CBD5E1; text-decoration: none; font-weight: 500;">Cómo funciona</a>
+        </div>
       </div>
-
-      <div class="calculator-box">
-        
-        <div class="calculator-form">
-          <div class="form-group">
-            <label class="form-label" for="calc-trade">Seleccioná el rubro</label>
-            <select id="calc-trade" class="form-control">
-              <option value="electricidad">Electricidad (Instalaciones y tableros)</option>
-              <option value="plomeria">Plomería (Pérdidas, bombas y griferías)</option>
-              <option value="gas">Gas Matriculado (Inspecciones y artefactos)</option>
-              <option value="pintura">Pintura (Interiores y cielorrasos)</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="calc-scope">Magnitud del trabajo</label>
-            <select id="calc-scope" class="form-control">
-              <option value="pequeño">Trabajo puntual / Reparación menor (1 ambiente o artefacto)</option>
-              <option value="mediano" selected>Trabajo estándar (Instalación completa de sector / cocina)</option>
-              <option value="grande">Trabajo integral (Tendido nuevo o reforma total)</option>
-            </select>
-          </div>
-
-          <div style="font-size: 0.84rem; color: var(--color-text-tertiary); line-height: 1.45;">
-            * Los valores son promedios referenciales de profesionales calificados en Argentina. Los presupuestos finales se ajustan con precisión una vez enviado el pedido.
-          </div>
-        </div>
-
-        <div class="calculator-result-card">
-          <span style="font-size: 0.85rem; font-weight: 700; color: #065F46; text-transform: uppercase;">Estimación orientativa</span>
-          <div id="calc-result-amount" class="calc-estimate-amount">$24.500</div>
-          <span style="font-size: 0.9rem; color: var(--color-text-secondary);">ARS (Mano de obra especializada)</span>
-          <div style="font-size: 0.84rem; color: var(--color-text-tertiary); margin-top: 4px;">
-            Tiempo estimado: <strong id="calc-result-time">2 a 3 horas</strong>
-          </div>
-          <button class="btn btn-primary" style="margin-top: 10px;" onclick="openNewOrderModal()">
-            Solicitar Presupuesto Real
-          </button>
-        </div>
-
+      <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 0.78rem; color: #64748B; gap: 12px;">
+        <div>© 2026 Sademy Argentina. Todos los derechos reservados.</div>
+        <div>Córdoba · Buenos Aires · Rosario · Pago Seguro y Garantía</div>
       </div>
-
     </div>
-  </section>
-
-  <!-- ========================================================================
-       SECCIÓN 5: TRABAJOS REALES VERIFICADOS (ANTES Y DESPUÉS)
-       ======================================================================== -->
-  <section id="galeria-trabajos" class="section section-bg-light">
-    <div class="container">
-      
-      <div class="section-header">
-        <div class="apple-section-badge">
-          <span class="badge-dot"></span>
-          EVIDENCIA · ANTES & DESPUÉS
-        </div>
-        <h2 class="section-title">Trabajos verificados: El Antes y Después</h2>
-        <p class="section-desc">
-          Comprobá la terminación y prolijidad técnica de los especialistas de Sademy en trabajos reales contratados por la plataforma.
-        </p>
-      </div>
-
-      <div class="case-showcase-grid">
-        
-        <!-- Caso 1: Electricidad -->
-        <div class="case-card">
-          <div class="case-image-container">
-            <span class="case-tag-badge">Electricidad · Palermo</span>
-            <img id="case-img-1" src="assets/marcos.jpg" alt="Caso Electricidad" class="case-img">
-          </div>
-          <div class="case-card-body">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--color-text-main);">Renovación de Tablero</h3>
-              <div class="case-toggle-tabs">
-                <button id="case-btn-1-before" class="case-toggle-btn" onclick="toggleCaseView(1, 'before')">Antes</button>
-                <button id="case-btn-1-after" class="case-toggle-btn active" onclick="toggleCaseView(1, 'after')">Después</button>
-              </div>
-            </div>
-            
-            <p id="case-desc-1" style="font-size: 0.86rem; color: var(--color-text-secondary); min-height: 48px;">
-              Instalación de tablero seccional con disyuntor de 40A y llaves térmicas Schneider bajo norma IRAM.
-            </p>
-
-            <div class="case-worker-tag">
-              <img src="assets/marcos.jpg" alt="Marcos R." class="case-worker-avatar">
-              <span>Realizado por <strong>Marcos R.</strong> · ★ 4.9 (38 trabajos)</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Caso 2: Plomería -->
-        <div class="case-card">
-          <div class="case-image-container">
-            <span class="case-tag-badge">Plomería · Belgrano</span>
-            <img id="case-img-2" src="assets/sofia.jpg" alt="Caso Plomería" class="case-img">
-          </div>
-          <div class="case-card-body">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--color-text-main);">Termofusión Bajo Mesada</h3>
-              <div class="case-toggle-tabs">
-                <button id="case-btn-2-before" class="case-toggle-btn" onclick="toggleCaseView(2, 'before')">Antes</button>
-                <button id="case-btn-2-after" class="case-toggle-btn active" onclick="toggleCaseView(2, 'after')">Después</button>
-              </div>
-            </div>
-            
-            <p id="case-desc-2" style="font-size: 0.86rem; color: var(--color-text-secondary); min-height: 48px;">
-              Reemplazo de tramo oxidado por cañería Acqua System en termofusión con llaves esféricas de corte rápido.
-            </p>
-
-            <div class="case-worker-tag">
-              <img src="assets/sofia.jpg" alt="Sofía L." class="case-worker-avatar">
-              <span>Realizado por <strong>Sofía L.</strong> · ★ 5.0 (52 trabajos)</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Caso 3: Gas -->
-        <div class="case-card">
-          <div class="case-image-container">
-            <span class="case-tag-badge">Gas Matriculado · Caballito</span>
-            <img id="case-img-3" src="assets/claudio.jpg" alt="Caso Gas" class="case-img">
-          </div>
-          <div class="case-card-body">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--color-text-main);">Ventilación Reglamentaria</h3>
-              <div class="case-toggle-tabs">
-                <button id="case-btn-3-before" class="case-toggle-btn" onclick="toggleCaseView(3, 'before')">Antes</button>
-                <button id="case-btn-3-after" class="case-toggle-btn active" onclick="toggleCaseView(3, 'after')">Después</button>
-              </div>
-            </div>
-            
-            <p id="case-desc-3" style="font-size: 0.86rem; color: var(--color-text-secondary); min-height: 48px;">
-              Tendido de conducto rígido de 4 pulgadas con sombrero reglamentario y prueba de hermeticidad con columna de agua.
-            </p>
-
-            <div class="case-worker-tag">
-              <img src="assets/claudio.jpg" alt="Claudio V." class="case-worker-avatar">
-              <span>Realizado por <strong>Claudio V.</strong> · ★ 4.9 (84 trabajos)</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       SECCIÓN 7: VISTA SADEMY PRO (PARA TRABAJADORES Y OFICIOS)
-       ======================================================================== -->
-  <section id="sademy-pro" class="section section-bg-light view-pro-only" style="display: none;">
-    <div class="container">
-      
-      <div class="section-header">
-        <span class="section-pretitle">Portal Sademy Pro</span>
-        <h2 class="section-title">Hacé crecer tu trabajo y cobrá con seguridad</h2>
-        <p class="section-desc">
-          Gestioná tus solicitudes en tu zona, enviá cotizaciones formales y recibí pagos garantizados sin demoras ni cobradores.
-        </p>
-      </div>
-
-      <div class="pro-dashboard-preview">
-        
-        <!-- Métricas del profesional -->
-        <div class="pro-stats-grid">
-          <div class="pro-stat-card">
-            <span class="pro-stat-label">Pedidos en tu zona</span>
-            <div class="pro-stat-value">12</div>
-            <span class="pro-stat-badge">Radio: 5 km</span>
-          </div>
-
-          <div class="pro-stat-card">
-            <span class="pro-stat-label">Presupuestos Aceptados</span>
-            <div class="pro-stat-value">8</div>
-            <span class="pro-stat-badge">+2 esta semana</span>
-          </div>
-
-          <div class="pro-stat-card">
-            <span class="pro-stat-label">Saldo en Custodia (A liberar)</span>
-            <div class="pro-stat-value">$49.000</div>
-            <span class="pro-stat-badge">Liberación garantizada</span>
-          </div>
-
-          <div class="pro-stat-card">
-            <span class="pro-stat-label">Reputación y Nivel</span>
-            <div class="pro-stat-value">4.9 ★</div>
-            <span class="pro-stat-badge">Profesional Verificado Pro</span>
-          </div>
-        </div>
-
-        <!-- Solicitudes abiertas disponibles para presupuestar -->
-        <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--color-text-main); margin-bottom: 16px;">
-          Oportunidades de trabajo disponibles en tu zona
-        </h3>
-
-        <div class="pro-jobs-feed">
-          
-          <div class="pro-job-item">
-            <div>
-              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                <span class="badge-tag badge-profession">ELECTRICIDAD</span>
-                <span style="font-size: 0.78rem; color: var(--color-text-tertiary);">Palermo · Hace 30 min</span>
-              </div>
-              <h4 style="font-size: 1.1rem; font-weight: 800; color: var(--color-text-main);">Instalación de luminarias LED y revisión de térmica</h4>
-              <p style="font-size: 0.86rem; color: var(--color-text-secondary); margin-top: 2px;">Cliente: Carlos M. · Requiere materiales y mano de obra · Urgencia: Hoy</p>
-            </div>
-            <button class="btn btn-primary btn-sm" onclick="sendWorkerProposal('Instalación de luminarias LED')">
-              Enviar Cotización
-            </button>
-          </div>
-
-          <div class="pro-job-item">
-            <div>
-              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                <span class="badge-tag badge-profession">ELECTRICIDAD</span>
-                <span style="font-size: 0.78rem; color: var(--color-text-tertiary);">Belgrano · Hace 1 hora</span>
-              </div>
-              <h4 style="font-size: 1.1rem; font-weight: 800; color: var(--color-text-main);">Colocación de disyuntor bipolar y recableado de cocina</h4>
-              <p style="font-size: 0.86rem; color: var(--color-text-secondary); margin-top: 2px;">Cliente: Laura P. · Tablero antiguo de tapones a térmicas Schneider</p>
-            </div>
-            <button class="btn btn-primary btn-sm" onclick="sendWorkerProposal('Colocación de disyuntor')">
-              Enviar Cotización
-            </button>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       SECCIÓN 6: PREGUNTAS FRECUENTES (FAQ)
-       ======================================================================== -->
-  <section id="faq" class="section">
-    <div class="container">
-      
-      <div class="section-header">
-        <div class="apple-section-badge">
-          <span class="badge-dot"></span>
-          AYUDA & CLARIDAD · PREGUNTAS FRECUENTES
-        </div>
-        <h2 class="section-title">Resolvemos tus dudas con total claridad</h2>
-        <p class="section-desc">
-          Todo lo que necesitás saber sobre la custodia de fondos Escrow, garantías de trabajo y validación técnica.
-        </p>
-      </div>
-
-      <div style="max-width: 820px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px;">
-        
-        <details style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: 12px; padding: 18px 22px; cursor: pointer;">
-          <summary style="font-weight: 700; font-size: 1.05rem; color: var(--color-text-main); outline: none;">
-            ¿Cómo se verifica a los trabajadores en Sademy?
-          </summary>
-          <p style="margin-top: 10px; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6;">
-            Cada profesional pasa por un proceso de 4 etapas: validación biométrica de identidad (DNI), verificación de matrícula oficial habilitante en organismos correspondientes (COPIME, Metrogas, etc.), antecedentes penales sin observaciones y entrevista técnica inicial.
-          </p>
-        </details>
-
-        <details style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: 12px; padding: 18px 22px; cursor: pointer;">
-          <summary style="font-weight: 700; font-size: 1.05rem; color: var(--color-text-main); outline: none;">
-            ¿Qué pasa si el trabajo no queda bien o hay una rotura?
-          </summary>
-          <p style="margin-top: 10px; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6;">
-            Tu pago queda en custodia de Sademy hasta que revises el trabajo. Si algo no está conforme, retenemos la liberación y enviamos una revisión técnica sin costo. Además, cada contratación cuenta con Seguro contra Daños accidentales de hasta $500.000 ARS.
-          </p>
-        </details>
-
-        <details style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: 12px; padding: 18px 22px; cursor: pointer;">
-          <summary style="font-weight: 700; font-size: 1.05rem; color: var(--color-text-main); outline: none;">
-            ¿Por qué no conviene contratar o pagar por fuera de la plataforma?
-          </summary>
-          <p style="margin-top: 10px; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6;">
-            Al operar por fuera, perdés la protección de custodia de fondos, la garantía de 6 meses y el seguro de daños de Sademy. Dentro de la plataforma garantizamos que el profesional cobre exactamente lo pactado y vos recibas un trabajo garantizado.
-          </p>
-        </details>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       FOOTER OFICIAL SADEMY ARGENTINA (ESTÁNDAR APPLE / CORPORATIVO)
-       ======================================================================== -->
-  <footer class="site-footer" style="background: var(--color-surface-dark); color: var(--color-text-muted); padding: 64px 0 32px; border-top: 1px solid var(--color-surface-dark-2);">
-    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
-      
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; margin-bottom: 48px;">
-        
-        <!-- Columna 1: Marca y Propuesta -->
-        <div>
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
-            <img src="assets/mascot.jpg" alt="Sademy" style="width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--color-primary);">
-            <span style="font-size: 1.3rem; font-weight: 800; color: #FFFFFF; letter-spacing: -0.02em;">Sademy</span>
-          </div>
-          <p style="font-size: 0.85rem; line-height: 1.6; color: var(--color-text-muted); margin-bottom: 16px;">
-            El marketplace oficial de oficios y servicios verificados de la República Argentina. Seguridad financiera con custodia Escrow y matrículas auditadas.
-          </p>
-          <div style="display: flex; gap: 12px; align-items: center;">
-            <span style="display: inline-flex; align-items: center; gap: 6px; background: rgba(16, 185, 129, 0.12); color: #34D399; padding: 4px 10px; border-radius: 999px; font-size: 0.74rem; font-weight: 700;">
-              <span style="width: 6px; height: 6px; border-radius: 50%; background: #10B981;"></span> Plataforma Activa 2026
-            </span>
-          </div>
-        </div>
-
-        <!-- Columna 2: Servicios -->
-        <div>
-          <h4 style="font-size: 0.88rem; font-weight: 700; color: #FFFFFF; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px;">Oficios Destacados</h4>
-          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; font-size: 0.85rem;">
-            <li><a href="#directorio" style="color: #94A3B8; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Electricistas Matriculados</a></li>
-            <li><a href="#directorio" style="color: #94A3B8; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Plomeros y Destapaciones</a></li>
-            <li><a href="#directorio" style="color: #94A3B8; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Gasistas Matriculados (Metrogas)</a></li>
-            <li><a href="#directorio" style="color: #94A3B8; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Pintura y Revestimientos</a></li>
-            <li><a href="#directorio" style="color: #94A3B8; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Cerrajería Urgente 24h</a></li>
-            <li><a href="#directorio" style="color: #94A3B8; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Climatización & Split</a></li>
-          </ul>
-        </div>
-
-        <!-- Columna 3: Seguridad y Garantía -->
-        <div>
-          <h4 style="font-size: 0.88rem; font-weight: 700; color: #FFFFFF; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px;">Garantía & Fondos</h4>
-          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; font-size: 0.85rem;">
-            <li><a href="javascript:void(0)" onclick="openClientWarrantyModal()" style="color: #94A3B8; text-decoration: none;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Custodia Sademy Escrow</a></li>
-            <li><a href="javascript:void(0)" onclick="openClientWarrantyModal()" style="color: #94A3B8; text-decoration: none;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Seguro contra Daños ($500.000)</a></li>
-            <li><a href="#calculadora" style="color: #94A3B8; text-decoration: none;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Calculadora de Precios</a></li>
-            <li><a href="javascript:void(0)" onclick="openAuthModal('pro')" style="color: #94A3B8; text-decoration: none;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Trabajá con nosotros (Sademy PRO)</a></li>
-            <li><a href="javascript:void(0)" onclick="triggerPwaInstall()" style="color: #94A3B8; text-decoration: none;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Descargar App PWA Oficial</a></li>
-          </ul>
-        </div>
-
-        <!-- Columna 4: Corporativo & Acceso Administrativo -->
-        <div>
-          <h4 style="font-size: 0.88rem; font-weight: 700; color: #FFFFFF; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px;">Corporativo</h4>
-          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; font-size: 0.85rem;">
-            <li><a href="javascript:void(0)" onclick="showToast('Términos Oficiales', 'Plataforma regida por leyes argentinas y defensa al consumidor.')" style="color: #94A3B8; text-decoration: none;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Términos y Condiciones</a></li>
-            <li><a href="javascript:void(0)" onclick="showToast('Privacidad Protegida', 'Datos cifrados de extremo a extremo conforme a Ley 25.326.')" style="color: #94A3B8; text-decoration: none;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Política de Privacidad</a></li>
-            <li>
-              <button type="button" onclick="openAdminLoginModal()" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #38BDF8; padding: 7px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; margin-top: 6px;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
-                Portal Sademy HQ
-              </button>
-            </li>
-          </ul>
-        </div>
-
-      </div>
-
-      <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; font-size: 0.78rem;">
-        <div>
-          © 2026 Sademy Argentina Inc. Todos los derechos reservados.
-        </div>
-        <div style="display: flex; gap: 16px; color: #64748B;">
-          <span>CABA & GBA</span>
-          <span>·</span>
-          <span>Cobros Procesados con Mercado Pago</span>
-          <span>·</span>
-          <span>Garantía de Satisfacción</span>
-        </div>
-      </div>
-
   </footer>
   </div> <!-- ==================== FIN APARTADO 1: VISITANTE ==================== -->
 
@@ -2036,30 +1539,49 @@
   <!-- ========================================================================
        MODAL 4: CHAT EN VIVO CON EL PROFESIONAL
        ======================================================================== -->
+  <!-- ========================================================================
+       MODAL: CHAT DIRECTO CON EL PROFESIONAL (DISEÑO OFICIAL SCREEN 7)
+       ======================================================================== -->
   <div id="modal-chat" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="chat-modal-title">
-    <div class="modal-container">
+    <div class="modal-container" style="max-width: 440px; width: 95%; background: #F9F6ED; border-radius: 24px; padding: 18px; display: flex; flex-direction: column; height: 600px; max-height: 90vh;">
       
-      <div class="modal-header">
-        <div style="display: flex; align-items: center; gap: 10px;">
-          <img src="assets/marcos.jpg" alt="Avatar" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;">
+      <!-- Header del chat con flecha atrás y estado En línea -->
+      <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 14px; border-bottom: 1px solid var(--color-border); margin-bottom: 12px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <button type="button" onclick="closeChatModal()" style="background: none; border: none; cursor: pointer; color: #1A201C; padding: 2px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <div style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #E5DFD2; flex-shrink: 0;">
+            <img id="chat-modal-avatar" src="assets/matias.jpg" alt="Matías Rojas" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
           <div>
-            <h3 id="chat-modal-title" class="modal-title" style="font-size: 1.1rem;">Chat con Marcos R.</h3>
-            <span style="font-size: 0.76rem; color: var(--color-primary); font-weight: 700;">● En línea · Responde en minutos</span>
+            <h3 id="chat-modal-title" style="font-size: 1.05rem; font-weight: 800; color: #1A201C; margin: 0;">Matías Rojas</h3>
+            <span style="font-size: 0.76rem; color: #1A7A52; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+              <span style="width: 6px; height: 6px; border-radius: 50%; background: #1A7A52; display: inline-block;"></span>
+              En línea
+            </span>
           </div>
         </div>
-        <button class="modal-close-btn" onclick="closeChatModal()" aria-label="Cerrar modal">&times;</button>
+        <button type="button" onclick="showToast('Opciones de chat', 'Atención protegida por Sademy.')" style="background: none; border: none; cursor: pointer; color: #525B56; padding: 4px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+        </button>
       </div>
 
-      <div class="chat-window">
-        <div id="chat-messages-container" class="chat-messages-area">
-          <!-- Mensajes dinámicos -->
-        </div>
-
-        <form class="chat-input-bar" onsubmit="event.preventDefault(); sendChatMessage();">
-          <input type="text" id="chat-input-field" class="form-control" style="flex: 1;" placeholder="Escribí tu consulta aquí...">
-          <button type="submit" class="btn btn-primary btn-sm">Enviar</button>
-        </form>
+      <!-- Área de mensajes scrolleable -->
+      <div id="chat-messages-container" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding: 6px 4px 14px;">
+        <!-- Renderizado dinámicamente vía app.js -->
       </div>
+
+      <!-- Barra de input estilo Screen 7: [📎 Escribí un mensaje... [🟢 ✈️]] -->
+      <form class="chat-input-bar" onsubmit="event.preventDefault(); sendChatMessage();" style="display: flex; align-items: center; gap: 10px; background: #FFFFFF; border: 1.5px solid var(--color-border); border-radius: 999px; padding: 6px 8px 6px 14px; box-shadow: var(--shadow-xs);">
+        <button type="button" onclick="showToast('Adjuntar archivo', 'Podés enviar fotos o planos del trabajo.')" style="background: none; border: none; cursor: pointer; color: #94A3B8; padding: 2px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+        </button>
+        <input type="text" id="chat-input-field" placeholder="Escribí un mensaje..." style="flex: 1; border: none; background: transparent; outline: none; font-size: 0.95rem; font-family: inherit; color: var(--color-text-main);">
+        <button type="submit" style="width: 38px; height: 38px; border-radius: 50%; background: #1A7A52; border: none; color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; box-shadow: 0 4px 10px rgba(26, 122, 82, 0.3);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+      </form>
 
     </div>
   </div>
@@ -2324,6 +1846,239 @@
         </div>
 
       </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: ONBOARDING GOOGLE PRO - PASO 1: VERIFICACIÓN DNI OBLIGATORIA
+       ======================================================================== -->
+  <div id="modal-google-pro-dni" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="google-pro-dni-title" style="z-index: 11000;">
+    <div class="modal-container" style="max-width: 480px; width: 95%; background: #FFFFFF; border-radius: 24px; overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.25);">
+      <div class="modal-header" style="background: #F8FAFC; border-bottom: 1px solid #E2E8F0; padding: 20px 24px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 40px; height: 40px; border-radius: 12px; background: #EAF5EE; border: 1.5px solid #1A7A52; display: flex; align-items: center; justify-content: center; color: #1A7A52;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><polyline points="16 11 18 13 22 9"></polyline></svg>
+          </div>
+          <div>
+            <h3 id="google-pro-dni-title" class="modal-title" style="font-size: 1.18rem; color: #1A201C; margin: 0; font-weight: 800;">Registro Profesional Sademy</h3>
+            <span style="font-size: 0.78rem; color: #1A7A52; font-weight: 700;">Paso 1 de 2: Verificación de DNI</span>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeGoogleProDniModal()" aria-label="Cerrar">&times;</button>
+      </div>
+      
+      <div class="modal-body" style="padding: 24px;">
+        <!-- Identidad Google detectada -->
+        <div id="google-pro-identity-preview" style="display: flex; align-items: center; gap: 12px; background: #FAF9F5; border: 1px solid #E8E6DE; border-radius: 14px; padding: 12px 14px; margin-bottom: 20px;">
+          <img id="google-pro-avatar-preview" src="assets/mascot.jpg" alt="Usuario" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid #1A7A52;">
+          <div style="flex: 1; text-align: left;">
+            <strong id="google-pro-name-preview" style="font-size: 0.95rem; color: #1A201C; display: block;">Nombre de Profesional</strong>
+            <span id="google-pro-email-preview" style="font-size: 0.8rem; color: #525B56;">email@gmail.com</span>
+          </div>
+          <span style="background: #EAF5EE; color: #1A7A52; font-size: 0.72rem; font-weight: 800; padding: 4px 10px; border-radius: 999px;">Google Verificado</span>
+        </div>
+
+        <form id="google-pro-dni-form" onsubmit="event.preventDefault(); submitGoogleProDniAndProceed();">
+          <div class="form-group" style="margin-bottom: 16px; text-align: left;">
+            <label class="form-label" for="google-pro-dni" style="font-size: 0.88rem; font-weight: 700; color: #1A201C; display: block; margin-bottom: 6px;">
+              Número de DNI argentino <span style="color: #EF4444;">*</span>
+            </label>
+            <input type="text" id="google-pro-dni" class="form-control" placeholder="Ej: 38491204 (sin puntos ni guiones)" required style="width: 100%; padding: 12px 14px; border-radius: 12px; border: 1.5px solid #CBD5E1; font-size: 0.95rem;">
+            <span style="font-size: 0.74rem; color: #64748B; margin-top: 4px; display: block;">Requisito obligatorio para validar tu perfil ante clientes y habilitar cobros en custodia.</span>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 16px; text-align: left;">
+            <label class="form-label" for="google-pro-trade" style="font-size: 0.88rem; font-weight: 700; color: #1A201C; display: block; margin-bottom: 6px;">
+              Oficio o Especialidad Principal <span style="color: #EF4444;">*</span>
+            </label>
+            <select id="google-pro-trade" class="form-control" required style="width: 100%; padding: 12px 14px; border-radius: 12px; border: 1.5px solid #CBD5E1; font-size: 0.95rem; background: #FFFFFF;">
+              <option value="Plomero y Gasista">Plomería y Sanitarios</option>
+              <option value="Electricista Matriculado">Electricista e Instalaciones</option>
+              <option value="Gasista Matriculado">Gasista Matriculado (Metrogas / Ecogas)</option>
+              <option value="Albañilería y Construcción">Albañilería y Reformas</option>
+              <option value="Pintor Profesional">Pintura y Revestimientos</option>
+              <option value="Cerrajero 24 Horas">Cerrajería y Seguridad</option>
+              <option value="Técnico Climatización">Climatización & Aire Acondicionado</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 16px; text-align: left;">
+            <label class="form-label" for="google-pro-phone" style="font-size: 0.88rem; font-weight: 700; color: #1A201C; display: block; margin-bottom: 6px;">
+              Teléfono o WhatsApp de contacto <span style="color: #EF4444;">*</span>
+            </label>
+            <input type="tel" id="google-pro-phone" class="form-control" placeholder="Ej: 351 456-7890" required style="width: 100%; padding: 12px 14px; border-radius: 12px; border: 1.5px solid #CBD5E1; font-size: 0.95rem;">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 22px; text-align: left;">
+            <label class="form-label" for="google-pro-matricula" style="font-size: 0.88rem; font-weight: 700; color: #1A201C; display: block; margin-bottom: 6px;">
+              Nº de Matrícula Oficial (Opcional)
+            </label>
+            <input type="text" id="google-pro-matricula" class="form-control" placeholder="Ej: COPIME #38192 o METROGAS #9214" style="width: 100%; padding: 12px 14px; border-radius: 12px; border: 1.5px solid #CBD5E1; font-size: 0.95rem;">
+          </div>
+
+          <button type="submit" id="btn-google-pro-proceed" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 1rem; font-weight: 800; border-radius: 14px; background: #1A7A52; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 14px rgba(26, 122, 82, 0.35);">
+            <span>Continuar a Validación Facial (Face ID)</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: DETALLE DEL PROFESIONAL (DISEÑO OFICIAL SCREEN 4)
+       ======================================================================== -->
+  <div id="modal-pro-detail" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="pro-detail-name">
+    <div class="modal-container" style="max-width: 440px; width: 95%; background: #FAF9F5; border-radius: 24px; overflow: hidden; padding: 0;">
+      
+      <!-- Barra superior con Back y Favorito -->
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; background: transparent;">
+        <button type="button" onclick="closeProDetailModal()" style="background: none; border: none; cursor: pointer; color: #1A201C;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div style="display: flex; gap: 14px;">
+          <button type="button" onclick="showToast('Enlace copiado', 'Perfil listo para compartir.')" style="background: none; border: none; cursor: pointer; color: #1A201C;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+          </button>
+          <button type="button" id="pro-detail-fav-btn" onclick="toggleFavoritePro()" style="background: none; border: none; cursor: pointer; color: #1A7A52;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Foto de Perfil Grande / Retrato -->
+      <div style="text-align: center; padding: 0 24px 20px;">
+        <div style="width: 140px; height: 140px; margin: 0 auto 16px; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.08); background: #EAE7DF;">
+          <img id="pro-detail-avatar" src="assets/marcos.jpg" alt="Foto profesional" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 4px;">
+          <h2 id="pro-detail-name" style="font-size: 1.45rem; font-weight: 800; color: #1A201C; margin: 0;">Matías Rojas</h2>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#1A7A52"><circle cx="12" cy="12" r="10"/><path fill="#FFF" d="M9 12l2 2 4-4"/></svg>
+        </div>
+
+        <!-- Rating -->
+        <div id="pro-detail-rating-row" style="font-size: 0.88rem; color: #525B56; margin-bottom: 14px;">
+          <span style="color: #F59E0B; font-weight: 800;">★ 4.8</span> (124 reseñas)
+        </div>
+
+        <!-- Tags / Rubros -->
+        <div id="pro-detail-tags" style="display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;">
+          <span class="badge-tag" style="background: #EAF5EE; color: #1A7A52; font-weight: 700; border-radius: 999px; padding: 4px 12px;">Plomería</span>
+          <span class="badge-tag" style="background: #EAF5EE; color: #1A7A52; font-weight: 700; border-radius: 999px; padding: 4px 12px;">Gasistas</span>
+          <span class="badge-tag" style="background: #EAF5EE; color: #1A7A52; font-weight: 700; border-radius: 999px; padding: 4px 12px;">Instalaciones</span>
+        </div>
+
+        <!-- Badges de confianza -->
+        <div style="display: flex; justify-content: center; gap: 14px; font-size: 0.8rem; color: #525B56; font-weight: 600; padding: 10px 0; border-top: 1px solid #E8E6DE; border-bottom: 1px solid #E8E6DE; margin-bottom: 20px;">
+          <span>✓ Verificado</span>
+          <span>⏱ 5 años exp.</span>
+          <span id="pro-detail-city-badge">📍 Córdoba</span>
+        </div>
+
+        <!-- Sobre mí -->
+        <div style="text-align: left; background: #FFFFFF; border: 1px solid #E8E6DE; border-radius: 16px; padding: 16px; margin-bottom: 24px;">
+          <strong style="font-size: 0.92rem; color: #1A201C; display: block; margin-bottom: 6px;">Sobre mí</strong>
+          <p id="pro-detail-bio" style="font-size: 0.88rem; color: #525B56; margin: 0; line-height: 1.5;">
+            Trabajo hace 5 años en el rubro de la plomería. Realizo instalaciones, reparaciones y mantenimiento en hogares y comercios.
+          </p>
+        </div>
+
+        <!-- Botón Solicitar Presupuesto Sticky Verde -->
+        <button type="button" class="btn btn-primary" onclick="proceedToRequestQuoteFromDetail()" style="width: 100%; padding: 15px; font-size: 1.05rem; font-weight: 800; border-radius: 16px; background: #1A7A52; margin-bottom: 10px; box-shadow: 0 4px 16px rgba(26, 122, 82, 0.35);">
+          Solicitar presupuesto
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: SOLICITAR PRESUPUESTO (DISEÑO OFICIAL SCREEN 5)
+       ======================================================================== -->
+  <div id="modal-request-quote" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="req-quote-title">
+    <div class="modal-container" style="max-width: 440px; width: 95%; background: #FAF9F5; border-radius: 24px; overflow: hidden; padding: 24px;">
+      
+      <!-- Back button y header -->
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+        <button type="button" onclick="closeRequestQuoteModal()" style="background: none; border: none; cursor: pointer; color: #1A201C; padding: 0;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div>
+          <h2 id="req-quote-title" style="font-size: 1.35rem; font-weight: 800; color: #1A201C; margin: 0;">Solicitar presupuesto</h2>
+          <span id="req-quote-subtitle" style="font-size: 0.82rem; color: #525B56;">Matías Rojas te responderá en menos de 1 hora.</span>
+        </div>
+      </div>
+
+      <form id="request-quote-form" onsubmit="event.preventDefault(); submitClientOrderRequest();">
+        <div class="form-group" style="margin-bottom: 16px; text-align: left;">
+          <label class="form-label" for="req-quote-trade" style="font-size: 0.88rem; font-weight: 700; color: #1A201C; display: block; margin-bottom: 6px;">
+            ¿Qué trabajo necesitás?
+          </label>
+          <select id="req-quote-trade" class="form-control" required style="width: 100%; padding: 12px 14px; border-radius: 14px; border: 1px solid #E8E6DE; background: #FFFFFF; font-size: 0.95rem;">
+            <option value="plomeria">Instalación o reparación de plomería</option>
+            <option value="electricidad">Instalación eléctrica o tablero</option>
+            <option value="gas">Revisión o conexión de gas</option>
+            <option value="albanileria">Albañilería y refacciones</option>
+            <option value="pintura">Pintura de ambientes</option>
+            <option value="aire">Climatización y Split</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px; text-align: left;">
+          <label class="form-label" for="req-quote-desc" style="font-size: 0.88rem; font-weight: 700; color: #1A201C; display: block; margin-bottom: 6px;">
+            Descripción del trabajo
+          </label>
+          <textarea id="req-quote-desc" rows="4" class="form-control" placeholder="Contá más detalles (opcional)" style="width: 100%; padding: 12px 14px; border-radius: 14px; border: 1px solid #E8E6DE; background: #FFFFFF; font-size: 0.92rem; font-family: inherit; resize: vertical;"></textarea>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 24px; text-align: left;">
+          <label class="form-label" style="font-size: 0.88rem; font-weight: 700; color: #1A201C; display: block; margin-bottom: 6px;">
+            Ubicación
+          </label>
+          <div style="background: #FFFFFF; border: 1px solid #E8E6DE; border-radius: 14px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; cursor: pointer;" onclick="cycleCitySelection()">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A7A52" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span id="req-quote-city-label" style="font-size: 0.92rem; font-weight: 600; color: #1A201C;">Córdoba, Córdoba</span>
+            </div>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 1.05rem; font-weight: 800; border-radius: 16px; background: #1A7A52; box-shadow: 0 4px 16px rgba(26, 122, 82, 0.35);">
+          Enviar solicitud
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: SOLICITUD ENVIADA CON ÉXITO (DISEÑO OFICIAL SCREEN 13)
+       ======================================================================== -->
+  <div id="modal-request-success" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-container" style="max-width: 400px; width: 95%; background: #FAF9F5; border-radius: 24px; padding: 36px 24px; text-align: center;">
+      
+      <!-- Círculo Verde con Checkmark estilo Screen 13 -->
+      <div style="width: 80px; height: 80px; margin: 0 auto 20px; border-radius: 50%; background: #1A7A52; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 24px rgba(26, 122, 82, 0.3);">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </div>
+
+      <h2 style="font-size: 1.6rem; font-weight: 800; color: #1A201C; margin: 0 0 8px;">
+        ¡Solicitud enviada!
+      </h2>
+      <p id="success-quote-subtitle" style="font-size: 0.95rem; color: #525B56; margin: 0 0 28px;">
+        Matías Rojas te responderá en menos de 1 hora.
+      </p>
+
+      <button type="button" class="btn btn-primary" onclick="closeSuccessModalAndGoHome()" style="width: 100%; padding: 14px; font-size: 1rem; font-weight: 800; border-radius: 14px; background: #1A7A52; margin-bottom: 14px;">
+        Volver al inicio
+      </button>
+
+      <button type="button" onclick="closeSuccessModalAndOpenOrders()" style="background: none; border: none; font-size: 0.92rem; font-weight: 700; color: #1A7A52; cursor: pointer;">
+        Ver mis pedidos
+      </button>
 
     </div>
   </div>
@@ -2761,32 +2516,35 @@
   </div>
 
   <!-- ========================================================================
-       MODAL 6: MIS PEDIDOS (PANEL DEL CLIENTE)
+       MODAL: MIS PEDIDOS (DISEÑO OFICIAL SCREEN 6)
        ======================================================================== -->
   <div id="modal-my-orders" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="orders-modal-title">
-    <div class="modal-container" style="max-width: 620px;">
+    <div class="modal-container" style="max-width: 460px; width: 95%; background: #F9F6ED; border-radius: 24px; padding: 20px 22px;">
       
-      <div class="modal-header">
-        <div style="display: flex; align-items: center; gap: 10px;">
-          <div style="width: 38px; height: 38px; border-radius: 50%; background-color: var(--color-primary-bg); color: var(--color-primary); display: flex; align-items: center; justify-content: center;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-          </div>
-          <div>
-            <h3 id="orders-modal-title" class="modal-title" style="font-size: 1.25rem;">Mis Pedidos de Oficios</h3>
-            <p style="font-size: 0.8rem; color: var(--color-text-secondary);">Seguimiento de cotizaciones, custodia de pagos y garantías</p>
-          </div>
-        </div>
-        <button class="modal-close-btn" onclick="closeMyOrdersModal()" aria-label="Cerrar modal">&times;</button>
+      <!-- Header con título y botón de cerrar -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+        <h2 id="orders-modal-title" style="font-size: 1.45rem; font-weight: 800; color: #1A201C; margin: 0;">Mis pedidos</h2>
+        <button type="button" onclick="closeMyOrdersModal()" style="background: none; border: none; font-size: 1.6rem; color: #525B56; cursor: pointer; line-height: 1; padding: 4px;">&times;</button>
       </div>
 
-      <div id="my-orders-list-container" class="modal-body" style="gap: 14px;">
-        <!-- Se renderiza dinámicamente desde el almacenamiento real vía app.js -->
+      <!-- Pestañas Activos / Historial estilo Screen 6 -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; background: #EFE9DC; padding: 4px; border-radius: 999px; margin-bottom: 20px;">
+        <button type="button" id="orders-subtab-activos" onclick="switchOrdersModalSubtab('activos')" style="padding: 9px; border-radius: 999px; border: none; font-weight: 700; font-size: 0.9rem; cursor: pointer; background: #1A7A52; color: #FFFFFF; transition: all 0.2s ease;">
+          Activos
+        </button>
+        <button type="button" id="orders-subtab-historial" onclick="switchOrdersModalSubtab('historial')" style="padding: 9px; border-radius: 999px; border: none; font-weight: 600; font-size: 0.9rem; cursor: pointer; background: transparent; color: #525B56; transition: all 0.2s ease;">
+          Historial
+        </button>
       </div>
 
-      <div class="modal-footer">
-        <button class="btn btn-secondary btn-sm" onclick="closeMyOrdersModal()">Cerrar</button>
-        <button class="btn btn-primary btn-sm" onclick="closeMyOrdersModal(); openNewOrderModal();">
-          + Solicitar Nuevo Pedido
+      <!-- Contenedor dinámico de pedidos estilo Screen 6 -->
+      <div id="my-orders-list-container" style="display: flex; flex-direction: column; gap: 12px; max-height: 440px; overflow-y: auto; padding-right: 2px;">
+        <!-- Se renderiza reactivamente vía renderMyOrdersModalList() -->
+      </div>
+
+      <div style="margin-top: 18px; text-align: center;">
+        <button type="button" class="btn btn-primary" onclick="closeMyOrdersModal(); openOrderModalWithTrade('plomeria', 'Matías Rojas');" style="width: 100%; padding: 13px; font-weight: 700; border-radius: 14px; background: #1A7A52;">
+          + Nuevo Pedido de Servicio
         </button>
       </div>
 
@@ -3228,141 +2986,104 @@
   </div>
 
   <!-- Barra de Navegación Inferior Nativa para Celulares (Fiel al diseño oficial Sademy) -->
-  <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Navegación móvil nativa">
-    <button id="mob-nav-btn-pedidos" class="mob-nav-item active" onclick="switchMobileNav('pedidos'); switchAppTab('pedidos'); window.scrollTo({top: 0, behavior: 'smooth'});">
+  <!-- Barra de Navegación Inferior (Diseño Oficial de Referencia: 4 Pestañas) -->
+  <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Navegación móvil oficial">
+    <button id="mob-nav-btn-inicio" class="mob-nav-item active" onclick="switchMobileNavTab('inicio')">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      <span>Inicio</span>
+    </button>
+    <button id="mob-nav-btn-pedidos" class="mob-nav-item" onclick="switchMobileNavTab('pedidos')">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-      <span>Presupuestos</span>
+      <span>Pedidos</span>
     </button>
-    <button id="mob-nav-btn-oficios" class="mob-nav-item" onclick="switchMobileNav('oficios'); document.getElementById('oficios').scrollIntoView({behavior: 'smooth'})">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-      <span>Oficios</span>
+    <button id="mob-nav-btn-profesionales" class="mob-nav-item" onclick="switchMobileNavTab('profesionales')">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      <span>Profesionales</span>
     </button>
-    <button id="mob-nav-btn-mensajes" class="mob-nav-item" onclick="switchMobileNav('mensajes'); switchAppTab('mensajes'); window.scrollTo({top: 0, behavior: 'smooth'});">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-      <span>Mensajes</span>
-    </button>
-    <button id="mob-nav-btn-garantia" class="mob-nav-item" onclick="switchMobileNav('garantia'); switchAppTab('ayuda'); window.scrollTo({top: 0, behavior: 'smooth'});">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-      <span>Garantía</span>
-    </button>
-    <button id="mob-nav-btn-perfil" class="mob-nav-item" onclick="switchMobileNav('perfil'); openAccountModal();">
+    <button id="mob-nav-btn-perfil" class="mob-nav-item" onclick="switchMobileNavTab('perfil')">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-      <span id="mob-nav-perfil-label">Marcos</span>
+      <span>Perfil</span>
     </button>
   </nav>
 
   <!-- ========================================================================
        MODAL: MI CUENTA, PERFILES Y CIERRE DE SESIÓN (ESTILO APPLE / SAMSUNG)
        ======================================================================== -->
+  <!-- ========================================================================
+       MODAL: PERFIL DE USUARIO (DISEÑO OFICIAL SCREEN 11)
+       ======================================================================== -->
   <div id="modal-account-view" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-account-title">
-    <div class="modal-container" style="max-width: 500px;">
-      <div class="modal-header">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <img id="account-modal-avatar" src="assets/mascot.jpg" alt="Avatar" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2.5px solid var(--color-primary);">
-          <div>
-            <h3 id="account-modal-name" class="modal-title" style="font-size: 1.2rem; margin: 0;">Mi Cuenta</h3>
-            <p id="account-modal-email" style="font-size: 0.8rem; color: var(--color-text-secondary); margin: 2px 0 0;">usuario@sademy.com</p>
-            <span id="account-modal-badge" class="badge-tag" style="background: #ECFDF5; color: #065F46; font-weight: 700; margin-top: 4px; display: inline-block;">Cliente Verificado</span>
-          </div>
-        </div>
-        <button class="modal-close-btn" onclick="closeAccountModal()" aria-label="Cerrar modal">&times;</button>
+    <div class="modal-container" style="max-width: 440px; width: 95%; background: #F9F6ED; border-radius: 24px; padding: 24px;">
+      
+      <!-- Header con Back / Cerrar y Avatar -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
+        <h2 id="modal-account-title" style="font-size: 1.45rem; font-weight: 800; color: #1A201C; margin: 0;">Perfil</h2>
+        <button type="button" onclick="closeAccountModal()" style="background: none; border: none; font-size: 1.6rem; color: #525B56; cursor: pointer; line-height: 1; padding: 4px;">&times;</button>
       </div>
 
-      <div class="modal-body" style="padding-top: 16px;">
+      <!-- Avatar y Nombre estilo Screen 11 (Eric Sadler) -->
+      <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 28px; background: #FFFFFF; border: 1.5px solid var(--color-border); border-radius: 18px; padding: 16px 18px; box-shadow: var(--shadow-xs);">
+        <div style="width: 56px; height: 56px; border-radius: 50%; background: #1A7A52; color: #FFFFFF; font-weight: 800; font-size: 1.3rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;" id="account-avatar-circle">
+          ES
+        </div>
+        <div>
+          <h3 id="account-modal-name" style="font-size: 1.25rem; font-weight: 800; color: #1A201C; margin: 0;">Eric Sadler</h3>
+          <span id="account-modal-role" style="font-size: 0.82rem; color: #1A7A52; font-weight: 700;">Cliente Verificado</span>
+        </div>
+      </div>
+
+      <!-- Lista de Opciones con Chevron estilo Screen 11 -->
+      <div style="background: #FFFFFF; border: 1.5px solid var(--color-border); border-radius: 20px; overflow: hidden; margin-bottom: 24px; box-shadow: var(--shadow-xs);">
         
-        <!-- Protocolo de Seguridad y Verificación -->
-        <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 14px; margin-bottom: 16px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <span style="font-size: 0.74rem; text-transform: uppercase; font-weight: 800; color: #475569; letter-spacing: 0.04em;">
-              Seguridad de Cuenta Sademy
-            </span>
-            <span class="badge-tag" style="background: #D1FAE5; color: #065F46; font-size: 0.72rem; font-weight: 700;">100% Protegido</span>
+        <button type="button" onclick="closeAccountModal(); openMyOrdersModal();" style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; border: none; background: transparent; cursor: pointer; border-bottom: 1px solid #F1ECE1; font-size: 0.95rem; font-weight: 600; color: #1A201C;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            <span>Mis pedidos</span>
           </div>
-          <p style="font-size: 0.8rem; color: #64748B; margin: 0; line-height: 1.4;">
-            Tu identidad y operaciones cuentan con custodia financiera Sademy Escrow y verificación técnica obligatoria.
-          </p>
-        </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
 
-        <!-- Selector Rápido de Roles en Perfil (Apple Switcher) -->
-        <div style="margin-bottom: 16px;">
-          <div style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; color: #475569; letter-spacing: 0.04em; margin-bottom: 6px;">
-            Cambiar Rol de Acceso Activo
+        <button type="button" onclick="closeAccountModal(); openMyOrdersModal('activos');" style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; border: none; background: transparent; cursor: pointer; border-bottom: 1px solid #F1ECE1; font-size: 0.95rem; font-weight: 600; color: #1A201C;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            <span>Mis presupuestos</span>
           </div>
-          <div style="background: #F3F4F6; padding: 4px; border-radius: 12px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px;">
-            <button type="button" id="acc-role-pill-client" class="role-switch-pill" onclick="switchProfile('client')" style="padding: 7px 4px; font-size: 0.76rem; font-weight: 700; border-radius: 8px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
-              <span>👤 Cliente</span>
-            </button>
-            <button type="button" id="acc-role-pill-pro" class="role-switch-pill" onclick="switchProfile('pro')" style="padding: 7px 4px; font-size: 0.76rem; font-weight: 700; border-radius: 8px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
-              <span>⚡ Pro</span>
-            </button>
-            <button type="button" id="acc-role-pill-admin" class="role-switch-pill" onclick="switchProfile('admin')" style="padding: 7px 4px; font-size: 0.76rem; font-weight: 700; border-radius: 8px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
-              <span>🛡️ Admin HQ</span>
-            </button>
-          </div>
-        </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
 
-        <!-- Acciones Rápidas del Rol Scoped -->
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          
-          <!-- CLIENTE ONLY -->
-          <div class="user-menu-role-group view-client-only" style="display: flex; flex-direction: column; gap: 8px;">
-            <button type="button" onclick="closeAccountModal(); openMyOrdersModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 700;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-              <div style="text-align: left;">
-                <div style="color: var(--color-text-main);">Mis Pedidos & Custodia</div>
-                <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Ver pedidos en curso y PIN de conformidad</div>
-              </div>
-            </button>
-            <button type="button" onclick="closeAccountModal(); openNewOrderModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 700;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-              <div style="text-align: left;">
-                <div style="color: #059669;">Pedir Nuevo Presupuesto</div>
-                <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Cotizaciones rápidas y gratis en 1 min</div>
-              </div>
-            </button>
-            <button type="button" onclick="closeAccountModal(); openClientWarrantyModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 600;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-              <div style="text-align: left;">
-                <div>Garantía & Fondos Protegidos</div>
-                <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Custodia segura Sademy Escrow</div>
-              </div>
-            </button>
+        <button type="button" onclick="closeAccountModal(); showFavoritesModal();" style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; border: none; background: transparent; cursor: pointer; border-bottom: 1px solid #F1ECE1; font-size: 0.95rem; font-weight: 600; color: #1A201C;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            <span>Mis favoritos</span>
           </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
 
-          <!-- PRO ONLY -->
-          <div class="user-menu-role-group view-pro-only" style="display: flex; flex-direction: column; gap: 8px;">
-            <button type="button" onclick="closeAccountModal(); openProDashboardModal('crm');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 800; background: #ECFDF5; border: 1.5px solid #A7F3D0;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-              <div style="text-align: left;">
-                <div style="color: #047857;">Sademy CRM Profesional</div>
-                <div style="font-size: 0.72rem; color: #065F46; font-weight: normal;">Directorio de clientes, historial, cobranzas y notas</div>
-              </div>
-            </button>
-            <button type="button" onclick="closeAccountModal(); openProDashboardModal('oportunidades');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 700;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-              <div style="text-align: left;">
-                <div style="color: #047857;">Portal Sademy PRO (Oportunidades)</div>
-                <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">12 solicitudes abiertas para cotizar en tu zona</div>
-              </div>
-            </button>
-            <button type="button" onclick="closeAccountModal(); openProDashboardModal('billetera');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 700;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#065F46" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="6" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="18" y2="12"></line></svg>
-              <div style="text-align: left;">
-                <div style="color: #065F46;" id="acc-pro-wallet-balance">Mi Billetera & Cobros ($49.000)</div>
-                <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Retirar saldo a Mercado Pago o CBU</div>
-              </div>
-            </button>
-            <button type="button" onclick="closeAccountModal(); openProSubscriptionsModal();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 600;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-              <div style="text-align: left;">
-                <div>Membresías Sademy PRO</div>
-                <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Comisión reducida hasta el 5%</div>
-              </div>
-            </button>
+        <button type="button" onclick="showToast('Configuración', 'Ajustes de cuenta, notificaciones y privacidad.')" style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; border: none; background: transparent; cursor: pointer; border-bottom: 1px solid #F1ECE1; font-size: 0.95rem; font-weight: 600; color: #1A201C;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            <span>Configuración</span>
           </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
 
-          <!-- ADMIN ONLY -->
-          <div class="user-menu-role-group view-admin-only" style="display: flex; flex-direction: column; gap: 8px;">
+        <button type="button" onclick="closeAccountModal(); document.getElementById('como-funciona')?.scrollIntoView({behavior: 'smooth'});" style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; border: none; background: transparent; cursor: pointer; font-size: 0.95rem; font-weight: 600; color: #1A201C;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <span>Ayuda</span>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+
+      </div>
+
+      <!-- Botón Cerrar Sesión -->
+      <button type="button" onclick="logoutUser(); closeAccountModal();" style="width: 100%; background: none; border: 1.5px solid #E8E2D5; border-radius: 14px; padding: 12px; font-weight: 700; color: #DC2626; cursor: pointer; transition: all 0.2s ease;">
+        Cerrar Sesión
+      </button>
+
+    </div>
+  </div>
             <button type="button" onclick="closeAccountModal(); openAdminBackofficeModal('finanzas');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 700;">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#92400E" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
               <div style="text-align: left;">
