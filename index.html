@@ -449,6 +449,32 @@
   </section>
 
   <!-- ========================================================================
+       BARRA DE TRACCIÓN Y MÉTRICAS INSTITUCIONALES (INVESTOR-GRADE PROOF)
+       ======================================================================== -->
+  <section class="traction-metrics-bar">
+    <div class="container" style="max-width: 1040px; margin: 0 auto; padding: 0 20px;">
+      <div class="traction-grid">
+        <div class="traction-item">
+          <div class="traction-val">$1.84M+ <span style="font-size: 0.82rem; font-weight: 700; color: #78716C;">ARS</span></div>
+          <div class="traction-label">Transaccionados en Custodia</div>
+        </div>
+        <div class="traction-item">
+          <div class="traction-val" style="color: #1A201C;">142</div>
+          <div class="traction-label">Técnicos con Matrícula Activa</div>
+        </div>
+        <div class="traction-item">
+          <div class="traction-val">99.2%</div>
+          <div class="traction-label">Conformidad sin Reclamos</div>
+        </div>
+        <div class="traction-item">
+          <div class="traction-val" style="color: #1A201C;">6 Meses</div>
+          <div class="traction-label">Garantía Escrita Oficial</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
        SECCIÓN 3: DIRECTORIO DE PROFESIONALES VERIFICADOS (FILTRABLE EN VIVO)
        ======================================================================== -->
   <section id="directorio" class="section" style="background: var(--color-bg-base); padding: 40px 0;">
@@ -570,6 +596,23 @@
             <div class="escrow-step-item">
               <span style="width: 22px; height: 22px; border-radius: 50%; background: #1A7A52; color: #FFF; display: flex; align-items: center; justify-content: center; font-size: 0.72rem;">3</span>
               <span>Aprobás y se libera</span>
+            </div>
+          </div>
+
+          <!-- Sandbox Interactivo para Demostración en Vivo de Escrow -->
+          <div class="escrow-sandbox-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+              <span style="font-size: 0.78rem; font-weight: 800; color: #1A7A52; text-transform: uppercase;">Simulador de Liberación Segura</span>
+              <span id="escrow-demo-badge" style="font-size: 0.74rem; font-weight: 800; background: #FEF3C7; color: #92400E; padding: 2px 8px; border-radius: 6px;">Fondos en Custodia: $24.500 ARS</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <input type="text" id="escrow-demo-pin-input" class="escrow-sandbox-input" placeholder="PIN" maxlength="4" value="1234" title="Ingresá 4 dígitos (ej: 1234)">
+              <button type="button" class="btn btn-primary btn-sm" onclick="simulateEscrowPinRelease()" style="font-weight: 700; border-radius: 10px; padding: 8px 16px;">
+                Liberar Fondos con PIN
+              </button>
+            </div>
+            <div id="escrow-demo-result" style="font-size: 0.8rem; color: #78716C; margin-top: 8px;">
+              Ingresá el PIN de satisfacción <strong>1234</strong> para ver cómo se liquidan los fondos al profesional y la comisión Sademy.
             </div>
           </div>
         </div>
@@ -704,6 +747,41 @@
         <button type="button" class="btn btn-primary" onclick="triggerGoogleDeviceSignIn('pro')" style="padding: 14px 28px; font-weight: 800; font-size: 1rem; border-radius: 14px; background: #1A7A52; box-shadow: 0 4px 14px rgba(26, 122, 82, 0.35);">
           Quiero ser profesional
         </button>
+      </div>
+
+      <!-- SECCIÓN B2B: SADEMY PARA ADMINISTRACIONES DE CONSORCIOS Y EMPRESAS -->
+      <div id="para-empresas" class="enterprise-card-bento">
+        <div style="max-width: 650px;">
+          <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18); padding: 5px 14px; border-radius: 999px; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: #A7F3D0; margin-bottom: 14px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            División B2B · Alto Volumen
+          </div>
+          <h3 style="font-size: 1.85rem; font-weight: 900; color: #FFFFFF; margin: 0 0 10px; line-height: 1.25;">
+            Sademy para Administraciones de Consorcios y Empresas
+          </h3>
+          <p style="font-size: 0.98rem; color: #CBD5E1; margin: 0 0 24px; line-height: 1.5;">
+            Centralizá el mantenimiento integral de tus edificios y locales comerciales con cuadrillas matriculadas, factura A electrónica (ARCA) y cobertura de ART al día.
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px;">
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: #F1F5F9;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Facturación discriminada A y B por consorcio o razón social.</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: #F1F5F9;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Certificados de matrícula COPIME/ERSEPT y nómina de ART verificada.</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: #F1F5F9;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Cuenta corriente con pagos programados a 15 y 30 días para consorcios.</span>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-primary" onclick="openEnterpriseInquiryModal()" style="padding: 14px 30px; font-weight: 800; font-size: 0.98rem; border-radius: 14px; background: #10B981; color: #FFFFFF; border: none; cursor: pointer; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);">
+            Solicitar Cuenta Corporativa Consorcios →
+          </button>
+        </div>
       </div>
 
       <!-- BANNER FINAL: TU HOGAR EN BUENAS MANOS (DISEÑO OFICIAL SCREEN 14) -->
@@ -2159,6 +2237,58 @@
         Ver mis pedidos
       </button>
 
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: CONSULTA CORPORATIVA / ADMINISTRACIÓN DE CONSORCIOS
+       ======================================================================== -->
+  <div id="modal-enterprise-inquiry" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="enterprise-modal-title">
+    <div class="modal-container" style="max-width: 480px; width: 95%; background: #FAF9F5; border-radius: 24px; padding: 28px 24px;">
+      
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <div>
+          <span style="font-size: 0.76rem; font-weight: 800; color: #1A7A52; text-transform: uppercase;">División Corporativa</span>
+          <h3 id="enterprise-modal-title" style="font-size: 1.3rem; font-weight: 800; color: #1A201C; margin: 2px 0 0;">Convenio para Consorcios</h3>
+        </div>
+        <button class="modal-close-btn" onclick="closeEnterpriseInquiryModal()" aria-label="Cerrar modal">&times;</button>
+      </div>
+
+      <p style="font-size: 0.86rem; color: #525B56; margin: 0 0 20px;">
+        Completá los datos de tu administración o empresa para coordinar una cuenta corriente con tarifa corporativa preferencial.
+      </p>
+
+      <form onsubmit="event.preventDefault(); submitEnterpriseInquiry();" style="display: flex; flex-direction: column; gap: 14px;">
+        <div>
+          <label style="font-size: 0.8rem; font-weight: 700; color: #1A201C; display: block; margin-bottom: 4px;">Nombre de la Administración / Empresa</label>
+          <input type="text" id="ent-company-name" required placeholder="Ej: Administración del Solar S.R.L." style="width: 100%; padding: 12px 14px; border: 1.5px solid var(--color-border); border-radius: 12px; font-size: 0.92rem; background: #FFFFFF;">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label style="font-size: 0.8rem; font-weight: 700; color: #1A201C; display: block; margin-bottom: 4px;">Edificios a cargo</label>
+            <select id="ent-buildings-count" style="width: 100%; padding: 12px 14px; border: 1.5px solid var(--color-border); border-radius: 12px; font-size: 0.92rem; background: #FFFFFF;">
+              <option value="1-5">1 a 5 edificios</option>
+              <option value="6-15" selected>6 a 15 edificios</option>
+              <option value="16-50">16 a 50 edificios</option>
+              <option value="50+">Más de 50 edificios</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 0.8rem; font-weight: 700; color: #1A201C; display: block; margin-bottom: 4px;">Ciudad / Zona</label>
+            <input type="text" id="ent-city" required placeholder="Ej: Córdoba" value="Córdoba" style="width: 100%; padding: 12px 14px; border: 1.5px solid var(--color-border); border-radius: 12px; font-size: 0.92rem; background: #FFFFFF;">
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size: 0.8rem; font-weight: 700; color: #1A201C; display: block; margin-bottom: 4px;">Teléfono de Contacto / WhatsApp</label>
+          <input type="tel" id="ent-phone" required placeholder="+54 9 351 555-1234" style="width: 100%; padding: 12px 14px; border: 1.5px solid var(--color-border); border-radius: 12px; font-size: 0.92rem; background: #FFFFFF;">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="padding: 14px; font-size: 0.95rem; font-weight: 800; border-radius: 12px; background: #1A7A52; margin-top: 6px;">
+          Enviar Solicitud de Convenio
+        </button>
+      </form>
     </div>
   </div>
 

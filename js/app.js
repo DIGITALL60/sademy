@@ -4207,6 +4207,91 @@ function requestQuickJobFromEstimator(trade, jobTitle, estimatedPrice) {
   modal.classList.add('active');
 }
 
+// ============================================================================
+// SIMULADOR INTERACTIVO DE ESCROW / CUSTODIA CON PIN (EXPERIENCIA APPLE 10/10)
+// ============================================================================
+function simulateEscrowPinRelease() {
+  triggerHapticFeedback();
+  const pinInput = document.getElementById('escrow-demo-pin-input');
+  const badgeEl = document.getElementById('escrow-demo-badge');
+  const resultEl = document.getElementById('escrow-demo-result');
+
+  const pinVal = pinInput ? pinInput.value.trim() : '';
+
+  if (pinVal === '1234') {
+    playSuccessChime();
+    if (badgeEl) {
+      badgeEl.style.background = '#DCFCE7';
+      badgeEl.style.color = '#15803D';
+      badgeEl.textContent = 'Pago Liberado con Éxito';
+    }
+    if (resultEl) {
+      resultEl.innerHTML = `
+        <div style="background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 12px; padding: 12px; margin-top: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-weight: 800; color: #166534; font-size: 0.88rem; margin-bottom: 6px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            PIN Verificado · $24.500 ARS liquidados instantáneamente
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.8rem; color: #14532D; margin-top: 4px;">
+            <div>Liquidación a Técnico: <strong>$21.560 ARS</strong> (88%)</div>
+            <div>Fee Sademy Escrow: <strong>+$2.940 ARS</strong> (12%)</div>
+          </div>
+          <div style="font-size: 0.74rem; color: #15803D; margin-top: 6px; font-weight: 600;">
+            Garantía de conformidad activa por 6 meses · Notificación enviada a ambas partes.
+          </div>
+        </div>
+      `;
+    }
+    showToast('¡Pago en Custodia Liberado!', 'El profesional ha recibido $21.560 ARS y la garantía de 6 meses quedó activada.');
+  } else {
+    playPop();
+    if (badgeEl) {
+      badgeEl.style.background = '#FEE2E2';
+      badgeEl.style.color = '#B91C1C';
+      badgeEl.textContent = 'PIN Incorrecto · Fondos Protegidos';
+    }
+    if (resultEl) {
+      resultEl.innerHTML = `
+        <span style="color: #DC2626; font-weight: 700;">
+          El PIN ingresado no coincide. Probá ingresando el código de prueba <strong>1234</strong>.
+        </span>
+      `;
+    }
+  }
+}
+
+// ============================================================================
+// CONVENIOS B2B / ADMINISTRACIONES DE CONSORCIOS & EMPRESAS
+// ============================================================================
+function openEnterpriseInquiryModal() {
+  triggerHapticFeedback();
+  playPop();
+  const modal = document.getElementById('modal-enterprise-inquiry');
+  if (modal) modal.classList.add('active');
+}
+
+function closeEnterpriseInquiryModal() {
+  const modal = document.getElementById('modal-enterprise-inquiry');
+  if (modal) modal.classList.remove('active');
+}
+
+function submitEnterpriseInquiry() {
+  triggerHapticFeedback();
+  playSuccessChime();
+
+  const company = document.getElementById('ent-company-name')?.value || 'Administración';
+  const buildings = document.getElementById('ent-buildings-count')?.value || '6-15';
+  const city = document.getElementById('ent-city')?.value || 'Córdoba';
+  const phone = document.getElementById('ent-phone')?.value || '';
+
+  closeEnterpriseInquiryModal();
+
+  showToast(
+    'Solicitud Corporativa Recibida',
+    `Un ejecutivo de cuentas Sademy B2B se comunicará con ${company} al ${phone || 'teléfono indicado'} para coordinar la cuenta corriente.`
+  );
+}
+
 // Modal Screen 4: Detalle del Profesional
 function openProDetailModal(proId) {
   triggerHapticFeedback();
