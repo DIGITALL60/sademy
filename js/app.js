@@ -2619,7 +2619,7 @@ function openQuoteDetailModal(quoteId) {
           <span class="badge-tag badge-profession">${foundQuote.proTrade}</span>
         </div>
         <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin-top: 2px;">
-          ★ <strong>${foundQuote.rating}</strong> (${foundQuote.jobsCount} trabajos completados en Sademy)
+          <strong>${foundQuote.rating} / 5.0</strong> (${foundQuote.jobsCount} trabajos completados en Sademy)
         </p>
       </div>
     </div>
@@ -2857,7 +2857,7 @@ function renderAndOpenInvoice(quote, order, customInvoice = null) {
             <div><strong>Fecha de Emisión:</strong> ${dateStr}</div>
             <div><strong>CUIT Emisor:</strong> 30-71829450-8</div>
             <div><strong>Custodia Escrow:</strong> <span style="font-family: monospace; font-weight: 700; color: #10B981;">${escrowCode}</span></div>
-            <div><strong>Estado de Fondos:</strong> <span style="color: #10B981; font-weight: 700;">✓ Pago Liberado / Conformidad</span></div>
+            <div><strong>Estado de Fondos:</strong> <span style="color: #10B981; font-weight: 700;">Pago Liberado / Conformidad</span></div>
           </div>
         </div>
 
@@ -3017,7 +3017,7 @@ function renderAndOpenInvoice(quote, order, customInvoice = null) {
           <div>
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 3px;">
               <span style="font-size: 13px; font-weight: 900; letter-spacing: 0.5px; color: #065F46;">SELLO DIGITAL SADEMY ESCROW</span>
-              <span style="background: #ECFDF5; color: #047857; font-size: 9px; font-weight: 800; padding: 2px 7px; border-radius: 4px; border: 1px solid #A7F3D0;">VERIFICADO ✓</span>
+              <span style="background: #ECFDF5; color: #047857; font-size: 9px; font-weight: 800; padding: 2px 7px; border-radius: 4px; border: 1px solid #A7F3D0;">VERIFICADO</span>
             </div>
             <div style="font-size: 9.5px; font-weight: 800; color: #111827;">
               Comprobante Oficial de Prestación y Certificado de Garantía
@@ -3031,7 +3031,7 @@ function renderAndOpenInvoice(quote, order, customInvoice = null) {
         <div style="text-align: right; font-size: 10.5px; line-height: 1.6;">
           <div><strong>Token de Seguridad:</strong> <span style="font-family: monospace; font-size: 12px; font-weight: 800; color: #064E3B; letter-spacing: 1px;">SAD-${compNumber}-SEC</span></div>
           <div><strong>Profesional Prestador:</strong> <span style="font-weight: 700;">${proName}</span></div>
-          <div style="font-size: 9px; color: #059669; font-weight: 700; margin-top: 3px;">✓ Garantía y Custodia Escrow Activa</div>
+          <div style="font-size: 9px; color: #059669; font-weight: 700; margin-top: 3px;">Garantía y Custodia Escrow Activa</div>
         </div>
       </div>
 
@@ -3307,7 +3307,7 @@ function renderWorkerInvoicesList() {
         <div>
           <div style="display: flex; align-items: center; gap: 8px;">
             <strong style="color: #111827; font-size: 0.92rem;">${inv.id}</strong>
-            <span class="badge-tag" style="background: #DCFCE7; color: #166534; font-weight: 700; font-size: 0.72rem;">✓ ${inv.status || 'Cobrada / En Garantía'}</span>
+            <span class="badge-tag" style="background: #DCFCE7; color: #166534; font-weight: 700; font-size: 0.72rem;">${inv.status || 'Cobrada / En Garantía'}</span>
           </div>
           <div style="font-size: 0.84rem; color: #334155; font-weight: 600; margin-top: 3px;">
             Cliente: <strong>${inv.clientName}</strong> · ${inv.jobDescription.substring(0, 48)}${inv.jobDescription.length > 48 ? '...' : ''}
@@ -3643,7 +3643,7 @@ function submitOrderReview() {
         );
         if (clientMatch) {
           clientMatch.rating = rating;
-          clientMatch.notes = (clientMatch.notes || '') + ` | Reseña recibida (${rating}★): "${comment}"`;
+          clientMatch.notes = (clientMatch.notes || '') + ` | Reseña recibida (${rating}/5): "${comment}"`;
         }
       }
     }
@@ -3665,8 +3665,8 @@ function submitOrderReview() {
   const proCountStr = targetPro ? targetPro.reviewsCount : '1';
 
   showToast(
-    '⭐ Calificación y Reputación Acumuladas',
-    `¡Tu puntuación de ${rating}★ se acumuló automáticamente al perfil de ${proNameStr}! Nuevo promedio oficial: ${proRatingStr}★ (${proCountStr} reseñas verificadas).`
+    'Calificación y Reputación Acumuladas',
+    `¡Tu puntuación de ${rating}/5 se acumuló automáticamente al perfil de ${proNameStr}! Nuevo promedio oficial: ${proRatingStr}/5 (${proCountStr} reseñas verificadas).`
   );
 }
 
@@ -3894,11 +3894,17 @@ function renderProfessionalsDirectory() {
               ${pro.certified ? `<svg width="15" height="15" viewBox="0 0 24 24" fill="#1A7A52"><circle cx="12" cy="12" r="10"/><path fill="#FFF" d="M9 12l2 2 4-4"/></svg>` : ''}
             </div>
             <div style="font-size: 0.82rem; color: #78716C; margin: 2px 0 4px; display: flex; align-items: center; gap: 4px;">
-              <span style="color: #F59E0B; font-weight: 800;">★ ${pro.rating}</span>
+              <span style="color: #F59E0B; font-weight: 800; display: inline-flex; align-items: center; gap: 3px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#F59E0B"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                ${pro.rating}
+              </span>
               <span>(${pro.reviewsCount} reseñas)</span>
             </div>
             <div style="display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: #525B56; flex-wrap: wrap;">
-              <span style="color: #1A7A52; font-weight: 700;">✓ Verificado</span>
+              <span style="color: #1A7A52; font-weight: 700; display: inline-flex; align-items: center; gap: 3px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#1A7A52"><circle cx="12" cy="12" r="10"/><path fill="#FFF" d="M9 12l2 2 4-4"/></svg>
+                Verificado
+              </span>
               <span>·</span>
               <span>${expText}</span>
             </div>
@@ -3969,7 +3975,8 @@ function selectCleanTrade(cat) {
             <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid #F1ECE1; font-size: 0.84rem;">
               <span style="display: flex; align-items: center; gap: 6px; font-weight: 600; color: #1A201C; cursor: pointer;" onclick="cycleCitySelection()">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A7A52" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                Córdoba, Córdoba ✏️
+                <span>Córdoba, Córdoba</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
               </span>
               <span style="font-size: 0.82rem; font-weight: 700; color: #1A7A52;">Precios desde $15.000</span>
             </div>
@@ -4033,9 +4040,11 @@ function openProDetailModal(proId) {
 
   if (avatar) avatar.src = pro.avatar || 'assets/matias.jpg';
   if (name) name.textContent = pro.name;
-  if (ratingRow) ratingRow.innerHTML = `<span style="color: #F59E0B; font-weight: 800;">★ ${pro.rating}</span> (${pro.reviewsCount} reseñas)`;
+  if (ratingRow) ratingRow.innerHTML = `<span style="color: #F59E0B; font-weight: 800; display: inline-flex; align-items: center; gap: 3px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#F59E0B"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg> ${pro.rating}</span> (${pro.reviewsCount} reseñas)`;
   if (bio) bio.textContent = pro.bio || `Especialista con más de 5 años de trayectoria en instalaciones y reparaciones.`;
-  if (cityBadge) cityBadge.textContent = `📍 ${pro.city ? pro.city.split(',')[0] : 'Córdoba'}`;
+  if (cityBadge) {
+    cityBadge.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align: -2px; margin-right: 3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>` + (pro.city ? pro.city.split(',')[0] : 'Córdoba');
+  }
   if (tags && pro.skills) {
     tags.innerHTML = pro.skills.map(s => `<span class="badge-tag" style="background: #EAF5EE; color: #1A7A52; font-weight: 700; border-radius: 999px; padding: 4px 12px;">${s}</span>`).join('');
   }
@@ -4636,9 +4645,9 @@ function highlightActiveSubscriptionCard() {
   const btnGold = document.getElementById('btn-plan-gold');
   const btnPlat = document.getElementById('btn-plan-platinum');
 
-  if (btnBasic) btnBasic.textContent = currentPlan === 'basic' ? '✓ Plan Actual' : 'Elegir Plan';
-  if (btnGold) btnGold.textContent = currentPlan === 'gold' ? '✓ Plan Activo' : 'Suscribirme a PRO Destacado';
-  if (btnPlat) btnPlat.textContent = currentPlan === 'platinum' ? '✓ Plan Activo' : 'Activar Plan Empresa';
+  if (btnBasic) btnBasic.textContent = currentPlan === 'basic' ? 'Plan Actual' : 'Elegir Plan';
+  if (btnGold) btnGold.textContent = currentPlan === 'gold' ? 'Plan Activo' : 'Suscribirme a PRO Destacado';
+  if (btnPlat) btnPlat.textContent = currentPlan === 'platinum' ? 'Plan Activo' : 'Activar Plan Empresa';
 }
 
 function selectProSubscription(planId) {
@@ -5073,7 +5082,7 @@ function renderWorkerCrmDashboard() {
           <span class="badge-tag" style="background: #ECFDF5; color: #065F46; font-size: 0.68rem; font-weight: 800;">Cartera</span>
         </div>
         <div style="font-size: 1.45rem; font-weight: 900; color: #111827;">${totalClients} <span style="font-size: 0.82rem; font-weight: 600; color: #64748B;">frecuentes</span></div>
-        <div style="font-size: 0.72rem; color: #059669; font-weight: 600; margin-top: 3px;">100% Calificación 5.0 ★</div>
+        <div style="font-size: 0.72rem; color: #059669; font-weight: 600; margin-top: 3px;">100% Calificación 5.0 / 5.0</div>
       </div>
 
       <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 14px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
@@ -5229,11 +5238,11 @@ function renderCrmClientsList(clients, container) {
                 <div>
                   <div style="display: flex; align-items: center; gap: 8px;">
                     <strong style="color: #111827; font-size: 1.05rem;">${c.name}</strong>
-                    <span class="badge-tag" style="background: #ECFDF5; color: #065F46; font-weight: 800; font-size: 0.7rem;">★ ${(c.rating || 5.0).toFixed(1)}</span>
+                    <span class="badge-tag" style="background: #ECFDF5; color: #065F46; font-weight: 800; font-size: 0.7rem;">${(c.rating || 5.0).toFixed(1)}</span>
                     <span class="badge-tag" style="background: #F1F5F9; color: #475569; font-weight: 700; font-size: 0.7rem;">${c.category || 'Residencial'}</span>
                   </div>
                   <div style="display: flex; align-items: center; gap: 10px; font-size: 0.78rem; color: #64748B; margin-top: 3px;">
-                    <span>📍 <strong>${c.zone || 'CABA'}</strong></span>
+                    <span><strong>${c.zone || 'CABA'}</strong></span>
                     <span>•</span>
                     <span>Último servicio: <strong>${c.lastServiceDate || '15/10/2026'}</strong></span>
                   </div>
@@ -5262,7 +5271,7 @@ function renderCrmClientsList(clients, container) {
             <!-- Preview de Nota Técnica Privada -->
             ${c.notes ? `
               <div style="background: #FFFBEB; border-left: 3.5px solid #F59E0B; border-radius: 6px; padding: 8px 12px; margin-bottom: 14px; font-size: 0.78rem; color: #78350F; line-height: 1.4;">
-                <strong style="color: #92400E; display: inline-flex; align-items: center; gap: 4px;">📝 Nota Confidencial:</strong> ${c.notes}
+                <strong style="color: #92400E; display: inline-flex; align-items: center; gap: 4px;">Nota Confidencial:</strong> ${c.notes}
               </div>
             ` : ''}
 
@@ -5329,13 +5338,13 @@ function renderCrmJobsHistory(clients, container) {
             <div style="flex: 1; min-width: 260px;">
               <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <strong style="color: #111827; font-size: 0.95rem;">${j.title}</strong>
-                <span class="badge-tag" style="background: #DCFCE7; color: #166534; font-weight: 800; font-size: 0.7rem;">✓ ${j.status || 'Cobrado'}</span>
+                <span class="badge-tag" style="background: #DCFCE7; color: #166534; font-weight: 800; font-size: 0.7rem;">${j.status || 'Cobrado'}</span>
                 <span class="badge-tag" style="background: #EFF6FF; color: #1E40AF; font-weight: 700; font-size: 0.68rem;">${j.orderId}</span>
               </div>
               <div style="font-size: 0.82rem; color: #475569; margin-top: 4px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <span>Cliente: <strong style="color: #111827; cursor: pointer; text-decoration: underline;" onclick="openCrmClientDetailModal('${j.clientId}')">${j.clientName}</strong></span>
                 <span>•</span>
-                <span>📍 <a href="${mapUrl}" target="_blank" rel="noopener noreferrer" style="color: #2563EB; text-decoration: none; font-weight: 600;">${j.clientAddress}</a></span>
+                <span><a href="${mapUrl}" target="_blank" rel="noopener noreferrer" style="color: #2563EB; text-decoration: none; font-weight: 600;">${j.clientAddress}</a></span>
               </div>
               <div style="font-size: 0.74rem; color: #64748B; margin-top: 4px;">
                 Fecha: <strong>${j.date}</strong> · Garantía hasta: <strong>${j.warrantyUntil || '6 meses'}</strong> · Custodia Escrow: <strong style="color: #059669;">${j.escrowCode || 'ESC-2026-CONFIRM'}</strong>
@@ -5395,7 +5404,7 @@ function renderCrmPayoutsLedger(clients, container) {
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
         <div>
           <div style="display: flex; align-items: center; gap: 8px;">
-            <span class="badge-tag" style="background: #34D399; color: #064E3B; font-weight: 900; font-size: 0.72rem;">★ COMISIÓN REDUCIDA 8%</span>
+            <span class="badge-tag" style="background: #34D399; color: #064E3B; font-weight: 900; font-size: 0.72rem;">COMISIÓN REDUCIDA 8%</span>
             <span style="font-size: 0.78rem; color: #A7F3D0;">Plan Sademy PRO Destacado</span>
           </div>
           <h4 style="font-size: 1.15rem; margin: 6px 0 2px; font-weight: 800; color: #FFFFFF;">Liquidaciones Totales Acreditadas</h4>
@@ -5447,7 +5456,7 @@ function renderCrmPayoutsLedger(clients, container) {
                 </td>
                 <td style="padding: 12px 16px; text-align: right;">
                   <strong style="color: #047857; font-size: 0.95rem;">$${(t.netAmount || (t.amount - (t.fee || 0))).toLocaleString('es-AR')}</strong>
-                  <div style="font-size: 0.68rem; color: #059669; font-weight: 700;">✓ Acreditado</div>
+                  <div style="font-size: 0.68rem; color: #059669; font-weight: 700;">Acreditado</div>
                 </td>
                 <td style="padding: 12px 16px; text-align: center;">
                   <span class="badge-tag" style="background: #ECFDF5; color: #065F46; font-weight: 800; font-size: 0.68rem;">${t.escrowCode || 'ESC-2026-PIN'}</span>
@@ -5488,7 +5497,7 @@ function openCrmClientDetailModal(clientId) {
 
   if (avatarEl) avatarEl.src = client.avatar || 'assets/mascot.jpg';
   if (titleEl) titleEl.textContent = client.name;
-  if (ratingEl) ratingEl.textContent = `★ ${(client.rating || 5.0).toFixed(1)}`;
+  if (ratingEl) ratingEl.textContent = `${(client.rating || 5.0).toFixed(1)}`;
   if (subEl) subEl.textContent = `${client.category || 'Residencial'} · ${client.zone || 'CABA'}`;
   if (addrEl) addrEl.textContent = client.address;
   if (phoneEl) phoneEl.textContent = client.phone;
@@ -5513,7 +5522,7 @@ function openCrmClientDetailModal(clientId) {
           <div>
             <div style="display: flex; align-items: center; gap: 8px;">
               <strong style="color: #111827; font-size: 0.88rem;">${h.title}</strong>
-              <span class="badge-tag" style="background: #DCFCE7; color: #166534; font-weight: 800; font-size: 0.68rem;">✓ ${h.status}</span>
+              <span class="badge-tag" style="background: #DCFCE7; color: #166534; font-weight: 800; font-size: 0.68rem;">${h.status}</span>
             </div>
             <div style="font-size: 0.76rem; color: #64748B; margin-top: 3px;">
               Fecha: <strong>${h.date}</strong> · Orden: <strong>${h.orderId}</strong> · Garantía: <strong>${h.warrantyUntil || '6 meses'}</strong>
@@ -5954,7 +5963,7 @@ function autoCaptureFaceId(hasRealCamera) {
   }
 
   // Actualizar estado UI
-  if (titleEl) titleEl.innerHTML = '<span style="color: #34D399;">✓ Rostro Verificado con Éxito</span>';
+  if (titleEl) titleEl.innerHTML = '<span style="color: #34D399;">Rostro Verificado con Éxito</span>';
   if (descEl) descEl.textContent = 'La foto fue tomada automáticamente sin moverte. Se usará como tu foto oficial.';
   if (progressBar) progressBar.style.width = '100%';
 
@@ -6099,12 +6108,12 @@ function switchApartado(apartadoKey, skipScroll = false) {
   const modeBadge = document.getElementById('apartado-current-mode-badge');
   if (modeBadge) {
     const labels = {
-      guest: '🌐 Visitante',
-      client: '👤 Cliente',
-      pro: '⚡ Pro ($49k)',
-      admin: '🛡️ Admin HQ'
+      guest: 'Visitante',
+      client: 'Cliente',
+      pro: 'Profesional Pro',
+      admin: 'Administrador'
     };
-    modeBadge.textContent = labels[apartadoKey] || '🌐 Visitante';
+    modeBadge.textContent = labels[apartadoKey] || 'Visitante';
   }
 
   // 3. Mostrar el apartado seleccionado y ocultar los otros 3 (no se mezclan)
@@ -6198,7 +6207,7 @@ function renderWorkerCrmInWorkspace() {
               ${statusBadge}
             </div>
             <div style="font-size: 0.82rem; color: #64748B; margin-top: 3px;">
-              📍 ${client.address || 'CABA'} · 📞 ${client.phone}
+              ${client.address || 'CABA'} · ${client.phone}
             </div>
             <div style="font-size: 0.8rem; color: #047857; font-weight: 700; margin-top: 3px;">
               Último trabajo: ${client.lastJobTitle || 'Instalación eléctrica'} ($${(client.totalBilled || 0).toLocaleString('es-AR')} ARS)
@@ -6281,7 +6290,7 @@ function approveWorkerLicense(btnEl, proName, matricula) {
   playSuccessChime();
   if (btnEl) {
     btnEl.disabled = true;
-    btnEl.textContent = '✓ Aprobado Oficial';
+    btnEl.textContent = 'Aprobado Oficial';
     btnEl.style.background = '#047857';
   }
   showToast('Matrícula Aprobada Oficialmente', `${proName} (${matricula}) ha sido validado en Sademy HQ y su perfil ahora cuenta con el sello Verificado Pro.`);

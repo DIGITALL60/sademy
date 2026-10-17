@@ -76,41 +76,6 @@
   <!-- Barra de progreso de scroll ultra-fina -->
   <div id="scroll-progress-bar" class="scroll-progress-bar"></div>
 
-  <!-- ========================================================================
-       BARRA MAESTRA DE APARTADOS (VISITANTE, CLIENTE, PRO, ADMINISTRADOR)
-       Design System Apple Cupertino: navegación rápida e independiente por roles
-       ======================================================================== -->
-  <nav id="apartado-control-bar" class="apartado-control-bar" aria-label="Selector de apartados Sademy">
-    <div class="apartado-control-container">
-      <div class="apartado-brand-mini">
-        <img src="assets/favicon.svg" alt="Sademy" class="apartado-brand-icon">
-        <span class="apartado-brand-text">sademy</span>
-        <span class="apartado-mode-badge" id="apartado-current-mode-badge">🌐 Visitante</span>
-      </div>
-
-      <div class="apartado-segmented-control" role="tablist" aria-label="Espacios de trabajo">
-        <button type="button" id="apartado-btn-guest" class="apartado-btn active" role="tab" aria-selected="true" onclick="switchApartado('guest')">
-          <span class="apartado-icon">🌐</span>
-          <span class="apartado-label">Visitante</span>
-        </button>
-        <button type="button" id="apartado-btn-client" class="apartado-btn" role="tab" aria-selected="false" onclick="switchApartado('client')">
-          <span class="apartado-icon">👤</span>
-          <span class="apartado-label">Cliente</span>
-          <span class="apartado-chip">2</span>
-        </button>
-        <button type="button" id="apartado-btn-pro" class="apartado-btn" role="tab" aria-selected="false" onclick="switchApartado('pro')">
-          <span class="apartado-icon">⚡</span>
-          <span class="apartado-label">Trabajador Pro</span>
-          <span class="apartado-chip chip-pro">$49k</span>
-        </button>
-        <button type="button" id="apartado-btn-admin" class="apartado-btn" role="tab" aria-selected="false" onclick="switchApartado('admin')">
-          <span class="apartado-icon">🛡️</span>
-          <span class="apartado-label">Administrador</span>
-          <span class="apartado-chip chip-admin">HQ</span>
-        </button>
-      </div>
-    </div>
-  </nav>
 
   <!-- Header & Navegación Principal Oficial -->
   <header class="main-header">
@@ -218,13 +183,13 @@
             <!-- Selector Rápido de Roles (Apple Style Switcher) -->
             <div style="margin: 6px 10px 10px; background: #F3F4F6; padding: 4px; border-radius: 12px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px;">
               <button type="button" id="role-pill-client" class="role-switch-pill" onclick="switchProfile('client')" style="padding: 6px 4px; font-size: 0.75rem; font-weight: 700; border-radius: 8px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.2s ease;">
-                <span>👤 Cliente</span>
+                <span>Cliente</span>
               </button>
               <button type="button" id="role-pill-pro" class="role-switch-pill" onclick="switchProfile('pro')" style="padding: 6px 4px; font-size: 0.75rem; font-weight: 700; border-radius: 8px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.2s ease;">
-                <span>⚡ Pro</span>
+                <span>Profesional</span>
               </button>
               <button type="button" id="role-pill-admin" class="role-switch-pill" onclick="switchProfile('admin')" style="padding: 6px 4px; font-size: 0.75rem; font-weight: 700; border-radius: 8px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.2s ease;">
-                <span>🛡️ Admin</span>
+                <span>Administrador</span>
               </button>
             </div>
 
@@ -507,19 +472,19 @@
           Todos los oficios
         </button>
         <button type="button" class="quick-trade-pill" data-filter="plomeria" onclick="selectCleanTrade('plomeria')" style="padding: 8px 18px; border-radius: 999px; border: 1.5px solid var(--color-border); background: #FFFFFF; font-size: 0.88rem; font-weight: 700; color: var(--color-text-secondary); cursor: pointer; transition: all 0.2s ease;">
-          🔧 Plomería
+          Plomería
         </button>
         <button type="button" class="quick-trade-pill" data-filter="electricidad" onclick="selectCleanTrade('electricidad')" style="padding: 8px 18px; border-radius: 999px; border: 1.5px solid var(--color-border); background: #FFFFFF; font-size: 0.88rem; font-weight: 700; color: var(--color-text-secondary); cursor: pointer; transition: all 0.2s ease;">
-          ⚡ Electricidad
+          Electricidad
         </button>
         <button type="button" class="quick-trade-pill" data-filter="gas" onclick="selectCleanTrade('gas')" style="padding: 8px 18px; border-radius: 999px; border: 1.5px solid var(--color-border); background: #FFFFFF; font-size: 0.88rem; font-weight: 700; color: var(--color-text-secondary); cursor: pointer; transition: all 0.2s ease;">
-          🔥 Gasistas
+          Gasistas
         </button>
         <button type="button" class="quick-trade-pill" data-filter="albanileria" onclick="selectCleanTrade('albanileria')" style="padding: 8px 18px; border-radius: 999px; border: 1.5px solid var(--color-border); background: #FFFFFF; font-size: 0.88rem; font-weight: 700; color: var(--color-text-secondary); cursor: pointer; transition: all 0.2s ease;">
-          🧱 Albañilería
+          Albañilería
         </button>
         <button type="button" class="quick-trade-pill" data-filter="pintura" onclick="selectCleanTrade('pintura')" style="padding: 8px 18px; border-radius: 999px; border: 1.5px solid var(--color-border); background: #FFFFFF; font-size: 0.88rem; font-weight: 700; color: var(--color-text-secondary); cursor: pointer; transition: all 0.2s ease;">
-          🎨 Pintura
+          Pintura
         </button>
       </div>
 
@@ -696,7 +661,9 @@
       <div class="client-welcome-banner">
         <div>
           <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 1.5rem;">👤</span>
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; color: #FFFFFF;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
             <h1 style="font-size: 1.35rem; font-weight: 800; margin: 0; color: #FFFFFF;">Mi Portal de Cliente · Carlos M.</h1>
           </div>
           <p style="font-size: 0.85rem; color: #94A3B8; margin: 4px 0 0;">
@@ -771,8 +738,10 @@
                 <p class="quote-includes-text">Incluye materiales y mano de obra</p>
                 
                 <div class="quote-rating-row" style="margin-top: 6px;">
-                  <div class="star-rating">★★★★★</div>
-                  <span style="font-weight: 700; color: #111827;">4.9</span>
+                  <span style="font-weight: 700; color: #111827; display: inline-flex; align-items: center; gap: 4px;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="#F59E0B" stroke="#F59E0B"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    4.9
+                  </span>
                   <span style="color: var(--color-text-tertiary); font-weight: normal;">· 38 trabajos</span>
                 </div>
               </div>
@@ -815,8 +784,10 @@
                 <p class="quote-includes-text">Mano de obra + diagnóstico de tablero</p>
                 
                 <div class="quote-rating-row" style="margin-top: 6px;">
-                  <div class="star-rating">★★★★★</div>
-                  <span style="font-weight: 700; color: #111827;">5.0</span>
+                  <span style="font-weight: 700; color: #111827; display: inline-flex; align-items: center; gap: 4px;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="#F59E0B" stroke="#F59E0B"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    5.0
+                  </span>
                   <span style="color: var(--color-text-tertiary); font-weight: normal;">· 52 trabajos</span>
                 </div>
               </div>
@@ -927,7 +898,7 @@
                 <span class="badge-tag" style="background: #ECFDF5; color: #065F46; font-weight: 700;">FINALIZADO</span>
               </div>
               <div style="font-size: 0.82rem; color: #64748B; margin-top: 2px;">
-                Atendido por <strong>Sofía L. (Plomera)</strong> · Calificado con ★★★★★ 5.0
+                Atendido por <strong>Sofía L. (Plomera)</strong> · Calificación 5.0 / 5.0
               </div>
             </div>
           </div>
@@ -957,7 +928,7 @@
           <div>
             <div style="display: flex; align-items: center; gap: 8px;">
               <h1 style="font-size: 1.35rem; font-weight: 800; margin: 0; color: #0F172A;">Workspace Sademy PRO</h1>
-              <span class="badge-tag" style="background: #D1FAE5; color: #064E3B; font-weight: 800;">★ COPIME #4829</span>
+              <span class="badge-tag" style="background: #D1FAE5; color: #064E3B; font-weight: 800;">COPIME #4829</span>
             </div>
             <p style="font-size: 0.85rem; color: #64748B; margin: 2px 0 0;">
               Marcos R. · Electricista Matriculado · Plan PRO Destacado (8% comisión)
@@ -996,7 +967,7 @@
 
         <div class="pro-kpi-card">
           <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #64748B;">Trabajos Completados</div>
-          <div style="font-size: 1.55rem; font-weight: 800; color: #0F172A; margin-top: 4px;">38 <span style="font-size: 0.85rem; color: #F59E0B;">★ 4.9</span></div>
+          <div style="font-size: 1.55rem; font-weight: 800; color: #0F172A; margin-top: 4px;">38 <span style="font-size: 0.85rem; color: #F59E0B;">4.9 / 5.0</span></div>
           <div style="font-size: 0.75rem; color: #10B981; font-weight: 600; margin-top: 4px;">98% satisfacción positiva</div>
         </div>
 
@@ -1137,8 +1108,8 @@
       <!-- Header de Sademy HQ -->
       <div class="admin-hq-header">
         <div style="display: flex; align-items: center; gap: 14px;">
-          <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 1.6rem;">
-            🛡️
+          <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: #FFFFFF;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
           </div>
           <div>
             <div style="display: flex; align-items: center; gap: 8px;">
@@ -1180,7 +1151,7 @@
 
         <div class="pro-kpi-card">
           <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #64748B;">Técnicos Verificados</div>
-          <div style="font-size: 1.55rem; font-weight: 800; color: #0F172A; margin-top: 4px;">142 <span style="font-size: 0.85rem; color: #10B981;">✓</span></div>
+          <div style="font-size: 1.55rem; font-weight: 800; color: #0F172A; margin-top: 4px;">142 <span style="font-size: 0.85rem; color: #10B981; font-weight: 700;">Verificados</span></div>
           <div style="font-size: 0.75rem; color: #EF4444; font-weight: 700; margin-top: 4px;">2 matrículas pendientes</div>
         </div>
       </div>
@@ -1313,8 +1284,10 @@
       </div>
 
     </div>
-  </div> <!-- ==================== FIN APARTADO 4: ADMINISTRADOR ==================== -->
   </main> <!-- ==================== FIN #main-content ==================== -->
+
+  <!-- Modal Pedir Presupuesto sin Cargo (Oculto por defecto) -->
+  <div id="modal-order-wizard" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-wizard-title">
     <div class="modal-container">
       
       <div class="modal-header">
@@ -1572,7 +1545,7 @@
         <!-- Renderizado dinámicamente vía app.js -->
       </div>
 
-      <!-- Barra de input estilo Screen 7: [📎 Escribí un mensaje... [🟢 ✈️]] -->
+      <!-- Barra de input de chat -->
       <form class="chat-input-bar" onsubmit="event.preventDefault(); sendChatMessage();" style="display: flex; align-items: center; gap: 10px; background: #FFFFFF; border: 1.5px solid var(--color-border); border-radius: 999px; padding: 6px 8px 6px 14px; box-shadow: var(--shadow-xs);">
         <button type="button" onclick="showToast('Adjuntar archivo', 'Podés enviar fotos o planos del trabajo.')" style="background: none; border: none; cursor: pointer; color: #94A3B8; padding: 2px;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
@@ -1959,8 +1932,9 @@
         </div>
 
         <!-- Rating -->
-        <div id="pro-detail-rating-row" style="font-size: 0.88rem; color: #525B56; margin-bottom: 14px;">
-          <span style="color: #F59E0B; font-weight: 800;">★ 4.8</span> (124 reseñas)
+        <div id="pro-detail-rating-row" style="font-size: 0.88rem; color: #525B56; margin-bottom: 14px; display: flex; align-items: center; justify-content: center; gap: 4px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#F59E0B" stroke="#F59E0B"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <span style="color: #111827; font-weight: 800;">4.8</span> (124 reseñas)
         </div>
 
         <!-- Tags / Rubros -->
@@ -1971,10 +1945,16 @@
         </div>
 
         <!-- Badges de confianza -->
-        <div style="display: flex; justify-content: center; gap: 14px; font-size: 0.8rem; color: #525B56; font-weight: 600; padding: 10px 0; border-top: 1px solid #E8E6DE; border-bottom: 1px solid #E8E6DE; margin-bottom: 20px;">
-          <span>✓ Verificado</span>
-          <span>⏱ 5 años exp.</span>
-          <span id="pro-detail-city-badge">📍 Córdoba</span>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 14px; font-size: 0.8rem; color: #525B56; font-weight: 600; padding: 10px 0; border-top: 1px solid #E8E6DE; border-bottom: 1px solid #E8E6DE; margin-bottom: 20px;">
+          <span style="display: inline-flex; align-items: center; gap: 4px; color: #1A7A52; font-weight: 700;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#1A7A52"><circle cx="12" cy="12" r="10"/><path fill="#FFF" d="M9 12l2 2 4-4"/></svg>
+            Verificado
+          </span>
+          <span>5 años de experiencia</span>
+          <span id="pro-detail-city-badge" style="display: inline-flex; align-items: center; gap: 4px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            Córdoba
+          </span>
         </div>
 
         <!-- Sobre mí -->
@@ -2230,7 +2210,7 @@
           <div>
             <div style="display: flex; align-items: center; gap: 8px;">
               <h3 id="pro-dash-modal-title" class="modal-title" style="font-size: 1.25rem; margin: 0;">Portal Sademy PRO</h3>
-              <span class="badge-tag" style="background: #D1FAE5; color: #064E3B; font-weight: 800;">★ COPIME #4829</span>
+              <span class="badge-tag" style="background: #D1FAE5; color: #064E3B; font-weight: 800;">COPIME #4829</span>
             </div>
             <p style="font-size: 0.82rem; color: #64748B; margin: 2px 0 0;">
               Marcos R. · Electricista Matriculado · Plan PRO Destacado (8% comisión)
@@ -2396,7 +2376,7 @@
                   <td style="padding: 10px 14px;">Reparación eléctrica</td>
                   <td style="padding: 10px 14px; font-weight: 700; color: #065F46;">$24.000 ARS</td>
                   <td style="padding: 10px 14px; color: var(--color-primary);">-$1.920 ARS</td>
-                  <td style="padding: 10px 14px;"><span class="badge-tag" style="background: #DCFCE7; color: #166534; font-weight: 700;">✓ Acreditado</span></td>
+                  <td style="padding: 10px 14px;"><span class="badge-tag" style="background: #DCFCE7; color: #166534; font-weight: 700;">Acreditado</span></td>
                 </tr>
                 <tr>
                   <td style="padding: 10px 14px; font-weight: 700; color: var(--color-text-main);">ORD-2026-077</td>
@@ -2404,7 +2384,7 @@
                   <td style="padding: 10px 14px;">Instalación de apliques</td>
                   <td style="padding: 10px 14px; font-weight: 700; color: #065F46;">$25.000 ARS</td>
                   <td style="padding: 10px 14px; color: var(--color-primary);">-$2.000 ARS</td>
-                  <td style="padding: 10px 14px;"><span class="badge-tag" style="background: #DCFCE7; color: #166534; font-weight: 700;">✓ Acreditado</span></td>
+                  <td style="padding: 10px 14px;"><span class="badge-tag" style="background: #DCFCE7; color: #166534; font-weight: 700;">Acreditado</span></td>
                 </tr>
               </tbody>
             </table>
@@ -2651,7 +2631,7 @@
         <div>
           <div style="display: flex; align-items: center; gap: 8px;">
             <span class="badge-tag" style="background: #FEF3C7; color: #92400E; font-weight: 800;">SADEMY PRO</span>
-            <span style="font-size: 0.8rem; color: #059669; font-weight: 700;">✓ Comisiones más bajas</span>
+            <span style="font-size: 0.8rem; color: #059669; font-weight: 700;">Comisiones reducidas</span>
           </div>
           <h3 id="pro-sub-title" class="modal-title" style="margin-top: 4px; font-size: 1.4rem;">Membresías para Profesionales y Empresas</h3>
           <p style="font-size: 0.86rem; color: var(--color-text-secondary); margin-top: 2px;">
@@ -2693,12 +2673,12 @@
               Comisión: <strong>15% por trabajo cerrado</strong>
             </div>
             <ul class="plan-features-list">
-              <li><span>✓</span> Hasta 3 presupuestos al mes</li>
-              <li><span>✓</span> Perfil básico en el directorio</li>
-              <li><span>✓</span> Pagos protegidos en custodia</li>
-              <li><span>✓</span> Liberación de fondos en 48 hs</li>
-              <li class="disabled"><span>✕</span> Alertas instantáneas de WhatsApp</li>
-              <li class="disabled"><span>✕</span> Insignia dorada PRO Destacado</li>
+              <li><span>•</span> Hasta 3 presupuestos al mes</li>
+              <li><span>•</span> Perfil básico en el directorio</li>
+              <li><span>•</span> Pagos protegidos en custodia</li>
+              <li><span>•</span> Liberación de fondos en 48 hs</li>
+              <li class="disabled"><span>-</span> Alertas instantáneas de WhatsApp</li>
+              <li class="disabled"><span>-</span> Insignia dorada PRO Destacado</li>
             </ul>
             <button class="btn btn-secondary plan-action-btn" id="btn-plan-basic" onclick="selectProSubscription('basic')">
               Plan Actual
@@ -2707,7 +2687,7 @@
 
           <!-- Plan 2: PRO Destacado (Recomendado) -->
           <div class="pricing-plan-card featured" id="plan-card-gold">
-            <div class="plan-popular-ribbon">★ MÁS POPULAR · 84% DE PROS</div>
+            <div class="plan-popular-ribbon">MÁS POPULAR · 84% DE PROS</div>
             <div class="plan-header">
               <h4 class="plan-title">PRO Destacado</h4>
               <p class="plan-desc">Para profesionales independientes que buscan trabajo continuo.</p>
@@ -2721,12 +2701,12 @@
               Comisión reducida: <strong style="color: #065F46;">8% por trabajo cerrado</strong>
             </div>
             <ul class="plan-features-list">
-              <li><span>✓</span> <strong>Presupuestos ILIMITADOS</strong></li>
-              <li><span>✓</span> <strong>Insignia Dorada "PRO Destacado"</strong></li>
-              <li><span>✓</span> <strong>Alertas prioritarias por WhatsApp</strong></li>
-              <li><span>✓</span> Primeras posiciones en búsquedas</li>
-              <li><span>✓</span> Liberación acelerada de fondos en 2 hs</li>
-              <li><span>✓</span> Seguro de herramientas hasta $200.000</li>
+              <li><span>•</span> <strong>Presupuestos ILIMITADOS</strong></li>
+              <li><span>•</span> <strong>Insignia Dorada "PRO Destacado"</strong></li>
+              <li><span>•</span> <strong>Alertas prioritarias por WhatsApp</strong></li>
+              <li><span>•</span> Primeras posiciones en búsquedas</li>
+              <li><span>•</span> Liberación acelerada de fondos en 2 hs</li>
+              <li><span>•</span> Seguro de herramientas hasta $200.000</li>
             </ul>
             <button class="btn btn-primary plan-action-btn" id="btn-plan-gold" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);" onclick="selectProSubscription('gold')">
               Suscribirme a PRO Destacado
@@ -2748,12 +2728,12 @@
               Comisión mínima: <strong>5% por trabajo cerrado</strong>
             </div>
             <ul class="plan-features-list">
-              <li><span>✓</span> <strong>Hasta 5 operarios matriculados</strong></li>
-              <li><span>✓</span> Facturación electrónica ARCA integrada</li>
-              <li><span>✓</span> Cobertura de caución y ART ampliada</li>
-              <li><span>✓</span> Presupuestos y licitaciones ilimitadas</li>
-              <li><span>✓</span> Soporte VIP prioritario 24/7</li>
-              <li><span>✓</span> Ejecutivo de cuentas asignado</li>
+              <li><span>•</span> <strong>Hasta 5 operarios matriculados</strong></li>
+              <li><span>•</span> Facturación electrónica ARCA integrada</li>
+              <li><span>•</span> Cobertura de caución y ART ampliada</li>
+              <li><span>•</span> Presupuestos y licitaciones ilimitadas</li>
+              <li><span>•</span> Soporte VIP prioritario 24/7</li>
+              <li><span>•</span> Ejecutivo de cuentas asignado</li>
             </ul>
             <button class="btn btn-secondary plan-action-btn" id="btn-plan-platinum" onclick="selectProSubscription('platinum')">
               Activar Plan Empresa
@@ -2976,14 +2956,6 @@
 
 
 
-  <!-- Botón Flotante del Asistente Rápido Sademy -->
-  <div class="floating-assistant-btn" onclick="openNewOrderModal()" title="¿Tenés una urgencia? Tocá acá para cotizar con profesionales en 1 min">
-    <img src="assets/favicon.svg" alt="Sademy Mascota" class="floating-assistant-img">
-    <div>
-      <div class="floating-assistant-text">¿Urgencia en casa?</div>
-      <span class="floating-assistant-sub">Cotizá en 1 min</span>
-    </div>
-  </div>
 
   <!-- Barra de Navegación Inferior Nativa para Celulares (Fiel al diseño oficial Sademy) -->
   <!-- Barra de Navegación Inferior (Diseño Oficial de Referencia: 4 Pestañas) -->
@@ -3082,74 +3054,6 @@
         Cerrar Sesión
       </button>
 
-    </div>
-  </div>
-            <button type="button" onclick="closeAccountModal(); openAdminBackofficeModal('finanzas');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 700;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#92400E" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-              <div style="text-align: left;">
-                <div style="color: #92400E;">Panel Master Dueño & Finanzas</div>
-                <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Control de comisiones y facturación global</div>
-              </div>
-            </button>
-            <button type="button" onclick="closeAccountModal(); openAdminBackofficeModal('matriculas');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 700;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-              <div style="text-align: left;">
-                <div style="color: #B91C1C;">Aprobación de Matrículas (2)</div>
-                <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Revisión de Gasistas y Electricistas</div>
-              </div>
-            </button>
-            <button type="button" onclick="closeAccountModal(); openAdminBackofficeModal('custodia');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 700;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#065F46" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-              <div style="text-align: left;">
-                <div style="color: #065F46;">Fondos en Custodia (Escrow)</div>
-                <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">$115.000 ARS retenidos para liberación con PIN</div>
-              </div>
-            </button>
-            <button type="button" onclick="closeAccountModal(); openAdminBackofficeModal('usuarios');" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 700;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-              <div style="text-align: left;">
-                <div style="color: #2563EB;">Directorio de Usuarios Registrados</div>
-                <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Clientes y Profesionales creados (Google y Directos)</div>
-              </div>
-            </button>
-          </div>
-
-          <button type="button" onclick="closeAccountModal(); triggerPwaInstall();" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: flex-start; gap: 12px; font-weight: 600;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
-            <div style="text-align: left;">
-              <div>Instalar Aplicación en Pantalla</div>
-              <div style="font-size: 0.72rem; color: #64748B; font-weight: normal;">Acceso directo como app nativa</div>
-            </div>
-          </button>
-        </div>
-
-        <div style="height: 1px; background: #E2E8F0; margin: 16px 0;"></div>
-
-        <!-- Botón Cerrar Sesión Claro y Destacado -->
-        <div id="account-logged-in-section">
-          <button type="button" onclick="logoutUser(); closeAccountModal();" class="btn btn-sm" style="width: 100%; background: #FEE2E2; color: #B91C1C; border: 1.5px solid #FECACA; font-weight: 800; justify-content: center; gap: 8px; padding: 12px; cursor: pointer;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-            <span>Cerrar Sesión</span>
-          </button>
-        </div>
-
-        <div id="account-guest-section" style="display: none; text-align: center;">
-          <p style="font-size: 0.85rem; color: #64748B; margin-bottom: 12px;">No has iniciado sesión en Sademy. Ingresá para ver tus pedidos, presupuestos y custodia.</p>
-          <button type="button" class="btn btn-primary" style="width: 100%; margin-bottom: 8px; font-weight: 700; padding: 12px;" onclick="closeAccountModal(); openAuthModal('login');">
-            <span>Iniciar Sesión en Sademy</span>
-          </button>
-          <button type="button" class="btn-google" style="width: 100%; border: 1.5px solid #CBD5E1; border-radius: 12px; padding: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; background: #FFFFFF; cursor: pointer;" onclick="closeAccountModal(); triggerGoogleDeviceSignIn('client');">
-            <svg class="google-icon-svg" width="18" height="18" viewBox="0 0 24 24">
-              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-            </svg>
-            <span>Continuar con Google</span>
-          </button>
-        </div>
-
-      </div>
     </div>
   </div>
 
@@ -3482,7 +3386,7 @@
           <div>
             <div style="display: flex; align-items: center; gap: 8px;">
               <h3 id="crm-client-detail-title" class="modal-title" style="font-size: 1.25rem; margin: 0; color: var(--color-text-main);">Ficha de Cliente</h3>
-              <span id="crm-modal-rating-badge" class="badge-tag" style="background: #ECFDF5; color: #065F46; font-weight: 800;">★ 5.0</span>
+              <span id="crm-modal-rating-badge" class="badge-tag" style="background: #ECFDF5; color: #065F46; font-weight: 800;">5.0</span>
             </div>
             <p id="crm-modal-subtitle" style="font-size: 0.8rem; color: #64748B; margin: 2px 0 0;">Residencial · Palermo Chico</p>
           </div>
@@ -3533,8 +3437,8 @@
         <!-- Editor de Notas Técnicas Privadas -->
         <div style="background: #FFFBEB; border: 1.5px solid #FDE68A; border-radius: 14px; padding: 14px; margin-bottom: 20px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <label for="crm-client-note-textarea" style="font-size: 0.78rem; font-weight: 800; color: #78350F; text-transform: uppercase; letter-spacing: 0.04em; margin: 0;">
-              📝 Notas Técnicas Confidenciales del Profesional
+            <label for="crm-client-note-textarea" style="font-size: 0.78rem; font-weight: 800; color: #78350F; text-transform: uppercase; letter-spacing: 0.04em; margin: 0; display: inline-flex; align-items: center; gap: 6px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Notas Técnicas Confidenciales del Profesional
             </label>
             <span style="font-size: 0.7rem; color: #92400E;">Solo visible para ti</span>
           </div>
