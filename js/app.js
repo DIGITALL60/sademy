@@ -4728,16 +4728,9 @@ function initPreloader() {
   }, 1050);
 }
 
-// Barra de scroll ultra-fina reactiva
+// Barra de scroll eliminada por solicitud
 function initScrollProgress() {
-  const bar = document.getElementById('scroll-progress-bar');
-  if (!bar) return;
-  window.addEventListener('scroll', () => {
-    const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
-    bar.style.width = scrolled + '%';
-  });
+  // Desactivada
 }
 
 // Galería de Trabajos Verificados: Alternar Antes / Después

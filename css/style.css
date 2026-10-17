@@ -434,15 +434,16 @@ button, input, select, textarea {
   color: #DC2626 !important;
 }
 
-/* Navbar principal */
+/* Navbar principal con el mismo color cálido de la web (#F9F6ED) */
 .main-header {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: rgba(255, 255, 255, 0.96);
+  background-color: var(--color-bg-base);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border);
-  box-shadow: var(--shadow-xs);
+  box-shadow: none;
 }
 
 .navbar {
@@ -3006,17 +3007,9 @@ button, input, select, textarea {
    DETALLES & EXPERIENCIA ULTRA-PREMIUM SADEMY
    ========================================================================== */
 
-/* Barra de progreso de lectura / scroll suave */
+/* Barra de progreso de lectura (eliminada por solicitud) */
 .scroll-progress-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 3px;
-  width: 0%;
-  background: linear-gradient(90deg, #10B981 0%, #34D399 100%);
-  z-index: 10001;
-  transition: width 0.08s ease-out;
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+  display: none !important;
 }
 
 /* Badge de disponibilidad en vivo con pulso verde */
