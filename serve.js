@@ -251,6 +251,33 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, { received: true, status: 'payment_in_escrow_approved' });
   }
 
+  // API Enterprise B2B: Inquiries Get
+  if (cleanUrl === '/api/enterprise/inquiries' && req.method === 'GET') {
+    const db = readDb();
+    return sendJson(res, 200, { success: true, inquiries: db.corporateInquiries || [] });
+  }
+
+  // API Enterprise B2B: Inquiry Submit
+  if (cleanUrl === '/api/enterprise/inquiries' && req.method === 'POST') {
+    const body = await parseBody(req);
+    const db = readDb();
+    if (!db.corporateInquiries) db.corporateInquiries = [];
+
+    const newInquiry = {
+      id: `CORP-${Date.now().toString(36).toUpperCase()}`,
+      company: body.company || 'Administración de Consorcios',
+      buildings: body.buildings || '6-15 edificios',
+      city: body.city || 'Córdoba',
+      phone: body.phone || '',
+      status: 'Pendiente Contacto',
+      createdAt: new Date().toISOString()
+    };
+
+    db.corporateInquiries.unshift(newInquiry);
+    writeDb(db);
+    return sendJson(res, 201, { success: true, inquiry: newInquiry });
+  }
+
   // Static File Serving
   if (cleanUrl === '/') cleanUrl = '/index.html';
   

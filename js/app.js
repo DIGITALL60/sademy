@@ -4284,6 +4284,30 @@ function submitEnterpriseInquiry() {
   const city = document.getElementById('ent-city')?.value || 'Córdoba';
   const phone = document.getElementById('ent-phone')?.value || '';
 
+  const newInq = {
+    id: `CORP-${Date.now().toString(36).toUpperCase()}`,
+    company: company.trim(),
+    buildings: `${buildings} edificios`,
+    city: city.trim(),
+    phone: phone.trim(),
+    status: 'Pendiente Contacto',
+    createdAt: new Date().toLocaleDateString('es-AR')
+  };
+
+  if (!appState.corporateInquiries) {
+    appState.corporateInquiries = [];
+  }
+  appState.corporateInquiries.unshift(newInq);
+
+  fetch('/api/enterprise/inquiries', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newInq)
+  }).catch(() => {});
+
+  const badge = document.getElementById('admin-consorcios-badge');
+  if (badge) badge.textContent = appState.corporateInquiries.length;
+
   closeEnterpriseInquiryModal();
 
   showToast(
@@ -4975,7 +4999,7 @@ function switchAdminTab(tabName) {
   triggerHapticFeedback();
   playPop();
 
-  const tabs = ['finanzas', 'matriculas', 'custodia', 'usuarios'];
+  const tabs = ['finanzas', 'matriculas', 'custodia', 'usuarios', 'consorcios'];
   tabs.forEach(t => {
     const btn = document.getElementById(`admin-tab-btn-${t}`);
     const view = document.getElementById(`admin-view-${t}`);
@@ -4991,6 +5015,8 @@ function switchAdminTab(tabName) {
 
   if (tabName === 'usuarios') {
     renderAdminUsers();
+  } else if (tabName === 'consorcios') {
+    renderAdminConsorcios();
   }
 }
 
@@ -5021,6 +5047,9 @@ function renderAdminBackoffice() {
 
   // 5. Renderizar usuarios registrados en la base
   renderAdminUsers();
+
+  // 6. Renderizar solicitudes corporativas B2B
+  renderAdminConsorcios();
 }
 
 function renderAdminTransactions() {
@@ -5309,6 +5338,107 @@ function renderAdminUsers(filterQuery = '', roleFilter = 'all') {
       </tr>
     `;
   }).join('');
+}
+
+const DEFAULT_CORPORATE_INQUIRIES = [
+  {
+    id: 'CORP-SOLAR',
+    company: 'Administración del Solar S.R.L.',
+    buildings: '14 edificios',
+    city: 'Nueva Córdoba',
+    phone: '+54 9 351 512-8899',
+    status: 'Convenio en Revisión',
+    createdAt: '15/10/2026'
+  },
+  {
+    id: 'CORP-TORRES',
+    company: 'Consorcios Capital Towers',
+    buildings: '8 edificios',
+    city: 'Cerro de las Rosas',
+    phone: '+54 9 351 688-4422',
+    status: 'Cuenta Corriente Activa',
+    createdAt: '12/10/2026'
+  },
+  {
+    id: 'CORP-ALTA',
+    company: 'Gestión Inmobiliaria Alta Gracia',
+    buildings: '6 edificios',
+    city: 'Alta Gracia',
+    phone: '+54 9 3547 42-1133',
+    status: 'Pendiente Contacto',
+    createdAt: '16/10/2026'
+  }
+];
+
+function renderAdminConsorcios() {
+  if (!appState.corporateInquiries) {
+    appState.corporateInquiries = [...DEFAULT_CORPORATE_INQUIRIES];
+  }
+
+  const badge = document.getElementById('admin-consorcios-badge');
+  if (badge) badge.textContent = appState.corporateInquiries.length;
+
+  const tbody = document.getElementById('admin-consorcios-tbody');
+  if (!tbody) return;
+
+  tbody.innerHTML = appState.corporateInquiries.map(inq => {
+    const isActive = inq.status === 'Cuenta Corriente Activa';
+    const isPending = inq.status === 'Pendiente Contacto';
+    const cleanPhone = (inq.phone || '').replace(/\D/g, '');
+
+    return `
+      <tr>
+        <td>
+          <div style="font-weight: 700; color: #111827;">${inq.company}</div>
+          <div style="font-size: 0.74rem; color: #64748B;">ID: ${inq.id}</div>
+        </td>
+        <td>
+          <span class="badge-tag" style="background: #F1F5F9; color: #334155; font-weight: 700;">
+            ${inq.buildings}
+          </span>
+        </td>
+        <td>${inq.city}</td>
+        <td>
+          <a href="https://wa.me/${cleanPhone}?text=Hola,%20te%20escribimos%20de%20Sademy%20por%20la%20cuenta%20de%20consorcios." target="_blank" rel="noopener noreferrer" style="color: #059669; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            ${inq.phone || 'Contactar'}
+          </a>
+        </td>
+        <td><span style="font-size: 0.8rem; color: #64748B;">${inq.createdAt || 'Reciente'}</span></td>
+        <td>
+          <span class="badge-tag" style="background: ${isActive ? '#DCFCE7' : isPending ? '#FEF3C7' : '#E0E7FF'}; color: ${isActive ? '#166534' : isPending ? '#92400E' : '#3730A3'}; font-weight: 700;">
+            ${inq.status}
+          </span>
+        </td>
+        <td>
+          ${isActive ? `
+            <span style="font-size: 0.78rem; color: #059669; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Habilitada
+            </span>
+          ` : `
+            <button class="btn btn-primary btn-sm" onclick="approveCorporateAccount('${inq.id}')" style="font-size: 0.76rem; padding: 6px 12px; border-radius: 8px; font-weight: 700; background: #059669;">
+              Aprobar B2B
+            </button>
+          `}
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function approveCorporateAccount(inquiryId) {
+  triggerHapticFeedback();
+  playSuccessChime();
+
+  if (appState.corporateInquiries) {
+    const item = appState.corporateInquiries.find(i => i.id === inquiryId);
+    if (item) {
+      item.status = 'Cuenta Corriente Activa';
+      renderAdminConsorcios();
+      showToast('Cuenta B2B Habilitada', `Se habilitó la cuenta corriente con facturación A para ${item.company}.`);
+    }
+  }
 }
 
 // ============================================================================

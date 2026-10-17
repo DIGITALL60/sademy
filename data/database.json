@@ -442,5 +442,34 @@
       "dni": "32.110.884",
       "docVerified": true
     }
+  ],
+  "corporateInquiries": [
+    {
+      "id": "CORP-SOLAR",
+      "company": "Administración del Solar S.R.L.",
+      "buildings": "14 edificios",
+      "city": "Nueva Córdoba",
+      "phone": "+54 9 351 512-8899",
+      "status": "Convenio en Revisión",
+      "createdAt": "2026-10-15T14:30:00.000Z"
+    },
+    {
+      "id": "CORP-TORRES",
+      "company": "Consorcios Capital Towers",
+      "buildings": "8 edificios",
+      "city": "Cerro de las Rosas",
+      "phone": "+54 9 351 688-4422",
+      "status": "Cuenta Corriente Activa",
+      "createdAt": "2026-10-12T09:15:00.000Z"
+    },
+    {
+      "id": "CORP-ALTA",
+      "company": "Gestión Inmobiliaria Alta Gracia",
+      "buildings": "6 edificios",
+      "city": "Alta Gracia",
+      "phone": "+54 9 3547 42-1133",
+      "status": "Pendiente Contacto",
+      "createdAt": "2026-10-16T18:40:00.000Z"
+    }
   ]
 }

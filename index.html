@@ -3057,6 +3057,10 @@
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
             Usuarios Registrados <span id="admin-users-badge" class="nav-badge" style="background: #10B981; color: #FFFFFF; margin-left: 6px;">4</span>
           </button>
+          <button class="admin-tab-btn" id="admin-tab-btn-consorcios" onclick="switchAdminTab('consorcios')" style="display: inline-flex; align-items: center; gap: 8px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            Convenios B2B Consorcios <span id="admin-consorcios-badge" class="nav-badge" style="background: #047857; color: #FFFFFF; margin-left: 6px;">3</span>
+          </button>
         </div>
 
         <!-- Vista 1: Finanzas & Transacciones en Vivo -->
@@ -3159,6 +3163,41 @@
                   </tr>
                 </thead>
                 <tbody id="admin-users-tbody">
+                  <!-- Rellenado dinámicamente -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vista 5: Convenios Corporativos y Consorcios B2B -->
+        <div id="admin-view-consorcios" class="admin-view-pane" style="display: none;">
+          <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; overflow: hidden; margin-top: 14px;">
+            <div style="padding: 16px 20px; border-bottom: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: #FAFAFA;">
+              <div>
+                <strong style="font-size: 0.95rem; color: var(--color-text-main);">Pipeline de Solicitudes Corporativas B2B (Consorcios & Administraciones)</strong>
+                <p style="font-size: 0.78rem; color: #64748B; margin: 2px 0 0;">Cuentas corrientes para edificios en mantenimiento preventivo, cuadrillas matriculadas y factura A</p>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="badge-tag" style="background: #ECFDF5; color: #047857; font-weight: 700; font-size: 0.8rem; padding: 6px 12px; border: 1px solid #A7F3D0;">
+                  GMV Proyectado: $6.200.000 ARS/mes
+                </span>
+              </div>
+            </div>
+            <div style="overflow-x: auto;">
+              <table class="admin-data-table">
+                <thead>
+                  <tr>
+                    <th>Administración / Empresa</th>
+                    <th>Edificios</th>
+                    <th>Zona / Ciudad</th>
+                    <th>Teléfono / WhatsApp</th>
+                    <th>Fecha Alta</th>
+                    <th>Estado Convenio</th>
+                    <th>Acción Comercial</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-consorcios-tbody">
                   <!-- Rellenado dinámicamente -->
                 </tbody>
               </table>
